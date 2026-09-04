@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Oak & Cedar Cedi Calculator</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f1faf4, #e3f4e9);
+    color: #183b28;
+}
+
+.container {
+    max-width: 520px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* HEADER */
+
+.header {
+    background: linear-gradient(135deg, #2e7d52, #4caf70);
+    color: white;
+    text-align: center;
+    padding: 25px 20px;
+    border-radius: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 20px rgba(46,125,82,0.18);
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    background: #d8f3df;
+    color: #2e7d52;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    border: 3px solid rgba(255,255,255,0.7);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+.header h1 {
+    margin: 11px 0 5px;
+    font-size: 25px;
+    letter-spacing: 0.3px;
+}
+
+.header p {
+    margin: 0;
+    color: #e8f8ed;
+    font-size: 15px;
+}
+
+/* CARD */
+
+.card {
+    background: rgba(255,255,255,0.97);
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(46,125,82,0.10);
+    border: 1px solid #dcefe2;
+}
+
+h2 {
+    margin: 0 0 18px;
+    color: #286b46;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* MONEY ROW */
+
+.row {
+    display: grid;
+    grid-template-columns: 70px 25px minmax(80px, 1fr) 125px;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5eee8;
+}
+
+.row:last-of-type {
+    border-bottom: none;
+}
+
+.denomination {
+    font-weight: bold;
+    white-space: nowrap;
+    color: #245d3d;
+}
+
+.multiply {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #42a765;
+}
+
+input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+    border: 1.5px solid #cde4d4;
+    border-radius: 9px;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    background: #f7fcf8;
+    transition: 0.2s;
+}
+
+input:focus {
+    border-color: #59b879;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(89,184,121,0.15);
+}
+
+.result {
+    text-align: right;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+    color: #286b46;
+}
+
+/* CALCULATE BUTTON */
+
+.calculate-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #2e7d52, #4caf70);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(46,125,82,0.20);
+    transition: 0.2s;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-1px);
+}
+
+.calculate-btn:active {
+    transform: scale(0.98);
+}
+
+/* TOTAL */
+
+.total {
+    margin-top: 20px;
+    padding: 21px;
+    background: linear-gradient(135deg, #276b45, #3f9660);
+    color: white;
+    border-radius: 13px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(46,125,82,0.15);
+}
+
+.total p {
+    margin: 0 0 7px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #d9f2e1;
+}
+
+#grandTotal {
+    font-size: 29px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* SMALL PHONES */
+
+@media (max-width: 400px) {
+
+    .container {
+        padding: 12px;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
+    .header {
+        padding: 22px 15px;
+    }
+
+    .row {
+        grid-template-columns: 60px 20px minmax(65px, 1fr) 105px;
+        gap: 5px;
+    }
+
+    .result {
+        font-size: 13px;
+    }
+
+    input {
+        font-size: 15px;
+        padding: 9px 5px;
+    }
+
+    #grandTotal {
+        font-size: 26px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="logo">
+            O&C
+        </div>
+
+        <h1>Oak & Cedar</h1>
+
+        <p>Cedi Calculator</p>
+
+    </div>
+
+
+    <!-- CALCULATOR -->
+
+    <div class="card">
+
+        <h2>Money Calculator</h2>
+
+
+        <!-- GH₵200 -->
+
+        <div class="row">
+
+            <div class="denomination">
+                GH₵200
+            </div>
+
+            <div class="multiply">
+                ×
+            </div>
+
+            <input type="number" id="money200" min="0">
+
+            <div class="result" id="total200">
+                GH₵0.00
+            </div>
+
+        </div>
+
+
+        <!-- GH₵100 -->
+
+        <div class="row">
+
+            <div class="denomination">
+                GH₵100
+            </div>
+
+            <div class="multiply">
+                ×
+            </div>
+
+            <input type="number" id="money100" min="0">
+
+            <div class="result" id="total100">
+                GH₵0.00
+            </div>
+
+        </div>
+
+
+        <!-- GH₵50 -->
+
+        <div class="row">
+
+            <div class="denomination">
+                GH₵50
+            </div>
+
+            <div class="multiply">
+                ×
+            </div>
+
+            <input type="number" id="money50" min="0">
+
+            <div class="result" id="total50">
+                GH₵0.00
+            </div>
+
+        </div>
+
+
+        <!-- GH₵20 -->
+
+        <div class="row">
+
+            <div class="denomination">
+                GH₵20
+            </div>
+
+            <div class="multiply">
+                ×
+            </div>
+
+            <input type="number" id="money20" min="0">
+
+            <div class="result" id="total20">
+                GH₵0.00
+            </div>
+
+        </div>
+
+
+        <!-- GH₵10 -->
+
+        <div class="row">
+
+            <div class="denomination">
+                GH₵10
+            </div>
+
+            <div class="multiply">
+                ×
+            </div>
+
+            <input type="number" id="money10" min="0">
+
+            <div class="result" id="total10">
+                GH₵0.00
+            </div>
+
+        </div>
+
+
+        <!-- GH₵5 -->
+
+        <div class="row">
+
+            <div class="denomination">
+                GH₵5
+            </div>
+
+            <div class="multiply">
+                ×
+            </div>
+
+            <input type="number" id="money5" min="0">
+
+            <div class="result" id="total5">
+                GH₵0.00
+            </div>
+
+        </div>
+
+
+        <!-- GH₵2 -->
+
+        <div class="row">
+
+            <div class="denomination">
+                GH₵2
+            </div>
+
+            <div class="multiply">
+                ×
+            </div>
+
+            <input type="number" id="money2" min="0">
+
+            <div class="result" id="total2">
+                GH₵0.00
+            </div>
+
+        </div>
+
+
+        <!-- GH₵1 -->
+
+        <div class="row">
+
+            <div class="denomination">
+                GH₵1
+            </div>
+
+            <div class="multiply">
+                ×
+            </div>
+
+            <input type="number" id="money1" min="0">
+
+            <div class="result" id="total1">
+                GH₵0.00
+            </div>
+
+        </div>
+
+
+        <!-- CALCULATE BUTTON -->
+
+        <button class="calculate-btn" onclick="calculate()">
+            Calculate Total
+        </button>
+
+
+        <!-- GRAND TOTAL -->
+
+        <div class="total">
+
+            <p>TOTAL MONEY</p>
+
+            <div id="grandTotal">
+                GH₵0.00
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function calculate() {
+
+    let money200 = Number(document.getElementById("money200").value) || 0;
+    let money100 = Number(document.getElementById("money100").value) || 0;
+    let money50 = Number(document.getElementById("money50").value) || 0;
+    let money20 = Number(document.getElementById("money20").value) || 0;
+    let money10 = Number(document.getElementById("money10").value) || 0;
+    let money5 = Number(document.getElementById("money5").value) || 0;
+    let money2 = Number(document.getElementById("money2").value) || 0;
+    let money1 = Number(document.getElementById("money1").value) || 0;
+
+
+    let total200 = money200 * 200;
+    let total100 = money100 * 100;
+    let total50 = money50 * 50;
+    let total20 = money20 * 20;
+    let total10 = money10 * 10;
+    let total5 = money5 * 5;
+    let total2 = money2 * 2;
+    let total1 = money1 * 1;
+
+
+    document.getElementById("total200").innerText =
+        "GH₵" + total200.toFixed(2);
+
+    document.getElementById("total100").innerText =
+        "GH₵" + total100.toFixed(2);
+
+    document.getElementById("total50").innerText =
+        "GH₵" + total50.toFixed(2);
+
+    document.getElementById("total20").innerText =
+        "GH₵" + total20.toFixed(2);
+
+    document.getElementById("total10").innerText =
+        "GH₵" + total10.toFixed(2);
+
+    document.getElementById("total5").innerText =
+        "GH₵" + total5.toFixed(2);
+
+    document.getElementById("total2").innerText =
+        "GH₵" + total2.toFixed(2);
+
+    document.getElementById("total1").innerText =
+        "GH₵" + total1.toFixed(2);
+
+
+    let grandTotal =
+        total200 +
+        total100 +
+        total50 +
+        total20 +
+        total10 +
+        total5 +
+        total2 +
+        total1;
+
+
+    document.getElementById("grandTotal").innerText =
+        "GH₵" + grandTotal.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
