@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Oak & Cedar Revenue Calculator</title>
+<title>Oak & Cedar Business Calculator</title>
 
 <style>
 
@@ -16,192 +14,524 @@
 
 body {
     margin: 0;
-    padding: 20px;
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #eef2ee, #dfe6df);
-    color: #202820;
+    color: #222;
 }
 
-.container {
-    max-width: 500px;
-    margin: auto;
+.header {
+    background: linear-gradient(135deg, #24452d, #6b8e58);
+    color: white;
+    text-align: center;
+    padding: 20px 15px;
 }
-
-/* LOGO */
 
 .logo {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.logo-icon {
-    width: 80px;
-    height: 80px;
-    margin: auto;
-    background: linear-gradient(135deg, #24452d, #6b8e58);
-    border-radius: 50% 50% 45% 45%;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: white;
+    color: #24452d;
+    border: 4px solid #dce6dc;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 42px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-    border: 4px solid white;
+    margin: auto;
+    font-size: 22px;
+    font-weight: bold;
 }
 
-.logo h1 {
-    margin: 12px 0 3px;
-    font-size: 25px;
-    letter-spacing: 1px;
+.header h1 {
+    margin: 10px 0 3px;
+    font-size: 26px;
 }
 
-.logo p {
+.header p {
     margin: 0;
-    color: #667066;
     font-size: 14px;
 }
 
-/* MAIN CARD */
-
-.card {
+.tabs {
+    display: flex;
     background: white;
-    padding: 22px;
-    border-radius: 22px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+    padding: 8px;
+    gap: 6px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* INPUTS */
-
-.section-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-top: 14px;
-    margin-bottom: 6px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #394439;
-}
-
-input {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #d5dcd5;
-    border-radius: 12px;
-    font-size: 17px;
-    outline: none;
-    background: #f8faf8;
-}
-
-input:focus {
-    border: 2px solid #547a59;
-    background: white;
-}
-
-/* BUTTONS */
-
-button {
-    width: 100%;
-    padding: 15px;
-    margin-top: 20px;
+.tab {
+    flex: 1;
+    padding: 12px 5px;
     border: none;
-    border-radius: 12px;
-    font-size: 17px;
+    border-radius: 8px;
+    background: #edf1ed;
+    color: #24452d;
     font-weight: bold;
     cursor: pointer;
 }
 
-.calculate {
-    background: linear-gradient(135deg, #24452d, #527a58);
-    color: white;
-    box-shadow: 0 6px 15px rgba(36,69,45,0.25);
-}
-
-.reset {
-    background: #edf0ed;
-    color: #394439;
-}
-
-/* RESULTS */
-
-.results {
-    margin-top: 25px;
-    padding: 18px;
-    background: #f4f7f4;
-    border-radius: 16px;
-    border: 1px solid #e0e6e0;
-}
-
-.results h2 {
-    text-align: center;
-    margin-top: 0;
-    font-size: 19px;
-}
-
-.result-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #dde3dd;
-    font-size: 15px;
-}
-
-.result-row:last-child {
-    border-bottom: none;
-}
-
-.value {
-    font-weight: bold;
-}
-
-.profit-box {
-    margin-top: 15px;
-    padding: 18px;
-    border-radius: 14px;
+.tab.active {
     background: #24452d;
     color: white;
-    text-align: center;
 }
 
-.profit-label {
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 15px;
+}
+
+.calculator {
+    display: none;
+}
+
+.calculator.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #24452d;
+    margin-bottom: 14px;
+}
+
+.input-group {
+    margin-bottom: 12px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5cb;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #527a58;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.result {
+    background: #f1f5f1;
+    padding: 13px;
+    border-radius: 9px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result span {
     font-size: 14px;
 }
 
-.profit {
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 6px;
+.result strong {
+    color: #24452d;
+    font-size: 16px;
 }
 
-.footer {
+button {
+    font-family: inherit;
+}
+
+.main-button {
+    width: 100%;
+    padding: 14px;
+    background: #24452d;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.reset-button {
+    width: 100%;
+    padding: 12px;
+    background: #e8ece8;
+    color: #24452d;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+/* CEDI */
+
+.cedi-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 110px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cedi-name {
+    font-weight: bold;
+    color: #24452d;
+}
+
+.cedi-total {
+    background: #f1f5f1;
+    padding: 11px;
+    border-radius: 8px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.grand-total {
     text-align: center;
-    margin-top: 18px;
+    background: #24452d;
+    color: white;
+    padding: 18px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.grand-total small {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.grand-total strong {
+    font-size: 25px;
+}
+
+/* GOODS */
+
+.add-grid {
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    gap: 10px;
+}
+
+.add-button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 9px;
+    background: #527a58;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.search-box {
+    margin-bottom: 12px;
+}
+
+.goods-header {
+    display: grid;
+    grid-template-columns: 1.5fr 80px 65px 90px 25px;
+    gap: 5px;
+    background: #24452d;
+    color: white;
+    padding: 9px 5px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.goods-row {
+    display: grid;
+    grid-template-columns: 1.5fr 80px 65px 90px 25px;
+    gap: 5px;
+    align-items: center;
+    padding: 8px 5px;
+    border-bottom: 1px solid #e1e6e1;
+}
+
+.goods-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.goods-price {
     font-size: 12px;
-    color: #687268;
+    text-align: center;
+}
+
+.quantity {
+    padding: 8px 4px;
+    text-align: center;
+}
+
+.item-total {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.delete-good {
+    border: none;
+    background: none;
+    color: #a32929;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.total-box {
+    background: #f1f5f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.total-box small {
+    display: block;
+    color: #555;
+}
+
+.total-box strong {
+    display: block;
+    color: #24452d;
+    font-size: 23px;
+    margin-top: 4px;
+}
+
+.clear-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 9px;
+    background: #e8ece8;
+    color: #24452d;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.save-record-button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #24452d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.save-record-button:active {
+    transform: scale(0.98);
+}
+
+.record-card {
+    background: #fafcfa;
+    border: 1px solid #dce4dc;
+    border-radius: 12px;
+    padding: 13px;
+    margin-bottom: 10px;
+}
+
+.record-date {
+    color: #24452d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.record-total {
+    font-size: 17px;
+    font-weight: bold;
+    color: #24452d;
+    margin-bottom: 10px;
+}
+
+.record-goods {
+    border-top: 1px solid #e0e6e0;
+    padding-top: 8px;
+}
+
+.record-good-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 5px 0;
+}
+
+.record-delete {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #f3dddd;
+    color: #a32929;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.no-records {
+    text-align: center;
+    padding: 20px 10px;
+    color: #777;
+    font-size: 14px;
+}
+
+@media(max-width: 500px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cedi-row {
+        grid-template-columns: 70px 1fr 90px;
+    }
+
+    .goods-header,
+    .goods-row {
+        grid-template-columns: 1.3fr 65px 55px 80px 20px;
+    }
+
+    .goods-name {
+        font-size: 11px;
+    }
+
+    .goods-price,
+    .item-total {
+        font-size: 10px;
+    }
+
+    .add-grid {
+        grid-template-columns: 1fr 100px;
+    }
 }
 
 </style>
-
 </head>
 
 <body>
 
+<div class="header">
+
+    <div class="logo">O&C</div>
+
+    <h1>Oak & Cedar</h1>
+
+    <p>Business Calculator</p>
+
+</div>
+
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        onclick="showCalculator('revenue', this)">
+        Revenue
+    </button>
+
+    <button
+        class="tab"
+        onclick="showCalculator('cedi', this)">
+        Cedi
+    </button>
+
+    <button
+        class="tab"
+        onclick="showCalculator('goods', this)">
+        Total Goods
+    </button>
+
+</div>
+
+
 <div class="container">
 
-<!-- LOGO -->
 
-<div class="logo">
+<!-- REVENUE CALCULATOR -->
 
-    <div class="logo-icon">
-        🌳
-    </div>
+<div id="revenue" class="calculator active">
 
-    <h1>OAK &amp; CEDAR</h1>
+<div class="card">
 
-    <p>Revenue Calculator</p>
+<div class="section-title">
+Revenue Calculator
+</div>
+
+<div class="grid">
+
+<div class="input-group">
+<label>Bank 1</label>
+<input type="number" id="bank1" placeholder="0">
+</div>
+
+<div class="input-group">
+<label>Bank 2</label>
+<input type="number" id="bank2" placeholder="0">
+</div>
+
+<div class="input-group">
+<label>Bank 3</label>
+<input type="number" id="bank3" placeholder="0">
+</div>
+
+<div class="input-group">
+<label>Cash at Hand</label>
+<input type="number" id="cash" placeholder="0">
+</div>
+
+<div class="input-group">
+<label>Total Goods</label>
+<input type="number" id="totalGoods" placeholder="0">
+</div>
+
+<div class="input-group">
+<label>Remaining Goods</label>
+<input type="number" id="remainingGoods" placeholder="0">
+</div>
+
+<div class="input-group">
+<label>Expenses</label>
+<input type="number" id="expenses" placeholder="0">
+</div>
+
+</div>
+
+<button
+class="main-button"
+onclick="calculateRevenue()">
+CALCULATE REVENUE
+</button>
+
+<button
+class="reset-button"
+onclick="resetRevenue()">
+RESET
+</button>
 
 </div>
 
@@ -209,89 +539,32 @@ button {
 <div class="card">
 
 <div class="section-title">
-Business Information
+Revenue Summary
 </div>
 
-
-<label>Bank 1 (&#8373;)</label>
-<input type="number" id="bank1" placeholder="Enter amount">
-
-
-<label>Bank 2 (&#8373;)</label>
-<input type="number" id="bank2" placeholder="Enter amount">
-
-
-<label>Bank 3 (&#8373;)</label>
-<input type="number" id="bank3" placeholder="Enter amount">
-
-
-<label>Cash at Hand (&#8373;)</label>
-<input type="number" id="cash" placeholder="Enter amount">
-
-
-<label>Total Goods (&#8373;)</label>
-<input type="number" id="totalGoods" placeholder="Enter amount">
-
-
-<label>Remaining Goods (&#8373;)</label>
-<input type="number" id="remainingGoods" placeholder="Enter amount">
-
-
-<label>Expenses (&#8373;)</label>
-<input type="number" id="expenses" placeholder="Enter amount">
-
-
-<button class="calculate" onclick="calculateProfit()">
-    CALCULATE REVENUE
-</button>
-
-
-<button class="reset" onclick="resetCalculator()">
-    RESET
-</button>
-
-
-<!-- RESULTS -->
-
-<div class="results">
-
-<h2>CALCULATION RESULTS</h2>
-
-
-<div class="result-row">
+<div class="result">
 <span>Total Banks</span>
-<span class="value">&#8373; <span id="totalBanks">0</span></span>
+<strong id="totalBanks">GH₵0.00</strong>
 </div>
 
-
-<div class="result-row">
-<span>Total Bank &amp; Cash</span>
-<span class="value">&#8373; <span id="totalCash">0</span></span>
+<div class="result">
+<span>Total Cash</span>
+<strong id="totalCash">GH₵0.00</strong>
 </div>
 
-
-<div class="result-row">
+<div class="result">
 <span>Remaining Goods</span>
-<span class="value">&#8373; <span id="remaining">0</span></span>
+<strong id="showRemainingGoods">GH₵0.00</strong>
 </div>
 
-
-<div class="result-row">
+<div class="result">
 <span>Goods After Expenses</span>
-<span class="value">&#8373; <span id="goodsAfterExpenses">0</span></span>
+<strong id="goodsAfterExpenses">GH₵0.00</strong>
 </div>
 
-
-<div class="profit-box">
-
-<div class="profit-label">
-TOTAL PROFIT
-</div>
-
-<div class="profit">
-&#8373; <span id="profit">0</span>
-</div>
-
+<div class="result">
+<span>Profit</span>
+<strong id="profit">GH₵0.00</strong>
 </div>
 
 </div>
@@ -299,8 +572,315 @@ TOTAL PROFIT
 </div>
 
 
-<div class="footer">
-Oak &amp; Cedar • Business Revenue Management
+<!-- CEDI CALCULATOR -->
+
+<div id="cedi" class="calculator">
+
+<div class="card">
+
+<div class="section-title">
+Ghana Cedi Calculator
+</div>
+
+
+<div class="cedi-row">
+
+<div class="cedi-name">GH₵200</div>
+
+<input
+type="number"
+id="money200"
+placeholder="Quantity"
+min="0"
+oninput="calculateCedi()">
+
+<div
+class="cedi-total"
+id="total200">
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="cedi-row">
+
+<div class="cedi-name">GH₵100</div>
+
+<input
+type="number"
+id="money100"
+placeholder="Quantity"
+min="0"
+oninput="calculateCedi()">
+
+<div
+class="cedi-total"
+id="total100">
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="cedi-row">
+
+<div class="cedi-name">GH₵50</div>
+
+<input
+type="number"
+id="money50"
+placeholder="Quantity"
+min="0"
+oninput="calculateCedi()">
+
+<div
+class="cedi-total"
+id="total50">
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="cedi-row">
+
+<div class="cedi-name">GH₵20</div>
+
+<input
+type="number"
+id="money20"
+placeholder="Quantity"
+min="0"
+oninput="calculateCedi()">
+
+<div
+class="cedi-total"
+id="total20">
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="cedi-row">
+
+<div class="cedi-name">GH₵10</div>
+
+<input
+type="number"
+id="money10"
+placeholder="Quantity"
+min="0"
+oninput="calculateCedi()">
+
+<div
+class="cedi-total"
+id="total10">
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="cedi-row">
+
+<div class="cedi-name">GH₵5</div>
+
+<input
+type="number"
+id="money5"
+placeholder="Quantity"
+min="0"
+oninput="calculateCedi()">
+
+<div
+class="cedi-total"
+id="total5">
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="cedi-row">
+
+<div class="cedi-name">GH₵2</div>
+
+<input
+type="number"
+id="money2"
+placeholder="Quantity"
+min="0"
+oninput="calculateCedi()">
+
+<div
+class="cedi-total"
+id="total2">
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="cedi-row">
+
+<div class="cedi-name">GH₵1</div>
+
+<input
+type="number"
+id="money1"
+placeholder="Quantity"
+min="0"
+oninput="calculateCedi()">
+
+<div
+class="cedi-total"
+id="total1">
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="grand-total">
+
+<small>
+GRAND TOTAL
+</small>
+
+<strong id="grandTotal">
+GH₵0.00
+</strong>
+
+</div>
+
+
+<button
+class="main-button"
+onclick="calculateCedi()">
+CALCULATE TOTAL
+</button>
+
+<button
+class="reset-button"
+onclick="resetCedi()">
+CLEAR
+</button>
+
+</div>
+
+</div>
+
+
+<!-- TOTAL GOODS CALCULATOR -->
+
+<div id="goods" class="calculator">
+
+
+<div class="card">
+
+<div class="section-title">
+Add New Goods
+</div>
+
+<div class="add-grid">
+
+<input
+type="text"
+id="goodsName"
+placeholder="Goods name">
+
+<input
+type="number"
+id="goodsPrice"
+placeholder="Price">
+
+</div>
+
+<button
+class="add-button"
+onclick="addGoods()">
++ ADD GOODS
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-title">
+Goods & Quantity
+</div>
+
+
+<div class="search-box">
+
+<input
+type="text"
+id="search"
+placeholder="Search goods or type first letter..."
+oninput="displayGoods()">
+
+</div>
+
+
+<div class="goods-header">
+
+<div>GOODS</div>
+<div>PRICE</div>
+<div>QTY</div>
+<div>TOTAL</div>
+<div></div>
+
+</div>
+
+
+<div id="goodsList"></div>
+
+
+<div class="total-box">
+
+<small>
+TOTAL GOODS VALUE
+</small>
+
+<strong id="goodsGrandTotal">
+GH₵0.00
+</strong>
+
+</div>
+
+
+<button
+class="save-record-button"
+onclick="saveGoodsRecord()">
+SAVE RECORD
+</button>
+
+
+<button
+class="clear-button"
+onclick="clearQuantities()">
+CLEAR ALL QUANTITIES
+</button>
+
+</div>
+
+
+<!-- SAVED RECORDS -->
+
+<div class="card">
+
+<div class="section-title">
+Saved Records
+</div>
+
+<div id="recordsList"></div>
+
+</div>
+
+
 </div>
 
 </div>
@@ -308,108 +888,889 @@ Oak &amp; Cedar • Business Revenue Management
 
 <script>
 
-function calculateProfit() {
 
-    var bank1 =
+/* TAB SWITCHING */
+
+function showCalculator(name, button) {
+
+    document
+        .querySelectorAll(".calculator")
+        .forEach(function(calculator) {
+
+            calculator.classList.remove("active");
+
+        });
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(function(tab) {
+
+            tab.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById(name)
+        .classList.add("active");
+
+
+    button.classList.add("active");
+
+}
+
+
+/* REVENUE */
+
+function calculateRevenue() {
+
+    let bank1 =
         Number(document.getElementById("bank1").value) || 0;
 
-    var bank2 =
+    let bank2 =
         Number(document.getElementById("bank2").value) || 0;
 
-    var bank3 =
+    let bank3 =
         Number(document.getElementById("bank3").value) || 0;
 
-    var cash =
+    let cash =
         Number(document.getElementById("cash").value) || 0;
 
-    var totalGoods =
+    let totalGoods =
         Number(document.getElementById("totalGoods").value) || 0;
 
-    var remainingGoods =
+    let remainingGoods =
         Number(document.getElementById("remainingGoods").value) || 0;
 
-    var expenses =
+    let expenses =
         Number(document.getElementById("expenses").value) || 0;
 
 
-    /* TOTAL BANKS */
-
-    var totalBanks =
+    let totalBanks =
         bank1 + bank2 + bank3;
 
 
-    /* TOTAL CASH */
-
-    var totalCash =
+    let totalCash =
         totalBanks + cash;
 
 
-    /* GOODS AFTER EXPENSES */
-
-    var goodsAfterExpenses =
+    let goodsAfterExpenses =
         totalGoods - expenses;
 
 
-    /* PROFIT */
+    let profit =
+        totalCash +
+        remainingGoods -
+        goodsAfterExpenses;
 
-    var profit =
-        totalCash + remainingGoods - goodsAfterExpenses;
-
-
-    /* PREVENT NEGATIVE PROFIT */
 
     if (profit < 0) {
         profit = 0;
     }
 
 
-    /* DISPLAY RESULTS */
-
-    document.getElementById("totalBanks").textContent =
-        totalBanks.toLocaleString();
+    document.getElementById("totalBanks").innerText =
+        "GH₵" + totalBanks.toFixed(2);
 
 
-    document.getElementById("totalCash").textContent =
-        totalCash.toLocaleString();
+    document.getElementById("totalCash").innerText =
+        "GH₵" + totalCash.toFixed(2);
 
 
-    document.getElementById("remaining").textContent =
-        remainingGoods.toLocaleString();
+    document.getElementById("showRemainingGoods").innerText =
+        "GH₵" + remainingGoods.toFixed(2);
 
 
-    document.getElementById("goodsAfterExpenses").textContent =
-        goodsAfterExpenses.toLocaleString();
+    document.getElementById("goodsAfterExpenses").innerText =
+        "GH₵" + goodsAfterExpenses.toFixed(2);
 
 
-    document.getElementById("profit").textContent =
-        profit.toLocaleString();
+    document.getElementById("profit").innerText =
+        "GH₵" + profit.toFixed(2);
 
 }
 
 
-function resetCalculator() {
+function resetRevenue() {
 
-    document.querySelectorAll("input").forEach(function(input) {
+    document
+        .querySelectorAll("#revenue input")
+        .forEach(function(input) {
 
-        input.value = "";
+            input.value = "";
+
+        });
+
+
+    document.getElementById("totalBanks").innerText =
+        "GH₵0.00";
+
+    document.getElementById("totalCash").innerText =
+        "GH₵0.00";
+
+    document.getElementById("showRemainingGoods").innerText =
+        "GH₵0.00";
+
+    document.getElementById("goodsAfterExpenses").innerText =
+        "GH₵0.00";
+
+    document.getElementById("profit").innerText =
+        "GH₵0.00";
+
+}
+
+
+/* CEDI CALCULATOR */
+
+function calculateCedi() {
+
+    let denominations = [
+        [200, "money200", "total200"],
+        [100, "money100", "total100"],
+        [50, "money50", "total50"],
+        [20, "money20", "total20"],
+        [10, "money10", "total10"],
+        [5, "money5", "total5"],
+        [2, "money2", "total2"],
+        [1, "money1", "total1"]
+    ];
+
+
+    let grandTotal = 0;
+
+
+    denominations.forEach(function(item) {
+
+        let amount =
+            Number(
+                document.getElementById(item[1]).value
+            ) || 0;
+
+
+        if (amount < 0) {
+            amount = 0;
+        }
+
+
+        let total =
+            item[0] * amount;
+
+
+        grandTotal += total;
+
+
+        document.getElementById(item[2]).innerText =
+            "GH₵" + total.toFixed(2);
 
     });
 
 
-    document.getElementById("totalBanks").textContent = "0";
-
-    document.getElementById("totalCash").textContent = "0";
-
-    document.getElementById("remaining").textContent = "0";
-
-    document.getElementById("goodsAfterExpenses").textContent = "0";
-
-    document.getElementById("profit").textContent = "0";
+    document.getElementById("grandTotal").innerText =
+        "GH₵" + grandTotal.toFixed(2);
 
 }
+
+
+function resetCedi() {
+
+    document
+        .querySelectorAll("#cedi input")
+        .forEach(function(input) {
+
+            input.value = "";
+
+        });
+
+
+    let totals = [
+        "total200",
+        "total100",
+        "total50",
+        "total20",
+        "total10",
+        "total5",
+        "total2",
+        "total1"
+    ];
+
+
+    totals.forEach(function(id) {
+
+        document.getElementById(id).innerText =
+            "GH₵0.00";
+
+    });
+
+
+    document.getElementById("grandTotal").innerText =
+        "GH₵0.00";
+
+}
+
+
+/* TOTAL GOODS */
+
+let goods = [];
+
+
+try {
+
+    goods =
+        JSON.parse(
+            localStorage.getItem("oakCedarGoods")
+        ) || [];
+
+} catch(error) {
+
+    goods = [];
+
+}
+
+
+function saveGoods() {
+
+    localStorage.setItem(
+        "oakCedarGoods",
+        JSON.stringify(goods)
+    );
+
+}
+
+
+function addGoods() {
+
+    let name =
+        document.getElementById("goodsName")
+            .value
+            .trim();
+
+
+    let price =
+        Number(
+            document.getElementById("goodsPrice").value
+        );
+
+
+    if (name === "") {
+
+        alert("Please enter the goods name.");
+
+        return;
+
+    }
+
+
+    if (isNaN(price) || price <= 0) {
+
+        alert("Please enter a valid price.");
+
+        return;
+
+    }
+
+
+    let existing =
+        goods.find(function(item) {
+
+            return item.name.toLowerCase() ===
+                name.toLowerCase();
+
+        });
+
+
+    if (existing) {
+
+        let answer =
+            confirm(
+                "This good already exists.\n\n" +
+                "Do you want to update its price?"
+            );
+
+
+        if (answer) {
+
+            existing.price = price;
+
+            saveGoods();
+
+            displayGoods();
+
+        }
+
+
+        return;
+
+    }
+
+
+    goods.push({
+
+        id: Date.now(),
+
+        name: name,
+
+        price: price,
+
+        quantity: 0
+
+    });
+
+
+    saveGoods();
+
+
+    document.getElementById("goodsName").value = "";
+
+    document.getElementById("goodsPrice").value = "";
+
+
+    displayGoods();
+
+}
+
+
+function displayGoods() {
+
+    let list =
+        document.getElementById("goodsList");
+
+
+    let search =
+        document.getElementById("search")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    list.innerHTML = "";
+
+
+    goods.forEach(function(item, index) {
+
+        if (
+            search !== "" &&
+            !item.name.toLowerCase().includes(search)
+        ) {
+
+            return;
+
+        }
+
+
+        let quantity =
+            Number(item.quantity) || 0;
+
+
+        let row =
+            document.createElement("div");
+
+
+        row.className =
+            "goods-row";
+
+
+        row.innerHTML = `
+
+            <div class="goods-name">
+                ${escapeHTML(item.name)}
+            </div>
+
+            <div class="goods-price">
+                GH₵${Number(item.price).toFixed(2)}
+            </div>
+
+            <input
+                class="quantity"
+                type="number"
+                min="0"
+                value="${quantity || ""}"
+                placeholder="0"
+                onchange="updateQuantity(${index}, this.value)"
+            >
+
+            <div
+                class="item-total"
+                id="itemTotal${index}">
+                GH₵${(Number(item.price) * quantity).toFixed(2)}
+            </div>
+
+            <button
+                class="delete-good"
+                onclick="deleteGoods(${index})">
+                ×
+            </button>
+
+        `;
+
+
+        list.appendChild(row);
+
+    });
+
+
+    calculateGoodsTotal();
+
+}
+
+
+function updateQuantity(index, value) {
+
+    let quantity =
+        Number(value);
+
+
+    if (
+        isNaN(quantity) ||
+        quantity < 0
+    ) {
+
+        quantity = 0;
+
+    }
+
+
+    goods[index].quantity =
+        quantity;
+
+
+    saveGoods();
+
+
+    let itemTotal =
+        document.getElementById(
+            "itemTotal" + index
+        );
+
+
+    if (itemTotal) {
+
+        itemTotal.innerText =
+            "GH₵" +
+            (
+                Number(goods[index].price) *
+                quantity
+            ).toFixed(2);
+
+    }
+
+
+    calculateGoodsTotal();
+
+}
+
+
+function calculateGoodsTotal() {
+
+    let total = 0;
+
+
+    goods.forEach(function(item) {
+
+        let quantity =
+            Number(item.quantity) || 0;
+
+
+        total +=
+            Number(item.price) *
+            quantity;
+
+    });
+
+
+    document.getElementById(
+        "goodsGrandTotal"
+    ).innerText =
+        "GH₵" + total.toFixed(2);
+
+
+    return total;
+
+}
+
+
+function deleteGoods(index) {
+
+    let answer =
+        confirm(
+            "Are you sure you want to delete " +
+            goods[index].name +
+            "?"
+        );
+
+
+    if (!answer) return;
+
+
+    goods.splice(index, 1);
+
+
+    saveGoods();
+
+    displayGoods();
+
+}
+
+
+/* CLEAR ALL QUANTITIES */
+
+function clearQuantities() {
+
+    if (goods.length === 0) {
+
+        alert("There are no goods to clear.");
+
+        return;
+
+    }
+
+
+    let answer =
+        confirm(
+            "Clear all quantities?\n\n" +
+            "Your goods and prices will NOT be deleted."
+        );
+
+
+    if (!answer) return;
+
+
+    goods.forEach(function(item) {
+
+        item.quantity = 0;
+
+    });
+
+
+    saveGoods();
+
+
+    document
+        .querySelectorAll(
+            "#goodsList .quantity"
+        )
+        .forEach(function(input) {
+
+            input.value = "";
+
+        });
+
+
+    document
+        .querySelectorAll(
+            "#goodsList .item-total"
+        )
+        .forEach(function(total) {
+
+            total.innerText =
+                "GH₵0.00";
+
+        });
+
+
+    document.getElementById(
+        "goodsGrandTotal"
+    ).innerText =
+        "GH₵0.00";
+
+}
+
+
+/* SAVED RECORDS */
+
+let records = [];
+
+
+try {
+
+    records =
+        JSON.parse(
+            localStorage.getItem(
+                "oakCedarGoodsRecords"
+            )
+        ) || [];
+
+} catch(error) {
+
+    records = [];
+
+}
+
+
+function saveRecords() {
+
+    localStorage.setItem(
+        "oakCedarGoodsRecords",
+        JSON.stringify(records)
+    );
+
+}
+
+
+function saveGoodsRecord() {
+
+    let selectedGoods = [];
+
+
+    goods.forEach(function(item) {
+
+        let quantity =
+            Number(item.quantity) || 0;
+
+
+        if (quantity > 0) {
+
+            selectedGoods.push({
+
+                name: item.name,
+
+                price:
+                    Number(item.price),
+
+                quantity:
+                    quantity,
+
+                total:
+                    Number(item.price) *
+                    quantity
+
+            });
+
+        }
+
+    });
+
+
+    if (selectedGoods.length === 0) {
+
+        alert(
+            "Please enter a quantity for at least one good before saving."
+        );
+
+        return;
+
+    }
+
+
+    let total =
+        selectedGoods.reduce(
+            function(sum, item) {
+
+                return sum + item.total;
+
+            },
+            0
+        );
+
+
+    let now =
+        new Date();
+
+
+    let record = {
+
+        id: Date.now(),
+
+        date:
+            now.toLocaleDateString(
+                "en-GH",
+                {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }
+            ),
+
+        time:
+            now.toLocaleTimeString(
+                "en-GH",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            ),
+
+        goods:
+            selectedGoods,
+
+        total:
+            total
+
+    };
+
+
+    records.unshift(record);
+
+
+    saveRecords();
+
+    displayRecords();
+
+
+    alert(
+        "Record saved successfully."
+    );
+
+}
+
+
+/* DISPLAY SAVED RECORDS */
+
+function displayRecords() {
+
+    let list =
+        document.getElementById(
+            "recordsList"
+        );
+
+
+    if (records.length === 0) {
+
+        list.innerHTML =
+            '<div class="no-records">' +
+            'No saved records yet.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    records.forEach(function(record, index) {
+
+        let card =
+            document.createElement("div");
+
+
+        card.className =
+            "record-card";
+
+
+        let goodsHTML = "";
+
+
+        record.goods.forEach(function(item) {
+
+            goodsHTML += `
+
+                <div class="record-good-line">
+
+                    <span>
+                        ${escapeHTML(item.name)}
+                        × ${item.quantity}
+                    </span>
+
+                    <strong>
+                        GH₵${Number(item.total).toFixed(2)}
+                    </strong>
+
+                </div>
+
+            `;
+
+        });
+
+
+        card.innerHTML = `
+
+            <div class="record-date">
+                ${escapeHTML(record.date)}
+                &nbsp;&nbsp;
+                ${escapeHTML(record.time)}
+            </div>
+
+            <div class="record-total">
+                Total: GH₵${Number(record.total).toFixed(2)}
+            </div>
+
+            <div class="record-goods">
+                ${goodsHTML}
+            </div>
+
+            <button
+                class="record-delete"
+                onclick="deleteRecord(${index})">
+                DELETE RECORD
+            </button>
+
+        `;
+
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+/* DELETE INDIVIDUAL RECORD */
+
+function deleteRecord(index) {
+
+    if (
+        index < 0 ||
+        index >= records.length
+    ) {
+
+        return;
+
+    }
+
+
+    let answer =
+        confirm(
+            "Are you sure you want to delete this saved record?\n\n" +
+            "This action cannot be undone."
+        );
+
+
+    if (!answer) {
+
+        return;
+
+    }
+
+
+    records.splice(index, 1);
+
+
+    saveRecords();
+
+
+    displayRecords();
+
+}
+
+
+/* SECURITY */
+
+function escapeHTML(text) {
+
+    let div =
+        document.createElement("div");
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* START APP */
+
+displayGoods();
+
+displayRecords();
+
+calculateCedi();
 
 </script>
 
 </body>
-
 </html>
