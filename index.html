@@ -6,124 +6,133 @@
 
 <title>Oak & Cedar Business Calculator</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #eef2ee, #dfe6df);
     color: #222;
+    min-height: 100vh;
 }
 
-.header {
+/* ================= HEADER ================= */
+
+header {
     background: linear-gradient(135deg, #24452d, #6b8e58);
     color: white;
-    text-align: center;
     padding: 20px 15px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .logo {
     width: 70px;
     height: 70px;
-    border-radius: 50%;
+    margin: auto;
     background: white;
     color: #24452d;
-    border: 4px solid #dce6dc;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: auto;
-    font-size: 22px;
     font-weight: bold;
+    font-size: 20px;
+    border: 4px solid #d8e5d8;
 }
 
-.header h1 {
-    margin: 10px 0 3px;
-    font-size: 26px;
+header h1 {
+    margin-top: 10px;
+    font-size: 25px;
 }
 
-.header p {
-    margin: 0;
-    font-size: 14px;
+header p {
+    margin-top: 5px;
+    opacity: 0.9;
 }
+
+/* ================= TABS ================= */
 
 .tabs {
-    display: flex;
-    background: white;
-    padding: 8px;
-    gap: 6px;
     position: sticky;
     top: 0;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 100;
+    display: flex;
+    background: white;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    overflow-x: auto;
 }
 
 .tab {
     flex: 1;
-    padding: 12px 5px;
-    border: none;
-    border-radius: 8px;
-    background: #edf1ed;
-    color: #24452d;
-    font-weight: bold;
+    min-width: 90px;
+    padding: 15px 5px;
+    text-align: center;
     cursor: pointer;
+    font-weight: bold;
+    color: #24452d;
+    border-bottom: 3px solid transparent;
 }
 
 .tab.active {
-    background: #24452d;
-    color: white;
+    background: #eef4ee;
+    border-bottom: 3px solid #24452d;
 }
 
+/* ================= CONTAINER ================= */
+
 .container {
-    max-width: 700px;
+    max-width: 800px;
     margin: auto;
     padding: 15px;
 }
 
-.calculator {
+.section {
     display: none;
 }
 
-.calculator.active {
+.section.active {
     display: block;
 }
+
+/* ================= CARDS ================= */
 
 .card {
     background: white;
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 15px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    padding: 18px;
+    border-radius: 15px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-.section-title {
-    font-size: 18px;
-    font-weight: bold;
+.card h2 {
     color: #24452d;
-    margin-bottom: 14px;
+    margin-bottom: 15px;
 }
 
-.input-group {
-    margin-bottom: 12px;
-}
+/* ================= INPUTS ================= */
 
-.input-group label {
+label {
     display: block;
-    font-size: 13px;
+    margin-top: 12px;
+    margin-bottom: 6px;
     font-weight: bold;
-    margin-bottom: 5px;
+    color: #36543d;
 }
 
 input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #cbd5cb;
-    border-radius: 8px;
-    font-size: 15px;
+    padding: 13px;
+    border: 1px solid #ccd5cc;
+    border-radius: 9px;
+    font-size: 16px;
     outline: none;
 }
 
@@ -131,303 +140,322 @@ input:focus {
     border-color: #527a58;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.result {
-    background: #f1f5f1;
-    padding: 13px;
-    border-radius: 9px;
-    margin-top: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.result span {
-    font-size: 14px;
-}
-
-.result strong {
-    color: #24452d;
-    font-size: 16px;
-}
+/* ================= BUTTONS ================= */
 
 button {
-    font-family: inherit;
-}
-
-.main-button {
     width: 100%;
-    padding: 14px;
+    padding: 13px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 9px;
     background: #24452d;
     color: white;
-    border: none;
-    border-radius: 9px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 8px;
 }
 
-.reset-button {
-    width: 100%;
-    padding: 12px;
-    background: #e8ece8;
+button:hover {
+    opacity: 0.9;
+}
+
+button.secondary {
+    background: #527a58;
+}
+
+button.danger {
+    background: #a83232;
+}
+
+button.light {
+    background: #e8eee8;
     color: #24452d;
-    border: none;
-    border-radius: 9px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 8px;
 }
 
-/* CEDI */
+/* ================= RESULTS ================= */
+
+.result {
+    background: #f0f5f0;
+    padding: 14px;
+    border-radius: 10px;
+    margin-top: 15px;
+    border-left: 5px solid #527a58;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid #d8e1d8;
+}
+
+.result-row:last-child {
+    border-bottom: none;
+}
+
+.result-row strong {
+    color: #24452d;
+}
+
+/* ================= CEDI ================= */
 
 .cedi-row {
     display: grid;
-    grid-template-columns: 90px 1fr 110px;
+    grid-template-columns: 80px 1fr 100px;
     gap: 8px;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.cedi-name {
-    font-weight: bold;
-    color: #24452d;
-}
-
-.cedi-total {
-    background: #f1f5f1;
-    padding: 11px;
-    border-radius: 8px;
-    text-align: right;
+.cedi-row span {
     font-weight: bold;
 }
 
-.grand-total {
+.cedi-row input {
     text-align: center;
+}
+
+.total-box {
     background: #24452d;
     color: white;
     padding: 18px;
     border-radius: 12px;
+    text-align: center;
     margin-top: 15px;
 }
 
-.grand-total small {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.grand-total strong {
+.total-box h3 {
     font-size: 25px;
+    margin-top: 5px;
 }
 
-/* GOODS */
+/* ================= GOODS ================= */
 
-.add-grid {
-    display: grid;
-    grid-template-columns: 1fr 130px;
-    gap: 10px;
-}
-
-.add-button {
-    width: 100%;
-    padding: 13px;
+.goods-item {
+    background: #f5f8f5;
+    padding: 12px;
+    border-radius: 10px;
     margin-top: 10px;
-    border: none;
-    border-radius: 9px;
-    background: #527a58;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.search-box {
-    margin-bottom: 12px;
+    border: 1px solid #dce5dc;
 }
 
 .goods-header {
-    display: grid;
-    grid-template-columns: 1.5fr 80px 65px 90px 25px;
-    gap: 5px;
-    background: #24452d;
-    color: white;
-    padding: 9px 5px;
-    border-radius: 7px;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.goods-row {
-    display: grid;
-    grid-template-columns: 1.5fr 80px 65px 90px 25px;
-    gap: 5px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 8px 5px;
-    border-bottom: 1px solid #e1e6e1;
+    gap: 8px;
 }
 
 .goods-name {
-    font-size: 13px;
     font-weight: bold;
+    color: #24452d;
 }
 
 .goods-price {
-    font-size: 12px;
+    font-size: 14px;
+    color: #666;
+}
+
+.goods-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.goods-controls input {
     text-align: center;
 }
 
-.quantity {
-    padding: 8px 4px;
-    text-align: center;
-}
+/* ================= RECORDS ================= */
 
-.item-total {
-    font-size: 12px;
-    font-weight: bold;
-    text-align: right;
-}
-
-.delete-good {
-    border: none;
-    background: none;
-    color: #a32929;
-    font-size: 17px;
-    cursor: pointer;
-}
-
-.total-box {
-    background: #f1f5f1;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 12px;
-    text-align: center;
-}
-
-.total-box small {
-    display: block;
-    color: #555;
-}
-
-.total-box strong {
-    display: block;
-    color: #24452d;
-    font-size: 23px;
-    margin-top: 4px;
-}
-
-.clear-button {
-    width: 100%;
+.record {
+    background: #f7f9f7;
     padding: 12px;
     margin-top: 10px;
-    border: none;
-    border-radius: 9px;
-    background: #e8ece8;
-    color: #24452d;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.save-record-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border: none;
     border-radius: 10px;
-    background: #24452d;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.save-record-button:active {
-    transform: scale(0.98);
-}
-
-.record-card {
-    background: #fafcfa;
-    border: 1px solid #dce4dc;
-    border-radius: 12px;
-    padding: 13px;
-    margin-bottom: 10px;
+    border-left: 4px solid #527a58;
 }
 
 .record-date {
-    color: #24452d;
-    font-weight: bold;
     font-size: 13px;
-    margin-bottom: 8px;
+    color: #777;
+    margin-bottom: 7px;
 }
 
-.record-total {
-    font-size: 17px;
+/* ================= AUTH ================= */
+
+.hidden {
+    display: none !important;
+}
+
+.auth-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.auth-logo {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: #24452d;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
     font-weight: bold;
+    font-size: 21px;
+}
+
+.auth-card h1 {
+    text-align: center;
     color: #24452d;
-    margin-bottom: 10px;
+    margin-top: 12px;
 }
 
-.record-goods {
-    border-top: 1px solid #e0e6e0;
-    padding-top: 8px;
+.auth-card p {
+    text-align: center;
+    color: #666;
+    margin-top: 5px;
 }
 
-.record-good-line {
+.auth-message {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #eef5ee;
+    color: #24452d;
+    display: none;
+}
+
+/* ================= USER BAR ================= */
+
+.user-bar {
+    background: white;
+    padding: 10px 15px;
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    padding: 5px 0;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.record-delete {
-    width: 100%;
+.user-email {
+    font-size: 13px;
+    color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.logout-btn {
+    width: auto;
+    margin: 0;
+    padding: 8px 13px;
+    background: #a83232;
+    font-size: 13px;
+}
+
+/* ================= ADMIN ================= */
+
+.admin-stat {
+    background: #f0f5f0;
+    padding: 15px;
+    border-radius: 10px;
     margin-top: 10px;
-    padding: 8px;
-    border: none;
-    border-radius: 8px;
-    background: #f3dddd;
-    color: #a32929;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.no-records {
     text-align: center;
-    padding: 20px 10px;
-    color: #777;
-    font-size: 14px;
 }
 
-@media(max-width: 500px) {
+.admin-stat strong {
+    display: block;
+    font-size: 25px;
+    color: #24452d;
+    margin-top: 5px;
+}
 
-    .grid {
-        grid-template-columns: 1fr;
-    }
+.admin-user {
+    background: #f5f8f5;
+    padding: 14px;
+    border-radius: 12px;
+    margin-top: 12px;
+    border: 1px solid #dce5dc;
+}
+
+.admin-user-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-user-name {
+    font-weight: bold;
+    color: #24452d;
+}
+
+.admin-user-email {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+    word-break: break-word;
+}
+
+.admin-user-info {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #555;
+}
+
+.admin-badge {
+    background: #24452d;
+    color: white;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.user-active {
+    color: #2d7a3d;
+    font-weight: bold;
+}
+
+.user-disabled {
+    color: #a83232;
+    font-weight: bold;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 500px) {
 
     .cedi-row {
-        grid-template-columns: 70px 1fr 90px;
+        grid-template-columns: 65px 1fr 85px;
     }
 
-    .goods-header,
-    .goods-row {
-        grid-template-columns: 1.3fr 65px 55px 80px 20px;
+    .tabs {
+        font-size: 14px;
     }
 
-    .goods-name {
-        font-size: 11px;
+    header h1 {
+        font-size: 22px;
     }
 
-    .goods-price,
-    .item-total {
-        font-size: 10px;
-    }
-
-    .add-grid {
-        grid-template-columns: 1fr 100px;
-    }
 }
 
 </style>
@@ -435,36 +463,195 @@ button {
 
 <body>
 
-<div class="header">
 
-    <div class="logo">O&C</div>
+<!-- =====================================================
+     LOGIN / SIGNUP SCREEN
+===================================================== -->
+
+<div id="authScreen" class="auth-screen">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            O&C
+        </div>
+
+        <h1>Oak & Cedar</h1>
+
+        <p>Business Calculator</p>
+
+
+        <!-- LOGIN -->
+
+        <div id="loginForm">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Enter your email"
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter your password"
+            >
+
+
+            <button onclick="loginUser()">
+                LOGIN
+            </button>
+
+
+            <button
+                class="light"
+                onclick="showSignup()"
+            >
+                CREATE ACCOUNT
+            </button>
+
+        </div>
+
+
+        <!-- SIGNUP -->
+
+        <div id="signupForm" class="hidden">
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                id="signupName"
+                placeholder="Enter your full name"
+            >
+
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="signupEmail"
+                placeholder="Enter your email"
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="signupPassword"
+                placeholder="Create a password"
+            >
+
+
+            <button onclick="signupUser()">
+                CREATE ACCOUNT
+            </button>
+
+
+            <button
+                class="light"
+                onclick="showLogin()"
+            >
+                BACK TO LOGIN
+            </button>
+
+        </div>
+
+
+        <div
+            id="authMessage"
+            class="auth-message"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN APP
+===================================================== -->
+
+<div id="app" class="hidden">
+
+
+<header>
+
+    <div class="logo">
+        O&C
+    </div>
 
     <h1>Oak & Cedar</h1>
 
     <p>Business Calculator</p>
 
+</header>
+
+
+<!-- USER BAR -->
+
+<div class="user-bar">
+
+    <div
+        class="user-email"
+        id="userEmail"
+    >
+        Loading...
+    </div>
+
+    <button
+        class="logout-btn"
+        onclick="logoutUser()"
+    >
+        LOGOUT
+    </button>
+
 </div>
 
 
+<!-- =====================================================
+     TABS
+===================================================== -->
+
 <div class="tabs">
 
-    <button
+    <div
         class="tab active"
-        onclick="showCalculator('revenue', this)">
+        onclick="openTab('revenue', this)"
+    >
         Revenue
-    </button>
+    </div>
 
-    <button
+
+    <div
         class="tab"
-        onclick="showCalculator('cedi', this)">
+        onclick="openTab('cedi', this)"
+    >
         Cedi
-    </button>
+    </div>
 
-    <button
+
+    <div
         class="tab"
-        onclick="showCalculator('goods', this)">
+        onclick="openTab('goods', this)"
+    >
         Total Goods
-    </button>
+    </div>
+
+
+    <div
+        id="adminTab"
+        class="tab hidden"
+        onclick="openTab('admin', this)"
+    >
+        Admin
+    </div>
 
 </div>
 
@@ -472,411 +659,588 @@ button {
 <div class="container">
 
 
-<!-- REVENUE CALCULATOR -->
-
-<div id="revenue" class="calculator active">
-
-<div class="card">
-
-<div class="section-title">
-Revenue Calculator
-</div>
-
-<div class="grid">
-
-<div class="input-group">
-<label>Bank 1</label>
-<input type="number" id="bank1" placeholder="0">
-</div>
-
-<div class="input-group">
-<label>Bank 2</label>
-<input type="number" id="bank2" placeholder="0">
-</div>
-
-<div class="input-group">
-<label>Bank 3</label>
-<input type="number" id="bank3" placeholder="0">
-</div>
-
-<div class="input-group">
-<label>Cash at Hand</label>
-<input type="number" id="cash" placeholder="0">
-</div>
-
-<div class="input-group">
-<label>Total Goods</label>
-<input type="number" id="totalGoods" placeholder="0">
-</div>
-
-<div class="input-group">
-<label>Remaining Goods</label>
-<input type="number" id="remainingGoods" placeholder="0">
-</div>
-
-<div class="input-group">
-<label>Expenses</label>
-<input type="number" id="expenses" placeholder="0">
-</div>
-
-</div>
-
-<button
-class="main-button"
-onclick="calculateRevenue()">
-CALCULATE REVENUE
-</button>
-
-<button
-class="reset-button"
-onclick="resetRevenue()">
-RESET
-</button>
-
-</div>
-
-
-<div class="card">
-
-<div class="section-title">
-Revenue Summary
-</div>
-
-<div class="result">
-<span>Total Banks</span>
-<strong id="totalBanks">GH₵0.00</strong>
-</div>
-
-<div class="result">
-<span>Total Cash</span>
-<strong id="totalCash">GH₵0.00</strong>
-</div>
-
-<div class="result">
-<span>Remaining Goods</span>
-<strong id="showRemainingGoods">GH₵0.00</strong>
-</div>
-
-<div class="result">
-<span>Goods After Expenses</span>
-<strong id="goodsAfterExpenses">GH₵0.00</strong>
-</div>
-
-<div class="result">
-<span>Profit</span>
-<strong id="profit">GH₵0.00</strong>
-</div>
-
-</div>
-
-</div>
-
-
-<!-- CEDI CALCULATOR -->
-
-<div id="cedi" class="calculator">
-
-<div class="card">
-
-<div class="section-title">
-Ghana Cedi Calculator
-</div>
-
-
-<div class="cedi-row">
-
-<div class="cedi-name">GH₵200</div>
-
-<input
-type="number"
-id="money200"
-placeholder="Quantity"
-min="0"
-oninput="calculateCedi()">
+<!-- =====================================================
+     REVENUE
+===================================================== -->
 
 <div
-class="cedi-total"
-id="total200">
-GH₵0.00
-</div>
+    id="revenue"
+    class="section active"
+>
+
+    <div class="card">
+
+        <h2>
+            Business Revenue Calculator
+        </h2>
+
+
+        <label>Bank 1</label>
+
+        <input
+            type="number"
+            id="bank1"
+            value="0"
+        >
+
+
+        <label>Bank 2</label>
+
+        <input
+            type="number"
+            id="bank2"
+            value="0"
+        >
+
+
+        <label>Bank 3</label>
+
+        <input
+            type="number"
+            id="bank3"
+            value="0"
+        >
+
+
+        <label>Cash at Hand</label>
+
+        <input
+            type="number"
+            id="cash"
+            value="0"
+        >
+
+
+        <label>Total Goods</label>
+
+        <input
+            type="number"
+            id="totalGoodsRevenue"
+            value="0"
+        >
+
+
+        <label>Remaining Goods</label>
+
+        <input
+            type="number"
+            id="remainingGoodsRevenue"
+            value="0"
+        >
+
+
+        <label>Expenses</label>
+
+        <input
+            type="number"
+            id="expenses"
+            value="0"
+        >
+
+
+        <button onclick="calculateRevenue()">
+            CALCULATE
+        </button>
+
+
+        <div
+            id="revenueResult"
+            class="result"
+        >
+
+            <div class="result-row">
+                <span>Total Banks</span>
+
+                <strong id="totalBanks">
+                    GH₵0.00
+                </strong>
+            </div>
+
+
+            <div class="result-row">
+                <span>Total Cash</span>
+
+                <strong id="totalCash">
+                    GH₵0.00
+                </strong>
+            </div>
+
+
+            <div class="result-row">
+                <span>Remaining Goods</span>
+
+                <strong id="remainingGoodsResult">
+                    GH₵0.00
+                </strong>
+            </div>
+
+
+            <div class="result-row">
+                <span>Goods After Expenses</span>
+
+                <strong id="goodsAfterExpenses">
+                    GH₵0.00
+                </strong>
+            </div>
+
+
+            <div class="result-row">
+                <span>Profit</span>
+
+                <strong id="profit">
+                    GH₵0.00
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 
-<div class="cedi-row">
-
-<div class="cedi-name">GH₵100</div>
-
-<input
-type="number"
-id="money100"
-placeholder="Quantity"
-min="0"
-oninput="calculateCedi()">
+<!-- =====================================================
+     CEDI
+===================================================== -->
 
 <div
-class="cedi-total"
-id="total100">
-GH₵0.00
-</div>
+    id="cedi"
+    class="section"
+>
+
+    <div class="card">
+
+        <h2>
+            Ghana Cedi Calculator
+        </h2>
+
+
+        <div class="cedi-row">
+
+            <span>GH₵200</span>
+
+            <input
+                type="number"
+                id="q200"
+                value="0"
+                min="0"
+                oninput="calculateCedi()"
+            >
+
+            <strong id="t200">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <div class="cedi-row">
+
+            <span>GH₵100</span>
+
+            <input
+                type="number"
+                id="q100"
+                value="0"
+                min="0"
+                oninput="calculateCedi()"
+            >
+
+            <strong id="t100">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <div class="cedi-row">
+
+            <span>GH₵50</span>
+
+            <input
+                type="number"
+                id="q50"
+                value="0"
+                min="0"
+                oninput="calculateCedi()"
+            >
+
+            <strong id="t50">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <div class="cedi-row">
+
+            <span>GH₵20</span>
+
+            <input
+                type="number"
+                id="q20"
+                value="0"
+                min="0"
+                oninput="calculateCedi()"
+            >
+
+            <strong id="t20">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <div class="cedi-row">
+
+            <span>GH₵10</span>
+
+            <input
+                type="number"
+                id="q10"
+                value="0"
+                min="0"
+                oninput="calculateCedi()"
+            >
+
+            <strong id="t10">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <div class="cedi-row">
+
+            <span>GH₵5</span>
+
+            <input
+                type="number"
+                id="q5"
+                value="0"
+                min="0"
+                oninput="calculateCedi()"
+            >
+
+            <strong id="t5">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <div class="cedi-row">
+
+            <span>GH₵2</span>
+
+            <input
+                type="number"
+                id="q2"
+                value="0"
+                min="0"
+                oninput="calculateCedi()"
+            >
+
+            <strong id="t2">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <div class="cedi-row">
+
+            <span>GH₵1</span>
+
+            <input
+                type="number"
+                id="q1"
+                value="0"
+                min="0"
+                oninput="calculateCedi()"
+            >
+
+            <strong id="t1">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <button onclick="calculateCedi()">
+            CALCULATE TOTAL
+        </button>
+
+
+        <button
+            class="danger"
+            onclick="clearCediQuantities()"
+        >
+            CLEAR ALL QUANTITIES
+        </button>
+
+
+        <div class="total-box">
+
+            <div>
+                TOTAL CEDI
+            </div>
+
+            <h3 id="cediGrandTotal">
+                GH₵0.00
+            </h3>
+
+        </div>
+
+    </div>
 
 </div>
 
 
-<div class="cedi-row">
-
-<div class="cedi-name">GH₵50</div>
-
-<input
-type="number"
-id="money50"
-placeholder="Quantity"
-min="0"
-oninput="calculateCedi()">
+<!-- =====================================================
+     TOTAL GOODS
+===================================================== -->
 
 <div
-class="cedi-total"
-id="total50">
-GH₵0.00
-</div>
+    id="goods"
+    class="section"
+>
+
+
+    <!-- ADD GOODS -->
+
+    <div class="card">
+
+        <h2>
+            Add Goods
+        </h2>
+
+
+        <label>
+            Goods Name
+        </label>
+
+        <input
+            type="text"
+            id="goodsName"
+            placeholder="e.g. Shampoo"
+        >
+
+
+        <label>
+            Price
+        </label>
+
+        <input
+            type="number"
+            id="goodsPrice"
+            placeholder="Enter price"
+            min="0"
+        >
+
+
+        <button onclick="addGoods()">
+            ADD GOODS
+        </button>
+
+    </div>
+
+
+    <!-- CURRENT GOODS -->
+
+    <div class="card">
+
+        <h2>
+            Current Goods
+        </h2>
+
+
+        <div id="goodsList">
+
+            <p
+                style="
+                    text-align:center;
+                    color:#777;
+                "
+            >
+                No goods added yet.
+            </p>
+
+        </div>
+
+
+        <button
+            class="secondary"
+            onclick="calculateGoodsTotal()"
+        >
+            CALCULATE TOTAL
+        </button>
+
+
+        <button
+            class="danger"
+            onclick="clearAllQuantities()"
+        >
+            CLEAR ALL QUANTITIES
+        </button>
+
+
+        <div class="total-box">
+
+            <div>
+                TOTAL GOODS VALUE
+            </div>
+
+            <h3 id="goodsGrandTotal">
+                GH₵0.00
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <!-- RECORDS -->
+
+    <div class="card">
+
+        <h2>
+            Saved Records
+        </h2>
+
+
+        <div id="recordsList">
+
+            <p
+                style="
+                    text-align:center;
+                    color:#777;
+                "
+            >
+                No saved records.
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
 
 
-<div class="cedi-row">
-
-<div class="cedi-name">GH₵20</div>
-
-<input
-type="number"
-id="money20"
-placeholder="Quantity"
-min="0"
-oninput="calculateCedi()">
+<!-- =====================================================
+     ADMIN DASHBOARD
+===================================================== -->
 
 <div
-class="cedi-total"
-id="total20">
-GH₵0.00
-</div>
+    id="admin"
+    class="section"
+>
 
-</div>
 
+    <div class="card">
 
-<div class="cedi-row">
+        <h2>
+            Admin Dashboard
+        </h2>
 
-<div class="cedi-name">GH₵10</div>
+        <p
+            style="
+                color:#666;
+                margin-bottom:15px;
+            "
+        >
+            Manage Oak & Cedar users and monitor account activity.
+        </p>
 
-<input
-type="number"
-id="money10"
-placeholder="Quantity"
-min="0"
-oninput="calculateCedi()">
 
-<div
-class="cedi-total"
-id="total10">
-GH₵0.00
-</div>
+        <button
+            class="secondary"
+            onclick="loadAdminDashboard()"
+        >
+            REFRESH DASHBOARD
+        </button>
 
-</div>
+    </div>
 
 
-<div class="cedi-row">
+    <!-- USER STATISTICS -->
 
-<div class="cedi-name">GH₵5</div>
+    <div class="card">
 
-<input
-type="number"
-id="money5"
-placeholder="Quantity"
-min="0"
-oninput="calculateCedi()">
+        <h2>
+            User Statistics
+        </h2>
 
-<div
-class="cedi-total"
-id="total5">
-GH₵0.00
-</div>
 
-</div>
+        <div class="admin-stat">
 
+            Total Users
 
-<div class="cedi-row">
+            <strong id="adminTotalUsers">
+                0
+            </strong>
 
-<div class="cedi-name">GH₵2</div>
+        </div>
 
-<input
-type="number"
-id="money2"
-placeholder="Quantity"
-min="0"
-oninput="calculateCedi()">
 
-<div
-class="cedi-total"
-id="total2">
-GH₵0.00
-</div>
+        <div class="admin-stat">
 
-</div>
+            Active Users
 
+            <strong id="adminActiveUsers">
+                0
+            </strong>
 
-<div class="cedi-row">
+        </div>
 
-<div class="cedi-name">GH₵1</div>
 
-<input
-type="number"
-id="money1"
-placeholder="Quantity"
-min="0"
-oninput="calculateCedi()">
+        <div class="admin-stat">
 
-<div
-class="cedi-total"
-id="total1">
-GH₵0.00
-</div>
+            Disabled Users
 
-</div>
+            <strong id="adminDisabledUsers">
+                0
+            </strong>
 
+        </div>
 
-<div class="grand-total">
 
-<small>
-GRAND TOTAL
-</small>
+        <div class="admin-stat">
 
-<strong id="grandTotal">
-GH₵0.00
-</strong>
+            Online Users
 
-</div>
+            <strong id="adminOnlineUsers">
+                0
+            </strong>
 
+        </div>
 
-<button
-class="main-button"
-onclick="calculateCedi()">
-CALCULATE TOTAL
-</button>
+    </div>
 
-<button
-class="reset-button"
-onclick="resetCedi()">
-CLEAR
-</button>
 
-</div>
+    <!-- USER LIST -->
 
-</div>
+    <div class="card">
 
+        <h2>
+            Registered Users
+        </h2>
 
-<!-- TOTAL GOODS CALCULATOR -->
 
-<div id="goods" class="calculator">
+        <div id="adminUsersList">
 
-
-<div class="card">
-
-<div class="section-title">
-Add New Goods
-</div>
-
-<div class="add-grid">
-
-<input
-type="text"
-id="goodsName"
-placeholder="Goods name">
-
-<input
-type="number"
-id="goodsPrice"
-placeholder="Price">
-
-</div>
-
-<button
-class="add-button"
-onclick="addGoods()">
-+ ADD GOODS
-</button>
-
-</div>
-
-
-<div class="card">
-
-<div class="section-title">
-Goods & Quantity
-</div>
-
-
-<div class="search-box">
-
-<input
-type="text"
-id="search"
-placeholder="Search goods or type first letter..."
-oninput="displayGoods()">
-
-</div>
-
-
-<div class="goods-header">
-
-<div>GOODS</div>
-<div>PRICE</div>
-<div>QTY</div>
-<div>TOTAL</div>
-<div></div>
-
-</div>
-
-
-<div id="goodsList"></div>
-
-
-<div class="total-box">
-
-<small>
-TOTAL GOODS VALUE
-</small>
-
-<strong id="goodsGrandTotal">
-GH₵0.00
-</strong>
-
-</div>
-
-
-<button
-class="save-record-button"
-onclick="saveGoodsRecord()">
-SAVE RECORD
-</button>
-
-
-<button
-class="clear-button"
-onclick="clearQuantities()">
-CLEAR ALL QUANTITIES
-</button>
-
-</div>
-
-
-<!-- SAVED RECORDS -->
-
-<div class="card">
-
-<div class="section-title">
-Saved Records
-</div>
-
-<div id="recordsList"></div>
+            <p
+                style="
+                    text-align:center;
+                    color:#777;
+                "
+            >
+                Loading users...
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -888,663 +1252,823 @@ Saved Records
 
 <script>
 
+/* =====================================================
+   SUPABASE CONNECTION
+===================================================== */
 
-/* TAB SWITCHING */
+const SUPABASE_URL =
+    "https://ywsmyynauytmgdiljwlo.supabase.co";
 
-function showCalculator(name, button) {
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
+let currentUser = null;
+
+let currentGoods = [];
+
+
+/* =====================================================
+   AUTH MESSAGE
+===================================================== */
+
+function showAuthMessage(message) {
+
+    const box =
+        document.getElementById(
+            "authMessage"
+        );
+
+    box.textContent = message;
+
+    box.style.display = "block";
+
+}
+
+
+/* =====================================================
+   SHOW LOGIN
+===================================================== */
+
+function showLogin() {
 
     document
-        .querySelectorAll(".calculator")
-        .forEach(function(calculator) {
+        .getElementById("loginForm")
+        .classList.remove("hidden");
 
-            calculator.classList.remove("active");
+    document
+        .getElementById("signupForm")
+        .classList.add("hidden");
+
+    document
+        .getElementById("authMessage")
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   SHOW SIGNUP
+===================================================== */
+
+function showSignup() {
+
+    document
+        .getElementById("loginForm")
+        .classList.add("hidden");
+
+    document
+        .getElementById("signupForm")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("authMessage")
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   SIGN UP
+===================================================== */
+
+async function signupUser() {
+
+    const name =
+        document
+            .getElementById("signupName")
+            .value
+            .trim();
+
+    const email =
+        document
+            .getElementById("signupEmail")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("signupPassword")
+            .value;
+
+
+    if (!email || !password) {
+
+        showAuthMessage(
+            "Please enter your email and password."
+        );
+
+        return;
+    }
+
+
+    if (password.length < 6) {
+
+        showAuthMessage(
+            "Password must be at least 6 characters."
+        );
+
+        return;
+    }
+
+
+    showAuthMessage(
+        "Creating account..."
+    );
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signUp({
+
+            email: email,
+
+            password: password,
+
+            options: {
+
+                data: {
+                    full_name: name
+                }
+
+            }
 
         });
+
+
+    if (error) {
+
+        showAuthMessage(
+            error.message
+        );
+
+        return;
+    }
+
+
+    if (data.session) {
+
+        await startApplication(
+            data.session.user
+        );
+
+    } else {
+
+        showAuthMessage(
+            "Account created. Please check your email if confirmation is required."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function loginUser() {
+
+    const email =
+        document
+            .getElementById("loginEmail")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("loginPassword")
+            .value;
+
+
+    if (!email || !password) {
+
+        showAuthMessage(
+            "Please enter your email and password."
+        );
+
+        return;
+    }
+
+
+    showAuthMessage(
+        "Logging in..."
+    );
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+    if (error) {
+
+        showAuthMessage(
+            error.message
+        );
+
+        return;
+    }
+
+
+    await startApplication(
+        data.user
+    );
+
+}
+
+
+/* =====================================================
+   START APPLICATION
+===================================================== */
+
+async function startApplication(user) {
+
+    currentUser = user;
+
+
+    const {
+        data: profile,
+        error: profileError
+    } =
+        await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .single();
+
+
+    if (profileError) {
+
+        await supabaseClient.auth.signOut();
+
+        showAuthMessage(
+            "Unable to load your account profile."
+        );
+
+        return;
+    }
+
+
+    /* Check account status */
+
+    if (
+        profile.status !== "active"
+    ) {
+
+        await supabaseClient.auth.signOut();
+
+        showAuthMessage(
+            "Your account has been disabled."
+        );
+
+        return;
+    }
+
+
+    /* Show application */
+
+    document
+        .getElementById("authScreen")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("app")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("userEmail")
+        .textContent =
+        user.email;
+
+
+    /* Update last seen */
+
+    await touchLastSeen();
+
+
+    /* Load calculator data */
+
+    await loadGoods();
+
+    await loadRecords();
+
+
+    /* Setup admin */
+
+    await setupAdminDashboard(
+        profile
+    );
+
+}
+
+
+/* =====================================================
+   CHECK SESSION
+===================================================== */
+
+async function checkSession() {
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (data.session) {
+
+        await startApplication(
+            data.session.user
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    async (
+        event,
+        session
+    ) => {
+
+        if (
+            event === "SIGNED_IN" &&
+            session
+        ) {
+
+            await startApplication(
+                session.user
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logoutUser() {
+
+    await supabaseClient.auth.signOut();
+
+    currentUser = null;
+
+    currentGoods = [];
+
+
+    document
+        .getElementById("app")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("authScreen")
+        .classList.remove("hidden");
+
+
+    showLogin();
+
+}
+
+
+/* =====================================================
+   LAST SEEN
+===================================================== */
+
+async function touchLastSeen() {
+
+    if (!currentUser) return;
+
+
+    await supabaseClient
+        .rpc(
+            "touch_last_seen"
+        );
+
+}
+
+
+/* Update last seen every minute */
+
+setInterval(
+    touchLastSeen,
+    60000
+);
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+function openTab(
+    tabName,
+    element
+) {
+
+    document
+        .querySelectorAll(".section")
+        .forEach(
+            section => {
+
+                section
+                    .classList
+                    .remove("active");
+
+            }
+        );
 
 
     document
         .querySelectorAll(".tab")
-        .forEach(function(tab) {
+        .forEach(
+            tab => {
 
-            tab.classList.remove("active");
+                tab
+                    .classList
+                    .remove("active");
 
-        });
+            }
+        );
 
 
     document
-        .getElementById(name)
-        .classList.add("active");
+        .getElementById(tabName)
+        .classList
+        .add("active");
 
 
-    button.classList.add("active");
+    element
+        .classList
+        .add("active");
+
+
+    /* Load admin data when opening admin */
+
+    if (
+        tabName === "admin"
+    ) {
+
+        loadAdminDashboard();
+
+    }
 
 }
 
 
-/* REVENUE */
+/* =====================================================
+   REVENUE CALCULATOR
+===================================================== */
+
+function getNumber(id) {
+
+    return parseFloat(
+        document
+            .getElementById(id)
+            .value
+    ) || 0;
+
+}
+
 
 function calculateRevenue() {
 
-    let bank1 =
-        Number(document.getElementById("bank1").value) || 0;
+    const bank1 =
+        getNumber("bank1");
 
-    let bank2 =
-        Number(document.getElementById("bank2").value) || 0;
+    const bank2 =
+        getNumber("bank2");
 
-    let bank3 =
-        Number(document.getElementById("bank3").value) || 0;
+    const bank3 =
+        getNumber("bank3");
 
-    let cash =
-        Number(document.getElementById("cash").value) || 0;
+    const cash =
+        getNumber("cash");
 
-    let totalGoods =
-        Number(document.getElementById("totalGoods").value) || 0;
+    const totalGoods =
+        getNumber("totalGoodsRevenue");
 
-    let remainingGoods =
-        Number(document.getElementById("remainingGoods").value) || 0;
+    const remainingGoods =
+        getNumber("remainingGoodsRevenue");
 
-    let expenses =
-        Number(document.getElementById("expenses").value) || 0;
-
-
-    let totalBanks =
-        bank1 + bank2 + bank3;
+    const expenses =
+        getNumber("expenses");
 
 
-    let totalCash =
-        totalBanks + cash;
+    const totalBanks =
+        bank1 +
+        bank2 +
+        bank3;
 
 
-    let goodsAfterExpenses =
-        totalGoods - expenses;
+    const totalCash =
+        totalBanks +
+        cash;
 
 
-    let profit =
-        totalCash +
-        remainingGoods -
-        goodsAfterExpenses;
+    const goodsAfterExpenses =
+        totalGoods -
+        expenses;
 
 
-    if (profit < 0) {
-        profit = 0;
-    }
+    const profit =
+        totalCash -
+        goodsAfterExpenses -
+        remainingGoods;
 
-
-    document.getElementById("totalBanks").innerText =
-        "GH₵" + totalBanks.toFixed(2);
-
-
-    document.getElementById("totalCash").innerText =
-        "GH₵" + totalCash.toFixed(2);
-
-
-    document.getElementById("showRemainingGoods").innerText =
-        "GH₵" + remainingGoods.toFixed(2);
-
-
-    document.getElementById("goodsAfterExpenses").innerText =
-        "GH₵" + goodsAfterExpenses.toFixed(2);
-
-
-    document.getElementById("profit").innerText =
-        "GH₵" + profit.toFixed(2);
-
-}
-
-
-function resetRevenue() {
 
     document
-        .querySelectorAll("#revenue input")
-        .forEach(function(input) {
-
-            input.value = "";
-
-        });
+        .getElementById("totalBanks")
+        .textContent =
+        "GH₵" +
+        totalBanks.toFixed(2);
 
 
-    document.getElementById("totalBanks").innerText =
-        "GH₵0.00";
+    document
+        .getElementById("totalCash")
+        .textContent =
+        "GH₵" +
+        totalCash.toFixed(2);
 
-    document.getElementById("totalCash").innerText =
-        "GH₵0.00";
 
-    document.getElementById("showRemainingGoods").innerText =
-        "GH₵0.00";
+    document
+        .getElementById("remainingGoodsResult")
+        .textContent =
+        "GH₵" +
+        remainingGoods.toFixed(2);
 
-    document.getElementById("goodsAfterExpenses").innerText =
-        "GH₵0.00";
 
-    document.getElementById("profit").innerText =
-        "GH₵0.00";
+    document
+        .getElementById("goodsAfterExpenses")
+        .textContent =
+        "GH₵" +
+        goodsAfterExpenses.toFixed(2);
+
+
+    document
+        .getElementById("profit")
+        .textContent =
+        "GH₵" +
+        profit.toFixed(2);
 
 }
 
 
-/* CEDI CALCULATOR */
+/* =====================================================
+   CEDI CALCULATOR
+===================================================== */
+
+const cediValues = [
+    200,
+    100,
+    50,
+    20,
+    10,
+    5,
+    2,
+    1
+];
+
 
 function calculateCedi() {
-
-    let denominations = [
-        [200, "money200", "total200"],
-        [100, "money100", "total100"],
-        [50, "money50", "total50"],
-        [20, "money20", "total20"],
-        [10, "money10", "total10"],
-        [5, "money5", "total5"],
-        [2, "money2", "total2"],
-        [1, "money1", "total1"]
-    ];
-
-
-    let grandTotal = 0;
-
-
-    denominations.forEach(function(item) {
-
-        let amount =
-            Number(
-                document.getElementById(item[1]).value
-            ) || 0;
-
-
-        if (amount < 0) {
-            amount = 0;
-        }
-
-
-        let total =
-            item[0] * amount;
-
-
-        grandTotal += total;
-
-
-        document.getElementById(item[2]).innerText =
-            "GH₵" + total.toFixed(2);
-
-    });
-
-
-    document.getElementById("grandTotal").innerText =
-        "GH₵" + grandTotal.toFixed(2);
-
-}
-
-
-function resetCedi() {
-
-    document
-        .querySelectorAll("#cedi input")
-        .forEach(function(input) {
-
-            input.value = "";
-
-        });
-
-
-    let totals = [
-        "total200",
-        "total100",
-        "total50",
-        "total20",
-        "total10",
-        "total5",
-        "total2",
-        "total1"
-    ];
-
-
-    totals.forEach(function(id) {
-
-        document.getElementById(id).innerText =
-            "GH₵0.00";
-
-    });
-
-
-    document.getElementById("grandTotal").innerText =
-        "GH₵0.00";
-
-}
-
-
-/* TOTAL GOODS */
-
-let goods = [];
-
-
-try {
-
-    goods =
-        JSON.parse(
-            localStorage.getItem("oakCedarGoods")
-        ) || [];
-
-} catch(error) {
-
-    goods = [];
-
-}
-
-
-function saveGoods() {
-
-    localStorage.setItem(
-        "oakCedarGoods",
-        JSON.stringify(goods)
-    );
-
-}
-
-
-function addGoods() {
-
-    let name =
-        document.getElementById("goodsName")
-            .value
-            .trim();
-
-
-    let price =
-        Number(
-            document.getElementById("goodsPrice").value
-        );
-
-
-    if (name === "") {
-
-        alert("Please enter the goods name.");
-
-        return;
-
-    }
-
-
-    if (isNaN(price) || price <= 0) {
-
-        alert("Please enter a valid price.");
-
-        return;
-
-    }
-
-
-    let existing =
-        goods.find(function(item) {
-
-            return item.name.toLowerCase() ===
-                name.toLowerCase();
-
-        });
-
-
-    if (existing) {
-
-        let answer =
-            confirm(
-                "This good already exists.\n\n" +
-                "Do you want to update its price?"
-            );
-
-
-        if (answer) {
-
-            existing.price = price;
-
-            saveGoods();
-
-            displayGoods();
-
-        }
-
-
-        return;
-
-    }
-
-
-    goods.push({
-
-        id: Date.now(),
-
-        name: name,
-
-        price: price,
-
-        quantity: 0
-
-    });
-
-
-    saveGoods();
-
-
-    document.getElementById("goodsName").value = "";
-
-    document.getElementById("goodsPrice").value = "";
-
-
-    displayGoods();
-
-}
-
-
-function displayGoods() {
-
-    let list =
-        document.getElementById("goodsList");
-
-
-    let search =
-        document.getElementById("search")
-            .value
-            .toLowerCase()
-            .trim();
-
-
-    list.innerHTML = "";
-
-
-    goods.forEach(function(item, index) {
-
-        if (
-            search !== "" &&
-            !item.name.toLowerCase().includes(search)
-        ) {
-
-            return;
-
-        }
-
-
-        let quantity =
-            Number(item.quantity) || 0;
-
-
-        let row =
-            document.createElement("div");
-
-
-        row.className =
-            "goods-row";
-
-
-        row.innerHTML = `
-
-            <div class="goods-name">
-                ${escapeHTML(item.name)}
-            </div>
-
-            <div class="goods-price">
-                GH₵${Number(item.price).toFixed(2)}
-            </div>
-
-            <input
-                class="quantity"
-                type="number"
-                min="0"
-                value="${quantity || ""}"
-                placeholder="0"
-                onchange="updateQuantity(${index}, this.value)"
-            >
-
-            <div
-                class="item-total"
-                id="itemTotal${index}">
-                GH₵${(Number(item.price) * quantity).toFixed(2)}
-            </div>
-
-            <button
-                class="delete-good"
-                onclick="deleteGoods(${index})">
-                ×
-            </button>
-
-        `;
-
-
-        list.appendChild(row);
-
-    });
-
-
-    calculateGoodsTotal();
-
-}
-
-
-function updateQuantity(index, value) {
-
-    let quantity =
-        Number(value);
-
-
-    if (
-        isNaN(quantity) ||
-        quantity < 0
-    ) {
-
-        quantity = 0;
-
-    }
-
-
-    goods[index].quantity =
-        quantity;
-
-
-    saveGoods();
-
-
-    let itemTotal =
-        document.getElementById(
-            "itemTotal" + index
-        );
-
-
-    if (itemTotal) {
-
-        itemTotal.innerText =
-            "GH₵" +
-            (
-                Number(goods[index].price) *
-                quantity
-            ).toFixed(2);
-
-    }
-
-
-    calculateGoodsTotal();
-
-}
-
-
-function calculateGoodsTotal() {
 
     let total = 0;
 
 
-    goods.forEach(function(item) {
+    cediValues.forEach(
+        value => {
 
-        let quantity =
-            Number(item.quantity) || 0;
-
-
-        total +=
-            Number(item.price) *
-            quantity;
-
-    });
-
-
-    document.getElementById(
-        "goodsGrandTotal"
-    ).innerText =
-        "GH₵" + total.toFixed(2);
+            const quantity =
+                parseInt(
+                    document
+                        .getElementById(
+                            "q" + value
+                        )
+                        .value
+                ) || 0;
 
 
-    return total;
-
-}
-
-
-function deleteGoods(index) {
-
-    let answer =
-        confirm(
-            "Are you sure you want to delete " +
-            goods[index].name +
-            "?"
-        );
+            const lineTotal =
+                quantity *
+                value;
 
 
-    if (!answer) return;
+            document
+                .getElementById(
+                    "t" + value
+                )
+                .textContent =
+                lineTotal.toFixed(2);
 
 
-    goods.splice(index, 1);
+            total +=
+                lineTotal;
+
+        }
+    );
 
 
-    saveGoods();
-
-    displayGoods();
+    document
+        .getElementById(
+            "cediGrandTotal"
+        )
+        .textContent =
+        "GH₵" +
+        total.toFixed(2);
 
 }
 
 
-/* CLEAR ALL QUANTITIES */
+/* =====================================================
+   CLEAR CEDI
+===================================================== */
 
-function clearQuantities() {
+function clearCediQuantities() {
 
-    if (goods.length === 0) {
+    cediValues.forEach(
+        value => {
 
-        alert("There are no goods to clear.");
+            document
+                .getElementById(
+                    "q" + value
+                )
+                .value = 0;
+
+
+            document
+                .getElementById(
+                    "t" + value
+                )
+                .textContent =
+                "0.00";
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "cediGrandTotal"
+        )
+        .textContent =
+        "GH₵0.00";
+
+}
+
+
+/* =====================================================
+   LOAD GOODS
+===================================================== */
+
+async function loadGoods() {
+
+    if (!currentUser)
+        return;
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("goods")
+            .select("*")
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: true
+                }
+            );
+
+
+    if (error) {
+
+        console.error(error);
 
         return;
 
     }
 
 
-    let answer =
-        confirm(
-            "Clear all quantities?\n\n" +
-            "Your goods and prices will NOT be deleted."
-        );
+    currentGoods =
+        data.map(
+            item => ({
 
-
-    if (!answer) return;
-
-
-    goods.forEach(function(item) {
-
-        item.quantity = 0;
-
-    });
-
-
-    saveGoods();
-
-
-    document
-        .querySelectorAll(
-            "#goodsList .quantity"
-        )
-        .forEach(function(input) {
-
-            input.value = "";
-
-        });
-
-
-    document
-        .querySelectorAll(
-            "#goodsList .item-total"
-        )
-        .forEach(function(total) {
-
-            total.innerText =
-                "GH₵0.00";
-
-        });
-
-
-    document.getElementById(
-        "goodsGrandTotal"
-    ).innerText =
-        "GH₵0.00";
-
-}
-
-
-/* SAVED RECORDS */
-
-let records = [];
-
-
-try {
-
-    records =
-        JSON.parse(
-            localStorage.getItem(
-                "oakCedarGoodsRecords"
-            )
-        ) || [];
-
-} catch(error) {
-
-    records = [];
-
-}
-
-
-function saveRecords() {
-
-    localStorage.setItem(
-        "oakCedarGoodsRecords",
-        JSON.stringify(records)
-    );
-
-}
-
-
-function saveGoodsRecord() {
-
-    let selectedGoods = [];
-
-
-    goods.forEach(function(item) {
-
-        let quantity =
-            Number(item.quantity) || 0;
-
-
-        if (quantity > 0) {
-
-            selectedGoods.push({
+                id: item.id,
 
                 name: item.name,
 
                 price:
                     Number(item.price),
 
-                quantity:
-                    quantity,
+                quantity: 0
 
-                total:
-                    Number(item.price) *
-                    quantity
-
-            });
-
-        }
-
-    });
+            })
+        );
 
 
-    if (selectedGoods.length === 0) {
+    renderGoods();
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   ADD GOODS
+===================================================== */
+
+async function addGoods() {
+
+    if (!currentUser)
+        return;
+
+
+    const name =
+        document
+            .getElementById(
+                "goodsName"
+            )
+            .value
+            .trim();
+
+
+    const price =
+        parseFloat(
+            document
+                .getElementById(
+                    "goodsPrice"
+                )
+                .value
+        );
+
+
+    if (!name) {
 
         alert(
-            "Please enter a quantity for at least one good before saving."
+            "Please enter the goods name."
         );
 
         return;
@@ -1552,223 +2076,1267 @@ function saveGoodsRecord() {
     }
 
 
-    let total =
-        selectedGoods.reduce(
-            function(sum, item) {
+    if (
+        isNaN(price) ||
+        price < 0
+    ) {
 
-                return sum + item.total;
+        alert(
+            "Please enter a valid price."
+        );
 
-            },
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("goods")
+            .insert({
+
+                user_id:
+                    currentUser.id,
+
+                name:
+                    name,
+
+                price:
+                    price
+
+            })
+            .select()
+            .single();
+
+
+    if (error) {
+
+        alert(
+            "Could not save goods: " +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    currentGoods.push({
+
+        id:
+            data.id,
+
+        name:
+            data.name,
+
+        price:
+            Number(data.price),
+
+        quantity:
             0
+
+    });
+
+
+    document
+        .getElementById(
+            "goodsName"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "goodsPrice"
+        )
+        .value = "";
+
+
+    renderGoods();
+
+}
+
+
+/* =====================================================
+   RENDER GOODS
+===================================================== */
+
+function renderGoods() {
+
+    const container =
+        document
+            .getElementById(
+                "goodsList"
+            );
+
+
+    if (
+        currentGoods.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <p
+                style="
+                    text-align:center;
+                    color:#777;
+                "
+            >
+                No goods added yet.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        currentGoods
+            .map(
+                (
+                    item,
+                    index
+                ) => `
+
+                <div class="goods-item">
+
+                    <div class="goods-header">
+
+                        <div>
+
+                            <div class="goods-name">
+
+                                ${
+                                    escapeHTML(
+                                        item.name
+                                    )
+                                }
+
+                            </div>
+
+                            <div class="goods-price">
+
+                                Price:
+                                GH₵${
+                                    Number(
+                                        item.price
+                                    ).toFixed(2)
+                                }
+
+                            </div>
+
+                        </div>
+
+
+                        <strong>
+
+                            GH₵${
+                                (
+                                    Number(
+                                        item.price
+                                    ) *
+                                    Number(
+                                        item.quantity
+                                    )
+                                ).toFixed(2)
+                            }
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="goods-controls">
+
+                        <input
+                            type="number"
+                            min="0"
+                            value="${item.quantity}"
+                            onchange="updateQuantity(${index}, this.value)"
+                            placeholder="Quantity"
+                        >
+
+
+                        <button
+                            class="danger"
+                            style="margin-top:0;"
+                            onclick="deleteGoods(${index})"
+                        >
+                            DELETE
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   UPDATE QUANTITY
+===================================================== */
+
+function updateQuantity(
+    index,
+    value
+) {
+
+    let quantity =
+        parseInt(value) || 0;
+
+
+    if (quantity < 0) {
+
+        quantity = 0;
+
+    }
+
+
+    currentGoods[index]
+        .quantity =
+        quantity;
+
+
+    renderGoods();
+
+}
+
+
+/* =====================================================
+   CLEAR ALL GOODS QUANTITIES
+===================================================== */
+
+function clearAllQuantities() {
+
+    currentGoods =
+        currentGoods.map(
+            item => ({
+
+                ...item,
+
+                quantity: 0
+
+            })
         );
 
 
-    let now =
-        new Date();
+    document
+        .getElementById(
+            "goodsGrandTotal"
+        )
+        .textContent =
+        "GH₵0.00";
 
 
-    let record = {
+    renderGoods();
 
-        id: Date.now(),
+}
 
-        date:
-            now.toLocaleDateString(
-                "en-GH",
+
+/* =====================================================
+   CALCULATE GOODS TOTAL
+===================================================== */
+
+async function calculateGoodsTotal() {
+
+    if (!currentUser)
+        return;
+
+
+    let total = 0;
+
+
+    currentGoods.forEach(
+        item => {
+
+            total +=
+                Number(item.price) *
+                Number(item.quantity);
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "goodsGrandTotal"
+        )
+        .textContent =
+        "GH₵" +
+        total.toFixed(2);
+
+
+    if (
+        currentGoods.length > 0
+    ) {
+
+        const goodsForRecord =
+            currentGoods.map(
+                item => ({
+
+                    name:
+                        item.name,
+
+                    price:
+                        Number(
+                            item.price
+                        ),
+
+                    quantity:
+                        Number(
+                            item.quantity
+                        ),
+
+                    total:
+                        Number(
+                            item.price
+                        ) *
+                        Number(
+                            item.quantity
+                        )
+
+                })
+            );
+
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("records")
+                .insert({
+
+                    user_id:
+                        currentUser.id,
+
+                    goods:
+                        goodsForRecord,
+
+                    total:
+                        total
+
+                });
+
+
+        if (error) {
+
+            console.error(error);
+
+            alert(
+                "Total calculated, but record could not be saved."
+            );
+
+            return;
+
+        }
+
+
+        await loadRecords();
+
+    }
+
+}
+
+
+/* =====================================================
+   DELETE GOODS
+===================================================== */
+
+async function deleteGoods(index) {
+
+    if (!currentUser)
+        return;
+
+
+    const item =
+        currentGoods[index];
+
+
+    if (!item)
+        return;
+
+
+    const confirmed =
+        confirm(
+            "Delete " +
+            item.name +
+            " permanently?"
+        );
+
+
+    if (!confirmed)
+        return;
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("goods")
+            .delete()
+            .eq(
+                "id",
+                item.id
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            );
+
+
+    if (error) {
+
+        alert(
+            "Could not delete goods: " +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    currentGoods.splice(
+        index,
+        1
+    );
+
+
+    renderGoods();
+
+}
+
+
+/* =====================================================
+   LOAD RECORDS
+===================================================== */
+
+async function loadRecords() {
+
+    if (!currentUser)
+        return;
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("records")
+            .select("*")
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
                 {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric"
+                    ascending: false
                 }
-            ),
-
-        time:
-            now.toLocaleTimeString(
-                "en-GH",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            ),
-
-        goods:
-            selectedGoods,
-
-        total:
-            total
-
-    };
+            );
 
 
-    records.unshift(record);
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
 
 
-    saveRecords();
-
-    displayRecords();
-
-
-    alert(
-        "Record saved successfully."
+    renderRecords(
+        data || []
     );
 
 }
 
 
-/* DISPLAY SAVED RECORDS */
+/* =====================================================
+   RENDER RECORDS
+===================================================== */
 
-function displayRecords() {
+function renderRecords(
+    records
+) {
 
-    let list =
-        document.getElementById(
-            "recordsList"
-        );
-
-
-    if (records.length === 0) {
-
-        list.innerHTML =
-            '<div class="no-records">' +
-            'No saved records yet.' +
-            '</div>';
-
-        return;
-
-    }
+    const container =
+        document
+            .getElementById(
+                "recordsList"
+            );
 
 
-    list.innerHTML = "";
+    if (
+        !records ||
+        records.length === 0
+    ) {
 
+        container.innerHTML = `
 
-    records.forEach(function(record, index) {
-
-        let card =
-            document.createElement("div");
-
-
-        card.className =
-            "record-card";
-
-
-        let goodsHTML = "";
-
-
-        record.goods.forEach(function(item) {
-
-            goodsHTML += `
-
-                <div class="record-good-line">
-
-                    <span>
-                        ${escapeHTML(item.name)}
-                        × ${item.quantity}
-                    </span>
-
-                    <strong>
-                        GH₵${Number(item.total).toFixed(2)}
-                    </strong>
-
-                </div>
-
-            `;
-
-        });
-
-
-        card.innerHTML = `
-
-            <div class="record-date">
-                ${escapeHTML(record.date)}
-                &nbsp;&nbsp;
-                ${escapeHTML(record.time)}
-            </div>
-
-            <div class="record-total">
-                Total: GH₵${Number(record.total).toFixed(2)}
-            </div>
-
-            <div class="record-goods">
-                ${goodsHTML}
-            </div>
-
-            <button
-                class="record-delete"
-                onclick="deleteRecord(${index})">
-                DELETE RECORD
-            </button>
+            <p
+                style="
+                    text-align:center;
+                    color:#777;
+                "
+            >
+                No saved records.
+            </p>
 
         `;
 
-
-        list.appendChild(card);
-
-    });
-
-}
-
-
-/* DELETE INDIVIDUAL RECORD */
-
-function deleteRecord(index) {
-
-    if (
-        index < 0 ||
-        index >= records.length
-    ) {
-
         return;
 
     }
 
 
-    let answer =
+    container.innerHTML =
+        records
+            .map(
+                record => {
+
+                    const date =
+                        new Date(
+                            record.created_at
+                        ).toLocaleString();
+
+
+                    let goodsHTML = "";
+
+
+                    if (
+                        Array.isArray(
+                            record.goods
+                        )
+                    ) {
+
+                        goodsHTML =
+                            record.goods
+                                .map(
+                                    item => `
+
+                                    <div class="result-row">
+
+                                        <span>
+
+                                            ${
+                                                escapeHTML(
+                                                    item.name
+                                                )
+                                            }
+
+                                            ×
+                                            ${
+                                                Number(
+                                                    item.quantity
+                                                )
+                                            }
+
+                                        </span>
+
+
+                                        <strong>
+
+                                            GH₵${
+                                                Number(
+                                                    item.total
+                                                ).toFixed(2)
+                                            }
+
+                                        </strong>
+
+                                    </div>
+
+                                `
+                                )
+                                .join("");
+
+                    }
+
+
+                    return `
+
+                        <div class="record">
+
+                            <div class="record-date">
+
+                                ${date}
+
+                            </div>
+
+
+                            ${goodsHTML}
+
+
+                            <div class="result-row">
+
+                                <strong>
+                                    TOTAL
+                                </strong>
+
+
+                                <strong>
+
+                                    GH₵${
+                                        Number(
+                                            record.total
+                                        ).toFixed(2)
+                                    }
+
+                                </strong>
+
+                            </div>
+
+
+                            <button
+                                class="danger"
+                                onclick="deleteRecord(${record.id})"
+                            >
+                                DELETE RECORD
+                            </button>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   DELETE RECORD
+===================================================== */
+
+async function deleteRecord(
+    id
+) {
+
+    if (!currentUser)
+        return;
+
+
+    const confirmed =
         confirm(
-            "Are you sure you want to delete this saved record?\n\n" +
-            "This action cannot be undone."
+            "Delete this saved record?"
         );
 
 
-    if (!answer) {
+    if (!confirmed)
+        return;
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("records")
+            .delete()
+            .eq(
+                "id",
+                id
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            );
+
+
+    if (error) {
+
+        alert(
+            "Could not delete record: " +
+            error.message
+        );
 
         return;
 
     }
 
 
-    records.splice(index, 1);
-
-
-    saveRecords();
-
-
-    displayRecords();
+    await loadRecords();
 
 }
 
 
-/* SECURITY */
+/* =====================================================
+   ADMIN - SETUP
+===================================================== */
 
-function escapeHTML(text) {
+async function setupAdminDashboard(
+    profile
+) {
 
-    let div =
-        document.createElement("div");
+    const adminTab =
+        document
+            .getElementById(
+                "adminTab"
+            );
 
 
-    div.textContent =
-        text;
+    if (!adminTab)
+        return;
 
 
-    return div.innerHTML;
+    if (
+        profile &&
+        profile.role === "admin" &&
+        profile.status === "active"
+    ) {
+
+        adminTab
+            .classList
+            .remove("hidden");
+
+
+        await loadAdminDashboard();
+
+    } else {
+
+        adminTab
+            .classList
+            .add("hidden");
+
+    }
 
 }
 
 
-/* START APP */
+/* =====================================================
+   ADMIN - LOAD DASHBOARD
+===================================================== */
 
-displayGoods();
+async function loadAdminDashboard() {
 
-displayRecords();
+    if (!currentUser)
+        return;
 
-calculateCedi();
+
+    /* Check current admin */
+
+    const {
+        data: profile,
+        error: profileError
+    } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "id,email,role,status"
+            )
+            .eq(
+                "id",
+                currentUser.id
+            )
+            .single();
+
+
+    if (
+        profileError ||
+        !profile ||
+        profile.role !== "admin" ||
+        profile.status !== "active"
+    ) {
+
+        document
+            .getElementById(
+                "adminTab"
+            )
+            .classList
+            .add("hidden");
+
+        return;
+
+    }
+
+
+    /* Get statistics */
+
+    const {
+        data: stats,
+        error: statsError
+    } =
+        await supabaseClient
+            .rpc(
+                "admin_stats"
+            );
+
+
+    if (statsError) {
+
+        console.error(
+            statsError
+        );
+
+    } else if (stats) {
+
+        document
+            .getElementById(
+                "adminTotalUsers"
+            )
+            .textContent =
+            stats.total_users ?? 0;
+
+
+        document
+            .getElementById(
+                "adminActiveUsers"
+            )
+            .textContent =
+            stats.active_users ?? 0;
+
+
+        document
+            .getElementById(
+                "adminDisabledUsers"
+            )
+            .textContent =
+            stats.disabled_users ?? 0;
+
+
+        document
+            .getElementById(
+                "adminOnlineUsers"
+            )
+            .textContent =
+            stats.online_users ?? 0;
+
+    }
+
+
+    /* Get all users */
+
+    const {
+        data: users,
+        error: usersError
+    } =
+        await supabaseClient
+            .from("profiles")
+            .select(
+                "id,email,full_name,role,status,last_seen,created_at"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (usersError) {
+
+        console.error(
+            usersError
+        );
+
+
+        document
+            .getElementById(
+                "adminUsersList"
+            )
+            .innerHTML = `
+
+                <p
+                    style="
+                        color:#a83232;
+                    "
+                >
+                    Unable to load users.
+                </p>
+
+            `;
+
+        return;
+
+    }
+
+
+    renderAdminUsers(
+        users || []
+    );
+
+}
+
+
+/* =====================================================
+   ADMIN - RENDER USERS
+===================================================== */
+
+function renderAdminUsers(
+    users
+) {
+
+    const container =
+        document
+            .getElementById(
+                "adminUsersList"
+            );
+
+
+    if (!users.length) {
+
+        container.innerHTML = `
+
+            <p
+                style="
+                    text-align:center;
+                    color:#777;
+                "
+            >
+                No registered users.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        users
+            .map(
+                user => {
+
+                    const isCurrentUser =
+                        user.id ===
+                        currentUser.id;
+
+
+                    const lastSeen =
+                        user.last_seen
+                            ? new Date(
+                                user.last_seen
+                            ).toLocaleString()
+                            : "Never";
+
+
+                    const createdAt =
+                        user.created_at
+                            ? new Date(
+                                user.created_at
+                            ).toLocaleDateString()
+                            : "Unknown";
+
+
+                    const online =
+                        user.last_seen &&
+                        (
+                            new Date() -
+                            new Date(
+                                user.last_seen
+                            )
+                        ) <
+                        5 * 60 * 1000;
+
+
+                    let actionButton =
+                        "";
+
+
+                    if (
+                        isCurrentUser
+                    ) {
+
+                        actionButton = `
+
+                            <button
+                                class="light"
+                                disabled
+                                style="
+                                    opacity:0.6;
+                                "
+                            >
+                                YOUR ACCOUNT
+                            </button>
+
+                        `;
+
+                    }
+
+                    else if (
+                        user.status ===
+                        "active"
+                    ) {
+
+                        actionButton = `
+
+                            <button
+                                class="danger"
+                                onclick="changeUserStatus(
+                                    '${user.id}',
+                                    'disabled'
+                                )"
+                            >
+                                DISABLE USER
+                            </button>
+
+                        `;
+
+                    }
+
+                    else {
+
+                        actionButton = `
+
+                            <button
+                                class="secondary"
+                                onclick="changeUserStatus(
+                                    '${user.id}',
+                                    'active'
+                                )"
+                            >
+                                REACTIVATE USER
+                            </button>
+
+                        `;
+
+                    }
+
+
+                    return `
+
+                        <div class="admin-user">
+
+                            <div
+                                class="admin-user-top"
+                            >
+
+                                <div>
+
+                                    <div
+                                        class="admin-user-name"
+                                    >
+
+                                        ${
+                                            escapeHTML(
+                                                user.full_name ||
+                                                "No name"
+                                            )
+                                        }
+
+                                    </div>
+
+
+                                    <div
+                                        class="admin-user-email"
+                                    >
+
+                                        ${
+                                            escapeHTML(
+                                                user.email ||
+                                                ""
+                                            )
+                                        }
+
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    class="admin-badge"
+                                >
+
+                                    ${
+                                        user.role ===
+                                        "admin"
+                                            ? "ADMIN"
+                                            : "USER"
+                                    }
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="admin-user-info"
+                            >
+
+                                <div>
+
+                                    Status:
+
+                                    ${
+                                        user.status ===
+                                        "active"
+
+                                            ? `
+                                                <span
+                                                    class="user-active"
+                                                >
+                                                    🟢 Active
+                                                </span>
+                                            `
+
+                                            : `
+                                                <span
+                                                    class="user-disabled"
+                                                >
+                                                    🔴 Disabled
+                                                </span>
+                                            `
+                                    }
+
+                                </div>
+
+
+                                <div>
+
+                                    Online:
+
+                                    ${
+                                        online
+                                            ? "🟢 Yes"
+                                            : "⚪ No"
+                                    }
+
+                                </div>
+
+
+                                <div>
+
+                                    Last seen:
+                                    ${
+                                        escapeHTML(
+                                            lastSeen
+                                        )
+                                    }
+
+                                </div>
+
+
+                                <div>
+
+                                    Account created:
+                                    ${
+                                        escapeHTML(
+                                            createdAt
+                                        )
+                                    }
+
+                                </div>
+
+                            </div>
+
+
+                            ${actionButton}
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   ADMIN - CHANGE USER STATUS
+===================================================== */
+
+async function changeUserStatus(
+    userId,
+    newStatus
+) {
+
+    if (!currentUser)
+        return;
+
+
+    /* Prevent disabling yourself */
+
+    if (
+        userId ===
+        currentUser.id
+    ) {
+
+        alert(
+            "You cannot disable your own admin account."
+        );
+
+        return;
+
+    }
+
+
+    const message =
+        newStatus ===
+        "disabled"
+
+            ? "Disable this user?"
+
+            : "Reactivate this user?";
+
+
+    if (
+        !confirm(message)
+    )
+        return;
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("profiles")
+            .update({
+
+                status:
+                    newStatus
+
+            })
+            .eq(
+                "id",
+                userId
+            );
+
+
+    if (error) {
+
+        alert(
+            "Could not update user: " +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        newStatus ===
+        "disabled"
+
+            ? "User has been disabled."
+
+            : "User has been reactivated."
+    );
+
+
+    await loadAdminDashboard();
+
+}
+
+
+/* =====================================================
+   START APP
+===================================================== */
+
+checkSession();
 
 </script>
 
