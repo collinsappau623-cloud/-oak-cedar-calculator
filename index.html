@@ -502,8 +502,6 @@ input:focus {
 
 <body>
 
-<!-- LOGIN -->
-
 <div id="loginScreen">
 
     <div class="login-card">
@@ -550,9 +548,6 @@ input:focus {
 
 </div>
 
-
-<!-- MAIN APP -->
-
 <div id="mainApp" style="display:none;">
 
 <div class="container">
@@ -573,7 +568,6 @@ input:focus {
 >
     LOGOUT
 </button>
-
 
 <div class="tabs">
 
@@ -608,7 +602,6 @@ input:focus {
     </button>
 
 </div>
-
 
 <!-- REVENUE -->
 
@@ -701,7 +694,6 @@ GH₵0.00
 
 </div>
 
-
 <!-- CEDI -->
 
 <div id="cedi" class="calculator">
@@ -782,7 +774,6 @@ GH₵0.00
 
 </div>
 
-
 <!-- GOODS -->
 
 <div id="goods" class="calculator">
@@ -814,7 +805,6 @@ placeholder="Price"
 </button>
 
 </div>
-
 
 <div class="card">
 
@@ -856,8 +846,8 @@ GH₵0.00
 </div>
 
 <button
-class="clear-button"
-onclick="clearQuantities()"
+    class="clear-button"
+    onclick="clearQuantities()"
 >
 CLEAR ALL QUANTITIES
 </button>
@@ -865,7 +855,6 @@ CLEAR ALL QUANTITIES
 </div>
 
 </div>
-
 
 <!-- ADMIN -->
 
@@ -883,14 +872,13 @@ Registered Users:
 </div>
 
 <button
-class="admin-refresh"
-onclick="loadAdminUsers()"
+    class="admin-refresh"
+    onclick="loadAdminUsers()"
 >
 ↻ REFRESH USERS
 </button>
 
 </div>
-
 
 <div class="card">
 
@@ -903,9 +891,9 @@ Add New User
 <label>New User Email</label>
 
 <input
-type="email"
-id="newUserEmail"
-placeholder="Enter user's email"
+    type="email"
+    id="newUserEmail"
+    placeholder="Enter user's email"
 >
 
 </div>
@@ -915,22 +903,21 @@ placeholder="Enter user's email"
 <label>New User Password</label>
 
 <input
-type="password"
-id="newUserPassword"
-placeholder="Enter user's password"
+    type="password"
+    id="newUserPassword"
+    placeholder="Enter user's password"
 >
 
 </div>
 
 <button
-class="admin-add"
-onclick="createAdminUser()"
+    class="admin-add"
+    onclick="createAdminUser()"
 >
 + ADD USER
 </button>
 
 </div>
-
 
 <div class="card">
 
@@ -954,7 +941,6 @@ Tap REFRESH USERS to load users.
 
 </div>
 
-
 <script>
 
 /* ================= SUPABASE ================= */
@@ -971,17 +957,14 @@ window.supabase.createClient(
     SUPABASE_KEY
 );
 
-
 /* ================= ADMIN EMAIL ================= */
 
 const ADMIN_EMAIL =
 "collinsappau3030@gmail.com";
 
-
 /* ================= LOGIN ================= */
 
 let loginMode = "login";
-
 
 function toggleAuthMode() {
 
@@ -1012,7 +995,6 @@ function toggleAuthMode() {
             "Create Account";
     }
 }
-
 
 async function handleAuth() {
 
@@ -1071,7 +1053,6 @@ async function handleAuth() {
     }
 }
 
-
 async function logoutUser() {
 
     await supabaseClient.auth.signOut();
@@ -1086,14 +1067,14 @@ async function logoutUser() {
         "none";
 }
 
-
 /* ================= ADMIN ACCESS ================= */
 
 async function checkAdminAccess() {
 
     const {
         data: { user }
-    } = await supabaseClient.auth.getUser();
+    } =
+        await supabaseClient.auth.getUser();
 
     const adminTab =
         document.getElementById("adminTab");
@@ -1126,7 +1107,6 @@ async function checkAdminAccess() {
         }
     }
 }
-
 
 /* ================= CHECK LOGIN ================= */
 
@@ -1165,7 +1145,6 @@ async function checkLogin() {
     }
 }
 
-
 supabaseClient.auth.onAuthStateChange(
     async function(event, session) {
 
@@ -1201,15 +1180,12 @@ supabaseClient.auth.onAuthStateChange(
     }
 );
 
-
 /* ================= SWITCH CALCULATORS ================= */
 
 function showCalculator(
     calculator,
     button
 ) {
-
-    /* Only admin can open admin */
 
     if (calculator === "admin") {
 
@@ -1256,7 +1232,6 @@ function showCalculator(
     }
 }
 
-
 /* ================= ADMIN FUNCTION ================= */
 
 async function callAdminFunction(
@@ -1295,7 +1270,7 @@ async function callAdminFunction(
         const response =
             await fetch(
                 SUPABASE_URL +
-                "/functions/v1/admin-users",
+                "/functions/v1/Admin-users",
                 {
                     method: "POST",
 
@@ -1380,7 +1355,6 @@ async function callAdminFunction(
         return null;
     }
 }
-
 
 /* ================= LOAD ADMIN USERS ================= */
 
@@ -1505,7 +1479,6 @@ async function loadAdminUsers() {
     });
 }
 
-
 /* ================= CREATE USER ================= */
 
 async function createAdminUser() {
@@ -1569,7 +1542,6 @@ async function createAdminUser() {
     loadAdminUsers();
 }
 
-
 /* ================= DELETE USER ================= */
 
 async function deleteAdminUser(
@@ -1603,7 +1575,6 @@ async function deleteAdminUser(
 
     loadAdminUsers();
 }
-
 
 /* ================= REVENUE ================= */
 
@@ -1707,7 +1678,6 @@ function calculateRevenue() {
         profit.toFixed(2);
 }
 
-
 function resetRevenue() {
 
     document
@@ -1745,7 +1715,6 @@ function resetRevenue() {
     ).innerText =
         "GH₵0.00";
 }
-
 
 /* ================= CEDI ================= */
 
@@ -1896,7 +1865,6 @@ function calculateCedi() {
         grandTotal.toFixed(2);
 }
 
-
 function resetCedi() {
 
     document
@@ -1933,7 +1901,6 @@ function resetCedi() {
         "GH₵0.00";
 }
 
-
 /* ================= GOODS ================= */
 
 let goods = [];
@@ -1953,7 +1920,6 @@ try {
 
 }
 
-
 function saveGoods() {
 
     localStorage.setItem(
@@ -1961,7 +1927,6 @@ function saveGoods() {
         JSON.stringify(goods)
     );
 }
-
 
 function addGoods() {
 
@@ -2064,7 +2029,6 @@ function addGoods() {
     ).value = "";
 }
 
-
 /* ================= DISPLAY GOODS ================= */
 
 function displayGoods() {
@@ -2166,7 +2130,6 @@ function displayGoods() {
     calculateGoodsTotal();
 }
 
-
 /* ================= UPDATE QUANTITY ================= */
 
 function updateQuantity(
@@ -2204,7 +2167,6 @@ function updateQuantity(
     calculateGoodsTotal();
 }
 
-
 /* ================= GOODS TOTAL ================= */
 
 function calculateGoodsTotal() {
@@ -2227,7 +2189,6 @@ function calculateGoodsTotal() {
         "GH₵" +
         total.toFixed(2);
 }
-
 
 /* ================= DELETE GOODS ================= */
 
@@ -2254,7 +2215,6 @@ function deleteGoods(index) {
     displayGoods();
 }
 
-
 /* ================= CLEAR QUANTITIES ================= */
 
 function clearQuantities() {
@@ -2279,7 +2239,6 @@ function clearQuantities() {
 
     displayGoods();
 }
-
 
 /* ================= PROTECT HTML ================= */
 
@@ -2307,7 +2266,6 @@ function escapeHTML(text) {
             "&#039;"
         );
 }
-
 
 /* ================= START ================= */
 
