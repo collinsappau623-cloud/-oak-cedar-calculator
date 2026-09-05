@@ -271,8 +271,7 @@ input:focus {
 }
 
 .profit-box,
-.total-money,
-.total-box {
+.total-money {
     margin-top: 15px;
     background: #24452d;
     color: white;
@@ -282,16 +281,14 @@ input:focus {
 }
 
 .profit-box small,
-.total-money small,
-.total-box small {
+.total-money small {
     display: block;
     font-size: 12px;
     margin-bottom: 5px;
 }
 
 .profit-box strong,
-.total-money strong,
-.total-box strong {
+.total-money strong {
     font-size: 25px;
 }
 
@@ -322,47 +319,74 @@ input:focus {
     white-space: nowrap;
 }
 
-/* GOODS */
+/* ================= GOODS ================= */
 
 .add-grid {
     display: grid;
-    grid-template-columns: 1fr 120px;
+    grid-template-columns: 1fr 130px;
+    gap: 10px;
+}
+
+.search-box {
+    margin-bottom: 12px;
+}
+
+.select-grid {
+    display: grid;
+    grid-template-columns: 1fr 110px;
     gap: 10px;
     margin-bottom: 10px;
 }
 
-.search-box {
-    margin-bottom: 15px;
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccd5cc;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    background: #fafcfa;
+}
+
+select:focus {
+    border-color: #527a58;
+}
+
+.add-button {
+    background: #527a58;
+    margin-top: 10px;
 }
 
 .goods-header {
     display: grid;
-    grid-template-columns: 1.4fr 80px 65px 95px 35px;
+    grid-template-columns: 1.5fr 80px 65px 90px 25px;
     gap: 5px;
-    padding: 10px 5px;
-    background: #edf3ed;
-    border-radius: 8px;
+    background: #24452d;
+    color: white;
+    padding: 9px 5px;
+    border-radius: 7px;
     font-size: 10px;
     font-weight: bold;
-    color: #24452d;
+    text-align: center;
 }
 
-.good-row {
+.goods-row {
     display: grid;
-    grid-template-columns: 1.4fr 80px 65px 95px 35px;
+    grid-template-columns: 1.5fr 80px 65px 90px 25px;
     gap: 5px;
     align-items: center;
-    padding: 9px 5px;
-    border-bottom: 1px solid #e3e8e3;
+    padding: 8px 5px;
+    border-bottom: 1px solid #e1e6e1;
 }
 
-.good-name {
+.goods-name {
     font-size: 13px;
     font-weight: bold;
 }
 
-.price {
+.goods-price {
     font-size: 12px;
+    text-align: center;
 }
 
 .quantity {
@@ -372,24 +396,131 @@ input:focus {
 }
 
 .item-total {
-    text-align: right;
-    font-weight: bold;
     font-size: 12px;
+    font-weight: bold;
+    text-align: right;
 }
 
-.delete-button,
-.admin-delete {
+.delete-good {
     border: none;
+    background: none;
+    color: #a32929;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.total-box {
+    background: #f1f5f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.total-box small {
+    display: block;
+    color: #555;
+}
+
+.total-box strong {
+    display: block;
+    color: #24452d;
+    font-size: 23px;
+    margin-top: 4px;
+}
+
+.calculate-goods-button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 9px;
+    background: #24452d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.save-record-button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #24452d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.save-record-button:active {
+    transform: scale(0.98);
+}
+
+.no-records {
+    text-align: center;
+    padding: 20px 10px;
+    color: #777;
+    font-size: 14px;
+}
+
+.no-selected {
+    text-align: center;
+    padding: 18px 8px;
+    color: #777;
+    font-size: 13px;
+}
+
+/* RECORDS */
+
+.record-card {
+    background: #fafcfa;
+    border: 1px solid #dce4dc;
+    border-radius: 12px;
+    padding: 13px;
+    margin-bottom: 10px;
+}
+
+.record-date {
+    color: #24452d;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.record-total {
+    background: #eef5ee;
+    border-radius: 9px;
+    padding: 11px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #24452d;
+    margin-bottom: 10px;
+}
+
+.record-goods {
+    border-top: 1px solid #e0e6e0;
+    padding-top: 8px;
+}
+
+.record-good-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 5px 0;
+    gap: 10px;
+}
+
+.record-delete {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
     background: #f3dddd;
     color: #a32929;
-    border-radius: 7px;
-    cursor: pointer;
     font-weight: bold;
-}
-
-.delete-button {
-    width: 30px;
-    height: 30px;
+    cursor: pointer;
 }
 
 /* ADMIN */
@@ -478,12 +609,12 @@ input:focus {
     }
 
     .goods-header,
-    .good-row {
-        grid-template-columns: 1.3fr 65px 55px 80px 30px;
+    .goods-row {
+        grid-template-columns: 1.3fr 65px 55px 80px 20px;
     }
 
-    .good-name,
-    .price,
+    .goods-name,
+    .goods-price,
     .item-total {
         font-size: 11px;
     }
@@ -495,6 +626,11 @@ input:focus {
     .add-grid {
         grid-template-columns: 1fr 100px;
     }
+
+    .select-grid {
+        grid-template-columns: 1fr 90px;
+    }
+
 }
 
 </style>
@@ -548,6 +684,7 @@ input:focus {
 
 </div>
 
+
 <div id="mainApp" style="display:none;">
 
 <div class="container">
@@ -562,12 +699,14 @@ input:focus {
 
 </div>
 
+
 <button
     class="logout-button"
     onclick="logoutUser()"
 >
     LOGOUT
 </button>
+
 
 <div class="tabs">
 
@@ -603,7 +742,8 @@ input:focus {
 
 </div>
 
-<!-- REVENUE -->
+
+<!-- ================= REVENUE ================= -->
 
 <div id="revenue" class="calculator active">
 
@@ -648,11 +788,17 @@ Revenue Calculator
 <input type="number" id="expenses" placeholder="Enter amount">
 </div>
 
-<button class="calculate-btn" onclick="calculateRevenue()">
+<button
+class="calculate-btn"
+onclick="calculateRevenue()"
+>
 CALCULATE REVENUE
 </button>
 
-<button class="reset-btn" onclick="resetRevenue()">
+<button
+class="reset-btn"
+onclick="resetRevenue()"
+>
 RESET
 </button>
 
@@ -694,7 +840,8 @@ GH₵0.00
 
 </div>
 
-<!-- CEDI -->
+
+<!-- ================= CEDI ================= -->
 
 <div id="cedi" class="calculator">
 
@@ -752,11 +899,17 @@ Cedi Calculator
 <div class="result" id="total1">GH₵0.00</div>
 </div>
 
-<button class="calculate-btn" onclick="calculateCedi()">
+<button
+class="calculate-btn"
+onclick="calculateCedi()"
+>
 CALCULATE TOTAL
 </button>
 
-<button class="reset-btn" onclick="resetCedi()">
+<button
+class="reset-btn"
+onclick="resetCedi()"
+>
 RESET
 </button>
 
@@ -774,7 +927,8 @@ GH₵0.00
 
 </div>
 
-<!-- GOODS -->
+
+<!-- ================= GOODS ================= -->
 
 <div id="goods" class="calculator">
 
@@ -800,44 +954,63 @@ placeholder="Price"
 
 </div>
 
-<button class="add-button" onclick="addGoods()">
+<button
+class="add-button"
+onclick="addGoods()"
+>
 + ADD GOODS
 </button>
 
 </div>
 
+
 <div class="card">
 
 <div class="section-title">
-Goods & Quantity
+Select Goods & Enter Quantity
 </div>
 
-<div class="search-box">
+<div class="select-grid">
+
+<select id="savedGoodSelect">
+
+<option value="">
+Select saved goods
+</option>
+
+</select>
 
 <input
-type="text"
-id="search"
-placeholder="Search goods or type first letter..."
-oninput="displayGoods()"
+type="number"
+id="newQuantity"
+min="1"
+placeholder="Qty"
 >
 
 </div>
 
-<div class="goods-header">
+<button
+class="add-button"
+onclick="addQuantityToList()"
+>
++ ADD QUANTITY
+</button>
 
-<div>GOODS</div>
-<div>PRICE</div>
-<div>QTY</div>
-<div>TOTAL</div>
-<div></div>
+
+<div id="goodsList">
+
+<div class="no-selected">
+Enter a quantity for a saved good to add it here.
+</div>
 
 </div>
 
-<div id="goodsList"></div>
 
 <div class="total-box">
 
-<small>TOTAL GOODS VALUE</small>
+<small>
+TOTAL GOODS VALUE
+</small>
 
 <strong id="goodsGrandTotal">
 GH₵0.00
@@ -845,18 +1018,47 @@ GH₵0.00
 
 </div>
 
+
 <button
-    class="clear-button"
-    onclick="clearQuantities()"
+class="calculate-goods-button"
+onclick="calculateGoodsTotal()"
+>
+CALCULATE TOTAL
+</button>
+
+
+<button
+class="save-record-button"
+onclick="saveGoodsRecord()"
+>
+SAVE RECORD
+</button>
+
+
+<button
+class="clear-button"
+onclick="clearQuantities()"
 >
 CLEAR ALL QUANTITIES
 </button>
 
 </div>
 
+
+<div class="card">
+
+<div class="section-title">
+Saved Records
 </div>
 
-<!-- ADMIN -->
+<div id="recordsList"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================= ADMIN ================= -->
 
 <div id="admin" class="calculator">
 
@@ -872,13 +1074,14 @@ Registered Users:
 </div>
 
 <button
-    class="admin-refresh"
-    onclick="loadAdminUsers()"
+class="admin-refresh"
+onclick="loadAdminUsers()"
 >
 ↻ REFRESH USERS
 </button>
 
 </div>
+
 
 <div class="card">
 
@@ -891,9 +1094,9 @@ Add New User
 <label>New User Email</label>
 
 <input
-    type="email"
-    id="newUserEmail"
-    placeholder="Enter user's email"
+type="email"
+id="newUserEmail"
+placeholder="Enter user's email"
 >
 
 </div>
@@ -903,21 +1106,22 @@ Add New User
 <label>New User Password</label>
 
 <input
-    type="password"
-    id="newUserPassword"
-    placeholder="Enter user's password"
+type="password"
+id="newUserPassword"
+placeholder="Enter user's password"
 >
 
 </div>
 
 <button
-    class="admin-add"
-    onclick="createAdminUser()"
+class="admin-add"
+onclick="createAdminUser()"
 >
 + ADD USER
 </button>
 
 </div>
+
 
 <div class="card">
 
@@ -937,9 +1141,11 @@ Tap REFRESH USERS to load users.
 
 </div>
 
+
 </div>
 
 </div>
+
 
 <script>
 
@@ -957,14 +1163,17 @@ window.supabase.createClient(
     SUPABASE_KEY
 );
 
+
 /* ================= ADMIN EMAIL ================= */
 
 const ADMIN_EMAIL =
 "collinsappau3030@gmail.com";
 
+
 /* ================= LOGIN ================= */
 
 let loginMode = "login";
+
 
 function toggleAuthMode() {
 
@@ -993,8 +1202,11 @@ function toggleAuthMode() {
 
         document.getElementById("switchText").innerText =
             "Create Account";
+
     }
+
 }
+
 
 async function handleAuth() {
 
@@ -1014,44 +1226,60 @@ async function handleAuth() {
         );
 
         return;
+
     }
+
 
     if (loginMode === "login") {
 
         const { error } =
             await supabaseClient.auth.signInWithPassword({
+
                 email: email,
+
                 password: password
+
             });
+
 
         if (error) {
 
             alert(error.message);
 
             return;
+
         }
 
     } else {
 
         const { error } =
             await supabaseClient.auth.signUp({
+
                 email: email,
+
                 password: password
+
             });
+
 
         if (error) {
 
             alert(error.message);
 
             return;
+
         }
+
 
         alert(
             "Account created successfully. " +
             "If email confirmation is required, check your email."
         );
+
     }
+
 }
+
 
 async function logoutUser() {
 
@@ -1065,7 +1293,9 @@ async function logoutUser() {
 
     document.getElementById("adminTab").style.display =
         "none";
+
 }
+
 
 /* ================= ADMIN ACCESS ================= */
 
@@ -1076,8 +1306,10 @@ async function checkAdminAccess() {
     } =
         await supabaseClient.auth.getUser();
 
+
     const adminTab =
         document.getElementById("adminTab");
+
 
     if (
         user &&
@@ -1104,9 +1336,13 @@ async function checkAdminAccess() {
                     ".tab:not(#adminTab)"
                 )
             );
+
         }
+
     }
+
 }
+
 
 /* ================= CHECK LOGIN ================= */
 
@@ -1116,6 +1352,7 @@ async function checkLogin() {
         data: { session }
     } =
         await supabaseClient.auth.getSession();
+
 
     if (session) {
 
@@ -1142,8 +1379,11 @@ async function checkLogin() {
         document.getElementById(
             "adminTab"
         ).style.display = "none";
+
     }
+
 }
+
 
 supabaseClient.auth.onAuthStateChange(
     async function(event, session) {
@@ -1176,9 +1416,12 @@ supabaseClient.auth.onAuthStateChange(
             document.getElementById(
                 "adminTab"
             ).style.display = "none";
+
         }
+
     }
 );
+
 
 /* ================= SWITCH CALCULATORS ================= */
 
@@ -1201,8 +1444,11 @@ function showCalculator(
             );
 
             return;
+
         }
+
     }
+
 
     document
     .querySelectorAll(".calculator")
@@ -1212,9 +1458,11 @@ function showCalculator(
 
     });
 
+
     document
     .getElementById(calculator)
     .classList.add("active");
+
 
     document
     .querySelectorAll(".tab")
@@ -1224,13 +1472,18 @@ function showCalculator(
 
     });
 
+
     button.classList.add("active");
+
 
     if (calculator === "admin") {
 
         loadAdminUsers();
+
     }
+
 }
+
 
 /* ================= ADMIN FUNCTION ================= */
 
@@ -1247,6 +1500,7 @@ async function callAdminFunction(
         } =
             await supabaseClient.auth.getSession();
 
+
         if (sessionError) {
 
             console.error(sessionError);
@@ -1256,7 +1510,9 @@ async function callAdminFunction(
             );
 
             return null;
+
         }
+
 
         if (!session) {
 
@@ -1265,46 +1521,60 @@ async function callAdminFunction(
             );
 
             return null;
+
         }
+
 
         const response =
             await fetch(
                 SUPABASE_URL +
                 "/functions/v1/Admin-users",
                 {
+
                     method: "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json",
 
                         "Authorization":
                             "Bearer " +
                             session.access_token
+
                     },
 
                     body:
                         JSON.stringify({
+
                             action: action,
+
                             ...extraData
+
                         })
+
                 }
             );
 
+
         const text =
             await response.text();
+
 
         console.log(
             "Admin Function Status:",
             response.status
         );
 
+
         console.log(
             "Admin Function Response:",
             text
         );
 
+
         let data;
+
 
         try {
 
@@ -1316,7 +1586,9 @@ async function callAdminFunction(
             data = {
                 error: text
             };
+
         }
+
 
         if (!response.ok) {
 
@@ -1329,14 +1601,18 @@ async function callAdminFunction(
             );
 
             return null;
+
         }
+
 
         if (data.error) {
 
             alert(data.error);
 
             return null;
+
         }
+
 
         return data;
 
@@ -1347,14 +1623,19 @@ async function callAdminFunction(
             error
         );
 
+
         alert(
             "Failed to connect to the Admin Function.\n\n" +
             error.message
         );
 
+
         return null;
+
     }
+
 }
+
 
 /* ================= LOAD ADMIN USERS ================= */
 
@@ -1365,13 +1646,16 @@ async function loadAdminUsers() {
             "adminUsersList"
         );
 
+
     list.innerHTML =
         '<div class="empty">Loading users...</div>';
+
 
     const data =
         await callAdminFunction(
             "list"
         );
+
 
     if (!data) {
 
@@ -1379,15 +1663,19 @@ async function loadAdminUsers() {
             '<div class="empty">Unable to load users.</div>';
 
         return;
+
     }
+
 
     const users =
         data.users || [];
+
 
     document.getElementById(
         "userCount"
     ).innerText =
         users.length;
+
 
     if (users.length === 0) {
 
@@ -1395,17 +1683,22 @@ async function loadAdminUsers() {
             '<div class="empty">No users found.</div>';
 
         return;
+
     }
 
+
     list.innerHTML = "";
+
 
     users.forEach(function(user) {
 
         const div =
             document.createElement("div");
 
+
         div.className =
             "admin-user";
+
 
         const created =
             user.created_at
@@ -1414,6 +1707,7 @@ async function loadAdminUsers() {
             ).toLocaleString()
             : "Unknown";
 
+
         const lastLogin =
             user.last_sign_in_at
             ? new Date(
@@ -1421,10 +1715,12 @@ async function loadAdminUsers() {
             ).toLocaleString()
             : "Never";
 
+
         const isAdmin =
             user.email &&
             user.email.toLowerCase() ===
             ADMIN_EMAIL.toLowerCase();
+
 
         div.innerHTML = `
 
@@ -1445,13 +1741,16 @@ async function loadAdminUsers() {
 
             </div>
 
+
             <div class="admin-date">
                 Created: ${escapeHTML(created)}
             </div>
 
+
             <div class="admin-last-login">
                 Last login: ${escapeHTML(lastLogin)}
             </div>
+
 
             ${
                 isAdmin
@@ -1474,10 +1773,13 @@ async function loadAdminUsers() {
 
         `;
 
+
         list.appendChild(div);
 
     });
+
 }
+
 
 /* ================= CREATE USER ================= */
 
@@ -1490,11 +1792,13 @@ async function createAdminUser() {
         .value
         .trim();
 
+
     const password =
         document.getElementById(
             "newUserPassword"
         )
         .value;
+
 
     if (!email || !password) {
 
@@ -1503,7 +1807,9 @@ async function createAdminUser() {
         );
 
         return;
+
     }
+
 
     if (password.length < 6) {
 
@@ -1512,35 +1818,49 @@ async function createAdminUser() {
         );
 
         return;
+
     }
+
 
     const data =
         await callAdminFunction(
             "create",
             {
+
                 email: email,
+
                 password: password
+
             }
         );
 
+
     if (!data) {
+
         return;
+
     }
+
 
     alert(
         "User created successfully."
     );
 
+
     document.getElementById(
         "newUserEmail"
     ).value = "";
+
 
     document.getElementById(
         "newUserPassword"
     ).value = "";
 
+
     loadAdminUsers();
+
 }
+
 
 /* ================= DELETE USER ================= */
 
@@ -1553,28 +1873,41 @@ async function deleteAdminUser(
             "Are you sure you want to delete this user?"
         );
 
+
     if (!answer) {
+
         return;
+
     }
+
 
     const data =
         await callAdminFunction(
             "delete",
             {
+
                 userId: userId
+
             }
         );
 
+
     if (!data) {
+
         return;
+
     }
+
 
     alert(
         "User deleted successfully."
     );
 
+
     loadAdminUsers();
+
 }
+
 
 /* ================= REVENUE ================= */
 
@@ -1587,12 +1920,14 @@ function calculateRevenue() {
             ).value
         ) || 0;
 
+
     let bank2 =
         Number(
             document.getElementById(
                 "bank2"
             ).value
         ) || 0;
+
 
     let bank3 =
         Number(
@@ -1601,12 +1936,14 @@ function calculateRevenue() {
             ).value
         ) || 0;
 
+
     let cash =
         Number(
             document.getElementById(
                 "cash"
             ).value
         ) || 0;
+
 
     let totalGoods =
         Number(
@@ -1615,12 +1952,14 @@ function calculateRevenue() {
             ).value
         ) || 0;
 
+
     let remainingGoods =
         Number(
             document.getElementById(
                 "remainingGoods"
             ).value
         ) || 0;
+
 
     let expenses =
         Number(
@@ -1629,23 +1968,31 @@ function calculateRevenue() {
             ).value
         ) || 0;
 
+
     let totalBanks =
         bank1 + bank2 + bank3;
+
 
     let totalCash =
         totalBanks + cash;
 
+
     let goodsAfterExpenses =
         totalGoods - expenses;
+
 
     let profit =
         totalCash +
         remainingGoods -
         goodsAfterExpenses;
 
+
     if (profit < 0) {
+
         profit = 0;
+
     }
+
 
     document.getElementById(
         "totalBanks"
@@ -1653,11 +2000,13 @@ function calculateRevenue() {
         "GH₵" +
         totalBanks.toFixed(2);
 
+
     document.getElementById(
         "totalCash"
     ).innerText =
         "GH₵" +
         totalCash.toFixed(2);
+
 
     document.getElementById(
         "showRemainingGoods"
@@ -1665,18 +2014,22 @@ function calculateRevenue() {
         "GH₵" +
         remainingGoods.toFixed(2);
 
+
     document.getElementById(
         "goodsAfterExpenses"
     ).innerText =
         "GH₵" +
         goodsAfterExpenses.toFixed(2);
 
+
     document.getElementById(
         "profit"
     ).innerText =
         "GH₵" +
         profit.toFixed(2);
+
 }
+
 
 function resetRevenue() {
 
@@ -1690,31 +2043,38 @@ function resetRevenue() {
 
     });
 
+
     document.getElementById(
         "totalBanks"
     ).innerText =
         "GH₵0.00";
+
 
     document.getElementById(
         "totalCash"
     ).innerText =
         "GH₵0.00";
 
+
     document.getElementById(
         "showRemainingGoods"
     ).innerText =
         "GH₵0.00";
+
 
     document.getElementById(
         "goodsAfterExpenses"
     ).innerText =
         "GH₵0.00";
 
+
     document.getElementById(
         "profit"
     ).innerText =
         "GH₵0.00";
+
 }
+
 
 /* ================= CEDI ================= */
 
@@ -1727,12 +2087,14 @@ function calculateCedi() {
             ).value
         ) || 0;
 
+
     let money100 =
         Number(
             document.getElementById(
                 "money100"
             ).value
         ) || 0;
+
 
     let money50 =
         Number(
@@ -1741,12 +2103,14 @@ function calculateCedi() {
             ).value
         ) || 0;
 
+
     let money20 =
         Number(
             document.getElementById(
                 "money20"
             ).value
         ) || 0;
+
 
     let money10 =
         Number(
@@ -1755,12 +2119,14 @@ function calculateCedi() {
             ).value
         ) || 0;
 
+
     let money5 =
         Number(
             document.getElementById(
                 "money5"
             ).value
         ) || 0;
+
 
     let money2 =
         Number(
@@ -1769,6 +2135,7 @@ function calculateCedi() {
             ).value
         ) || 0;
 
+
     let money1 =
         Number(
             document.getElementById(
@@ -1776,29 +2143,38 @@ function calculateCedi() {
             ).value
         ) || 0;
 
+
     let total200 =
         money200 * 200;
+
 
     let total100 =
         money100 * 100;
 
+
     let total50 =
         money50 * 50;
+
 
     let total20 =
         money20 * 20;
 
+
     let total10 =
         money10 * 10;
+
 
     let total5 =
         money5 * 5;
 
+
     let total2 =
         money2 * 2;
 
+
     let total1 =
         money1;
+
 
     document.getElementById(
         "total200"
@@ -1806,11 +2182,13 @@ function calculateCedi() {
         "GH₵" +
         total200.toFixed(2);
 
+
     document.getElementById(
         "total100"
     ).innerText =
         "GH₵" +
         total100.toFixed(2);
+
 
     document.getElementById(
         "total50"
@@ -1818,11 +2196,13 @@ function calculateCedi() {
         "GH₵" +
         total50.toFixed(2);
 
+
     document.getElementById(
         "total20"
     ).innerText =
         "GH₵" +
         total20.toFixed(2);
+
 
     document.getElementById(
         "total10"
@@ -1830,11 +2210,13 @@ function calculateCedi() {
         "GH₵" +
         total10.toFixed(2);
 
+
     document.getElementById(
         "total5"
     ).innerText =
         "GH₵" +
         total5.toFixed(2);
+
 
     document.getElementById(
         "total2"
@@ -1842,11 +2224,13 @@ function calculateCedi() {
         "GH₵" +
         total2.toFixed(2);
 
+
     document.getElementById(
         "total1"
     ).innerText =
         "GH₵" +
         total1.toFixed(2);
+
 
     let grandTotal =
         total200 +
@@ -1858,12 +2242,15 @@ function calculateCedi() {
         total2 +
         total1;
 
+
     document.getElementById(
         "grandTotal"
     ).innerText =
         "GH₵" +
         grandTotal.toFixed(2);
+
 }
+
 
 function resetCedi() {
 
@@ -1876,6 +2263,7 @@ function resetCedi() {
         input.value = "";
 
     });
+
 
     [
         "total200",
@@ -1895,15 +2283,25 @@ function resetCedi() {
 
     });
 
+
     document.getElementById(
         "grandTotal"
     ).innerText =
         "GH₵0.00";
+
 }
 
-/* ================= GOODS ================= */
+
+/* =====================================================
+   GOODS CALCULATOR
+   THIS SECTION IS FROM YOUR SECOND HTML
+   ===================================================== */
+
+
+/* ================= GOODS STORAGE ================= */
 
 let goods = [];
+
 
 try {
 
@@ -1920,13 +2318,25 @@ try {
 
 }
 
+
+/* ================= CURRENT GOODS ================= */
+
+let currentGoods = [];
+
+
+/* ================= SAVE GOODS ================= */
+
 function saveGoods() {
 
     localStorage.setItem(
         "oakCedarGoods",
         JSON.stringify(goods)
     );
+
 }
+
+
+/* ================= ADD NEW GOOD ================= */
 
 function addGoods() {
 
@@ -1937,12 +2347,14 @@ function addGoods() {
         .value
         .trim();
 
+
     let price =
         Number(
             document.getElementById(
                 "goodsPrice"
             ).value
         );
+
 
     if (name === "") {
 
@@ -1951,11 +2363,13 @@ function addGoods() {
         );
 
         return;
+
     }
 
+
     if (
-        price <= 0 ||
-        isNaN(price)
+        isNaN(price) ||
+        price <= 0
     ) {
 
         alert(
@@ -1963,7 +2377,9 @@ function addGoods() {
         );
 
         return;
+
     }
+
 
     let existing =
         goods.find(function(item) {
@@ -1974,14 +2390,15 @@ function addGoods() {
 
         });
 
+
     if (existing) {
 
         let answer =
             confirm(
-                name +
-                " already exists.\n\n" +
+                "This good already exists.\n\n" +
                 "Do you want to update its price?"
             );
+
 
         if (answer) {
 
@@ -1990,288 +2407,864 @@ function addGoods() {
 
             saveGoods();
 
-            displayGoods();
+            loadGoodsSelect();
 
-            document.getElementById(
-                "goodsName"
-            ).value = "";
-
-            document.getElementById(
-                "goodsPrice"
-            ).value = "";
         }
 
         return;
+
     }
+
 
     goods.push({
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
-        name: name,
+        name:
+            name,
 
-        price: price,
-
-        quantity: 0
+        price:
+            price
 
     });
 
+
     saveGoods();
 
-    displayGoods();
 
     document.getElementById(
         "goodsName"
     ).value = "";
 
+
     document.getElementById(
         "goodsPrice"
     ).value = "";
+
+
+    loadGoodsSelect();
+
+
+    alert(
+        name +
+        " has been saved successfully."
+    );
+
 }
 
-/* ================= DISPLAY GOODS ================= */
 
-function displayGoods() {
+/* ================= LOAD GOODS ================= */
+
+function loadGoodsSelect() {
+
+    let select =
+        document.getElementById(
+            "savedGoodSelect"
+        );
+
+
+    if (!select) {
+
+        return;
+
+    }
+
+
+    select.innerHTML =
+        '<option value="">Select saved goods</option>';
+
+
+    goods.forEach(function(item, index) {
+
+        let option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            index;
+
+
+        option.textContent =
+            item.name +
+            " — GH₵" +
+            Number(item.price).toFixed(2);
+
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+/* ================= ADD QUANTITY ================= */
+
+function addQuantityToList() {
+
+    let selectedIndex =
+        document.getElementById(
+            "savedGoodSelect"
+        ).value;
+
+
+    let quantity =
+        Number(
+            document.getElementById(
+                "newQuantity"
+            ).value
+        );
+
+
+    if (selectedIndex === "") {
+
+        alert(
+            "Please select a saved good."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        isNaN(quantity) ||
+        quantity <= 0
+    ) {
+
+        alert(
+            "Please enter a quantity greater than 0."
+        );
+
+        return;
+
+    }
+
+
+    quantity =
+        Math.floor(quantity);
+
+
+    let storedGood =
+        goods[
+            Number(selectedIndex)
+        ];
+
+
+    let existing =
+        currentGoods.find(function(item) {
+
+            return item.goodsId ===
+                storedGood.id;
+
+        });
+
+
+    if (existing) {
+
+        existing.quantity +=
+            quantity;
+
+    } else {
+
+        currentGoods.push({
+
+            goodsId:
+                storedGood.id,
+
+            name:
+                storedGood.name,
+
+            price:
+                Number(storedGood.price),
+
+            quantity:
+                quantity
+
+        });
+
+    }
+
+
+    document.getElementById(
+        "newQuantity"
+    ).value = "";
+
+
+    document.getElementById(
+        "savedGoodSelect"
+    ).value = "";
+
+
+    displayCurrentGoods();
+
+
+    calculateGoodsTotal();
+
+}
+
+
+/* ================= DISPLAY CURRENT GOODS ================= */
+
+function displayCurrentGoods() {
 
     let list =
         document.getElementById(
             "goodsList"
         );
 
-    let search =
-        document.getElementById(
-            "search"
-        )
-        .value
-        .toLowerCase()
-        .trim();
+
+    if (!list) {
+
+        return;
+
+    }
+
 
     list.innerHTML = "";
 
-    let filtered =
-        goods.filter(function(item) {
 
-            return item.name
-                .toLowerCase()
-                .startsWith(search);
-
-        });
-
-    if (filtered.length === 0) {
+    if (
+        currentGoods.length === 0
+    ) {
 
         list.innerHTML =
-            '<div class="empty">No goods found.</div>';
+            '<div class="no-selected">' +
+            'Enter a quantity for a saved good to add it here.' +
+            '</div>';
 
-        calculateGoodsTotal();
+        document.getElementById(
+            "goodsGrandTotal"
+        ).innerText =
+            "GH₵0.00";
 
         return;
+
     }
 
-    filtered.forEach(function(item) {
 
-        let index =
-            goods.indexOf(item);
+    /* HEADER */
+
+    let header =
+        document.createElement(
+            "div"
+        );
+
+
+    header.className =
+        "goods-header";
+
+
+    header.innerHTML = `
+
+        <div>GOODS</div>
+
+        <div>PRICE</div>
+
+        <div>QTY</div>
+
+        <div>TOTAL</div>
+
+        <div></div>
+
+    `;
+
+
+    list.appendChild(header);
+
+
+    currentGoods.forEach(function(
+        item,
+        index
+    ) {
 
         let row =
             document.createElement(
                 "div"
             );
 
+
         row.className =
-            "good-row";
+            "goods-row";
+
+
+        let lineTotal =
+            Number(item.price) *
+            Math.floor(
+                Number(item.quantity) || 0
+            );
+
 
         row.innerHTML = `
 
-            <div class="good-name">
+            <div class="goods-name">
                 ${escapeHTML(item.name)}
             </div>
 
-            <div class="price">
+            <div class="goods-price">
                 GH₵${Number(item.price).toFixed(2)}
             </div>
 
-            <div>
-
-                <input
-                    class="quantity"
-                    type="number"
-                    min="0"
-                    value="${item.quantity || ""}"
-                    placeholder="0"
-                    onchange="updateQuantity(${index}, this.value)"
-                >
-
-            </div>
+            <input
+                class="quantity"
+                type="number"
+                min="1"
+                step="1"
+                value="${Math.floor(item.quantity)}"
+                onchange="changeCurrentQuantity(${index}, this.value)"
+            >
 
             <div
                 class="item-total"
-                id="itemTotal${index}"
+                id="currentItemTotal${index}"
             >
-                GH₵${
-                    (
-                        item.price *
-                        (item.quantity || 0)
-                    ).toFixed(2)
-                }
+                GH₵${lineTotal.toFixed(2)}
             </div>
 
             <button
-                class="delete-button"
-                onclick="deleteGoods(${index})"
+                class="delete-good"
+                onclick="deleteCurrentGood(${index})"
             >
                 ×
             </button>
 
         `;
 
+
         list.appendChild(row);
+
     });
 
-    calculateGoodsTotal();
 }
 
-/* ================= UPDATE QUANTITY ================= */
 
-function updateQuantity(
+/* ================= CHANGE QUANTITY ================= */
+
+function changeCurrentQuantity(
     index,
     value
 ) {
 
     let quantity =
-        Number(value) || 0;
+        Number(value);
 
-    if (quantity < 0) {
-        quantity = 0;
+
+    if (
+        isNaN(quantity) ||
+        quantity <= 0
+    ) {
+
+        deleteCurrentGood(index);
+
+        return;
+
     }
 
-    goods[index].quantity =
-        quantity;
 
-    saveGoods();
+    currentGoods[index].quantity =
+        Math.floor(quantity);
 
-    let itemTotal =
-        document.getElementById(
-            "itemTotal" + index
-        );
 
-    if (itemTotal) {
-
-        itemTotal.innerText =
-            "GH₵" +
-            (
-                goods[index].price *
-                quantity
-            ).toFixed(2);
-    }
+    displayCurrentGoods();
 
     calculateGoodsTotal();
+
 }
 
-/* ================= GOODS TOTAL ================= */
+
+/* ================= DELETE CURRENT GOOD ================= */
+
+function deleteCurrentGood(index) {
+
+    currentGoods.splice(
+        index,
+        1
+    );
+
+
+    displayCurrentGoods();
+
+    calculateGoodsTotal();
+
+}
+
+
+/* ================= CALCULATE GOODS TOTAL ================= */
 
 function calculateGoodsTotal() {
 
     let total = 0;
 
-    goods.forEach(function(item) {
+
+    currentGoods.forEach(function(item) {
 
         let quantity =
-            Number(item.quantity) || 0;
+            Math.floor(
+                Number(item.quantity) || 0
+            );
+
+
+        let lineTotal =
+            Number(item.price) *
+            quantity;
+
 
         total +=
-            item.price *
-            quantity;
+            lineTotal;
+
     });
+
+
+    currentGoods.forEach(function(
+        item,
+        index
+    ) {
+
+        let itemTotal =
+            document.getElementById(
+                "currentItemTotal" +
+                index
+            );
+
+
+        if (itemTotal) {
+
+            itemTotal.innerText =
+                "GH₵" +
+                (
+                    Number(item.price) *
+                    Math.floor(
+                        Number(item.quantity) || 0
+                    )
+                ).toFixed(2);
+
+        }
+
+    });
+
 
     document.getElementById(
         "goodsGrandTotal"
     ).innerText =
         "GH₵" +
         total.toFixed(2);
+
+
+    return total;
+
 }
 
-/* ================= DELETE GOODS ================= */
-
-function deleteGoods(index) {
-
-    let answer =
-        confirm(
-            "Are you sure you want to delete " +
-            goods[index].name +
-            "?"
-        );
-
-    if (!answer) {
-        return;
-    }
-
-    goods.splice(
-        index,
-        1
-    );
-
-    saveGoods();
-
-    displayGoods();
-}
 
 /* ================= CLEAR QUANTITIES ================= */
 
 function clearQuantities() {
 
+    if (
+        currentGoods.length === 0
+    ) {
+
+        alert(
+            "There are no quantities to clear."
+        );
+
+        return;
+
+    }
+
+
     let answer =
         confirm(
             "Clear all quantities?\n\n" +
-            "Your goods and prices will NOT be deleted."
+            "Your saved goods and prices will NOT be deleted."
         );
 
+
     if (!answer) {
+
         return;
+
     }
 
-    goods.forEach(function(item) {
 
-        item.quantity = 0;
+    currentGoods = [];
+
+
+    document.getElementById(
+        "goodsGrandTotal"
+    ).innerText =
+        "GH₵0.00";
+
+
+    displayCurrentGoods();
+
+}
+
+
+/* ================= SAVED RECORDS ================= */
+
+let records = [];
+
+
+try {
+
+    records =
+        JSON.parse(
+            localStorage.getItem(
+                "oakCedarGoodsRecords"
+            )
+        ) || [];
+
+} catch(error) {
+
+    records = [];
+
+}
+
+
+/* ================= SAVE RECORDS ================= */
+
+function saveRecords() {
+
+    localStorage.setItem(
+        "oakCedarGoodsRecords",
+        JSON.stringify(records)
+    );
+
+}
+
+
+/* ================= SAVE RECORD ================= */
+
+function saveGoodsRecord() {
+
+    if (
+        currentGoods.length === 0
+    ) {
+
+        alert(
+            "Please enter a quantity for at least one good before saving."
+        );
+
+        return;
+
+    }
+
+
+    let total =
+        calculateGoodsTotal();
+
+
+    let selectedGoods =
+        currentGoods.map(function(item) {
+
+            let quantity =
+                Math.floor(
+                    Number(item.quantity)
+                );
+
+
+            return {
+
+                name:
+                    item.name,
+
+                price:
+                    Number(item.price),
+
+                quantity:
+                    quantity,
+
+                total:
+                    Number(item.price) *
+                    quantity
+
+            };
+
+        });
+
+
+    let now =
+        new Date();
+
+
+    let record = {
+
+        id:
+            Date.now(),
+
+        date:
+            now.toLocaleDateString(
+                "en-GH",
+                {
+
+                    day:
+                        "2-digit",
+
+                    month:
+                        "2-digit",
+
+                    year:
+                        "numeric"
+
+                }
+            ),
+
+        time:
+            now.toLocaleTimeString(
+                "en-GH",
+                {
+
+                    hour:
+                        "2-digit",
+
+                    minute:
+                        "2-digit"
+
+                }
+            ),
+
+        goods:
+            selectedGoods,
+
+        total:
+            total
+
+    };
+
+
+    records.unshift(
+        record
+    );
+
+
+    saveRecords();
+
+    displayRecords();
+
+
+    alert(
+        "Record saved successfully."
+    );
+
+}
+
+
+/* ================= DISPLAY RECORDS ================= */
+
+function displayRecords() {
+
+    let list =
+        document.getElementById(
+            "recordsList"
+        );
+
+
+    if (!list) {
+
+        return;
+
+    }
+
+
+    if (
+        records.length === 0
+    ) {
+
+        list.innerHTML =
+            '<div class="no-records">' +
+            'No saved records yet.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    records.forEach(function(
+        record,
+        index
+    ) {
+
+        let card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "record-card";
+
+
+        let goodsHTML =
+            "";
+
+
+        record.goods.forEach(
+            function(item) {
+
+                goodsHTML += `
+
+                    <div class="record-good-line">
+
+                        <span>
+
+                            ${escapeHTML(
+                                item.name
+                            )}
+
+                            × ${Math.floor(
+                                item.quantity
+                            )}
+
+                            @ GH₵${Number(
+                                item.price
+                            ).toFixed(2)}
+
+                        </span>
+
+                        <strong>
+
+                            GH₵${Number(
+                                item.total
+                            ).toFixed(2)}
+
+                        </strong>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        card.innerHTML = `
+
+            <div class="record-date">
+
+                ${escapeHTML(
+                    record.date
+                )}
+
+                &nbsp;&nbsp;
+
+                ${escapeHTML(
+                    record.time
+                )}
+
+            </div>
+
+
+            <div class="record-total">
+
+                Total:
+                GH₵${Number(
+                    record.total
+                ).toFixed(2)}
+
+            </div>
+
+
+            <div class="record-goods">
+
+                ${goodsHTML}
+
+            </div>
+
+
+            <button
+                class="record-delete"
+                onclick="deleteRecord(${index})"
+            >
+                DELETE RECORD
+            </button>
+
+        `;
+
+
+        list.appendChild(
+            card
+        );
 
     });
 
-    saveGoods();
-
-    displayGoods();
 }
+
+
+/* ================= DELETE RECORD ================= */
+
+function deleteRecord(index) {
+
+    if (
+        index < 0 ||
+        index >= records.length
+    ) {
+
+        return;
+
+    }
+
+
+    let answer =
+        confirm(
+            "Are you sure you want to delete this saved record?\n\n" +
+            "This action cannot be undone."
+        );
+
+
+    if (!answer) {
+
+        return;
+
+    }
+
+
+    records.splice(
+        index,
+        1
+    );
+
+
+    saveRecords();
+
+    displayRecords();
+
+}
+
 
 /* ================= PROTECT HTML ================= */
 
 function escapeHTML(text) {
 
-    return String(text)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
+    let div =
+        document.createElement(
+            "div"
         );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
 }
+
 
 /* ================= START ================= */
 
 checkLogin();
 
-displayGoods();
+loadGoodsSelect();
+
+displayCurrentGoods();
+
+displayRecords();
 
 </script>
 
