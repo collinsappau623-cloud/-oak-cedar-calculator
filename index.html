@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,8 +28,6 @@ body {
     max-width: 650px;
     margin: auto;
 }
-
-/* LOGIN */
 
 #loginScreen {
     max-width: 420px;
@@ -115,8 +114,6 @@ body {
     font-weight: bold;
 }
 
-/* HEADER */
-
 .header {
     background: linear-gradient(135deg, #24452d, #6b8e58);
     color: white;
@@ -152,8 +149,6 @@ body {
     font-size: 13px;
 }
 
-/* TABS */
-
 .tabs {
     display: flex;
     background: white;
@@ -184,8 +179,6 @@ body {
     color: white;
 }
 
-/* CALCULATORS */
-
 .calculator {
     display: none;
 }
@@ -193,8 +186,6 @@ body {
 .calculator.active {
     display: block;
 }
-
-/* CARDS */
 
 .card {
     background: white;
@@ -211,8 +202,6 @@ body {
     margin-bottom: 15px;
     text-align: center;
 }
-
-/* INPUTS */
 
 .input-group {
     margin-bottom: 13px;
@@ -240,8 +229,6 @@ input:focus {
     border-color: #527a58;
 }
 
-/* BUTTONS */
-
 .reset-btn,
 .clear-button {
     width: 100%;
@@ -255,8 +242,6 @@ input:focus {
     font-weight: bold;
     cursor: pointer;
 }
-
-/* RESULTS */
 
 .results {
     margin-top: 20px;
@@ -292,8 +277,6 @@ input:focus {
     font-size: 25px;
 }
 
-/* CEDI */
-
 .money-row {
     display: grid;
     grid-template-columns: 80px 1fr 100px;
@@ -319,7 +302,8 @@ input:focus {
     white-space: nowrap;
 }
 
-/* ================= GOODS ================= */
+
+/* GOODS */
 
 .add-grid {
     display: grid;
@@ -471,6 +455,7 @@ select:focus {
     font-size: 13px;
 }
 
+
 /* RECORDS */
 
 .record-card {
@@ -522,6 +507,7 @@ select:focus {
     font-weight: bold;
     cursor: pointer;
 }
+
 
 /* ADMIN */
 
@@ -592,7 +578,6 @@ select:focus {
     font-size: 14px;
 }
 
-/* MOBILE */
 
 @media (max-width:480px) {
 
@@ -630,122 +615,152 @@ select:focus {
     .select-grid {
         grid-template-columns: 1fr 90px;
     }
-
 }
 
 </style>
+
 </head>
 
 <body>
 
+
+<!-- LOGIN -->
+
 <div id="loginScreen">
 
-    <div class="login-card">
+<div class="login-card">
 
-        <div class="login-logo">O&C</div>
+<div class="login-logo">
+O&C
+</div>
 
-        <div class="login-title" id="authTitle">
-            Oak & Cedar Login
-        </div>
+<div class="login-title">
+Oak & Cedar Business Calculator
+</div>
 
-        <label>Email</label>
+<div class="input-group">
 
-        <input
-            type="email"
-            id="authEmail"
-            placeholder="Enter your email"
-        >
+<label>Email</label>
 
-        <label>Password</label>
+<input
+type="email"
+id="email"
+placeholder="Enter your email"
+>
 
-        <input
-            type="password"
-            id="authPassword"
-            placeholder="Enter your password"
-        >
+</div>
 
-        <button
-            class="login-button"
-            onclick="handleAuth()"
-            id="authButton"
-        >
-            LOGIN
-        </button>
+<div class="input-group">
 
-        <div
-            class="switch-auth"
-            onclick="toggleAuthMode()"
-            id="switchText"
-        >
-            Create Account
-        </div>
+<label>Password</label>
 
-    </div>
+<input
+type="password"
+id="password"
+placeholder="Enter your password"
+>
+
+</div>
+
+<button
+class="login-button"
+onclick="loginUser()"
+>
+LOGIN
+</button>
+
+<div
+class="switch-auth"
+onclick="toggleAuth()"
+id="authSwitch"
+>
+Don't have an account? Create Account
+</div>
+
+</div>
 
 </div>
 
 
-<div id="mainApp" style="display:none;">
 
-<div class="container">
+<!-- MAIN APP -->
+
+<div
+class="container"
+id="app"
+style="display:none;"
+>
 
 <div class="header">
 
-    <div class="logo">O&C</div>
+<div class="logo">
+O&C
+</div>
 
-    <h1>Oak & Cedar</h1>
+<h1>
+Oak & Cedar Business Calculator
+</h1>
 
-    <p>Business Calculator</p>
+<p>
+Professional Business Management Calculator
+</p>
 
 </div>
 
 
 <button
-    class="logout-button"
-    onclick="logoutUser()"
+class="logout-button"
+onclick="logoutUser()"
 >
-    LOGOUT
+LOGOUT
 </button>
 
 
+
+<!-- TABS -->
+
 <div class="tabs">
 
-    <button
-        class="tab active"
-        onclick="showCalculator('revenue', this)"
-    >
-        Revenue
-    </button>
+<button
+class="tab active"
+onclick="showTab('revenue', this)"
+>
+Revenue
+</button>
 
-    <button
-        class="tab"
-        onclick="showCalculator('cedi', this)"
-    >
-        Cedi
-    </button>
+<button
+class="tab"
+onclick="showTab('cedi', this)"
+>
+Cedi
+</button>
 
-    <button
-        class="tab"
-        onclick="showCalculator('goods', this)"
-    >
-        Total Goods
-    </button>
+<button
+class="tab"
+onclick="showTab('goods', this)"
+>
+Goods
+</button>
 
-    <button
-        class="tab"
-        id="adminTab"
-        style="display:none;"
-        onclick="showCalculator('admin', this)"
-    >
-        ADMIN
-    </button>
+<button
+class="tab"
+id="adminTab"
+onclick="showTab('admin', this)"
+style="display:none;"
+>
+Admin
+</button>
 
 </div>
 
 
-<!-- ================= REVENUE ================= -->
 
-<div id="revenue" class="calculator active">
+<!-- REVENUE -->
+
+<div
+id="revenue"
+class="calculator active"
+>
 
 <div class="card">
 
@@ -755,37 +770,65 @@ Revenue Calculator
 
 <div class="input-group">
 <label>Bank 1</label>
-<input type="number" id="bank1" placeholder="Enter amount">
+<input
+type="number"
+id="bank1"
+placeholder="Enter amount"
+>
 </div>
 
 <div class="input-group">
 <label>Bank 2</label>
-<input type="number" id="bank2" placeholder="Enter amount">
+<input
+type="number"
+id="bank2"
+placeholder="Enter amount"
+>
 </div>
 
 <div class="input-group">
 <label>Bank 3</label>
-<input type="number" id="bank3" placeholder="Enter amount">
+<input
+type="number"
+id="bank3"
+placeholder="Enter amount"
+>
 </div>
 
 <div class="input-group">
 <label>Cash at Hand</label>
-<input type="number" id="cash" placeholder="Enter amount">
-</div>
-
-<div class="input-group">
-<label>Total Goods</label>
-<input type="number" id="totalGoods" placeholder="Enter amount">
-</div>
-
-<div class="input-group">
-<label>Remaining Goods</label>
-<input type="number" id="remainingGoods" placeholder="Enter amount">
+<input
+type="number"
+id="cash"
+placeholder="Enter amount"
+>
 </div>
 
 <div class="input-group">
 <label>Expenses</label>
-<input type="number" id="expenses" placeholder="Enter amount">
+<input
+type="number"
+id="expenses"
+placeholder="Enter expenses"
+>
+</div>
+
+<div class="input-group">
+<label>Total Goods</label>
+<input
+type="number"
+id="totalGoods"
+placeholder="Enter total goods"
+>
+</div>
+
+<div class="input-group">
+<label>Remaining Goods</label>
+<input
+type="number"
+id="remainingGoods"
+placeholder="Enter remaining goods"
+>
 </div>
 
 <button
@@ -802,38 +845,10 @@ onclick="resetRevenue()"
 RESET
 </button>
 
-<div class="results">
-
-<div class="result-row">
-<span>Total Banks</span>
-<strong id="totalBanks">GH₵0.00</strong>
-</div>
-
-<div class="result-row">
-<span>Total Bank & Cash</span>
-<strong id="totalCash">GH₵0.00</strong>
-</div>
-
-<div class="result-row">
-<span>Remaining Goods</span>
-<strong id="showRemainingGoods">GH₵0.00</strong>
-</div>
-
-<div class="result-row">
-<span>Goods After Expenses</span>
-<strong id="goodsAfterExpenses">GH₵0.00</strong>
-</div>
-
-<div class="profit-box">
-
-<small>TOTAL PROFIT</small>
-
-<strong id="profit">
-GH₵0.00
-</strong>
-
-</div>
-
+<div
+class="results"
+id="revenueResults"
+>
 </div>
 
 </div>
@@ -841,9 +856,13 @@ GH₵0.00
 </div>
 
 
-<!-- ================= CEDI ================= -->
 
-<div id="cedi" class="calculator">
+<!-- CEDI -->
+
+<div
+id="cedi"
+class="calculator"
+>
 
 <div class="card">
 
@@ -851,60 +870,213 @@ GH₵0.00
 Cedi Calculator
 </div>
 
-<div class="money-row">
-<div class="denomination">GH₵200</div>
-<input type="number" id="money200" placeholder="Qty">
-<div class="result" id="total200">GH₵0.00</div>
-</div>
 
 <div class="money-row">
-<div class="denomination">GH₵100</div>
-<input type="number" id="money100" placeholder="Qty">
-<div class="result" id="total100">GH₵0.00</div>
+
+<div class="denomination">
+GH₵200
 </div>
 
-<div class="money-row">
-<div class="denomination">GH₵50</div>
-<input type="number" id="money50" placeholder="Qty">
-<div class="result" id="total50">GH₵0.00</div>
+<input
+type="number"
+id="c200"
+min="0"
+placeholder="Qty"
+>
+
+<div
+class="result"
+id="r200"
+>
+GH₵0.00
 </div>
 
-<div class="money-row">
-<div class="denomination">GH₵20</div>
-<input type="number" id="money20" placeholder="Qty">
-<div class="result" id="total20">GH₵0.00</div>
 </div>
 
-<div class="money-row">
-<div class="denomination">GH₵10</div>
-<input type="number" id="money10" placeholder="Qty">
-<div class="result" id="total10">GH₵0.00</div>
-</div>
 
 <div class="money-row">
-<div class="denomination">GH₵5</div>
-<input type="number" id="money5" placeholder="Qty">
-<div class="result" id="total5">GH₵0.00</div>
+
+<div class="denomination">
+GH₵100
 </div>
 
-<div class="money-row">
-<div class="denomination">GH₵2</div>
-<input type="number" id="money2" placeholder="Qty">
-<div class="result" id="total2">GH₵0.00</div>
+<input
+type="number"
+id="c100"
+min="0"
+placeholder="Qty"
+>
+
+<div
+class="result"
+id="r100"
+>
+GH₵0.00
 </div>
 
-<div class="money-row">
-<div class="denomination">GH₵1</div>
-<input type="number" id="money1" placeholder="Qty">
-<div class="result" id="total1">GH₵0.00</div>
 </div>
+
+
+<div class="money-row">
+
+<div class="denomination">
+GH₵50
+</div>
+
+<input
+type="number"
+id="c50"
+min="0"
+placeholder="Qty"
+>
+
+<div
+class="result"
+id="r50"
+>
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="money-row">
+
+<div class="denomination">
+GH₵20
+</div>
+
+<input
+type="number"
+id="c20"
+min="0"
+placeholder="Qty"
+>
+
+<div
+class="result"
+id="r20"
+>
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="money-row">
+
+<div class="denomination">
+GH₵10
+</div>
+
+<input
+type="number"
+id="c10"
+min="0"
+placeholder="Qty"
+>
+
+<div
+class="result"
+id="r10"
+>
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="money-row">
+
+<div class="denomination">
+GH₵5
+</div>
+
+<input
+type="number"
+id="c5"
+min="0"
+placeholder="Qty"
+>
+
+<div
+class="result"
+id="r5"
+>
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="money-row">
+
+<div class="denomination">
+GH₵2
+</div>
+
+<input
+type="number"
+id="c2"
+min="0"
+placeholder="Qty"
+>
+
+<div
+class="result"
+id="r2"
+>
+GH₵0.00
+</div>
+
+</div>
+
+
+<div class="money-row">
+
+<div class="denomination">
+GH₵1
+</div>
+
+<input
+type="number"
+id="c1"
+min="0"
+placeholder="Qty"
+>
+
+<div
+class="result"
+id="r1"
+>
+GH₵0.00
+</div>
+
+</div>
+
+
+<!-- ONLY CHANGE: BUTTON NOW SAYS CALCULATE -->
 
 <button
 class="calculate-btn"
 onclick="calculateCedi()"
 >
-CALCULATE TOTAL
+CALCULATE
 </button>
+
+
+<div class="total-money">
+
+<small>
+TOTAL CASH
+</small>
+
+<strong id="cediTotal">
+GH₵0.00
+</strong>
+
+</div>
+
 
 <button
 class="reset-btn"
@@ -913,24 +1085,18 @@ onclick="resetCedi()"
 RESET
 </button>
 
-<div class="total-money">
-
-<small>TOTAL MONEY</small>
-
-<strong id="grandTotal">
-GH₵0.00
-</strong>
-
-</div>
-
 </div>
 
 </div>
 
 
-<!-- ================= GOODS ================= -->
 
-<div id="goods" class="calculator">
+<!-- GOODS -->
+
+<div
+id="goods"
+class="calculator"
+>
 
 <div class="card">
 
@@ -970,6 +1136,19 @@ onclick="addGoods()"
 Select Goods & Enter Quantity
 </div>
 
+
+<div class="search-box">
+
+<input
+type="text"
+id="goodsSearch"
+placeholder="Search goods by first letters..."
+oninput="loadGoodsSelect()"
+>
+
+</div>
+
+
 <div class="select-grid">
 
 <select id="savedGoodSelect">
@@ -988,6 +1167,7 @@ placeholder="Qty"
 >
 
 </div>
+
 
 <button
 class="add-button"
@@ -1045,6 +1225,8 @@ CLEAR ALL QUANTITIES
 </div>
 
 
+<!-- SAVED RECORDS -->
+
 <div class="card">
 
 <div class="section-title">
@@ -1058,9 +1240,13 @@ Saved Records
 </div>
 
 
-<!-- ================= ADMIN ================= -->
 
-<div id="admin" class="calculator">
+<!-- ADMIN -->
+
+<div
+id="admin"
+class="calculator"
+>
 
 <div class="card">
 
@@ -1069,15 +1255,20 @@ Admin Dashboard
 </div>
 
 <div class="admin-count">
+
 Registered Users:
-<span id="userCount">0</span>
+
+<span id="userCount">
+0
+</span>
+
 </div>
 
 <button
 class="admin-refresh"
 onclick="loadAdminUsers()"
 >
-↻ REFRESH USERS
+REFRESH USERS
 </button>
 
 </div>
@@ -1091,27 +1282,33 @@ Add New User
 
 <div class="input-group">
 
-<label>New User Email</label>
+<label>
+User Email
+</label>
 
 <input
 type="email"
 id="newUserEmail"
-placeholder="Enter user's email"
+placeholder="Enter user email"
 >
 
 </div>
 
+
 <div class="input-group">
 
-<label>New User Password</label>
+<label>
+User Password
+</label>
 
 <input
 type="password"
 id="newUserPassword"
-placeholder="Enter user's password"
+placeholder="Minimum 6 characters"
 >
 
 </div>
+
 
 <button
 class="admin-add"
@@ -1129,11 +1326,7 @@ onclick="createAdminUser()"
 Registered Users
 </div>
 
-<div id="adminUsersList">
-
-<div class="empty">
-Tap REFRESH USERS to load users.
-</div>
+<div id="adminUsersList"></div>
 
 </div>
 
@@ -1141,15 +1334,12 @@ Tap REFRESH USERS to load users.
 
 </div>
 
-
-</div>
-
-</div>
 
 
 <script>
 
-/* ================= SUPABASE ================= */
+
+/* SUPABASE */
 
 const SUPABASE_URL =
 "https://ywsmyynauytmgdiijwlo.supabase.co";
@@ -1158,66 +1348,72 @@ const SUPABASE_KEY =
 "sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
 
 const supabaseClient =
-window.supabase.createClient(
+supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
-
-
-/* ================= ADMIN EMAIL ================= */
 
 const ADMIN_EMAIL =
 "collinsappau3030@gmail.com";
 
 
-/* ================= LOGIN ================= */
 
-let loginMode = "login";
+/* AUTH */
+
+let isCreateAccount = false;
 
 
-function toggleAuthMode() {
+function toggleAuth() {
 
-    if (loginMode === "login") {
+    isCreateAccount =
+        !isCreateAccount;
 
-        loginMode = "signup";
+    let button =
+        document.querySelector(
+            ".login-button"
+        );
 
-        document.getElementById("authTitle").innerText =
-            "Create Oak & Cedar Account";
+    let switchText =
+        document.getElementById(
+            "authSwitch"
+        );
 
-        document.getElementById("authButton").innerText =
+
+    if (isCreateAccount) {
+
+        button.textContent =
             "CREATE ACCOUNT";
 
-        document.getElementById("switchText").innerText =
+        switchText.textContent =
             "Already have an account? Login";
 
     } else {
 
-        loginMode = "login";
-
-        document.getElementById("authTitle").innerText =
-            "Oak & Cedar Login";
-
-        document.getElementById("authButton").innerText =
+        button.textContent =
             "LOGIN";
 
-        document.getElementById("switchText").innerText =
-            "Create Account";
+        switchText.textContent =
+            "Don't have an account? Create Account";
 
     }
 
 }
 
 
-async function handleAuth() {
+
+async function loginUser() {
 
     let email =
-        document.getElementById("authEmail")
-        .value
-        .trim();
+        document.getElementById(
+            "email"
+        ).value.trim();
+
 
     let password =
-        document.getElementById("authPassword")
-        .value;
+        document.getElementById(
+            "password"
+        ).value;
+
 
     if (!email || !password) {
 
@@ -1230,36 +1426,19 @@ async function handleAuth() {
     }
 
 
-    if (loginMode === "login") {
+    if (isCreateAccount) {
 
-        const { error } =
-            await supabaseClient.auth.signInWithPassword({
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.signUp({
 
-                email: email,
+            email: email,
 
-                password: password
+            password: password
 
-            });
-
-
-        if (error) {
-
-            alert(error.message);
-
-            return;
-
-        }
-
-    } else {
-
-        const { error } =
-            await supabaseClient.auth.signUp({
-
-                email: email,
-
-                password: password
-
-            });
+        });
 
 
         if (error) {
@@ -1272,43 +1451,70 @@ async function handleAuth() {
 
 
         alert(
-            "Account created successfully. " +
-            "If email confirmation is required, check your email."
+            "Account created successfully. You can now login."
         );
+
+
+        isCreateAccount = false;
+
+
+        document.querySelector(
+            ".login-button"
+        ).textContent =
+            "LOGIN";
+
+
+        document.getElementById(
+            "authSwitch"
+        ).textContent =
+            "Don't have an account? Create Account";
+
+
+        return;
 
     }
 
-}
-
-
-async function logoutUser() {
-
-    await supabaseClient.auth.signOut();
-
-    document.getElementById("mainApp").style.display =
-        "none";
-
-    document.getElementById("loginScreen").style.display =
-        "block";
-
-    document.getElementById("adminTab").style.display =
-        "none";
-
-}
-
-
-/* ================= ADMIN ACCESS ================= */
-
-async function checkAdminAccess() {
 
     const {
-        data: { user }
+        data,
+        error
     } =
-        await supabaseClient.auth.getUser();
+    await supabaseClient.auth.signInWithPassword({
+
+        email: email,
+
+        password: password
+
+    });
 
 
-    const adminTab =
-        document.getElementById("adminTab");
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+    showApp(data.user);
+
+}
+
+
+
+function showApp(user) {
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "app"
+    ).style.display =
+        "block";
 
 
     if (
@@ -1318,104 +1524,54 @@ async function checkAdminAccess() {
         ADMIN_EMAIL.toLowerCase()
     ) {
 
-        adminTab.style.display = "block";
+        document.getElementById(
+            "adminTab"
+        ).style.display =
+            "block";
 
     } else {
-
-        adminTab.style.display = "none";
-
-        if (
-            document.getElementById("admin")
-            .classList
-            .contains("active")
-        ) {
-
-            showCalculator(
-                "revenue",
-                document.querySelector(
-                    ".tab:not(#adminTab)"
-                )
-            );
-
-        }
-
-    }
-
-}
-
-
-/* ================= CHECK LOGIN ================= */
-
-async function checkLogin() {
-
-    const {
-        data: { session }
-    } =
-        await supabaseClient.auth.getSession();
-
-
-    if (session) {
-
-        document.getElementById(
-            "loginScreen"
-        ).style.display = "none";
-
-        document.getElementById(
-            "mainApp"
-        ).style.display = "block";
-
-        await checkAdminAccess();
-
-    } else {
-
-        document.getElementById(
-            "loginScreen"
-        ).style.display = "block";
-
-        document.getElementById(
-            "mainApp"
-        ).style.display = "none";
 
         document.getElementById(
             "adminTab"
-        ).style.display = "none";
+        ).style.display =
+            "none";
 
     }
+
+
+    loadGoods();
+
+    displayGoods();
+
+    displayRecords();
+
+    loadGoodsSelect();
 
 }
 
 
+
+async function logoutUser() {
+
+    await supabaseClient.auth.signOut();
+
+    location.reload();
+
+}
+
+
+
 supabaseClient.auth.onAuthStateChange(
-    async function(event, session) {
+    function(event, session) {
 
-        if (session) {
+        if (
+            session &&
+            session.user
+        ) {
 
-            document.getElementById(
-                "loginScreen"
-            ).style.display = "none";
-
-            document.getElementById(
-                "mainApp"
-            ).style.display = "block";
-
-            setTimeout(
-                checkAdminAccess,
-                100
+            showApp(
+                session.user
             );
-
-        } else {
-
-            document.getElementById(
-                "loginScreen"
-            ).style.display = "block";
-
-            document.getElementById(
-                "mainApp"
-            ).style.display = "none";
-
-            document.getElementById(
-                "adminTab"
-            ).style.display = "none";
 
         }
 
@@ -1423,60 +1579,86 @@ supabaseClient.auth.onAuthStateChange(
 );
 
 
-/* ================= SWITCH CALCULATORS ================= */
 
-function showCalculator(
-    calculator,
+/* TABS */
+
+function showTab(
+    tabId,
     button
 ) {
 
-    if (calculator === "admin") {
+    let calculators =
+        document.querySelectorAll(
+            ".calculator"
+        );
 
-        const adminTab =
-            document.getElementById("adminTab");
 
-        if (
-            adminTab.style.display === "none"
-        ) {
+    calculators.forEach(
+        function(calculator) {
 
-            alert(
-                "Access denied. Admin only."
+            calculator.classList.remove(
+                "active"
             );
 
-            return;
-
         }
+    );
+
+
+    let selected =
+        document.getElementById(
+            tabId
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active"
+        );
 
     }
 
 
-    document
-    .querySelectorAll(".calculator")
-    .forEach(function(section) {
-
-        section.classList.remove("active");
-
-    });
+    let tabs =
+        document.querySelectorAll(
+            ".tab"
+        );
 
 
-    document
-    .getElementById(calculator)
-    .classList.add("active");
+    tabs.forEach(
+        function(tab) {
+
+            tab.classList.remove(
+                "active"
+            );
+
+        }
+    );
 
 
-    document
-    .querySelectorAll(".tab")
-    .forEach(function(tab) {
+    if (button) {
 
-        tab.classList.remove("active");
+        button.classList.add(
+            "active"
+        );
 
-    });
-
-
-    button.classList.add("active");
+    }
 
 
-    if (calculator === "admin") {
+    if (tabId === "goods") {
+
+        loadGoods();
+
+        displayGoods();
+
+        displayRecords();
+
+        loadGoodsSelect();
+
+    }
+
+
+    if (tabId === "admin") {
 
         loadAdminUsers();
 
@@ -1485,431 +1667,8 @@ function showCalculator(
 }
 
 
-/* ================= ADMIN FUNCTION ================= */
 
-async function callAdminFunction(
-    action,
-    extraData = {}
-) {
-
-    try {
-
-        const {
-            data: { session },
-            error: sessionError
-        } =
-            await supabaseClient.auth.getSession();
-
-
-        if (sessionError) {
-
-            console.error(sessionError);
-
-            alert(
-                "Could not get your login session."
-            );
-
-            return null;
-
-        }
-
-
-        if (!session) {
-
-            alert(
-                "You are not logged in."
-            );
-
-            return null;
-
-        }
-
-
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                "/functions/v1/Admin-users",
-                {
-
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Authorization":
-                            "Bearer " +
-                            session.access_token
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            action: action,
-
-                            ...extraData
-
-                        })
-
-                }
-            );
-
-
-        const text =
-            await response.text();
-
-
-        console.log(
-            "Admin Function Status:",
-            response.status
-        );
-
-
-        console.log(
-            "Admin Function Response:",
-            text
-        );
-
-
-        let data;
-
-
-        try {
-
-            data =
-                JSON.parse(text);
-
-        } catch (e) {
-
-            data = {
-                error: text
-            };
-
-        }
-
-
-        if (!response.ok) {
-
-            alert(
-                "Admin request failed.\n\n" +
-                (
-                    data.error ||
-                    "Server returned an error."
-                )
-            );
-
-            return null;
-
-        }
-
-
-        if (data.error) {
-
-            alert(data.error);
-
-            return null;
-
-        }
-
-
-        return data;
-
-    } catch (error) {
-
-        console.error(
-            "Admin connection error:",
-            error
-        );
-
-
-        alert(
-            "Failed to connect to the Admin Function.\n\n" +
-            error.message
-        );
-
-
-        return null;
-
-    }
-
-}
-
-
-/* ================= LOAD ADMIN USERS ================= */
-
-async function loadAdminUsers() {
-
-    const list =
-        document.getElementById(
-            "adminUsersList"
-        );
-
-
-    list.innerHTML =
-        '<div class="empty">Loading users...</div>';
-
-
-    const data =
-        await callAdminFunction(
-            "list"
-        );
-
-
-    if (!data) {
-
-        list.innerHTML =
-            '<div class="empty">Unable to load users.</div>';
-
-        return;
-
-    }
-
-
-    const users =
-        data.users || [];
-
-
-    document.getElementById(
-        "userCount"
-    ).innerText =
-        users.length;
-
-
-    if (users.length === 0) {
-
-        list.innerHTML =
-            '<div class="empty">No users found.</div>';
-
-        return;
-
-    }
-
-
-    list.innerHTML = "";
-
-
-    users.forEach(function(user) {
-
-        const div =
-            document.createElement("div");
-
-
-        div.className =
-            "admin-user";
-
-
-        const created =
-            user.created_at
-            ? new Date(
-                user.created_at
-            ).toLocaleString()
-            : "Unknown";
-
-
-        const lastLogin =
-            user.last_sign_in_at
-            ? new Date(
-                user.last_sign_in_at
-            ).toLocaleString()
-            : "Never";
-
-
-        const isAdmin =
-            user.email &&
-            user.email.toLowerCase() ===
-            ADMIN_EMAIL.toLowerCase();
-
-
-        div.innerHTML = `
-
-            <div class="admin-email">
-
-                ${escapeHTML(
-                    user.email ||
-                    "No email"
-                )}
-
-                ${
-                    isAdmin
-                    ?
-                    '<span class="admin-badge">ADMIN</span>'
-                    :
-                    ''
-                }
-
-            </div>
-
-
-            <div class="admin-date">
-                Created: ${escapeHTML(created)}
-            </div>
-
-
-            <div class="admin-last-login">
-                Last login: ${escapeHTML(lastLogin)}
-            </div>
-
-
-            ${
-                isAdmin
-                ?
-                ''
-                :
-                `
-                <div class="admin-actions">
-
-                    <button
-                        class="admin-delete"
-                        onclick="deleteAdminUser('${user.id}')"
-                    >
-                        DELETE USER
-                    </button>
-
-                </div>
-                `
-            }
-
-        `;
-
-
-        list.appendChild(div);
-
-    });
-
-}
-
-
-/* ================= CREATE USER ================= */
-
-async function createAdminUser() {
-
-    const email =
-        document.getElementById(
-            "newUserEmail"
-        )
-        .value
-        .trim();
-
-
-    const password =
-        document.getElementById(
-            "newUserPassword"
-        )
-        .value;
-
-
-    if (!email || !password) {
-
-        alert(
-            "Please enter the user's email and password."
-        );
-
-        return;
-
-    }
-
-
-    if (password.length < 6) {
-
-        alert(
-            "Password must be at least 6 characters."
-        );
-
-        return;
-
-    }
-
-
-    const data =
-        await callAdminFunction(
-            "create",
-            {
-
-                email: email,
-
-                password: password
-
-            }
-        );
-
-
-    if (!data) {
-
-        return;
-
-    }
-
-
-    alert(
-        "User created successfully."
-    );
-
-
-    document.getElementById(
-        "newUserEmail"
-    ).value = "";
-
-
-    document.getElementById(
-        "newUserPassword"
-    ).value = "";
-
-
-    loadAdminUsers();
-
-}
-
-
-/* ================= DELETE USER ================= */
-
-async function deleteAdminUser(
-    userId
-) {
-
-    const answer =
-        confirm(
-            "Are you sure you want to delete this user?"
-        );
-
-
-    if (!answer) {
-
-        return;
-
-    }
-
-
-    const data =
-        await callAdminFunction(
-            "delete",
-            {
-
-                userId: userId
-
-            }
-        );
-
-
-    if (!data) {
-
-        return;
-
-    }
-
-
-    alert(
-        "User deleted successfully."
-    );
-
-
-    loadAdminUsers();
-
-}
-
-
-/* ================= REVENUE ================= */
+/* REVENUE */
 
 function calculateRevenue() {
 
@@ -1945,6 +1704,14 @@ function calculateRevenue() {
         ) || 0;
 
 
+    let expenses =
+        Number(
+            document.getElementById(
+                "expenses"
+            ).value
+        ) || 0;
+
+
     let totalGoods =
         Number(
             document.getElementById(
@@ -1961,28 +1728,24 @@ function calculateRevenue() {
         ) || 0;
 
 
-    let expenses =
-        Number(
-            document.getElementById(
-                "expenses"
-            ).value
-        ) || 0;
-
-
     let totalBanks =
-        bank1 + bank2 + bank3;
+        bank1 +
+        bank2 +
+        bank3;
 
 
-    let totalCash =
-        totalBanks + cash;
+    let totalBankCash =
+        totalBanks +
+        cash;
 
 
     let goodsAfterExpenses =
-        totalGoods - expenses;
+        totalGoods -
+        expenses;
 
 
     let profit =
-        totalCash +
+        totalBankCash +
         remainingGoods -
         goodsAfterExpenses;
 
@@ -1995,336 +1758,226 @@ function calculateRevenue() {
 
 
     document.getElementById(
-        "totalBanks"
-    ).innerText =
-        "GH₵" +
-        totalBanks.toFixed(2);
+        "revenueResults"
+    ).innerHTML = `
 
+        <div class="section-title">
+            CALCULATION RESULTS
+        </div>
 
-    document.getElementById(
-        "totalCash"
-    ).innerText =
-        "GH₵" +
-        totalCash.toFixed(2);
+        <div class="result-row">
 
+            <span>
+                Total Banks
+            </span>
 
-    document.getElementById(
-        "showRemainingGoods"
-    ).innerText =
-        "GH₵" +
-        remainingGoods.toFixed(2);
+            <strong>
+                ₵ ${totalBanks.toFixed(2)}
+            </strong>
 
+        </div>
 
-    document.getElementById(
-        "goodsAfterExpenses"
-    ).innerText =
-        "GH₵" +
-        goodsAfterExpenses.toFixed(2);
+        <div class="result-row">
 
+            <span>
+                Total Bank & Cash
+            </span>
 
-    document.getElementById(
-        "profit"
-    ).innerText =
-        "GH₵" +
-        profit.toFixed(2);
+            <strong>
+                ₵ ${totalBankCash.toFixed(2)}
+            </strong>
+
+        </div>
+
+        <div class="result-row">
+
+            <span>
+                Remaining Goods
+            </span>
+
+            <strong>
+                ₵ ${remainingGoods.toFixed(2)}
+            </strong>
+
+        </div>
+
+        <div class="result-row">
+
+            <span>
+                Goods After Expenses
+            </span>
+
+            <strong>
+                ₵ ${goodsAfterExpenses.toFixed(2)}
+            </strong>
+
+        </div>
+
+        <div class="profit-box">
+
+            <small>
+                TOTAL PROFIT
+            </small>
+
+            <strong>
+                ₵ ${profit.toFixed(2)}
+            </strong>
+
+        </div>
+
+    `;
 
 }
+
 
 
 function resetRevenue() {
 
-    document
-    .querySelectorAll(
-        "#revenue input"
-    )
-    .forEach(function(input) {
-
-        input.value = "";
-
-    });
-
+    document.getElementById(
+        "bank1"
+    ).value = "";
 
     document.getElementById(
-        "totalBanks"
-    ).innerText =
-        "GH₵0.00";
-
+        "bank2"
+    ).value = "";
 
     document.getElementById(
-        "totalCash"
-    ).innerText =
-        "GH₵0.00";
-
+        "bank3"
+    ).value = "";
 
     document.getElementById(
-        "showRemainingGoods"
-    ).innerText =
-        "GH₵0.00";
-
+        "cash"
+    ).value = "";
 
     document.getElementById(
-        "goodsAfterExpenses"
-    ).innerText =
-        "GH₵0.00";
-
+        "expenses"
+    ).value = "";
 
     document.getElementById(
-        "profit"
-    ).innerText =
-        "GH₵0.00";
+        "totalGoods"
+    ).value = "";
+
+    document.getElementById(
+        "remainingGoods"
+    ).value = "";
+
+    document.getElementById(
+        "revenueResults"
+    ).innerHTML = "";
 
 }
 
 
-/* ================= CEDI ================= */
+
+/* CEDI */
 
 function calculateCedi() {
 
-    let money200 =
-        Number(
+    let denominations = [
+        200,
+        100,
+        50,
+        20,
+        10,
+        5,
+        2,
+        1
+    ];
+
+
+    let total = 0;
+
+
+    denominations.forEach(
+        function(value) {
+
+            let quantity =
+                Number(
+                    document.getElementById(
+                        "c" + value
+                    ).value
+                ) || 0;
+
+
+            let amount =
+                quantity * value;
+
+
+            total += amount;
+
+
             document.getElementById(
-                "money200"
-            ).value
-        ) || 0;
+                "r" + value
+            ).textContent =
+                "GH₵" +
+                amount.toFixed(2);
 
-
-    let money100 =
-        Number(
-            document.getElementById(
-                "money100"
-            ).value
-        ) || 0;
-
-
-    let money50 =
-        Number(
-            document.getElementById(
-                "money50"
-            ).value
-        ) || 0;
-
-
-    let money20 =
-        Number(
-            document.getElementById(
-                "money20"
-            ).value
-        ) || 0;
-
-
-    let money10 =
-        Number(
-            document.getElementById(
-                "money10"
-            ).value
-        ) || 0;
-
-
-    let money5 =
-        Number(
-            document.getElementById(
-                "money5"
-            ).value
-        ) || 0;
-
-
-    let money2 =
-        Number(
-            document.getElementById(
-                "money2"
-            ).value
-        ) || 0;
-
-
-    let money1 =
-        Number(
-            document.getElementById(
-                "money1"
-            ).value
-        ) || 0;
-
-
-    let total200 =
-        money200 * 200;
-
-
-    let total100 =
-        money100 * 100;
-
-
-    let total50 =
-        money50 * 50;
-
-
-    let total20 =
-        money20 * 20;
-
-
-    let total10 =
-        money10 * 10;
-
-
-    let total5 =
-        money5 * 5;
-
-
-    let total2 =
-        money2 * 2;
-
-
-    let total1 =
-        money1;
+        }
+    );
 
 
     document.getElementById(
-        "total200"
-    ).innerText =
+        "cediTotal"
+    ).textContent =
         "GH₵" +
-        total200.toFixed(2);
-
-
-    document.getElementById(
-        "total100"
-    ).innerText =
-        "GH₵" +
-        total100.toFixed(2);
-
-
-    document.getElementById(
-        "total50"
-    ).innerText =
-        "GH₵" +
-        total50.toFixed(2);
-
-
-    document.getElementById(
-        "total20"
-    ).innerText =
-        "GH₵" +
-        total20.toFixed(2);
-
-
-    document.getElementById(
-        "total10"
-    ).innerText =
-        "GH₵" +
-        total10.toFixed(2);
-
-
-    document.getElementById(
-        "total5"
-    ).innerText =
-        "GH₵" +
-        total5.toFixed(2);
-
-
-    document.getElementById(
-        "total2"
-    ).innerText =
-        "GH₵" +
-        total2.toFixed(2);
-
-
-    document.getElementById(
-        "total1"
-    ).innerText =
-        "GH₵" +
-        total1.toFixed(2);
-
-
-    let grandTotal =
-        total200 +
-        total100 +
-        total50 +
-        total20 +
-        total10 +
-        total5 +
-        total2 +
-        total1;
-
-
-    document.getElementById(
-        "grandTotal"
-    ).innerText =
-        "GH₵" +
-        grandTotal.toFixed(2);
+        total.toFixed(2);
 
 }
+
 
 
 function resetCedi() {
 
-    document
-    .querySelectorAll(
-        "#cedi input"
-    )
-    .forEach(function(input) {
+    let denominations = [
+        200,
+        100,
+        50,
+        20,
+        10,
+        5,
+        2,
+        1
+    ];
 
-        input.value = "";
 
-    });
+    denominations.forEach(
+        function(value) {
+
+            document.getElementById(
+                "c" + value
+            ).value = "";
 
 
-    [
-        "total200",
-        "total100",
-        "total50",
-        "total20",
-        "total10",
-        "total5",
-        "total2",
-        "total1"
-    ].forEach(function(id) {
+            document.getElementById(
+                "r" + value
+            ).textContent =
+                "GH₵0.00";
 
-        document.getElementById(
-            id
-        ).innerText =
-            "GH₵0.00";
-
-    });
+        }
+    );
 
 
     document.getElementById(
-        "grandTotal"
-    ).innerText =
+        "cediTotal"
+    ).textContent =
         "GH₵0.00";
 
 }
 
 
-/* =====================================================
-   GOODS CALCULATOR
-   THIS SECTION IS FROM YOUR SECOND HTML
-   ===================================================== */
+
+/* GOODS */
+
+let goods =
+    JSON.parse(
+        localStorage.getItem(
+            "oakCedarGoods"
+        )
+    ) || [];
 
 
-/* ================= GOODS STORAGE ================= */
+let selectedGoods = [];
 
-let goods = [];
-
-
-try {
-
-    goods =
-        JSON.parse(
-            localStorage.getItem(
-                "oakCedarGoods"
-            )
-        ) || [];
-
-} catch(error) {
-
-    goods = [];
-
-}
-
-
-/* ================= CURRENT GOODS ================= */
-
-let currentGoods = [];
-
-
-/* ================= SAVE GOODS ================= */
 
 function saveGoods() {
 
@@ -2336,16 +1989,24 @@ function saveGoods() {
 }
 
 
-/* ================= ADD NEW GOOD ================= */
+function loadGoods() {
+
+    goods =
+        JSON.parse(
+            localStorage.getItem(
+                "oakCedarGoods"
+            )
+        ) || [];
+
+}
+
 
 function addGoods() {
 
     let name =
         document.getElementById(
             "goodsName"
-        )
-        .value
-        .trim();
+        ).value.trim();
 
 
     let price =
@@ -2356,7 +2017,7 @@ function addGoods() {
         );
 
 
-    if (name === "") {
+    if (!name) {
 
         alert(
             "Please enter the goods name."
@@ -2368,8 +2029,8 @@ function addGoods() {
 
 
     if (
-        isNaN(price) ||
-        price <= 0
+        !price ||
+        price < 0
     ) {
 
         alert(
@@ -2381,51 +2042,11 @@ function addGoods() {
     }
 
 
-    let existing =
-        goods.find(function(item) {
-
-            return item.name
-                .toLowerCase() ===
-                name.toLowerCase();
-
-        });
-
-
-    if (existing) {
-
-        let answer =
-            confirm(
-                "This good already exists.\n\n" +
-                "Do you want to update its price?"
-            );
-
-
-        if (answer) {
-
-            existing.price =
-                price;
-
-            saveGoods();
-
-            loadGoodsSelect();
-
-        }
-
-        return;
-
-    }
-
-
     goods.push({
 
-        id:
-            Date.now(),
+        name: name,
 
-        name:
-            name,
-
-        price:
-            price
+        price: price
 
     });
 
@@ -2445,16 +2066,18 @@ function addGoods() {
 
     loadGoodsSelect();
 
+    displayGoods();
+
 
     alert(
-        name +
-        " has been saved successfully."
+        "Goods added successfully."
     );
 
 }
 
 
-/* ================= LOAD GOODS ================= */
+
+/* GOODS SEARCH */
 
 function loadGoodsSelect() {
 
@@ -2471,43 +2094,71 @@ function loadGoodsSelect() {
     }
 
 
+    let searchInput =
+        document.getElementById(
+            "goodsSearch"
+        );
+
+
+    let search =
+        searchInput
+        ? searchInput.value
+            .toLowerCase()
+            .trim()
+        : "";
+
+
     select.innerHTML =
         '<option value="">Select saved goods</option>';
 
 
-    goods.forEach(function(item, index) {
+    goods.forEach(
+        function(item, index) {
 
-        let option =
-            document.createElement(
-                "option"
-            );
+            if (
+                search === "" ||
+                item.name
+                    .toLowerCase()
+                    .startsWith(search)
+            ) {
 
-
-        option.value =
-            index;
-
-
-        option.textContent =
-            item.name +
-            " — GH₵" +
-            Number(item.price).toFixed(2);
+                let option =
+                    document.createElement(
+                        "option"
+                    );
 
 
-        select.appendChild(option);
+                option.value =
+                    index;
 
-    });
+
+                option.textContent =
+                    item.name +
+                    " — GH₵" +
+                    Number(
+                        item.price
+                    ).toFixed(2);
+
+
+                select.appendChild(
+                    option
+                );
+
+            }
+
+        }
+    );
 
 }
 
 
-/* ================= ADD QUANTITY ================= */
 
 function addQuantityToList() {
 
-    let selectedIndex =
+    let select =
         document.getElementById(
             "savedGoodSelect"
-        ).value;
+        );
 
 
     let quantity =
@@ -2518,24 +2169,13 @@ function addQuantityToList() {
         );
 
 
-    if (selectedIndex === "") {
-
-        alert(
-            "Please select a saved good."
-        );
-
-        return;
-
-    }
-
-
     if (
-        isNaN(quantity) ||
-        quantity <= 0
+        select.value === "" ||
+        quantity < 1
     ) {
 
         alert(
-            "Please enter a quantity greater than 0."
+            "Please select a good and enter a quantity."
         );
 
         return;
@@ -2543,23 +2183,24 @@ function addQuantityToList() {
     }
 
 
-    quantity =
-        Math.floor(quantity);
+    let index =
+        Number(
+            select.value
+        );
 
 
-    let storedGood =
-        goods[
-            Number(selectedIndex)
-        ];
+    let item =
+        goods[index];
 
 
     let existing =
-        currentGoods.find(function(item) {
+        selectedGoods.find(
+            function(good) {
 
-            return item.goodsId ===
-                storedGood.id;
+                return good.index === index;
 
-        });
+            }
+        );
 
 
     if (existing) {
@@ -2569,19 +2210,17 @@ function addQuantityToList() {
 
     } else {
 
-        currentGoods.push({
+        selectedGoods.push({
 
-            goodsId:
-                storedGood.id,
+            index: index,
 
-            name:
-                storedGood.name,
+            name: item.name,
 
-            price:
-                Number(storedGood.price),
+            price: Number(
+                item.price
+            ),
 
-            quantity:
-                quantity
+            quantity: quantity
 
         });
 
@@ -2593,22 +2232,16 @@ function addQuantityToList() {
     ).value = "";
 
 
-    document.getElementById(
-        "savedGoodSelect"
-    ).value = "";
+    select.value = "";
 
 
-    displayCurrentGoods();
-
-
-    calculateGoodsTotal();
+    displayGoods();
 
 }
 
 
-/* ================= DISPLAY CURRENT GOODS ================= */
 
-function displayCurrentGoods() {
+function displayGoods() {
 
     let list =
         document.getElementById(
@@ -2623,126 +2256,109 @@ function displayCurrentGoods() {
     }
 
 
-    list.innerHTML = "";
-
-
     if (
-        currentGoods.length === 0
+        selectedGoods.length === 0
     ) {
 
-        list.innerHTML =
-            '<div class="no-selected">' +
-            'Enter a quantity for a saved good to add it here.' +
-            '</div>';
+        list.innerHTML = `
+
+            <div class="no-selected">
+                Enter a quantity for a saved good to add it here.
+            </div>
+
+        `;
+
 
         document.getElementById(
             "goodsGrandTotal"
-        ).innerText =
+        ).textContent =
             "GH₵0.00";
+
 
         return;
 
     }
 
 
-    /* HEADER */
+    list.innerHTML = `
 
-    let header =
-        document.createElement(
-            "div"
-        );
+        <div class="goods-header">
 
+            <div>GOOD</div>
+            <div>PRICE</div>
+            <div>QTY</div>
+            <div>TOTAL</div>
+            <div></div>
 
-    header.className =
-        "goods-header";
-
-
-    header.innerHTML = `
-
-        <div>GOODS</div>
-
-        <div>PRICE</div>
-
-        <div>QTY</div>
-
-        <div>TOTAL</div>
-
-        <div></div>
+        </div>
 
     `;
 
 
-    list.appendChild(header);
+    let grandTotal = 0;
 
 
-    currentGoods.forEach(function(
-        item,
-        index
-    ) {
+    selectedGoods.forEach(
+        function(item, index) {
 
-        let row =
-            document.createElement(
-                "div"
-            );
+            let total =
+                item.price *
+                item.quantity;
 
 
-        row.className =
-            "goods-row";
+            grandTotal += total;
 
 
-        let lineTotal =
-            Number(item.price) *
-            Math.floor(
-                Number(item.quantity) || 0
-            );
+            list.innerHTML += `
+
+                <div class="goods-row">
+
+                    <div class="goods-name">
+                        ${item.name}
+                    </div>
+
+                    <div class="goods-price">
+                        GH₵${item.price.toFixed(2)}
+                    </div>
+
+                    <input
+                        class="quantity"
+                        type="number"
+                        min="1"
+                        value="${item.quantity}"
+                        onchange="updateQuantity(${index}, this.value)"
+                    >
+
+                    <div class="item-total">
+                        GH₵${total.toFixed(2)}
+                    </div>
+
+                    <button
+                        class="delete-good"
+                        onclick="removeSelectedGood(${index})"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
 
 
-        row.innerHTML = `
-
-            <div class="goods-name">
-                ${escapeHTML(item.name)}
-            </div>
-
-            <div class="goods-price">
-                GH₵${Number(item.price).toFixed(2)}
-            </div>
-
-            <input
-                class="quantity"
-                type="number"
-                min="1"
-                step="1"
-                value="${Math.floor(item.quantity)}"
-                onchange="changeCurrentQuantity(${index}, this.value)"
-            >
-
-            <div
-                class="item-total"
-                id="currentItemTotal${index}"
-            >
-                GH₵${lineTotal.toFixed(2)}
-            </div>
-
-            <button
-                class="delete-good"
-                onclick="deleteCurrentGood(${index})"
-            >
-                ×
-            </button>
-
-        `;
-
-
-        list.appendChild(row);
-
-    });
+    document.getElementById(
+        "goodsGrandTotal"
+    ).textContent =
+        "GH₵" +
+        grandTotal.toFixed(2);
 
 }
 
 
-/* ================= CHANGE QUANTITY ================= */
 
-function changeCurrentQuantity(
+function updateQuantity(
     index,
     value
 ) {
@@ -2751,200 +2367,146 @@ function changeCurrentQuantity(
         Number(value);
 
 
-    if (
-        isNaN(quantity) ||
-        quantity <= 0
-    ) {
+    if (quantity < 1) {
 
-        deleteCurrentGood(index);
-
-        return;
+        quantity = 1;
 
     }
 
 
-    currentGoods[index].quantity =
-        Math.floor(quantity);
+    selectedGoods[index].quantity =
+        quantity;
 
 
-    displayCurrentGoods();
-
-    calculateGoodsTotal();
+    displayGoods();
 
 }
 
 
-/* ================= DELETE CURRENT GOOD ================= */
 
-function deleteCurrentGood(index) {
+function removeSelectedGood(
+    index
+) {
 
-    currentGoods.splice(
+    selectedGoods.splice(
         index,
         1
     );
 
 
-    displayCurrentGoods();
-
-    calculateGoodsTotal();
+    displayGoods();
 
 }
 
 
-/* ================= CALCULATE GOODS TOTAL ================= */
 
 function calculateGoodsTotal() {
 
     let total = 0;
 
 
-    currentGoods.forEach(function(item) {
+    selectedGoods.forEach(
+        function(item) {
 
-        let quantity =
-            Math.floor(
-                Number(item.quantity) || 0
-            );
-
-
-        let lineTotal =
-            Number(item.price) *
-            quantity;
-
-
-        total +=
-            lineTotal;
-
-    });
-
-
-    currentGoods.forEach(function(
-        item,
-        index
-    ) {
-
-        let itemTotal =
-            document.getElementById(
-                "currentItemTotal" +
-                index
-            );
-
-
-        if (itemTotal) {
-
-            itemTotal.innerText =
-                "GH₵" +
-                (
-                    Number(item.price) *
-                    Math.floor(
-                        Number(item.quantity) || 0
-                    )
-                ).toFixed(2);
+            total +=
+                item.price *
+                item.quantity;
 
         }
-
-    });
+    );
 
 
     document.getElementById(
         "goodsGrandTotal"
-    ).innerText =
+    ).textContent =
         "GH₵" +
         total.toFixed(2);
 
-
-    return total;
-
 }
 
 
-/* ================= CLEAR QUANTITIES ================= */
 
 function clearQuantities() {
 
-    if (
-        currentGoods.length === 0
-    ) {
-
-        alert(
-            "There are no quantities to clear."
-        );
-
-        return;
-
-    }
-
-
-    let answer =
-        confirm(
-            "Clear all quantities?\n\n" +
-            "Your saved goods and prices will NOT be deleted."
-        );
-
-
-    if (!answer) {
-
-        return;
-
-    }
-
-
-    currentGoods = [];
+    selectedGoods = [];
 
 
     document.getElementById(
-        "goodsGrandTotal"
-    ).innerText =
-        "GH₵0.00";
+        "newQuantity"
+    ).value = "";
 
 
-    displayCurrentGoods();
-
-}
-
-
-/* ================= SAVED RECORDS ================= */
-
-let records = [];
+    document.getElementById(
+        "savedGoodSelect"
+    ).value = "";
 
 
-try {
-
-    records =
-        JSON.parse(
-            localStorage.getItem(
-                "oakCedarGoodsRecords"
-            )
-        ) || [];
-
-} catch(error) {
-
-    records = [];
+    displayGoods();
 
 }
 
 
-/* ================= SAVE RECORDS ================= */
 
-function saveRecords() {
+function deleteGood(index) {
 
-    localStorage.setItem(
-        "oakCedarGoodsRecords",
-        JSON.stringify(records)
+    let confirmDelete =
+        confirm(
+            "Are you sure you want to delete this good?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    goods.splice(
+        index,
+        1
     );
 
+
+    saveGoods();
+
+
+    selectedGoods =
+        selectedGoods.filter(
+            function(item) {
+
+                return item.index !== index;
+
+            }
+        );
+
+
+    loadGoodsSelect();
+
+    displayGoods();
+
 }
 
 
-/* ================= SAVE RECORD ================= */
+
+/* SAVED RECORDS */
+
+let goodsRecords =
+    JSON.parse(
+        localStorage.getItem(
+            "oakCedarGoodsRecords"
+        )
+    ) || [];
+
 
 function saveGoodsRecord() {
 
     if (
-        currentGoods.length === 0
+        selectedGoods.length === 0
     ) {
 
         alert(
-            "Please enter a quantity for at least one good before saving."
+            "Please add goods before saving a record."
         );
 
         return;
@@ -2952,94 +2514,63 @@ function saveGoodsRecord() {
     }
 
 
-    let total =
-        calculateGoodsTotal();
+    let total = 0;
 
 
-    let selectedGoods =
-        currentGoods.map(function(item) {
+    let recordGoods =
+        selectedGoods.map(
+            function(item) {
 
-            let quantity =
-                Math.floor(
-                    Number(item.quantity)
-                );
-
-
-            return {
-
-                name:
-                    item.name,
-
-                price:
-                    Number(item.price),
-
-                quantity:
-                    quantity,
-
-                total:
-                    Number(item.price) *
-                    quantity
-
-            };
-
-        });
+                let itemTotal =
+                    item.price *
+                    item.quantity;
 
 
-    let now =
-        new Date();
+                total += itemTotal;
+
+
+                return {
+
+                    name: item.name,
+
+                    price: item.price,
+
+                    quantity:
+                        item.quantity,
+
+                    total:
+                        itemTotal
+
+                };
+
+            }
+        );
 
 
     let record = {
 
-        id:
-            Date.now(),
-
         date:
-            now.toLocaleDateString(
-                "en-GH",
-                {
+            new Date().toLocaleString(),
 
-                    day:
-                        "2-digit",
+        total: total,
 
-                    month:
-                        "2-digit",
-
-                    year:
-                        "numeric"
-
-                }
-            ),
-
-        time:
-            now.toLocaleTimeString(
-                "en-GH",
-                {
-
-                    hour:
-                        "2-digit",
-
-                    minute:
-                        "2-digit"
-
-                }
-            ),
-
-        goods:
-            selectedGoods,
-
-        total:
-            total
+        goods: recordGoods
 
     };
 
 
-    records.unshift(
+    goodsRecords.unshift(
         record
     );
 
 
-    saveRecords();
+    localStorage.setItem(
+        "oakCedarGoodsRecords",
+        JSON.stringify(
+            goodsRecords
+        )
+    );
+
 
     displayRecords();
 
@@ -3051,17 +2582,16 @@ function saveGoodsRecord() {
 }
 
 
-/* ================= DISPLAY RECORDS ================= */
 
 function displayRecords() {
 
-    let list =
+    let container =
         document.getElementById(
             "recordsList"
         );
 
 
-    if (!list) {
+    if (!container) {
 
         return;
 
@@ -3069,71 +2599,305 @@ function displayRecords() {
 
 
     if (
-        records.length === 0
+        goodsRecords.length === 0
     ) {
 
-        list.innerHTML =
-            '<div class="no-records">' +
-            'No saved records yet.' +
-            '</div>';
+        container.innerHTML = `
+
+            <div class="no-records">
+                No saved records yet.
+            </div>
+
+        `;
 
         return;
 
     }
 
 
-    list.innerHTML = "";
+    container.innerHTML = "";
 
 
-    records.forEach(function(
-        record,
-        index
-    ) {
+    goodsRecords.forEach(
+        function(record, index) {
 
-        let card =
-            document.createElement(
-                "div"
+            let goodsHTML = "";
+
+
+            record.goods.forEach(
+                function(item) {
+
+                    goodsHTML += `
+
+                        <div class="record-good-line">
+
+                            <span>
+                                ${item.name}
+                                × ${item.quantity}
+                            </span>
+
+                            <strong>
+                                GH₵${Number(item.total).toFixed(2)}
+                            </strong>
+
+                        </div>
+
+                    `;
+
+                }
             );
 
 
-        card.className =
-            "record-card";
+            container.innerHTML += `
+
+                <div class="record-card">
+
+                    <div class="record-date">
+                        ${record.date}
+                    </div>
+
+                    <div class="record-total">
+                        Total:
+                        GH₵${Number(record.total).toFixed(2)}
+                    </div>
+
+                    <div class="record-goods">
+                        ${goodsHTML}
+                    </div>
+
+                    <button
+                        class="record-delete"
+                        onclick="deleteRecord(${index})"
+                    >
+                        DELETE RECORD
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
 
 
-        let goodsHTML =
-            "";
+
+function deleteRecord(index) {
+
+    let confirmDelete =
+        confirm(
+            "Are you sure you want to delete this record?"
+        );
 
 
-        record.goods.forEach(
-            function(item) {
+    if (!confirmDelete) {
 
-                goodsHTML += `
+        return;
 
-                    <div class="record-good-line">
+    }
 
-                        <span>
 
-                            ${escapeHTML(
-                                item.name
-                            )}
+    goodsRecords.splice(
+        index,
+        1
+    );
 
-                            × ${Math.floor(
-                                item.quantity
-                            )}
 
-                            @ GH₵${Number(
-                                item.price
-                            ).toFixed(2)}
+    localStorage.setItem(
+        "oakCedarGoodsRecords",
+        JSON.stringify(
+            goodsRecords
+        )
+    );
 
-                        </span>
 
-                        <strong>
+    displayRecords();
 
-                            GH₵${Number(
-                                item.total
-                            ).toFixed(2)}
+}
 
-                        </strong>
+
+
+/* ADMIN */
+
+async function loadAdminUsers() {
+
+    let sessionResult =
+        await supabaseClient.auth.getSession();
+
+
+    let session =
+        sessionResult.data.session;
+
+
+    if (
+        !session ||
+        !session.user ||
+        session.user.email.toLowerCase() !==
+        ADMIN_EMAIL.toLowerCase()
+    ) {
+
+        alert(
+            "Access denied. Admin only."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        let response =
+            await fetch(
+                SUPABASE_URL +
+                "/functions/v1/Admin-users",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " +
+                            session.access_token
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            action: "list"
+                        })
+
+                }
+            );
+
+
+        let data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.error ||
+                "Unable to load users."
+            );
+
+            return;
+
+        }
+
+
+        let users =
+            data.users || [];
+
+
+        document.getElementById(
+            "userCount"
+        ).textContent =
+            users.length;
+
+
+        let list =
+            document.getElementById(
+                "adminUsersList"
+            );
+
+
+        if (users.length === 0) {
+
+            list.innerHTML = `
+
+                <div class="empty">
+                    No registered users.
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        list.innerHTML = "";
+
+
+        users.forEach(
+            function(user) {
+
+                let isAdmin =
+                    user.email &&
+                    user.email.toLowerCase() ===
+                    ADMIN_EMAIL.toLowerCase();
+
+
+                let created =
+                    user.created_at
+                    ? new Date(
+                        user.created_at
+                    ).toLocaleString()
+                    : "N/A";
+
+
+                let lastLogin =
+                    user.last_sign_in_at
+                    ? new Date(
+                        user.last_sign_in_at
+                    ).toLocaleString()
+                    : "Never";
+
+
+                list.innerHTML += `
+
+                    <div class="admin-user">
+
+                        <div class="admin-email">
+
+                            ${user.email}
+
+                            ${
+                                isAdmin
+                                ? '<span class="admin-badge">MAIN ADMIN</span>'
+                                : ''
+                            }
+
+                        </div>
+
+
+                        <div class="admin-date">
+                            Created:
+                            ${created}
+                        </div>
+
+
+                        <div class="admin-last-login">
+                            Last Login:
+                            ${lastLogin}
+                        </div>
+
+
+                        ${
+                            isAdmin
+                            ? ""
+                            : `
+
+                                <div class="admin-actions">
+
+                                    <button
+                                        class="record-delete admin-delete"
+                                        onclick="deleteAdminUser('${user.id}')"
+                                    >
+                                        DELETE USER
+                                    </button>
+
+                                </div>
+
+                            `
+                        }
 
                     </div>
 
@@ -3143,128 +2907,269 @@ function displayRecords() {
         );
 
 
-        card.innerHTML = `
+    } catch (error) {
 
-            <div class="record-date">
+        console.error(error);
 
-                ${escapeHTML(
-                    record.date
-                )}
-
-                &nbsp;&nbsp;
-
-                ${escapeHTML(
-                    record.time
-                )}
-
-            </div>
-
-
-            <div class="record-total">
-
-                Total:
-                GH₵${Number(
-                    record.total
-                ).toFixed(2)}
-
-            </div>
-
-
-            <div class="record-goods">
-
-                ${goodsHTML}
-
-            </div>
-
-
-            <button
-                class="record-delete"
-                onclick="deleteRecord(${index})"
-            >
-                DELETE RECORD
-            </button>
-
-        `;
-
-
-        list.appendChild(
-            card
+        alert(
+            "Unable to connect to the admin system."
         );
 
-    });
+    }
 
 }
 
 
-/* ================= DELETE RECORD ================= */
 
-function deleteRecord(index) {
+async function createAdminUser() {
 
-    if (
-        index < 0 ||
-        index >= records.length
-    ) {
+    let email =
+        document.getElementById(
+            "newUserEmail"
+        ).value.trim();
+
+
+    let password =
+        document.getElementById(
+            "newUserPassword"
+        ).value;
+
+
+    if (!email || !password) {
+
+        alert(
+            "Please enter email and password."
+        );
 
         return;
 
     }
 
 
-    let answer =
+    if (password.length < 6) {
+
+        alert(
+            "Password must be at least 6 characters."
+        );
+
+        return;
+
+    }
+
+
+    let sessionResult =
+        await supabaseClient.auth.getSession();
+
+
+    let session =
+        sessionResult.data.session;
+
+
+    if (!session) {
+
+        alert(
+            "Admin session expired. Please login again."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        let response =
+            await fetch(
+                SUPABASE_URL +
+                "/functions/v1/Admin-users",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " +
+                            session.access_token
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            action:
+                                "create",
+
+                            email:
+                                email,
+
+                            password:
+                                password
+
+                        })
+
+                }
+            );
+
+
+        let data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.error ||
+                "Unable to create user."
+            );
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "newUserEmail"
+        ).value = "";
+
+
+        document.getElementById(
+            "newUserPassword"
+        ).value = "";
+
+
+        alert(
+            "User created successfully."
+        );
+
+
+        loadAdminUsers();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to connect to the admin system."
+        );
+
+    }
+
+}
+
+
+
+async function deleteAdminUser(
+    userId
+) {
+
+    let confirmDelete =
         confirm(
-            "Are you sure you want to delete this saved record?\n\n" +
-            "This action cannot be undone."
+            "Are you sure you want to delete this user?"
         );
 
 
-    if (!answer) {
+    if (!confirmDelete) {
 
         return;
 
     }
 
 
-    records.splice(
-        index,
-        1
-    );
+    let sessionResult =
+        await supabaseClient.auth.getSession();
 
 
-    saveRecords();
-
-    displayRecords();
-
-}
+    let session =
+        sessionResult.data.session;
 
 
-/* ================= PROTECT HTML ================= */
+    if (!session) {
 
-function escapeHTML(text) {
+        alert(
+            "Admin session expired. Please login again."
+        );
 
-    let div =
-        document.createElement(
-            "div"
+        return;
+
+    }
+
+
+    try {
+
+        let response =
+            await fetch(
+                SUPABASE_URL +
+                "/functions/v1/Admin-users",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " +
+                            session.access_token
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            action:
+                                "delete",
+
+                            userId:
+                                userId
+
+                        })
+
+                }
+            );
+
+
+        let data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.error ||
+                "Unable to delete user."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "User deleted successfully."
         );
 
 
-    div.textContent =
-        text;
+        loadAdminUsers();
 
 
-    return div.innerHTML;
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to connect to the admin system."
+        );
+
+    }
 
 }
-
-
-/* ================= START ================= */
-
-checkLogin();
-
-loadGoodsSelect();
-
-displayCurrentGoods();
-
-displayRecords();
 
 </script>
 
