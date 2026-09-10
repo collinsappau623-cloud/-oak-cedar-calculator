@@ -1,1345 +1,1282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Oak & Cedar Business Calculator</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(135deg,#eef2ee,#dfe6df);
+  color:#24452d;
+  min-height:100vh;
+}
+
+.header{
+  background:#24452d;
+  color:white;
+  padding:18px 15px;
+  text-align:center;
+  box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.logo{
+  width:58px;
+  height:58px;
+  border:3px solid white;
+  border-radius:50%;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:19px;
+}
+
+.header h1{
+  margin:9px 0 2px;
+  font-size:22px;
+}
+
+.header p{
+  margin:0;
+  font-size:13px;
+  opacity:.85;
+}
+
+.user-bar{
+  background:#f5f7f4;
+  padding:9px 14px;
+  text-align:center;
+  font-size:12px;
+  color:#526052;
+  border-bottom:1px solid #dce4dc;
+}
+
+.tabs{
+  display:flex;
+  gap:7px;
+  padding:10px;
+  background:white;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.tab{
+  flex:1;
+  border:none;
+  padding:12px 5px;
+  border-radius:10px;
+  background:#edf2ed;
+  color:#24452d;
+  font-weight:700;
+  font-size:13px;
+}
+
+.tab.active{
+  background:#6b8e58;
+  color:white;
+}
+
+.container{
+  max-width:720px;
+  margin:auto;
+  padding:14px;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 4px 14px rgba(36,69,45,.09);
+}
+
+.card h2{
+  margin:0 0 13px;
+  font-size:18px;
+}
+
+label{
+  display:block;
+  margin:10px 0 5px;
+  font-size:13px;
+  font-weight:700;
+}
+
+input,
+select{
+  width:100%;
+  padding:12px;
+  border:1px solid #cbd5cb;
+  border-radius:10px;
+  background:#fafcf9;
+  color:#222;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:#6b8e58;
+}
 
-* {
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    margin: 0;
-    background: linear-gradient(135deg, #eef2ee, #dfe6df);
-    min-height: 100vh;
-    padding: 20px;
-    color: #202820;
-}
-
-.container {
-    max-width: 650px;
-    margin: auto;
-}
-
-#loginScreen {
-    max-width: 420px;
-    margin: 50px auto;
-}
-
-.login-card {
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-}
-
-.login-logo {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: #24452d;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 15px;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.login-title {
-    text-align: center;
-    color: #24452d;
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.login-card label {
-    display: block;
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 6px;
-}
-
-.login-card input {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #ccd5cc;
-    border-radius: 10px;
-    font-size: 16px;
-    margin-bottom: 12px;
-}
-
-.login-button,
-.calculate-btn,
-.add-button,
-.admin-add,
-.admin-refresh {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #24452d, #527a58);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.switch-auth {
-    text-align: center;
-    margin-top: 15px;
-    color: #527a58;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.logout-button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: none;
-    border-radius: 9px;
-    background: #f3dddd;
-    color: #a32929;
-    font-weight: bold;
+.main-btn{
+  width:100%;
+  border:none;
+  padding:13px;
+  margin-top:12px;
+  border-radius:10px;
+  background:#527a58;
+  color:white;
+  font-weight:800;
+  font-size:14px;
 }
 
-.header {
-    background: linear-gradient(135deg, #24452d, #6b8e58);
-    color: white;
-    padding: 25px 20px;
-    border-radius: 18px;
-    text-align: center;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    margin-bottom: 15px;
+.reset-btn{
+  background:#e9eee9;
+  color:#24452d;
 }
-
-.logo {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: white;
-    color: #24452d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 12px;
-    font-size: 24px;
-    font-weight: bold;
-    border: 4px solid #dfe6df;
+
+.logout-btn{
+  background:#24452d;
+}
+
+.result{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #e4e9e4;
 }
 
-.header h1 {
-    margin: 0;
-    font-size: 23px;
+.result strong:last-child{
+  color:#111;
+  text-align:right;
 }
 
-.header p {
-    margin: 6px 0 0;
-    font-size: 13px;
+.profit{
+  margin-top:10px;
+  padding:15px;
+  border-radius:12px;
+  background:#edf4eb;
+  text-align:center;
 }
 
-.tabs {
-    display: flex;
-    background: white;
-    padding: 5px;
-    border-radius: 13px;
-    margin-bottom: 18px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    gap: 4px;
-    overflow-x: auto;
+.profit small{
+  display:block;
+  font-weight:700;
 }
 
-.tab {
-    flex: 1;
-    min-width: 75px;
-    padding: 12px 4px;
-    text-align: center;
-    color: #394439;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 9px;
-    cursor: pointer;
-    border: none;
-    background: transparent;
+.profit strong{
+  display:block;
+  font-size:25px;
+  margin-top:4px;
+  color:#111;
 }
 
-.tab.active {
-    background: #24452d;
-    color: white;
+.revenue-record{
+  background:#edf4eb;
+  border:1px solid #d7e2d6;
+  border-radius:11px;
+  padding:12px;
+  margin-bottom:8px;
+  cursor:pointer;
 }
 
-.calculator {
-    display: none;
+.revenue-record-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
 }
 
-.calculator.active {
-    display: block;
+.revenue-record-header strong{
+  font-size:14px;
 }
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.10);
-    margin-bottom: 15px;
+.revenue-record-header span{
+  font-size:12px;
+  color:#667066;
 }
 
-.section-title {
-    color: #24452d;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-align: center;
+.revenue-record-details{
+  display:none;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid #d8e2d7;
 }
 
-.input-group {
-    margin-bottom: 13px;
+.revenue-record-details.open{
+  display:block;
 }
 
-.input-group label {
-    display: block;
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 6px;
-    color: #394439;
+.revenue-line{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px solid #e7ebe7;
+  font-size:13px;
 }
 
-input {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #ccd5cc;
-    border-radius: 10px;
-    font-size: 16px;
-    outline: none;
-    background: #fafcfa;
+.revenue-line strong:last-child{
+  color:#111;
+  text-align:right;
 }
 
-input:focus {
-    border-color: #527a58;
+.record-delete{
+  width:100%;
+  border:none;
+  margin-top:10px;
+  padding:10px;
+  border-radius:9px;
+  background:#f3dddd;
+  color:#8c2b2b;
+  font-weight:800;
 }
 
-.reset-btn,
-.clear-button {
-    width: 100%;
-    padding: 13px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 11px;
-    background: #edf3ed;
-    color: #24452d;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
+.cedi-row{
+  display:grid;
+  grid-template-columns:75px 1fr 110px;
+  gap:7px;
+  align-items:center;
+  margin-bottom:8px;
 }
 
-.results {
-    margin-top: 20px;
+.denom{
+  font-weight:800;
 }
 
-.result-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 5px;
-    border-bottom: 1px solid #e2e7e2;
-    font-size: 14px;
+.line-total{
+  text-align:right;
+  font-weight:700;
+  color:#111;
 }
 
-.profit-box,
-.total-money {
-    margin-top: 15px;
-    background: #24452d;
-    color: white;
-    padding: 18px;
-    border-radius: 12px;
-    text-align: center;
+.cedi-total{
+  margin-top:15px;
+  padding:15px;
+  background:#edf4eb;
+  border-radius:12px;
+  text-align:center;
 }
 
-.profit-box small,
-.total-money small {
-    display: block;
-    font-size: 12px;
-    margin-bottom: 5px;
+.cedi-total small{
+  display:block;
+  font-weight:700;
 }
 
-.profit-box strong,
-.total-money strong {
-    font-size: 25px;
+.cedi-total strong{
+  display:block;
+  font-size:25px;
+  color:#111;
 }
 
-.money-row {
-    display: grid;
-    grid-template-columns: 80px 1fr 100px;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
+.words{
+  margin-top:12px;
+  padding:13px;
+  border-radius:10px;
+  background:#f5f7f4;
+  border:1px solid #dce4dc;
 }
 
-.denomination {
-    font-weight: bold;
-    white-space: nowrap;
+.words strong{
+  display:block;
+  margin-top:5px;
+  color:#111;
+  line-height:1.5;
 }
 
-.money-row input {
-    text-align: center;
-    padding: 11px;
+.choice-row{
+  display:flex;
+  gap:8px;
 }
 
-.result {
-    text-align: right;
-    font-weight: bold;
-    font-size: 14px;
-    white-space: nowrap;
+.choice-btn{
+  flex:1;
+  padding:12px 5px;
+  border:none;
+  border-radius:10px;
+  background:#edf2ed;
+  color:#24452d;
+  font-weight:800;
 }
 
+.choice-btn.active{
+  background:#6b8e58;
+  color:white;
+}
 
-/* GOODS */
+.goods-row{
+  display:grid;
+  grid-template-columns:minmax(130px,1fr) 75px 105px 42px;
+  gap:6px;
+  align-items:center;
+  margin-bottom:8px;
+}
 
-.add-grid {
-    display: grid;
-    grid-template-columns: 1fr 130px;
-    gap: 10px;
+.goods-row select,
+.goods-row input{
+  padding:9px;
+  font-size:13px;
 }
 
-.search-box {
-    margin-bottom: 12px;
+.price-box{
+  background:#f1f5f0;
+  border:1px solid #dce5dc;
+  border-radius:8px;
+  padding:9px 5px;
+  text-align:center;
+  font-size:12px;
+  font-weight:800;
+  color:#111;
+  min-height:37px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.select-grid {
-    display: grid;
-    grid-template-columns: 1fr 110px;
-    gap: 10px;
-    margin-bottom: 10px;
+.remove-btn{
+  border:none;
+  border-radius:8px;
+  padding:9px;
+  background:#f1dddd;
+  color:#8b2c2c;
+  font-weight:800;
+  height:37px;
 }
 
-select {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #ccd5cc;
-    border-radius: 10px;
-    font-size: 15px;
-    outline: none;
-    background: #fafcfa;
+.add-good-btn{
+  border:none;
+  background:#edf4eb;
+  color:#24452d;
+  padding:11px;
+  border-radius:9px;
+  font-weight:800;
+  width:100%;
 }
 
-select:focus {
-    border-color: #527a58;
+.saved-status{
+  text-align:center;
+  background:#edf4eb;
+  border:1px solid #d5e2d4;
+  color:#24452d;
+  padding:13px;
+  border-radius:10px;
+  font-weight:800;
 }
 
-.add-button {
-    background: #527a58;
-    margin-top: 10px;
+.saved-status small{
+  display:block;
+  margin-top:4px;
+  font-weight:500;
+  color:#5d695f;
 }
 
-.goods-header {
-    display: grid;
-    grid-template-columns: 1.5fr 80px 65px 90px 25px;
-    gap: 5px;
-    background: #24452d;
-    color: white;
-    padding: 9px 5px;
-    border-radius: 7px;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: center;
+.edit-current-btn{
+  width:100%;
+  border:none;
+  margin-top:9px;
+  padding:11px;
+  border-radius:9px;
+  background:#e8efe6;
+  color:#24452d;
+  font-weight:800;
 }
 
-.goods-row {
-    display: grid;
-    grid-template-columns: 1.5fr 80px 65px 90px 25px;
-    gap: 5px;
-    align-items: center;
-    padding: 8px 5px;
-    border-bottom: 1px solid #e1e6e1;
+.balance-record{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#edf4eb;
+  border:1px solid #d7e2d6;
+  border-radius:11px;
+  padding:12px;
+  margin-bottom:8px;
+  cursor:pointer;
 }
 
-.goods-name {
-    font-size: 13px;
-    font-weight: bold;
+.balance-left{
+  font-weight:800;
 }
 
-.goods-price {
-    font-size: 12px;
-    text-align: center;
+.balance-left small{
+  display:block;
+  margin-top:3px;
+  color:#687168;
+  font-weight:500;
 }
 
-.quantity {
-    width: 100%;
-    padding: 8px 4px;
-    text-align: center;
+.balance-amount{
+  color:#111;
+  font-weight:900;
+  font-size:15px;
 }
 
-.item-total {
-    font-size: 12px;
-    font-weight: bold;
-    text-align: right;
+.saved-record{
+  background:#edf4eb;
+  border:1px solid #d7e2d6;
+  border-radius:11px;
+  padding:12px;
+  margin-bottom:8px;
+  font-weight:800;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
 }
 
-.delete-good {
-    border: none;
-    background: none;
-    color: #a32929;
-    font-size: 17px;
-    cursor: pointer;
+.saved-record span{
+  font-size:12px;
+  opacity:.75;
 }
 
-.total-box {
-    background: #f1f5f1;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 12px;
-    text-align: center;
+.record-details{
+  display:none;
+  background:white;
+  border:1px solid #dce4dc;
+  border-radius:0 0 11px 11px;
+  padding:10px;
+  margin-top:-8px;
+  margin-bottom:8px;
 }
 
-.total-box small {
-    display: block;
-    color: #555;
+.record-details.open{
+  display:block;
 }
 
-.total-box strong {
-    display: block;
-    color: #24452d;
-    font-size: 23px;
-    margin-top: 4px;
+.record-anchor{
+  scroll-margin-top:95px;
 }
 
-.calculate-goods-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 9px;
-    background: #24452d;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:500px;
 }
 
-.save-record-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #24452d;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+.table-wrap{
+  overflow-x:auto;
+  margin-top:8px;
 }
 
-.save-record-button:active {
-    transform: scale(0.98);
+th,
+td{
+  padding:8px 6px;
+  border-bottom:1px solid #e2e7e2;
+  text-align:left;
+  font-size:12px;
 }
 
-.no-records {
-    text-align: center;
-    padding: 20px 10px;
-    color: #777;
-    font-size: 14px;
+th{
+  background:#edf4eb;
 }
 
-.no-selected {
-    text-align: center;
-    padding: 18px 8px;
-    color: #777;
-    font-size: 13px;
+td.money{
+  text-align:right;
+  color:#111;
+  font-weight:700;
 }
 
+.table-total{
+  text-align:right;
+  padding:10px 4px;
+  font-weight:800;
+  color:#111;
+}
 
-/* RECORDS */
+.sold{
+  text-align:right;
+  padding:6px 4px 12px;
+  font-weight:800;
+  color:#24452d;
+}
 
-.record-card {
-    background: #fafcfa;
-    border: 1px solid #dce4dc;
-    border-radius: 12px;
-    padding: 13px;
-    margin-bottom: 10px;
+.balance-box{
+  margin-top:10px;
+  padding:14px;
+  background:#edf4eb;
+  border:2px solid #d5e2d4;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  font-weight:900;
+  scroll-margin-top:95px;
 }
 
-.record-date {
-    color: #24452d;
-    font-weight: bold;
-    font-size: 13px;
-    margin-bottom: 8px;
+.balance-box span:last-child{
+  color:#111;
+  font-size:17px;
 }
 
-.record-total {
-    background: #eef5ee;
-    border-radius: 9px;
-    padding: 11px;
-    font-size: 17px;
-    font-weight: bold;
-    color: #24452d;
-    margin-bottom: 10px;
+.record-buttons{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
 }
 
-.record-goods {
-    border-top: 1px solid #e0e6e0;
-    padding-top: 8px;
+.small-btn{
+  flex:1;
+  padding:9px;
+  border:none;
+  border-radius:8px;
+  font-weight:800;
 }
 
-.record-good-line {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    padding: 5px 0;
-    gap: 10px;
+.edit-btn{
+  background:#e8efe6;
+  color:#24452d;
 }
 
-.record-delete {
-    width: 100%;
-    margin-top: 10px;
-    padding: 8px;
-    border: none;
-    border-radius: 8px;
-    background: #f3dddd;
-    color: #a32929;
-    font-weight: bold;
-    cursor: pointer;
+.delete-btn{
+  background:#f3dddd;
+  color:#8c2b2b;
 }
 
+.info{
+  background:#f5f7f4;
+  padding:11px;
+  border-radius:10px;
+  margin-top:10px;
+  font-size:13px;
+}
 
-/* ADMIN */
+.empty{
+  text-align:center;
+  padding:15px;
+  color:#777;
+  font-size:13px;
+}
 
-.admin-count {
-    text-align: center;
-    background: #edf3ed;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    font-weight: bold;
-    color: #24452d;
+.hidden{
+  display:none!important;
 }
 
-.admin-count span {
-    font-size: 22px;
-    margin-left: 5px;
+.good-admin{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  padding:10px;
+  border-bottom:1px solid #e4e9e4;
 }
 
-.admin-refresh {
-    background: #527a58;
+.good-admin small{
+  display:block;
+  color:#666;
 }
 
-.admin-user {
-    border: 1px solid #dce4dc;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 10px;
-    background: #fafcfa;
+.revenue-date-box{
+  margin-top:12px;
+  padding:13px;
+  background:#f5f7f4;
+  border:1px solid #dce4dc;
+  border-radius:11px;
 }
 
-.admin-email {
-    font-weight: bold;
-    color: #24452d;
-    word-break: break-word;
-    margin-bottom: 8px;
+.date-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
 }
 
-.admin-badge {
-    display: inline-block;
-    background: #24452d;
-    color: white;
-    font-size: 10px;
-    padding: 4px 7px;
-    border-radius: 6px;
-    margin-left: 5px;
+.date-label{
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:5px;
 }
 
-.admin-date,
-.admin-last-login {
-    font-size: 12px;
-    color: #666;
-    margin-top: 5px;
+.auto-date{
+  background:#edf4eb;
+  color:#24452d;
+  font-weight:700;
 }
 
-.admin-actions {
-    margin-top: 12px;
+.save-note{
+  margin-top:9px;
+  font-size:12px;
+  color:#697269;
+  line-height:1.4;
 }
 
-.admin-delete {
-    width: 100%;
-    padding: 10px;
+.login-overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#eef2ee,#dfe6df);
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
 }
 
-.empty {
-    text-align: center;
-    padding: 25px 10px;
-    color: #777;
-    font-size: 14px;
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 6px 25px rgba(36,69,45,.15);
 }
 
+.login-logo{
+  width:65px;
+  height:65px;
+  border:3px solid #24452d;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 12px;
+  font-weight:900;
+  color:#24452d;
+  font-size:20px;
+}
 
-@media (max-width:480px) {
+.login-card h2{
+  text-align:center;
+  margin:0 0 5px;
+}
 
-    body {
-        padding: 12px;
-    }
+.login-card p{
+  text-align:center;
+  color:#687168;
+  font-size:13px;
+  margin:0 0 18px;
+}
 
-    .money-row {
-        grid-template-columns: 65px 1fr 85px;
-    }
+.login-message{
+  margin-top:10px;
+  padding:10px;
+  border-radius:9px;
+  background:#f5f7f4;
+  color:#526052;
+  font-size:13px;
+  display:none;
+}
 
-    .result {
-        font-size: 12px;
-    }
+.login-toggle{
+  margin-top:12px;
+  width:100%;
+  border:none;
+  background:transparent;
+  color:#527a58;
+  font-weight:800;
+  padding:8px;
+}
 
-    .goods-header,
-    .goods-row {
-        grid-template-columns: 1.3fr 65px 55px 80px 20px;
-    }
+.loading{
+  text-align:center;
+  padding:20px;
+  color:#526052;
+}
 
-    .goods-name,
-    .goods-price,
-    .item-total {
-        font-size: 11px;
-    }
+.admin-user{
+  padding:12px 0;
+  border-bottom:1px solid #e4e9e4;
+}
 
-    .quantity {
-        font-size: 12px;
-    }
+.admin-user strong{
+  display:block;
+}
 
-    .add-grid {
-        grid-template-columns: 1fr 100px;
-    }
+.admin-user small{
+  color:#687168;
+}
 
-    .select-grid {
-        grid-template-columns: 1fr 90px;
-    }
+.admin-user-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:8px;
 }
+
+@media(max-width:520px){
+
+  .goods-row{
+    grid-template-columns:minmax(105px,1fr) 65px 85px 38px;
+  }
 
+  .goods-row select,
+  .goods-row input{
+    font-size:12px;
+  }
+
+  .price-box{
+    font-size:11px;
+  }
+
+  .tab{
+    font-size:12px;
+  }
+
+  .date-row{
+    grid-template-columns:1fr 1fr;
+  }
+}
 </style>
-
 </head>
 
 <body>
 
-
 <!-- LOGIN -->
 
-<div id="loginScreen">
+<div id="loginOverlay" class="login-overlay">
 
-<div class="login-card">
+  <div class="login-card">
 
-<div class="login-logo">
-O&C
+    <div class="login-logo">O&C</div>
+
+    <h2 id="loginTitle">Oak & Cedar</h2>
+
+    <p id="loginSubtitle">Sign in to your Business Calculator</p>
+
+    <div id="signupNameBox" class="hidden">
+
+      <label>Full Name</label>
+
+      <input
+        id="signupName"
+        type="text"
+        placeholder="Enter your full name">
+
+    </div>
+
+    <label>Email</label>
+
+    <input
+      id="loginEmail"
+      type="email"
+      autocomplete="email"
+      placeholder="Enter your email">
+
+    <label>Password</label>
+
+    <input
+      id="loginPassword"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Enter your password">
+
+    <button
+      id="loginButton"
+      class="main-btn"
+      onclick="handleAuth()">
+      LOGIN
+    </button>
+
+    <button
+      id="authToggle"
+      class="login-toggle"
+      onclick="toggleAuthMode()">
+      Create a new account
+    </button>
+
+    <div id="loginMessage" class="login-message"></div>
+
+  </div>
+
 </div>
 
-<div class="login-title">
-Oak & Cedar Business Calculator
-</div>
 
-<div class="input-group">
-
-<label>Email</label>
-
-<input
-type="email"
-id="email"
-placeholder="Enter your email"
->
-
-</div>
-
-<div class="input-group">
-
-<label>Password</label>
-
-<input
-type="password"
-id="password"
-placeholder="Enter your password"
->
-
-</div>
-
-<button
-class="login-button"
-onclick="loginUser()"
->
-LOGIN
-</button>
-
-<div
-class="switch-auth"
-onclick="toggleAuth()"
-id="authSwitch"
->
-Don't have an account? Create Account
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- MAIN APP -->
-
-<div
-class="container"
-id="app"
-style="display:none;"
->
+<!-- HEADER -->
 
 <div class="header">
 
-<div class="logo">
-O&C
-</div>
+  <div class="logo">O&C</div>
 
-<h1>
-Oak & Cedar Business Calculator
-</h1>
+  <h1>Oak & Cedar</h1>
 
-<p>
-Professional Business Management Calculator
-</p>
+  <p>Business Calculator</p>
 
 </div>
 
 
-<button
-class="logout-button"
-onclick="logoutUser()"
->
-LOGOUT
-</button>
-
+<div id="userBar" class="user-bar hidden"></div>
 
 
 <!-- TABS -->
 
-<div class="tabs">
+<div id="appTabs" class="tabs hidden">
 
-<button
-class="tab active"
-onclick="showTab('revenue', this)"
->
-Revenue
-</button>
+  <button class="tab active"
+  onclick="showTab('revenue',this)">
+  Revenue
+  </button>
 
-<button
-class="tab"
-onclick="showTab('cedi', this)"
->
-Cedi
-</button>
+  <button class="tab"
+  onclick="showTab('cedi',this)">
+  Cedi
+  </button>
 
-<button
-class="tab"
-onclick="showTab('goods', this)"
->
-Goods
-</button>
+  <button class="tab"
+  onclick="showTab('goods',this)">
+  Goods
+  </button>
 
-<button
-class="tab"
-id="adminTab"
-onclick="showTab('admin', this)"
-style="display:none;"
->
-Admin
-</button>
+  <button id="adminTab"
+  class="tab hidden"
+  onclick="showTab('admin',this)">
+  Admin
+  </button>
 
 </div>
 
+
+<div class="container">
 
 
 <!-- REVENUE -->
 
-<div
-id="revenue"
-class="calculator active"
->
+<section id="revenue" class="section active">
 
 <div class="card">
 
-<div class="section-title">
-Revenue Calculator
-</div>
+<h2>Business Revenue Calculator</h2>
 
-<div class="input-group">
 <label>Bank 1</label>
-<input
-type="number"
-id="bank1"
-placeholder="Enter amount"
->
-</div>
+<input id="bank1" type="number" inputmode="decimal" placeholder="0">
 
-<div class="input-group">
 <label>Bank 2</label>
-<input
-type="number"
-id="bank2"
-placeholder="Enter amount"
->
-</div>
+<input id="bank2" type="number" inputmode="decimal" placeholder="0">
 
-<div class="input-group">
 <label>Bank 3</label>
-<input
-type="number"
-id="bank3"
-placeholder="Enter amount"
->
-</div>
+<input id="bank3" type="number" inputmode="decimal" placeholder="0">
 
-<div class="input-group">
 <label>Cash at Hand</label>
-<input
-type="number"
-id="cash"
-placeholder="Enter amount"
->
-</div>
+<input id="cash" type="number" inputmode="decimal" placeholder="0">
 
-<div class="input-group">
 <label>Expenses</label>
-<input
-type="number"
-id="expenses"
-placeholder="Enter expenses"
->
-</div>
+<input id="expenses" type="number" inputmode="decimal" placeholder="0">
 
-<div class="input-group">
 <label>Total Goods</label>
-<input
-type="number"
-id="totalGoods"
-placeholder="Enter total goods"
->
-</div>
+<input id="totalGoods" type="number" inputmode="decimal" placeholder="0">
 
-<div class="input-group">
 <label>Remaining Goods</label>
-<input
-type="number"
-id="remainingGoods"
-placeholder="Enter remaining goods"
->
-</div>
+<input id="remainingGoods" type="number" inputmode="decimal" placeholder="0">
 
-<button
-class="calculate-btn"
-onclick="calculateRevenue()"
->
-CALCULATE REVENUE
+<button class="main-btn" onclick="calculateRevenue()">
+CALCULATE
 </button>
 
-<button
-class="reset-btn"
-onclick="resetRevenue()"
->
+<button class="main-btn" onclick="openRevenueSave()">
+SAVE REVENUE RECORD
+</button>
+
+<button class="main-btn reset-btn" onclick="resetRevenue()">
 RESET
 </button>
 
-<div
-class="results"
-id="revenueResults"
->
+<button class="main-btn logout-btn" onclick="logoutApp()">
+LOGOUT
+</button>
+
 </div>
+
+
+<div class="card">
+
+<h2>Summary</h2>
+
+<div class="result">
+<strong>Total Banks</strong>
+<strong id="outBanks">GH₵0.00</strong>
+</div>
+
+<div class="result">
+<strong>Total Bank & Cash</strong>
+<strong id="outCash">GH₵0.00</strong>
+</div>
+
+<div class="result">
+<strong>Remaining Goods</strong>
+<strong id="outRemaining">GH₵0.00</strong>
+</div>
+
+<div class="result">
+<strong>Goods After Expenses</strong>
+<strong id="outGoodsAfter">GH₵0.00</strong>
+</div>
+
+<div class="profit">
+<small>TOTAL PROFIT</small>
+<strong id="outProfit">GH₵0.00</strong>
+</div>
+
+</div>
+
+
+<div class="card hidden" id="revenueSaveCard">
+
+<h2>Save Revenue Record</h2>
+
+<label>Week</label>
+
+<select id="revenueWeek"></select>
+
+<div class="revenue-date-box">
+
+<div class="date-row">
+
+<div>
+
+<div class="date-label">START</div>
+
+<input
+id="revenueStartDate"
+type="date"
+onchange="updateRevenueEndDate">
+
+</div>
+
+<div>
+
+<div class="date-label">TO</div>
+
+<input
+id="revenueEndDate"
+class="auto-date"
+type="date"
+readonly>
 
 </div>
 
 </div>
 
+<div class="save-note">
+Select the Start date. The To date will automatically be set to 4 days after the selected start date.
+</div>
+
+</div>
+
+<div class="info">
+The saved record will contain the Revenue Summary and Expenses. Profit will not be saved.
+</div>
+
+<button class="main-btn" onclick="confirmSaveRevenueRecord()">
+SAVE RECORD
+</button>
+
+<button class="main-btn reset-btn" onclick="closeRevenueSave()">
+CANCEL
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>Saved Revenue Records</h2>
+
+<div id="revenueRecords">
+<div class="loading">Loading records...</div>
+</div>
+
+</div>
+
+</section>
 
 
 <!-- CEDI -->
 
-<div
-id="cedi"
-class="calculator"
->
+<section id="cedi" class="section">
 
 <div class="card">
 
-<div class="section-title">
-Cedi Calculator
+<h2>Ghana Cedi Calculator</h2>
+
+<div class="cedi-row">
+<div class="denom">GH₵200</div>
+<input class="cediQty" data-denom="200" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+<div class="line-total" id="line200">GH₵0.00</div>
 </div>
 
-
-<div class="money-row">
-
-<div class="denomination">
-GH₵200
+<div class="cedi-row">
+<div class="denom">GH₵100</div>
+<input class="cediQty" data-denom="100" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+<div class="line-total" id="line100">GH₵0.00</div>
 </div>
 
-<input
-type="number"
-id="c200"
-min="0"
-placeholder="Qty"
->
-
-<div
-class="result"
-id="r200"
->
-GH₵0.00
+<div class="cedi-row">
+<div class="denom">GH₵50</div>
+<input class="cediQty" data-denom="50" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+<div class="line-total" id="line50">GH₵0.00</div>
 </div>
 
+<div class="cedi-row">
+<div class="denom">GH₵20</div>
+<input class="cediQty" data-denom="20" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+<div class="line-total" id="line20">GH₵0.00</div>
 </div>
 
-
-<div class="money-row">
-
-<div class="denomination">
-GH₵100
+<div class="cedi-row">
+<div class="denom">GH₵10</div>
+<input class="cediQty" data-denom="10" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+<div class="line-total" id="line10">GH₵0.00</div>
 </div>
 
-<input
-type="number"
-id="c100"
-min="0"
-placeholder="Qty"
->
-
-<div
-class="result"
-id="r100"
->
-GH₵0.00
+<div class="cedi-row">
+<div class="denom">GH₵5</div>
+<input class="cediQty" data-denom="5" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+<div class="line-total" id="line5">GH₵0.00</div>
 </div>
 
+<div class="cedi-row">
+<div class="denom">GH₵2</div>
+<input class="cediQty" data-denom="2" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+<div class="line-total" id="line2">GH₵0.00</div>
 </div>
 
-
-<div class="money-row">
-
-<div class="denomination">
-GH₵50
+<div class="cedi-row">
+<div class="denom">GH₵1</div>
+<input class="cediQty" data-denom="1" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+<div class="line-total" id="line1">GH₵0.00</div>
 </div>
 
-<input
-type="number"
-id="c50"
-min="0"
-placeholder="Qty"
->
-
-<div
-class="result"
-id="r50"
->
-GH₵0.00
-</div>
-
-</div>
-
-
-<div class="money-row">
-
-<div class="denomination">
-GH₵20
-</div>
-
-<input
-type="number"
-id="c20"
-min="0"
-placeholder="Qty"
->
-
-<div
-class="result"
-id="r20"
->
-GH₵0.00
-</div>
-
-</div>
-
-
-<div class="money-row">
-
-<div class="denomination">
-GH₵10
-</div>
-
-<input
-type="number"
-id="c10"
-min="0"
-placeholder="Qty"
->
-
-<div
-class="result"
-id="r10"
->
-GH₵0.00
-</div>
-
-</div>
-
-
-<div class="money-row">
-
-<div class="denomination">
-GH₵5
-</div>
-
-<input
-type="number"
-id="c5"
-min="0"
-placeholder="Qty"
->
-
-<div
-class="result"
-id="r5"
->
-GH₵0.00
-</div>
-
-</div>
-
-
-<div class="money-row">
-
-<div class="denomination">
-GH₵2
-</div>
-
-<input
-type="number"
-id="c2"
-min="0"
-placeholder="Qty"
->
-
-<div
-class="result"
-id="r2"
->
-GH₵0.00
-</div>
-
-</div>
-
-
-<div class="money-row">
-
-<div class="denomination">
-GH₵1
-</div>
-
-<input
-type="number"
-id="c1"
-min="0"
-placeholder="Qty"
->
-
-<div
-class="result"
-id="r1"
->
-GH₵0.00
-</div>
-
-</div>
-
-
-<!-- ONLY CHANGE: BUTTON NOW SAYS CALCULATE -->
-
-<button
-class="calculate-btn"
-onclick="calculateCedi()"
->
+<button class="main-btn" onclick="calculateCedi()">
 CALCULATE
 </button>
 
+<div class="cedi-total">
 
-<div class="total-money">
+<small>TOTAL CASH</small>
 
-<small>
-TOTAL CASH
-</small>
+<strong id="cediGrandTotal">GH₵0.00</strong>
 
-<strong id="cediTotal">
-GH₵0.00
+</div>
+
+<div class="words">
+
+<strong>Amount in Words</strong>
+
+<strong id="amountWords">
+Zero Ghana cedis only
 </strong>
 
 </div>
 
-
-<button
-class="reset-btn"
-onclick="resetCedi()"
->
-RESET
-</button>
-
 </div>
 
-</div>
-
+</section>
 
 
 <!-- GOODS -->
 
-<div
-id="goods"
-class="calculator"
->
+<section id="goods" class="section">
 
 <div class="card">
 
-<div class="section-title">
-Add New Goods
+<h2>Weekly Goods Recording</h2>
+
+<label>Select Week</label>
+
+<select id="weekSelect" onchange="loadSelectedWeek()"></select>
+
+<label>Date</label>
+
+<input id="weekDate" type="date">
+
+<div class="info" id="previousInfo">
+Previous Week Remaining Goods: GH₵0.00
 </div>
-
-<div class="add-grid">
-
-<input
-type="text"
-id="goodsName"
-placeholder="Goods name"
->
-
-<input
-type="number"
-id="goodsPrice"
-placeholder="Price"
->
-
-</div>
-
-<button
-class="add-button"
-onclick="addGoods()"
->
-+ ADD GOODS
-</button>
 
 </div>
 
 
 <div class="card">
 
-<div class="section-title">
-Select Goods & Enter Quantity
-</div>
+<h2>What do you want to record?</h2>
 
+<div class="choice-row">
 
-<div class="search-box">
-
-<input
-type="text"
-id="goodsSearch"
-placeholder="Search goods by first letters..."
-oninput="loadGoodsSelect()"
->
-
-</div>
-
-
-<div class="select-grid">
-
-<select id="savedGoodSelect">
-
-<option value="">
-Select saved goods
-</option>
-
-</select>
-
-<input
-type="number"
-id="newQuantity"
-min="1"
-placeholder="Qty"
->
-
-</div>
-
-
-<button
-class="add-button"
-onclick="addQuantityToList()"
->
-+ ADD QUANTITY
+<button id="startingChoice" class="choice-btn" onclick="chooseRecordType('starting')">
+Starting Goods
 </button>
 
-
-<div id="goodsList">
-
-<div class="no-selected">
-Enter a quantity for a saved good to add it here.
-</div>
+<button id="remainingChoice" class="choice-btn" onclick="chooseRecordType('remaining')">
+Remaining Goods
+</button>
 
 </div>
 
+</div>
 
-<div class="total-box">
+
+<div class="card hidden" id="startingCard">
+
+<h2>Starting Goods</h2>
+
+<div id="startingEditorArea">
+
+<div id="startingList"></div>
+
+<button class="add-good-btn" onclick="addStartingRow()">
+ADD GOOD
+</button>
+
+<button class="main-btn" onclick="saveStartingGoods()">
+SAVE STARTING GOODS
+</button>
+
+</div>
+
+<div id="startingSavedStatus" class="hidden">
+
+<div class="saved-status">
+
+Starting Goods Saved
 
 <small>
-TOTAL GOODS VALUE
+Your Starting Goods have been recorded for this week.
 </small>
 
-<strong id="goodsGrandTotal">
-GH₵0.00
-</strong>
-
 </div>
 
-
-<button
-class="calculate-goods-button"
-onclick="calculateGoodsTotal()"
->
-CALCULATE TOTAL
-</button>
-
-
-<button
-class="save-record-button"
-onclick="saveGoodsRecord()"
->
-SAVE RECORD
-</button>
-
-
-<button
-class="clear-button"
-onclick="clearQuantities()"
->
-CLEAR ALL QUANTITIES
+<button class="edit-current-btn" onclick="editCurrentStarting()">
+EDIT STARTING GOODS
 </button>
 
 </div>
 
+</div>
 
-<!-- SAVED RECORDS -->
+
+<div class="card hidden" id="remainingCard">
+
+<h2>Remaining Goods</h2>
+
+<div id="remainingEditorArea">
+
+<div id="remainingList"></div>
+
+<button class="add-good-btn" onclick="addRemainingRow()">
+ADD GOOD
+</button>
+
+<button class="main-btn" onclick="saveRemainingGoods()">
+SAVE REMAINING GOODS
+</button>
+
+</div>
+
+<div id="remainingSavedStatus" class="hidden">
+
+<div class="saved-status">
+
+Remaining Goods Saved
+
+<small>
+Your Remaining Goods have been recorded for this week.
+</small>
+
+</div>
+
+<button class="edit-current-btn" onclick="editCurrentRemaining()">
+EDIT REMAINING GOODS
+</button>
+
+</div>
+
+</div>
+
 
 <div class="card">
 
-<div class="section-title">
-Saved Records
+<h2>Balance Records</h2>
+
+<div class="info">
+This section records only the weekly Balance value. Tap a Balance record to automatically open the exact Balance figure inside that week's saved record.
 </div>
 
-<div id="recordsList"></div>
+<div id="balanceRecords"></div>
 
 </div>
 
+
+<div class="card">
+
+<h2>Saved Weekly Records</h2>
+
+<div id="savedRecords"></div>
+
 </div>
 
+</section>
 
 
 <!-- ADMIN -->
 
-<div
-id="admin"
-class="calculator"
->
+<section id="admin" class="section">
 
 <div class="card">
 
-<div class="section-title">
-Admin Dashboard
+<h2>Approved Goods & Prices</h2>
+
+<div id="adminGoods"></div>
+
+<label>Good Name</label>
+
+<input id="newGoodName" type="text" placeholder="Enter good name">
+
+<label>Price</label>
+
+<input id="newGoodPrice" type="number" inputmode="decimal" placeholder="Enter price">
+
+<button class="main-btn" onclick="addGood()">
+ADD GOOD & PRICE
+</button>
+
 </div>
 
-<div class="admin-count">
 
-Registered Users:
+<div class="card">
 
-<span id="userCount">
-0
-</span>
+<h2>Registered Users</h2>
 
+<div id="adminUsers">
+<div class="loading">Loading users...</div>
 </div>
 
-<button
-class="admin-refresh"
-onclick="loadAdminUsers()"
->
+<button class="main-btn reset-btn" onclick="loadAdminUsers()">
 REFRESH USERS
 </button>
 
 </div>
 
-
-<div class="card">
-
-<div class="section-title">
-Add New User
-</div>
-
-<div class="input-group">
-
-<label>
-User Email
-</label>
-
-<input
-type="email"
-id="newUserEmail"
-placeholder="Enter user email"
->
+</section>
 
 </div>
-
-
-<div class="input-group">
-
-<label>
-User Password
-</label>
-
-<input
-type="password"
-id="newUserPassword"
-placeholder="Minimum 6 characters"
->
-
-</div>
-
-
-<button
-class="admin-add"
-onclick="createAdminUser()"
->
-+ ADD USER
-</button>
-
-</div>
-
-
-<div class="card">
-
-<div class="section-title">
-Registered Users
-</div>
-
-<div id="adminUsersList"></div>
-
-</div>
-
-</div>
-
-</div>
-
 
 
 <script>
 
-
-/* SUPABASE */
+/* =====================================================
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://ywsmyynauytmgdiijwlo.supabase.co";
@@ -1348,1828 +1285,3746 @@ const SUPABASE_KEY =
 "sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
 
 const supabaseClient =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-const ADMIN_EMAIL =
-"collinsappau3030@gmail.com";
+
+/* =====================================================
+   APP STATE
+===================================================== */
+
+const defaultGoods = [
+  {name:"Bone Straight",price:500},
+  {name:"Body Wave",price:450},
+  {name:"Deep Wave",price:400},
+  {name:"Water Wave",price:380},
+  {name:"Kinky Straight",price:350},
+  {name:"Curly Hair",price:420}
+];
+
+let goods = [];
+let weeks = {};
+let revenueRecords = [];
+let selectedWeek = "Week 1";
+let selectedRecordType = "";
+let currentUser = null;
+let currentProfile = null;
+let authMode = "login";
 
 
+/* =====================================================
+   AUTH MODE
+===================================================== */
 
-/* AUTH */
+function toggleAuthMode(){
 
-let isCreateAccount = false;
+if(authMode==="login"){
 
+authMode="signup";
 
-function toggleAuth() {
+document.getElementById("loginTitle").textContent =
+"Create Oak & Cedar Account";
 
-    isCreateAccount =
-        !isCreateAccount;
+document.getElementById("loginSubtitle").textContent =
+"Create an account to use the Business Calculator";
 
-    let button =
-        document.querySelector(
-            ".login-button"
-        );
+document.getElementById("signupNameBox")
+.classList.remove("hidden");
 
-    let switchText =
-        document.getElementById(
-            "authSwitch"
-        );
+document.getElementById("loginButton").textContent =
+"CREATE ACCOUNT";
 
+document.getElementById("authToggle").textContent =
+"Back to login";
 
-    if (isCreateAccount) {
+document.getElementById("loginPassword")
+.setAttribute("autocomplete","new-password");
 
-        button.textContent =
-            "CREATE ACCOUNT";
+}else{
 
-        switchText.textContent =
-            "Already have an account? Login";
+authMode="login";
 
-    } else {
+document.getElementById("loginTitle").textContent =
+"Oak & Cedar";
 
-        button.textContent =
-            "LOGIN";
+document.getElementById("loginSubtitle").textContent =
+"Sign in to your Business Calculator";
 
-        switchText.textContent =
-            "Don't have an account? Create Account";
+document.getElementById("signupNameBox")
+.classList.add("hidden");
 
-    }
+document.getElementById("loginButton").textContent =
+"LOGIN";
+
+document.getElementById("authToggle").textContent =
+"Create a new account";
+
+document.getElementById("loginPassword")
+.setAttribute("autocomplete","current-password");
+
+}
+
+showLoginMessage("");
 
 }
 
 
+function showLoginMessage(message){
 
-async function loginUser() {
+const box =
+document.getElementById("loginMessage");
 
-    let email =
-        document.getElementById(
-            "email"
-        ).value.trim();
+if(!message){
 
+box.style.display="none";
+box.textContent="";
+return;
 
-    let password =
-        document.getElementById(
-            "password"
-        ).value;
+}
 
-
-    if (!email || !password) {
-
-        alert(
-            "Please enter your email and password."
-        );
-
-        return;
-
-    }
-
-
-    if (isCreateAccount) {
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.auth.signUp({
-
-            email: email,
-
-            password: password
-
-        });
-
-
-        if (error) {
-
-            alert(error.message);
-
-            return;
-
-        }
-
-
-        alert(
-            "Account created successfully. You can now login."
-        );
-
-
-        isCreateAccount = false;
-
-
-        document.querySelector(
-            ".login-button"
-        ).textContent =
-            "LOGIN";
-
-
-        document.getElementById(
-            "authSwitch"
-        ).textContent =
-            "Don't have an account? Create Account";
-
-
-        return;
-
-    }
-
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient.auth.signInWithPassword({
-
-        email: email,
-
-        password: password
-
-    });
-
-
-    if (error) {
-
-        alert(error.message);
-
-        return;
-
-    }
-
-
-    showApp(data.user);
+box.style.display="block";
+box.textContent=message;
 
 }
 
 
+/* =====================================================
+   AUTH
+===================================================== */
 
-function showApp(user) {
+async function handleAuth(){
 
-    document.getElementById(
-        "loginScreen"
-    ).style.display =
-        "none";
+const email =
+document.getElementById("loginEmail")
+.value.trim();
 
+const password =
+document.getElementById("loginPassword")
+.value;
 
-    document.getElementById(
-        "app"
-    ).style.display =
-        "block";
+if(!email){
 
+showLoginMessage("Please enter your email.");
 
-    if (
-        user &&
-        user.email &&
-        user.email.toLowerCase() ===
-        ADMIN_EMAIL.toLowerCase()
-    ) {
+return;
 
-        document.getElementById(
-            "adminTab"
-        ).style.display =
-            "block";
+}
 
-    } else {
+if(!password){
 
-        document.getElementById(
-            "adminTab"
-        ).style.display =
-            "none";
+showLoginMessage("Please enter your password.");
 
-    }
-
-
-    loadGoods();
-
-    displayGoods();
-
-    displayRecords();
-
-    loadGoodsSelect();
+return;
 
 }
 
 
+const button =
+document.getElementById("loginButton");
 
-async function logoutUser() {
+button.disabled=true;
 
-    await supabaseClient.auth.signOut();
 
-    location.reload();
+try{
+
+if(authMode==="login"){
+
+const {data,error} =
+await supabaseClient.auth.signInWithPassword({
+email:email,
+password:password
+});
+
+if(error) throw error;
+
+await startApp(data.user);
+
+}else{
+
+const fullName =
+document.getElementById("signupName")
+.value.trim();
+
+if(!fullName){
+
+showLoginMessage("Please enter your full name.");
+
+button.disabled=false;
+
+return;
 
 }
 
 
+const {data,error} =
+await supabaseClient.auth.signUp({
+email:email,
+password:password,
+options:{
+data:{
+full_name:fullName
+}
+}
+});
+
+if(error) throw error;
+
+
+if(data.session){
+
+await startApp(data.user);
+
+}else{
+
+showLoginMessage(
+"Account created. Check your email to confirm your account before logging in."
+);
+
+}
+
+}
+
+}catch(error){
+
+showLoginMessage(
+error.message || "Authentication failed."
+);
+
+}finally{
+
+button.disabled=false;
+
+}
+
+}
+
+
+/* =====================================================
+   START APP
+===================================================== */
+
+async function startApp(user){
+
+currentUser=user;
+
+document.getElementById("loginOverlay")
+.classList.add("hidden");
+
+document.getElementById("appTabs")
+.classList.remove("hidden");
+
+document.getElementById("userBar")
+.classList.remove("hidden");
+
+await loadProfile();
+
+await loadGoods();
+
+await loadRevenueRecords();
+
+await loadWeeklyRecords();
+
+await loadCediRecord();
+
+createWeekOptions();
+
+createRevenueWeekOptions();
+
+document.getElementById("weekSelect").value =
+"Week 1";
+
+selectedWeek="Week 1";
+
+updateUserInterface();
+
+renderAdminGoods();
+
+renderRevenueRecords();
+
+renderSavedRecords();
+
+renderBalanceRecords();
+
+loadSelectedWeek();
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+async function loadProfile(){
+
+if(!currentUser) return;
+
+
+const {data,error} =
+await supabaseClient
+.from("profiles")
+.select("*")
+.eq("id",currentUser.id)
+.maybeSingle();
+
+
+if(error){
+
+console.error(error);
+
+return;
+
+}
+
+
+if(data){
+
+currentProfile=data;
+
+}else{
+
+const fullName =
+currentUser.user_metadata?.full_name || "";
+
+
+const {data:newProfile,error:createError} =
+await supabaseClient
+.from("profiles")
+.insert({
+id:currentUser.id,
+email:currentUser.email,
+full_name:fullName,
+role:"user",
+status:"active"
+})
+.select()
+.single();
+
+
+if(!createError){
+
+currentProfile=newProfile;
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+   USER INTERFACE
+===================================================== */
+
+function updateUserInterface(){
+
+const bar =
+document.getElementById("userBar");
+
+if(!currentUser){
+
+bar.classList.add("hidden");
+
+return;
+
+}
+
+
+bar.textContent =
+currentUser.email+
+(
+currentProfile &&
+currentProfile.role==="admin"
+?" | Admin"
+:" | User"
+);
+
+
+if(
+currentProfile &&
+currentProfile.role==="admin"
+){
+
+document.getElementById("adminTab")
+.classList.remove("hidden");
+
+}else{
+
+document.getElementById("adminTab")
+.classList.add("hidden");
+
+}
+
+}
+
+
+/* =====================================================
+   ACTIVE USER CHECK
+===================================================== */
+
+function isAdmin(){
+
+return !!(
+currentProfile &&
+currentProfile.role==="admin" &&
+currentProfile.status==="active"
+);
+
+}
+
+
+function isActiveUser(){
+
+return !!(
+currentProfile &&
+currentProfile.status==="active"
+);
+
+}
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+function showTab(tabId,button){
+
+if(tabId==="admin" && !isAdmin()){
+
+alert("Admin access required.");
+
+return;
+
+}
+
+
+document.querySelectorAll(".section")
+.forEach(function(section){
+
+section.classList.remove("active");
+
+});
+
+
+document.getElementById(tabId)
+.classList.add("active");
+
+
+document.querySelectorAll(".tab")
+.forEach(function(tab){
+
+tab.classList.remove("active");
+
+});
+
+
+if(button){
+
+button.classList.add("active");
+
+}
+
+
+if(tabId==="goods"){
+
+loadSelectedWeek();
+
+renderSavedRecords();
+
+renderBalanceRecords();
+
+}
+
+
+if(tabId==="admin"){
+
+renderAdminGoods();
+
+loadAdminUsers();
+
+}
+
+
+if(tabId==="revenue"){
+
+renderRevenueRecords();
+
+}
+
+}
+
+
+/* =====================================================
+   MONEY
+===================================================== */
+
+function money(value){
+
+return "GH₵"+
+(Number(value)||0).toLocaleString(
+"en-GH",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+);
+
+}
+
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   REVENUE
+===================================================== */
+
+function getNum(id){
+
+return Number(
+document.getElementById(id).value
+)||0;
+
+}
+
+
+function calculateRevenue(){
+
+const bank1=getNum("bank1");
+const bank2=getNum("bank2");
+const bank3=getNum("bank3");
+const cash=getNum("cash");
+const expenses=getNum("expenses");
+const totalGoods=getNum("totalGoods");
+const remainingGoods=getNum("remainingGoods");
+
+const totalBanks =
+bank1+bank2+bank3;
+
+const totalCash =
+totalBanks+cash;
+
+const goodsAfterExpenses =
+totalGoods-expenses;
+
+let profit =
+totalCash+
+remainingGoods-
+goodsAfterExpenses;
+
+if(profit<0){
+profit=0;
+}
+
+document.getElementById("outBanks")
+.textContent=money(totalBanks);
+
+document.getElementById("outCash")
+.textContent=money(totalCash);
+
+document.getElementById("outRemaining")
+.textContent=money(remainingGoods);
+
+document.getElementById("outGoodsAfter")
+.textContent=money(goodsAfterExpenses);
+
+document.getElementById("outProfit")
+.textContent=money(profit);
+
+}
+
+
+function openRevenueSave(){
+
+calculateRevenue();
+
+document.getElementById("revenueSaveCard")
+.classList.remove("hidden");
+
+const start =
+document.getElementById("revenueStartDate");
+
+
+if(!start.value){
+
+const today = new Date();
+
+const yyyy =
+today.getFullYear();
+
+const mm =
+String(today.getMonth()+1).padStart(2,"0");
+
+const dd =
+String(today.getDate()).padStart(2,"0");
+
+start.value =
+yyyy+"-"+mm+"-"+dd;
+
+}
+
+updateRevenueEndDate();
+
+setTimeout(function(){
+
+document.getElementById("revenueSaveCard")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+},100);
+
+}
+
+
+function updateRevenueEndDate(){
+
+const start =
+document.getElementById("revenueStartDate")
+.value;
+
+if(!start){
+
+document.getElementById("revenueEndDate")
+.value="";
+
+return;
+
+}
+
+const date =
+new Date(start+"T00:00:00");
+
+date.setDate(
+date.getDate()+4
+);
+
+const yyyy =
+date.getFullYear();
+
+const mm =
+String(date.getMonth()+1).padStart(2,"0");
+
+const dd =
+String(date.getDate()).padStart(2,"0");
+
+document.getElementById("revenueEndDate")
+.value =
+yyyy+"-"+mm+"-"+dd;
+
+}
+
+
+function formatDate(dateString){
+
+if(!dateString) return "";
+
+const date =
+new Date(dateString+"T00:00:00");
+
+return date.toLocaleDateString(
+"en-GH",
+{
+day:"numeric",
+month:"long",
+year:"numeric"
+}
+);
+
+}
+
+
+async function confirmSaveRevenueRecord(){
+
+if(!currentUser){
+
+alert("Please log in first.");
+
+return;
+
+}
+
+const startDate =
+document.getElementById("revenueStartDate")
+.value;
+
+const endDate =
+document.getElementById("revenueEndDate")
+.value;
+
+const week =
+document.getElementById("revenueWeek")
+.value;
+
+if(!startDate){
+
+alert("Please select the Start date.");
+
+return;
+
+}
+
+if(!endDate){
+
+alert("Please select the Start date first.");
+
+return;
+
+}
+
+
+const bank1=getNum("bank1");
+const bank2=getNum("bank2");
+const bank3=getNum("bank3");
+const cash=getNum("cash");
+const expenses=getNum("expenses");
+const totalGoods=getNum("totalGoods");
+const remainingGoods=getNum("remainingGoods");
+
+const totalBanks =
+bank1+bank2+bank3;
+
+const totalCash =
+totalBanks+cash;
+
+const goodsAfterExpenses =
+totalGoods-expenses;
+
+
+const {error} =
+await supabaseClient
+.from("revenue_records")
+.insert({
+user_id:currentUser.id,
+week:week,
+start_date:startDate,
+to_date:endDate,
+total_banks:totalBanks,
+total_bank_cash:totalCash,
+remaining_goods:remainingGoods,
+goods_after_expenses:goodsAfterExpenses,
+expenses:expenses
+});
+
+
+if(error){
+
+alert(
+"Could not save Revenue Record: "+
+error.message
+);
+
+return;
+
+}
+
+
+alert("Revenue record saved successfully.");
+
+await loadRevenueRecords();
+
+closeRevenueSave();
+
+}
+
+
+function closeRevenueSave(){
+
+document.getElementById("revenueSaveCard")
+.classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   REVENUE CLOUD
+===================================================== */
+
+async function loadRevenueRecords(){
+
+if(!currentUser) return;
+
+const {data,error} =
+await supabaseClient
+.from("revenue_records")
+.select("*")
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false});
+
+
+if(error){
+
+console.error(error);
+
+revenueRecords=[];
+
+}else{
+
+revenueRecords =
+(data||[]).map(function(record){
+
+return {
+id:record.id,
+week:record.week,
+startDate:record.start_date,
+endDate:record.to_date,
+dateSaved:record.created_at
+?new Date(record.created_at)
+.toLocaleString("en-GH",{
+dateStyle:"medium",
+timeStyle:"short"
+})
+:"",
+totalBanks:Number(record.total_banks)||0,
+totalBankCash:Number(record.total_bank_cash)||0,
+remainingGoods:Number(record.remaining_goods)||0,
+goodsAfterExpenses:Number(record.goods_after_expenses)||0,
+expenses:Number(record.expenses)||0
+};
+
+});
+
+}
+
+renderRevenueRecords();
+
+}
+
+
+function renderRevenueRecords(){
+
+const container =
+document.getElementById("revenueRecords");
+
+if(!container) return;
+
+container.innerHTML="";
+
+
+if(!revenueRecords.length){
+
+container.innerHTML =
+'<div class="empty">No Revenue Records saved yet.</div>';
+
+return;
+
+}
+
+
+revenueRecords.forEach(function(record,index){
+
+const box =
+document.createElement("div");
+
+box.className="revenue-record";
+
+
+const header =
+document.createElement("div");
+
+header.className="revenue-record-header";
+
+
+header.innerHTML =
+"<div>"+
+"<strong>"+
+escapeHTML(record.week||"Revenue Record")+
+"</strong>"+
+"<br>"+
+"<span>"+
+formatDate(record.startDate)+
+" to "+
+formatDate(record.endDate)+
+"</span>"+
+"</div>"+
+"<strong>View</strong>";
+
+
+const details =
+document.createElement("div");
+
+details.className="revenue-record-details";
+
+
+details.innerHTML =
+
+'<div class="revenue-line">'+
+"<strong>Total Banks</strong>"+
+"<strong>"+money(record.totalBanks)+"</strong>"+
+"</div>"+
+
+'<div class="revenue-line">'+
+"<strong>Total Bank & Cash</strong>"+
+"<strong>"+money(record.totalBankCash)+"</strong>"+
+"</div>"+
+
+'<div class="revenue-line">'+
+"<strong>Remaining Goods</strong>"+
+"<strong>"+money(record.remainingGoods)+"</strong>"+
+"</div>"+
+
+'<div class="revenue-line">'+
+"<strong>Goods After Expenses</strong>"+
+"<strong>"+money(record.goodsAfterExpenses)+"</strong>"+
+"</div>"+
+
+'<div class="revenue-line">'+
+"<strong>Expenses</strong>"+
+"<strong>"+money(record.expenses)+"</strong>"+
+"</div>"+
+
+'<div class="revenue-line">'+
+"<strong>Week</strong>"+
+"<strong>"+escapeHTML(record.week||"")+"</strong>"+
+"</div>"+
+
+'<div class="revenue-line">'+
+"<strong>Period</strong>"+
+"<strong>"+
+formatDate(record.startDate)+
+" to "+
+formatDate(record.endDate)+
+"</strong>"+
+"</div>"+
+
+'<div class="revenue-line">'+
+"<strong>Saved</strong>"+
+"<strong>"+escapeHTML(record.dateSaved||"")+"</strong>"+
+"</div>"+
+
+'<button class="record-delete" '+
+'onclick="deleteRevenueRecord(event,'+
+record.id+
+')">DELETE RECORD</button>';
+
+
+header.onclick=function(){
+
+details.classList.toggle("open");
+
+};
+
+
+box.appendChild(header);
+box.appendChild(details);
+
+container.appendChild(box);
+
+});
+
+}
+
+
+async function deleteRevenueRecord(event,id){
+
+event.stopPropagation();
+
+if(!confirm("Delete this Revenue Record?")){
+
+return;
+
+}
+
+
+const {error} =
+await supabaseClient
+.from("revenue_records")
+.delete()
+.eq("id",id)
+.eq("user_id",currentUser.id);
+
+
+if(error){
+
+alert(
+"Could not delete record: "+
+error.message
+);
+
+return;
+
+}
+
+
+await loadRevenueRecords();
+
+}
+
+
+/* =====================================================
+   RESET REVENUE
+===================================================== */
+
+function resetRevenue(){
+
+[
+"bank1",
+"bank2",
+"bank3",
+"cash",
+"expenses",
+"totalGoods",
+"remainingGoods"
+].forEach(function(id){
+
+document.getElementById(id).value="";
+
+});
+
+
+document.getElementById("outBanks")
+.textContent="GH₵0.00";
+
+document.getElementById("outCash")
+.textContent="GH₵0.00";
+
+document.getElementById("outRemaining")
+.textContent="GH₵0.00";
+
+document.getElementById("outGoodsAfter")
+.textContent="GH₵0.00";
+
+document.getElementById("outProfit")
+.textContent="GH₵0.00";
+
+closeRevenueSave();
+
+}
+
+
+/* =====================================================
+   CEDI
+===================================================== */
+
+function updateCediLine(input){
+
+const denomination =
+Number(input.dataset.denom)||0;
+
+const quantity =
+Number(input.value)||0;
+
+const total =
+denomination*quantity;
+
+document.getElementById(
+"line"+denomination
+).textContent =
+money(total);
+
+}
+
+
+async function calculateCedi(){
+
+let total=0;
+
+const quantities={};
+
+document.querySelectorAll(".cediQty")
+.forEach(function(input){
+
+const denomination =
+Number(input.dataset.denom)||0;
+
+const quantity =
+Number(input.value)||0;
+
+quantities[String(denomination)] =
+quantity;
+
+const lineTotal =
+denomination*quantity;
+
+total+=lineTotal;
+
+document.getElementById(
+"line"+denomination
+).textContent =
+money(lineTotal);
+
+});
+
+
+document.getElementById("cediGrandTotal")
+.textContent=money(total);
+
+document.getElementById("amountWords")
+.textContent=amountInWords(total);
+
+
+if(currentUser){
+
+const {data:existing} =
+await supabaseClient
+.from("cedi_records")
+.select("id")
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false})
+.limit(1);
+
+
+if(existing && existing.length){
+
+await supabaseClient
+.from("cedi_records")
+.update({
+quantities:quantities,
+total_cash:total
+})
+.eq("id",existing[0].id)
+.eq("user_id",currentUser.id);
+
+}else{
+
+await supabaseClient
+.from("cedi_records")
+.insert({
+user_id:currentUser.id,
+quantities:quantities,
+total_cash:total
+});
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+   LOAD CEDI RECORD
+===================================================== */
+
+async function loadCediRecord(){
+
+if(!currentUser) return;
+
+
+const {data,error} =
+await supabaseClient
+.from("cedi_records")
+.select("*")
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false})
+.limit(1);
+
+
+if(error || !data || !data.length){
+
+return;
+
+}
+
+
+const quantities =
+data[0].quantities || {};
+
+
+document.querySelectorAll(".cediQty")
+.forEach(function(input){
+
+const denomination =
+String(input.dataset.denom);
+
+const quantity =
+quantities[denomination];
+
+if(quantity!==undefined){
+
+input.value=quantity;
+
+updateCediLine(input);
+
+}
+
+});
+
+
+const total =
+Number(data[0].total_cash)||0;
+
+document.getElementById("cediGrandTotal")
+.textContent=money(total);
+
+document.getElementById("amountWords")
+.textContent=amountInWords(total);
+
+}
+
+
+/* =====================================================
+   NUMBER TO WORDS
+===================================================== */
+
+function numberToWords(num){
+
+num=Math.floor(Number(num)||0);
+
+if(num===0){
+
+return "zero";
+
+}
+
+const ones=[
+"",
+"one",
+"two",
+"three",
+"four",
+"five",
+"six",
+"seven",
+"eight",
+"nine",
+"ten",
+"eleven",
+"twelve",
+"thirteen",
+"fourteen",
+"fifteen",
+"sixteen",
+"seventeen",
+"eighteen",
+"nineteen"
+];
+
+const tens=[
+"",
+"",
+"twenty",
+"thirty",
+"forty",
+"fifty",
+"sixty",
+"seventy",
+"eighty",
+"ninety"
+];
+
+function convert(n){
+
+if(n<20){
+
+return ones[n];
+
+}
+
+if(n<100){
+
+return tens[Math.floor(n/10)] +
+(n%10?" "+ones[n%10]:"");
+
+}
+
+if(n<1000){
+
+return ones[Math.floor(n/100)] +
+" hundred"+
+(n%100?" "+convert(n%100):"");
+
+}
+
+if(n<1000000){
+
+return convert(Math.floor(n/1000))+
+" thousand"+
+(n%1000?" "+convert(n%1000):"");
+
+}
+
+if(n<1000000000){
+
+return convert(Math.floor(n/1000000))+
+" million"+
+(n%1000000?" "+convert(n%1000000):"");
+
+}
+
+return convert(Math.floor(n/1000000000))+
+" billion";
+
+}
+
+return convert(num);
+
+}
+
+
+function amountInWords(amount){
+
+amount=Number(amount)||0;
+
+const whole=Math.floor(amount);
+
+const decimal=Math.round(
+(amount-whole)*100
+);
+
+let result =
+numberToWords(whole)+
+" Ghana cedis";
+
+if(decimal>0){
+
+result+=
+" and "+
+numberToWords(decimal)+
+" pesewas";
+
+}
+
+return result+" only";
+
+}
+
+
+/* =====================================================
+   GOODS CLOUD
+===================================================== */
+
+async function loadGoods(){
+
+if(!currentUser) return;
+
+
+const {data,error} =
+await supabaseClient
+.from("goods")
+.select("*")
+.order("name",{ascending:true});
+
+
+if(error){
+
+console.error(error);
+
+goods=[];
+
+return;
+
+}
+
+
+goods=(data||[]).map(function(item){
+
+return {
+id:item.id,
+name:item.name,
+price:Number(item.price)||0,
+user_id:item.user_id
+};
+
+});
+
+
+/*
+  If the Admin has not added the default goods yet,
+  automatically create them from the Admin account.
+*/
+
+if(isAdmin() && goods.length===0){
+
+for(const item of defaultGoods){
+
+await supabaseClient
+.from("goods")
+.insert({
+user_id:currentUser.id,
+name:item.name,
+price:item.price
+});
+
+}
+
+const {data:reload} =
+await supabaseClient
+.from("goods")
+.select("*")
+.order("name",{ascending:true});
+
+goods=(reload||[]).map(function(item){
+
+return {
+id:item.id,
+name:item.name,
+price:Number(item.price)||0,
+user_id:item.user_id
+};
+
+});
+
+}
+
+renderAdminGoods();
+
+}
+
+
+/* =====================================================
+   GOODS OPTIONS
+===================================================== */
+
+function goodsOptions(selectedName){
+
+let html =
+'<option value="">Select good</option>';
+
+goods.forEach(function(good){
+
+const selected =
+good.name===selectedName
+?"selected"
+:"";
+
+html +=
+'<option value="'+
+escapeHTML(good.name)+
+'" '+
+selected+
+'>'+
+escapeHTML(good.name)+
+"</option>";
+
+});
+
+return html;
+
+}
+
+
+function getPrice(name){
+
+const found =
+goods.find(function(good){
+
+return good.name===name;
+
+});
+
+return found
+?Number(found.price)||0
+:0;
+
+}
+
+
+/* =====================================================
+   WEEK FUNCTIONS
+===================================================== */
+
+function createWeekOptions(){
+
+const select =
+document.getElementById("weekSelect");
+
+select.innerHTML="";
+
+for(let i=1;i<=52;i++){
+
+const option =
+document.createElement("option");
+
+option.value="Week "+i;
+option.textContent="Week "+i;
+
+select.appendChild(option);
+
+}
+
+}
+
+
+function createRevenueWeekOptions(){
+
+const select =
+document.getElementById("revenueWeek");
+
+select.innerHTML="";
+
+for(let i=1;i<=52;i++){
+
+const option =
+document.createElement("option");
+
+option.value="Week "+i;
+option.textContent="Week "+i;
+
+select.appendChild(option);
+
+}
+
+}
+
+
+function weekNumber(week){
+
+const match =
+String(week).match(/(\d+)/);
+
+return match
+?Number(match[1])
+:0;
+
+}
+
+
+/* =====================================================
+   PREVIOUS REMAINING
+===================================================== */
+
+function getPreviousRemainingGoods(){
+
+const number =
+weekNumber(selectedWeek);
+
+if(number<=1){
+
+return [];
+
+}
+
+const previous =
+weeks["Week "+(number-1)];
+
+if(
+!previous ||
+!previous.remainingGoodsSaved
+){
+
+return [];
+
+}
+
+return previous.remainingGoods||[];
+
+}
+
+
+function getPreviousRemainingValue(){
+
+return getPreviousRemainingGoods()
+.reduce(function(sum,item){
+
+return sum+
+(Number(item.price)||0)*
+(Number(item.remainingQty)||0);
+
+},0);
+
+}
+
+
+/* =====================================================
+   BALANCE
+===================================================== */
+
+function calculateBalance(week){
+
+const current=weeks[week];
+
+if(!current){
+
+return 0;
+
+}
+
+const currentStarting =
+Number(current.startingGoodsValue)||0;
+
+const currentRemaining =
+Number(current.remainingGoodsValue)||0;
+
+const number=weekNumber(week);
+
+if(number===1){
+
+if(current.remainingGoodsSaved){
+
+return currentRemaining;
+
+}
+
+return currentStarting;
+
+}
+
+const previous =
+weeks["Week "+(number-1)];
+
+const previousRemaining =
+previous&&
+previous.remainingGoodsSaved
+?Number(previous.remainingGoodsValue)||0
+:0;
+
+if(previousRemaining>=1){
+
+return previousRemaining+
+currentStarting;
+
+}
+
+return current.remainingGoodsSaved
+?currentRemaining
+:currentStarting;
+
+}
+
+
+/* =====================================================
+   LOAD WEEK
+===================================================== */
+
+function loadSelectedWeek(){
+
+const select =
+document.getElementById("weekSelect");
+
+if(!select) return;
+
+selectedWeek=select.value;
+
+const record=weeks[selectedWeek];
+
+document.getElementById("weekDate")
+.value =
+record&&record.date
+?record.date
+:"";
+
+document.getElementById("previousInfo")
+.textContent =
+"Previous Week Remaining Goods: "+
+money(getPreviousRemainingValue());
+
+clearEntryCards();
+
+
+if(
+record&&
+record.startingGoodsSaved
+){
+
+renderStartingEditor(
+record.startingGoods||[]
+);
+
+showStartingSavedStatus();
+
+}
+
+
+if(
+record&&
+record.remainingGoodsSaved
+){
+
+renderRemainingEditor(
+record.remainingGoods||[]
+);
+
+showRemainingSavedStatus();
+
+}
+
+
+renderSavedRecords();
+
+renderBalanceRecords();
+
+}
+
+
+/* =====================================================
+   CHOOSE RECORD TYPE
+===================================================== */
+
+function chooseRecordType(type){
+
+selectedRecordType=type;
+
+document.getElementById("startingCard")
+.classList.toggle(
+"hidden",
+type!=="starting"
+);
+
+document.getElementById("remainingCard")
+.classList.toggle(
+"hidden",
+type!=="remaining"
+);
+
+document.getElementById("startingChoice")
+.classList.toggle(
+"active",
+type==="starting"
+);
+
+document.getElementById("remainingChoice")
+.classList.toggle(
+"active",
+type==="remaining"
+);
+
+
+if(type==="starting"){
+
+const record=weeks[selectedWeek];
+
+if(
+record&&
+record.startingGoodsSaved
+){
+
+renderStartingEditor(
+record.startingGoods||[]
+);
+
+showStartingSavedStatus();
+
+}else{
+
+hideStartingSavedStatus();
+
+createStartingFromPrevious();
+
+}
+
+}
+
+
+if(type==="remaining"){
+
+const record=weeks[selectedWeek];
+
+if(
+record&&
+record.remainingGoodsSaved
+){
+
+renderRemainingEditor(
+record.remainingGoods||[]
+);
+
+showRemainingSavedStatus();
+
+}else{
+
+hideRemainingSavedStatus();
+
+createRemainingFromStarting();
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+   ENTRY STATUS
+===================================================== */
+
+function clearEntryCards(){
+
+document.getElementById("startingCard")
+.classList.add("hidden");
+
+document.getElementById("remainingCard")
+.classList.add("hidden");
+
+document.getElementById("startingChoice")
+.classList.remove("active");
+
+document.getElementById("remainingChoice")
+.classList.remove("active");
+
+selectedRecordType="";
+
+}
+
+
+function showStartingSavedStatus(){
+
+document.getElementById("startingEditorArea")
+.classList.add("hidden");
+
+document.getElementById("startingSavedStatus")
+.classList.remove("hidden");
+
+}
+
+
+function hideStartingSavedStatus(){
+
+document.getElementById("startingEditorArea")
+.classList.remove("hidden");
+
+document.getElementById("startingSavedStatus")
+.classList.add("hidden");
+
+}
+
+
+function showRemainingSavedStatus(){
+
+document.getElementById("remainingEditorArea")
+.classList.add("hidden");
+
+document.getElementById("remainingSavedStatus")
+.classList.remove("hidden");
+
+}
+
+
+function hideRemainingSavedStatus(){
+
+document.getElementById("remainingEditorArea")
+.classList.remove("hidden");
+
+document.getElementById("remainingSavedStatus")
+.classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   STARTING GOODS
+===================================================== */
+
+function updateStartingPrice(select){
+
+const row=select.closest(".goods-row");
+
+const price=getPrice(select.value);
+
+row.querySelector(".start-price")
+.textContent =
+select.value
+?money(price)
+:"Price";
+
+}
+
+
+function addStartingRow(item){
+
+const container =
+document.getElementById("startingList");
+
+const row =
+document.createElement("div");
+
+row.className="goods-row";
+
+const name =
+item&&item.name
+?item.name
+:"";
+
+const qty =
+item&&item.qty!=null
+?item.qty
+:"";
+
+row.innerHTML =
+'<select class="start-name" onchange="updateStartingPrice(this)">'+
+goodsOptions(name)+
+"</select>"+
+
+'<div class="price-box start-price">'+
+(name?money(getPrice(name)):"Price")+
+"</div>"+
+
+'<input class="start-qty" type="number" min="0" placeholder="Qty" value="'+
+escapeHTML(qty)+
+'">'+
+
+'<button class="remove-btn" onclick="this.parentElement.remove()">REMOVE</button>';
+
+container.appendChild(row);
+
+}
+
+
+function createStartingFromPrevious(){
+
+const previous =
+getPreviousRemainingGoods();
+
+document.getElementById("startingList")
+.innerHTML="";
+
+
+if(previous.length){
+
+previous.forEach(function(item){
+
+addStartingRow({
+name:item.name,
+qty:item.remainingQty
+});
+
+});
+
+}else{
+
+addStartingRow();
+
+}
+
+}
+
+
+function renderStartingEditor(items){
+
+const container =
+document.getElementById("startingList");
+
+container.innerHTML="";
+
+if(items.length){
+
+items.forEach(function(item){
+
+addStartingRow(item);
+
+});
+
+}else{
+
+addStartingRow();
+
+}
+
+}
+
+
+function collectStartingGoods(){
+
+const rows =
+document.querySelectorAll(
+"#startingList .goods-row"
+);
+
+const result=[];
+
+rows.forEach(function(row){
+
+const name =
+row.querySelector(".start-name").value;
+
+const qty =
+Number(
+row.querySelector(".start-qty").value
+)||0;
+
+if(name){
+
+result.push({
+name:name,
+price:getPrice(name),
+qty:qty
+});
+
+}
+
+});
+
+return result;
+
+}
+
+
+function calculateStartingValue(items){
+
+return items.reduce(function(sum,item){
+
+return sum+
+(Number(item.price)||0)*
+(Number(item.qty)||0);
+
+},0);
+
+}
+
+
+async function saveStartingGoods(){
+
+if(!currentUser){
+
+alert("Please log in first.");
+
+return;
+
+}
+
+
+const items=collectStartingGoods();
+
+if(!items.length){
+
+alert("Please select at least one good.");
+
+return;
+
+}
+
+const date =
+document.getElementById("weekDate").value;
+
+
+if(!weeks[selectedWeek]){
+
+weeks[selectedWeek]={};
+
+}
+
+weeks[selectedWeek].date=date;
+weeks[selectedWeek].startingGoods=items;
+weeks[selectedWeek].startingGoodsSaved=true;
+weeks[selectedWeek].startingGoodsValue=
+calculateStartingValue(items);
+
+recalculateRecord(selectedWeek);
+
+await saveWeekToCloud(selectedWeek);
+
+showStartingSavedStatus();
+
+renderSavedRecords();
+
+renderBalanceRecords();
+
+}
+
+
+/* =====================================================
+   EDIT STARTING
+===================================================== */
+
+function editCurrentStarting(){
+
+hideStartingSavedStatus();
+
+renderStartingEditor(
+weeks[selectedWeek].startingGoods||[]
+);
+
+}
+
+
+/* =====================================================
+   REMAINING GOODS
+===================================================== */
+
+function updateRemainingPrice(select){
+
+const row =
+select.closest(".goods-row");
+
+const price =
+getPrice(select.value);
+
+row.querySelector(".remain-price")
+.textContent =
+select.value
+?money(price)
+:"Price";
+
+}
+
+
+function addRemainingRow(item){
+
+const container =
+document.getElementById("remainingList");
+
+const row =
+document.createElement("div");
+
+row.className="goods-row";
+
+const name =
+item&&item.name
+?item.name
+:"";
+
+const qty =
+item&&item.remainingQty!=null
+?item.remainingQty
+:"";
+
+row.innerHTML =
+'<select class="remain-name" onchange="updateRemainingPrice(this)">'+
+goodsOptions(name)+
+"</select>"+
+
+'<div class="price-box remain-price">'+
+(name?money(getPrice(name)):"Price")+
+"</div>"+
+
+'<input class="remain-qty" type="number" min="0" placeholder="Qty" value="'+
+escapeHTML(qty)+
+'">'+
+
+'<button class="remove-btn" onclick="this.parentElement.remove()">REMOVE</button>';
+
+container.appendChild(row);
+
+}
+
+
+function createRemainingFromStarting(){
+
+const record=weeks[selectedWeek];
+
+document.getElementById("remainingList")
+.innerHTML="";
+
+
+if(
+record&&
+record.startingGoodsSaved&&
+record.startingGoods&&
+record.startingGoods.length
+){
+
+record.startingGoods.forEach(function(item){
+
+addRemainingRow({
+name:item.name,
+remainingQty:""
+});
+
+});
+
+}else{
+
+addRemainingRow();
+
+}
+
+}
+
+
+function renderRemainingEditor(items){
+
+const container =
+document.getElementById("remainingList");
+
+container.innerHTML="";
+
+if(items.length){
+
+items.forEach(function(item){
+
+addRemainingRow(item);
+
+});
+
+}else{
+
+addRemainingRow();
+
+}
+
+}
+
+
+function findStartingQty(name){
+
+const record=weeks[selectedWeek];
+
+if(
+!record||
+!record.startingGoodsSaved||
+!record.startingGoods
+){
+
+return 0;
+
+}
+
+const found =
+record.startingGoods.find(function(item){
+
+return item.name===name;
+
+});
+
+return found
+?Number(found.qty)||0
+:0;
+
+}
+
+
+function collectRemainingGoods(){
+
+const rows =
+document.querySelectorAll(
+"#remainingList .goods-row"
+);
+
+const result=[];
+
+rows.forEach(function(row){
+
+const name =
+row.querySelector(".remain-name").value;
+
+const remainingQty =
+Number(
+row.querySelector(".remain-qty").value
+)||0;
+
+if(name){
+
+result.push({
+name:name,
+price:getPrice(name),
+startingQty:findStartingQty(name),
+remainingQty:remainingQty
+});
+
+}
+
+});
+
+return result;
+
+}
+
+
+function calculateRemainingValue(items){
+
+return items.reduce(function(sum,item){
+
+return sum+
+(Number(item.price)||0)*
+(Number(item.remainingQty)||0);
+
+},0);
+
+}
+
+
+async function saveRemainingGoods(){
+
+if(!currentUser){
+
+alert("Please log in first.");
+
+return;
+
+}
+
+const items =
+collectRemainingGoods();
+
+if(!items.length){
+
+alert("Please select at least one good.");
+
+return;
+
+}
+
+const date =
+document.getElementById("weekDate").value;
+
+if(!weeks[selectedWeek]){
+
+weeks[selectedWeek]={};
+
+}
+
+weeks[selectedWeek].date=date;
+weeks[selectedWeek].remainingGoods=items;
+weeks[selectedWeek].remainingGoodsSaved=true;
+weeks[selectedWeek].remainingGoodsValue=
+calculateRemainingValue(items);
+
+recalculateRecord(selectedWeek);
+
+await saveWeekToCloud(selectedWeek);
+
+showRemainingSavedStatus();
+
+renderSavedRecords();
+
+renderBalanceRecords();
+
+}
+
+
+/* =====================================================
+   EDIT REMAINING
+===================================================== */
+
+function editCurrentRemaining(){
+
+hideRemainingSavedStatus();
+
+renderRemainingEditor(
+weeks[selectedWeek].remainingGoods||[]
+);
+
+}
+
+
+/* =====================================================
+   RECALCULATE
+===================================================== */
+
+function recalculateRecord(week){
+
+const record=weeks[week];
+
+if(!record) return;
+
+if(record.startingGoodsSaved){
+
+record.startingGoodsValue =
+calculateStartingValue(
+record.startingGoods||[]
+);
+
+}else{
+
+record.startingGoodsValue=0;
+
+}
+
+if(record.remainingGoodsSaved){
+
+record.remainingGoodsValue =
+calculateRemainingValue(
+record.remainingGoods||[]
+);
+
+}else{
+
+record.remainingGoodsValue=0;
+
+}
+
+if(
+record.startingGoodsSaved&&
+record.remainingGoodsSaved
+){
+
+record.soldUsedValue =
+Math.max(
+0,
+record.startingGoodsValue-
+record.remainingGoodsValue
+);
+
+}else{
+
+record.soldUsedValue=0;
+
+}
+
+record.balanceValue =
+calculateBalance(week);
+
+}
+
+
+/* =====================================================
+   SAVE WEEK TO SUPABASE
+===================================================== */
+
+async function saveWeekToCloud(week){
+
+if(!currentUser) return;
+
+const record=weeks[week];
+
+const payload={
+user_id:currentUser.id,
+week:week,
+record_date:record.date||null,
+starting_goods:record.startingGoods||[],
+starting_goods_value:Number(record.startingGoodsValue)||0,
+remaining_goods:record.remainingGoods||[],
+remaining_goods_value:Number(record.remainingGoodsValue)||0,
+remaining_goods_saved:!!record.remainingGoodsSaved,
+updated_at:new Date().toISOString()
+};
+
+
+const {data,error} =
+await supabaseClient
+.from("weekly_records")
+.upsert(
+payload,
+{
+onConflict:"user_id,week"
+}
+)
+.select()
+.single();
+
+
+if(error){
+
+/*
+  If the table does not yet have a unique
+  user_id + week constraint, use manual lookup.
+*/
+
+const {data:existing} =
+await supabaseClient
+.from("weekly_records")
+.select("id")
+.eq("user_id",currentUser.id)
+.eq("week",week)
+.limit(1);
+
+
+if(existing && existing.length){
+
+const updateResult =
+await supabaseClient
+.from("weekly_records")
+.update(payload)
+.eq("id",existing[0].id)
+.eq("user_id",currentUser.id);
+
+if(updateResult.error){
+
+alert(
+"Could not save weekly record: "+
+updateResult.error.message
+);
+
+return;
+
+}
+
+}else{
+
+const insertResult =
+await supabaseClient
+.from("weekly_records")
+.insert(payload);
+
+if(insertResult.error){
+
+alert(
+"Could not save weekly record: "+
+insertResult.error.message
+);
+
+return;
+
+}
+
+}
+
+}else{
+
+if(data){
+
+weeks[week]={
+...record,
+date:data.record_date||"",
+startingGoods:data.starting_goods||[],
+startingGoodsValue:Number(data.starting_goods_value)||0,
+startingGoodsSaved:
+Array.isArray(data.starting_goods)&&
+data.starting_goods.length>0,
+remainingGoods:data.remaining_goods||[],
+remainingGoodsValue:Number(data.remaining_goods_value)||0,
+remainingGoodsSaved:!!data.remaining_goods_saved
+};
+
+recalculateRecord(week);
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+   LOAD WEEKLY CLOUD RECORDS
+===================================================== */
+
+async function loadWeeklyRecords(){
+
+if(!currentUser) return;
+
+const {data,error} =
+await supabaseClient
+.from("weekly_records")
+.select("*")
+.eq("user_id",currentUser.id)
+.order("week",{ascending:true});
+
+
+if(error){
+
+console.error(error);
+
+weeks={};
+
+return;
+
+}
+
+
+weeks={};
+
+(data||[]).forEach(function(record){
+
+weeks[record.week]={
+id:record.id,
+date:record.record_date||"",
+startingGoods:
+record.starting_goods||[],
+startingGoodsValue:
+Number(record.starting_goods_value)||0,
+startingGoodsSaved:
+Array.isArray(record.starting_goods)&&
+record.starting_goods.length>0,
+remainingGoods:
+record.remaining_goods||[],
+remainingGoodsValue:
+Number(record.remaining_goods_value)||0,
+remainingGoodsSaved:
+!!record.remaining_goods_saved,
+balanceValue:0,
+soldUsedValue:0
+};
+
+});
+
+
+Object.keys(weeks).forEach(function(week){
+
+recalculateRecord(week);
+
+});
+
+}
+
+
+/* =====================================================
+   BALANCE RECORDS
+===================================================== */
+
+function renderBalanceRecords(){
+
+const container =
+document.getElementById("balanceRecords");
+
+if(!container) return;
+
+container.innerHTML="";
+
+const names =
+Object.keys(weeks)
+.sort(function(a,b){
+
+return weekNumber(a)-weekNumber(b);
+
+});
+
+
+if(!names.length){
+
+container.innerHTML =
+'<div class="empty">No Balance records yet.</div>';
+
+return;
+
+}
+
+
+names.forEach(function(week){
+
+const record=weeks[week];
+
+recalculateRecord(week);
+
+const bar =
+document.createElement("div");
+
+bar.className="balance-record";
+
+bar.innerHTML =
+'<div class="balance-left">'+
+escapeHTML(week)+
+'<small>'+
+(record.date
+?escapeHTML(record.date)
+:"No date")+
+"</small>"+
+"</div>"+
+'<div class="balance-amount">'+
+money(record.balanceValue)+
+"</div>";
+
+
+bar.onclick=function(){
+
+openExactBalance(week);
+
+};
+
+container.appendChild(bar);
+
+});
+
+}
+
+
+function openExactBalance(week){
+
+const goodsTab =
+document.querySelectorAll(".tab")[2];
+
+showTab("goods",goodsTab);
+
+document.getElementById("weekSelect")
+.value=week;
+
+selectedWeek=week;
+
+renderSavedRecords();
+
+const details =
+document.getElementById(
+"details-"+week.replace(" ","-")
+);
+
+if(details){
+
+details.classList.add("open");
+
+}
+
+setTimeout(function(){
+
+const balanceElement =
+document.getElementById(
+"balance-"+week.replace(" ","-")
+);
+
+if(balanceElement){
+
+balanceElement.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+}
+
+},150);
+
+}
+
+
+/* =====================================================
+   SAVED WEEKLY RECORDS
+===================================================== */
+
+function renderSavedRecords(){
+
+const container =
+document.getElementById("savedRecords");
+
+if(!container) return;
+
+container.innerHTML="";
+
+const names =
+Object.keys(weeks)
+.sort(function(a,b){
+
+return weekNumber(a)-weekNumber(b);
+
+});
+
+
+if(!names.length){
+
+container.innerHTML =
+'<div class="empty">No weekly records saved yet.</div>';
+
+return;
+
+}
+
+
+names.forEach(function(week){
+
+const record=weeks[week];
+
+recalculateRecord(week);
+
+const wrapper =
+document.createElement("div");
+
+const bar =
+document.createElement("div");
+
+bar.className="saved-record";
+
+bar.innerHTML =
+"<div>"+
+escapeHTML(week)+
+"<br><span>"+
+(record.date
+?escapeHTML(record.date)
+:"No date")+
+"</span>"+
+"</div>"+
+"<div>View</div>";
+
+
+const details =
+document.createElement("div");
+
+details.className="record-details";
+
+details.id =
+"details-"+week.replace(" ","-");
+
+
+bar.onclick=function(){
+
+details.classList.toggle("open");
+
+};
+
+
+let html="";
+
+
+if(record.startingGoodsSaved){
+
+html +=
+"<h3 style='font-size:15px;margin:5px 0;'>"+
+"Starting Goods"+
+"</h3>";
+
+html +=
+'<div class="table-wrap">'+
+"<table>"+
+"<thead>"+
+"<tr>"+
+"<th>Good</th>"+
+"<th>Price</th>"+
+"<th>Qty</th>"+
+"<th>Value</th>"+
+"</tr>"+
+"</thead>"+
+"<tbody>";
+
+
+record.startingGoods.forEach(function(item){
+
+const value =
+(Number(item.price)||0)*
+(Number(item.qty)||0);
+
+html +=
+"<tr>"+
+"<td>"+escapeHTML(item.name)+"</td>"+
+"<td class='money'>"+money(item.price)+"</td>"+
+"<td>"+(Number(item.qty)||0)+"</td>"+
+"<td class='money'>"+money(value)+"</td>"+
+"</tr>";
+
+});
+
+
+html +=
+"</tbody></table></div>";
+
+html +=
+'<div class="table-total">Total: '+
+money(record.startingGoodsValue)+
+"</div>";
+
+}
+
+
+if(record.remainingGoodsSaved){
+
+html +=
+"<h3 style='font-size:15px;margin:16px 0 5px;'>"+
+"Remaining Goods"+
+"</h3>";
+
+html +=
+'<div class="table-wrap">'+
+"<table>"+
+"<thead>"+
+"<tr>"+
+"<th>Good</th>"+
+"<th>Price</th>"+
+"<th>Starting Qty</th>"+
+"<th>Remaining Qty</th>"+
+"<th>Value</th>"+
+"</tr>"+
+"</thead>"+
+"<tbody>";
+
+
+record.remainingGoods.forEach(function(item){
+
+const value =
+(Number(item.price)||0)*
+(Number(item.remainingQty)||0);
+
+html +=
+"<tr>"+
+"<td>"+escapeHTML(item.name)+"</td>"+
+"<td class='money'>"+money(item.price)+"</td>"+
+"<td>"+(Number(item.startingQty)||0)+"</td>"+
+"<td>"+(Number(item.remainingQty)||0)+"</td>"+
+"<td class='money'>"+money(value)+"</td>"+
+"</tr>";
+
+});
+
+
+html +=
+"</tbody></table></div>";
+
+html +=
+'<div class="table-total">Total: '+
+money(record.remainingGoodsValue)+
+"</div>";
+
+
+if(record.startingGoodsSaved){
+
+html +=
+'<div class="sold">Sold: '+
+money(record.soldUsedValue)+
+"</div>";
+
+}
+
+}
+
+
+html +=
+'<div class="balance-box record-anchor" id="balance-'+
+week.replace(" ","-")+
+'">'+
+"<span>Balance</span>"+
+"<span>"+money(record.balanceValue)+"</span>"+
+"</div>";
+
+
+html +=
+'<div class="record-buttons">';
+
+
+if(record.startingGoodsSaved){
+
+html +=
+'<button class="small-btn edit-btn" onclick="event.stopPropagation();editStarting(\''+
+escapeHTML(week)+
+'\')">EDIT STARTING</button>'+
+'<button class="small-btn delete-btn" onclick="event.stopPropagation();deleteStarting(\''+
+escapeHTML(week)+
+'\')">DELETE</button>';
+
+}
+
+
+if(record.remainingGoodsSaved){
+
+html +=
+'<button class="small-btn edit-btn" onclick="event.stopPropagation();editRemaining(\''+
+escapeHTML(week)+
+'\')">EDIT REMAINING</button>'+
+'<button class="small-btn delete-btn" onclick="event.stopPropagation();deleteRemaining(\''+
+escapeHTML(week)+
+'\')">DELETE</button>';
+
+}
+
+html +=
+"</div>";
+
+
+details.innerHTML=html;
+
+wrapper.appendChild(bar);
+wrapper.appendChild(details);
+
+container.appendChild(wrapper);
+
+});
+
+}
+
+
+/* =====================================================
+   EDIT WEEKLY
+===================================================== */
+
+function editStarting(week){
+
+document.getElementById("weekSelect")
+.value=week;
+
+selectedWeek=week;
+
+chooseRecordType("starting");
+
+renderStartingEditor(
+weeks[week].startingGoods||[]
+);
+
+hideStartingSavedStatus();
+
+setTimeout(function(){
+
+document.getElementById("startingCard")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+},100);
+
+}
+
+
+function editRemaining(week){
+
+document.getElementById("weekSelect")
+.value=week;
+
+selectedWeek=week;
+
+chooseRecordType("remaining");
+
+renderRemainingEditor(
+weeks[week].remainingGoods||[]
+);
+
+hideRemainingSavedStatus();
+
+setTimeout(function(){
+
+document.getElementById("remainingCard")
+.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+},100);
+
+}
+
+
+/* =====================================================
+   DELETE STARTING
+===================================================== */
+
+async function deleteStarting(week){
+
+if(!confirm(
+"Delete Starting Goods for "+
+week+
+"?"
+)){
+
+return;
+
+}
+
+
+if(!weeks[week]) return;
+
+
+const {error} =
+await supabaseClient
+.from("weekly_records")
+.delete()
+.eq("user_id",currentUser.id)
+.eq("week",week);
+
+
+if(error){
+
+alert(
+"Could not delete Starting Goods: "+
+error.message
+);
+
+return;
+
+}
+
+
+delete weeks[week].startingGoods;
+delete weeks[week].startingGoodsValue;
+
+weeks[week].startingGoodsSaved=false;
+
+recalculateRecord(week);
+
+renderSavedRecords();
+renderBalanceRecords();
+
+if(selectedWeek===week){
+
+loadSelectedWeek();
+
+}
+
+}
+
+
+/* =====================================================
+   DELETE REMAINING
+===================================================== */
+
+async function deleteRemaining(week){
+
+if(!confirm(
+"Delete Remaining Goods for "+
+week+
+"?"
+)){
+
+return;
+
+}
+
+
+if(!weeks[week]) return;
+
+
+weeks[week].remainingGoodsSaved=false;
+weeks[week].remainingGoods=[];
+weeks[week].remainingGoodsValue=0;
+weeks[week].soldUsedValue=0;
+
+recalculateRecord(week);
+
+await saveWeekToCloud(week);
+
+renderSavedRecords();
+renderBalanceRecords();
+
+if(selectedWeek===week){
+
+loadSelectedWeek();
+
+}
+
+}
+
+
+/* =====================================================
+   ADMIN GOODS
+===================================================== */
+
+function renderAdminGoods(){
+
+const container =
+document.getElementById("adminGoods");
+
+if(!container) return;
+
+container.innerHTML="";
+
+if(!isAdmin()){
+
+container.innerHTML =
+'<div class="empty">Admin access required.</div>';
+
+return;
+
+}
+
+
+if(!goods.length){
+
+container.innerHTML =
+'<div class="empty">No goods saved.</div>';
+
+return;
+
+}
+
+
+goods.forEach(function(good){
+
+const row =
+document.createElement("div");
+
+row.className="good-admin";
+
+row.innerHTML =
+"<div>"+
+"<strong>"+escapeHTML(good.name)+"</strong>"+
+"<small>"+money(good.price)+"</small>"+
+"</div>"+
+'<div style="display:flex;gap:6px;">'+
+'<button class="small-btn edit-btn" style="flex:0 0 65px;" onclick="editGood('+good.id+')">EDIT</button>'+
+'<button class="small-btn delete-btn" style="flex:0 0 70px;" onclick="deleteGood('+good.id+')">DELETE</button>'+
+"</div>";
+
+container.appendChild(row);
+
+});
+
+}
+
+
+/* =====================================================
+   ADMIN ADD GOOD
+===================================================== */
+
+async function addGood(){
+
+if(!isAdmin()){
+
+alert("Admin access required.");
+
+return;
+
+}
+
+
+const name =
+document.getElementById("newGoodName")
+.value.trim();
+
+const price =
+Number(
+document.getElementById("newGoodPrice").value
+)||0;
+
+
+if(!name){
+
+alert("Please enter the good name.");
+
+return;
+
+}
+
+
+if(price<=0){
+
+alert("Please enter a valid price.");
+
+return;
+
+}
+
+
+const existing =
+goods.find(function(good){
+
+return good.name.toLowerCase()===
+name.toLowerCase();
+
+});
+
+
+if(existing){
+
+alert("This good already exists.");
+
+return;
+
+}
+
+
+const {error} =
+await supabaseClient
+.from("goods")
+.insert({
+user_id:currentUser.id,
+name:name,
+price:price
+});
+
+
+if(error){
+
+alert(
+"Could not add good: "+
+error.message
+);
+
+return;
+
+}
+
+
+document.getElementById("newGoodName")
+.value="";
+
+document.getElementById("newGoodPrice")
+.value="";
+
+
+await loadGoods();
+
+renderAdminGoods();
+
+alert("Good and price added successfully.");
+
+}
+
+
+/* =====================================================
+   ADMIN EDIT GOOD
+===================================================== */
+
+async function editGood(id){
+
+if(!isAdmin()){
+
+alert("Admin access required.");
+
+return;
+
+}
+
+
+const good =
+goods.find(function(item){
+
+return Number(item.id)===Number(id);
+
+});
+
+
+if(!good) return;
+
+
+const newName =
+prompt(
+"Enter the new good name:",
+good.name
+);
+
+
+if(newName===null) return;
+
+
+const newPriceText =
+prompt(
+"Enter the new price:",
+good.price
+);
+
+
+if(newPriceText===null) return;
+
+
+const newPrice =
+Number(newPriceText);
+
+
+if(!newName.trim()||newPrice<=0){
+
+alert("Please enter a valid name and price.");
+
+return;
+
+}
+
+
+const duplicate =
+goods.find(function(item){
+
+return Number(item.id)!==Number(id) &&
+item.name.toLowerCase()===
+newName.trim().toLowerCase();
+
+});
+
+
+if(duplicate){
+
+alert("Another good already uses that name.");
+
+return;
+
+}
+
+
+const {error} =
+await supabaseClient
+.from("goods")
+.update({
+name:newName.trim(),
+price:newPrice
+})
+.eq("id",id);
+
+
+if(error){
+
+alert(
+"Could not update good: "+
+error.message
+);
+
+return;
+
+}
+
+
+await loadGoods();
+
+renderAdminGoods();
+
+alert("Good and price updated successfully.");
+
+}
+
+
+/* =====================================================
+   ADMIN DELETE GOOD
+===================================================== */
+
+async function deleteGood(id){
+
+if(!isAdmin()){
+
+alert("Admin access required.");
+
+return;
+
+}
+
+
+const good =
+goods.find(function(item){
+
+return Number(item.id)===Number(id);
+
+});
+
+
+if(!good) return;
+
+
+if(!confirm(
+"Delete "+good.name+"?"
+)){
+
+return;
+
+}
+
+
+const {error} =
+await supabaseClient
+.from("goods")
+.delete()
+.eq("id",id);
+
+
+if(error){
+
+alert(
+"Could not delete good: "+
+error.message
+);
+
+return;
+
+}
+
+
+await loadGoods();
+
+renderAdminGoods();
+
+}
+
+
+/* =====================================================
+   ADMIN USERS
+===================================================== */
+
+async function loadAdminUsers(){
+
+if(!isAdmin()) return;
+
+
+const container =
+document.getElementById("adminUsers");
+
+container.innerHTML =
+'<div class="loading">Loading users...</div>';
+
+
+const {data,error} =
+await supabaseClient
+.from("profiles")
+.select("*")
+.order("email",{ascending:true});
+
+
+if(error){
+
+container.innerHTML =
+'<div class="empty">'+
+escapeHTML(error.message)+
+"</div>";
+
+return;
+
+}
+
+
+container.innerHTML="";
+
+
+if(!data || !data.length){
+
+container.innerHTML =
+'<div class="empty">No users found.</div>';
+
+return;
+
+}
+
+
+data.forEach(function(profile){
+
+const box =
+document.createElement("div");
+
+box.className="admin-user";
+
+
+box.innerHTML =
+"<strong>"+
+escapeHTML(profile.email||"")+
+"</strong>"+
+"<small>"+
+"Name: "+
+escapeHTML(profile.full_name||"Not provided")+
+"</small>"+
+"<small>"+
+"Role: "+
+escapeHTML(profile.role||"user")+
+" | Status: "+
+escapeHTML(profile.status||"active")+
+"</small>";
+
+
+/*
+  The Admin cannot change their own account
+  through this control.
+*/
+
+if(profile.id!==currentUser.id){
+
+const controls =
+document.createElement("div");
+
+controls.className="admin-user-controls";
+
+
+const roleButton =
+document.createElement("button");
+
+roleButton.className="small-btn edit-btn";
+
+roleButton.textContent =
+profile.role==="admin"
+?"MAKE USER"
+:"MAKE ADMIN";
+
+roleButton.onclick=function(){
+
+changeUserRole(
+profile.id,
+profile.role==="admin"
+?"user"
+:"admin"
+);
+
+};
+
+
+const statusButton =
+document.createElement("button");
+
+statusButton.className="small-btn delete-btn";
+
+statusButton.textContent =
+profile.status==="active"
+?"DEACTIVATE"
+:"ACTIVATE";
+
+statusButton.onclick=function(){
+
+changeUserStatus(
+profile.id,
+profile.status==="active"
+?"inactive"
+:"active"
+);
+
+};
+
+
+controls.appendChild(roleButton);
+controls.appendChild(statusButton);
+
+box.appendChild(controls);
+
+}
+
+container.appendChild(box);
+
+});
+
+}
+
+
+/* =====================================================
+   ADMIN CHANGE ROLE
+===================================================== */
+
+async function changeUserRole(id,role){
+
+if(!isAdmin()) return;
+
+
+if(!confirm(
+"Change this user's role to "+
+role+
+"?"
+)){
+
+return;
+
+}
+
+
+const {error} =
+await supabaseClient
+.from("profiles")
+.update({
+role:role
+})
+.eq("id",id);
+
+
+if(error){
+
+alert(
+"Could not change role: "+
+error.message
+);
+
+return;
+
+}
+
+
+await loadAdminUsers();
+
+}
+
+
+/* =====================================================
+   ADMIN CHANGE STATUS
+===================================================== */
+
+async function changeUserStatus(id,status){
+
+if(!isAdmin()) return;
+
+
+if(!confirm(
+status==="active"
+?"Activate this user?"
+:"Deactivate this user?"
+)){
+
+return;
+
+}
+
+
+const {error} =
+await supabaseClient
+.from("profiles")
+.update({
+status:status
+})
+.eq("id",id);
+
+
+if(error){
+
+alert(
+"Could not change status: "+
+error.message
+);
+
+return;
+
+}
+
+
+await loadAdminUsers();
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logoutApp(){
+
+if(!confirm("Log out of Oak & Cedar?")){
+
+return;
+
+}
+
+
+const {error} =
+await supabaseClient.auth.signOut();
+
+
+if(error){
+
+alert(
+"Could not log out: "+
+error.message
+);
+
+return;
+
+}
+
+
+currentUser=null;
+currentProfile=null;
+
+goods=[];
+weeks={};
+revenueRecords=[];
+
+document.getElementById("appTabs")
+.classList.add("hidden");
+
+document.getElementById("adminTab")
+.classList.add("hidden");
+
+document.getElementById("userBar")
+.classList.add("hidden");
+
+document.getElementById("loginOverlay")
+.classList.remove("hidden");
+
+document.getElementById("loginEmail")
+.value="";
+
+document.getElementById("loginPassword")
+.value="";
+
+}
+
+
+/* =====================================================
+   AUTH SESSION
+===================================================== */
 
 supabaseClient.auth.onAuthStateChange(
-    function(event, session) {
+async function(event,session){
 
-        if (
-            session &&
-            session.user
-        ) {
+if(session && session.user){
 
-            showApp(
-                session.user
-            );
+if(!currentUser){
 
-        }
+setTimeout(function(){
 
-    }
-);
+startApp(session.user);
 
-
-
-/* TABS */
-
-function showTab(
-    tabId,
-    button
-) {
-
-    let calculators =
-        document.querySelectorAll(
-            ".calculator"
-        );
-
-
-    calculators.forEach(
-        function(calculator) {
-
-            calculator.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
-
-    let selected =
-        document.getElementById(
-            tabId
-        );
-
-
-    if (selected) {
-
-        selected.classList.add(
-            "active"
-        );
-
-    }
-
-
-    let tabs =
-        document.querySelectorAll(
-            ".tab"
-        );
-
-
-    tabs.forEach(
-        function(tab) {
-
-            tab.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
-
-    if (button) {
-
-        button.classList.add(
-            "active"
-        );
-
-    }
-
-
-    if (tabId === "goods") {
-
-        loadGoods();
-
-        displayGoods();
-
-        displayRecords();
-
-        loadGoodsSelect();
-
-    }
-
-
-    if (tabId === "admin") {
-
-        loadAdminUsers();
-
-    }
+},0);
 
 }
 
+}else{
 
-
-/* REVENUE */
-
-function calculateRevenue() {
-
-    let bank1 =
-        Number(
-            document.getElementById(
-                "bank1"
-            ).value
-        ) || 0;
-
-
-    let bank2 =
-        Number(
-            document.getElementById(
-                "bank2"
-            ).value
-        ) || 0;
-
-
-    let bank3 =
-        Number(
-            document.getElementById(
-                "bank3"
-            ).value
-        ) || 0;
-
-
-    let cash =
-        Number(
-            document.getElementById(
-                "cash"
-            ).value
-        ) || 0;
-
-
-    let expenses =
-        Number(
-            document.getElementById(
-                "expenses"
-            ).value
-        ) || 0;
-
-
-    let totalGoods =
-        Number(
-            document.getElementById(
-                "totalGoods"
-            ).value
-        ) || 0;
-
-
-    let remainingGoods =
-        Number(
-            document.getElementById(
-                "remainingGoods"
-            ).value
-        ) || 0;
-
-
-    let totalBanks =
-        bank1 +
-        bank2 +
-        bank3;
-
-
-    let totalBankCash =
-        totalBanks +
-        cash;
-
-
-    let goodsAfterExpenses =
-        totalGoods -
-        expenses;
-
-
-    let profit =
-        totalBankCash +
-        remainingGoods -
-        goodsAfterExpenses;
-
-
-    if (profit < 0) {
-
-        profit = 0;
-
-    }
-
-
-    document.getElementById(
-        "revenueResults"
-    ).innerHTML = `
-
-        <div class="section-title">
-            CALCULATION RESULTS
-        </div>
-
-        <div class="result-row">
-
-            <span>
-                Total Banks
-            </span>
-
-            <strong>
-                ₵ ${totalBanks.toFixed(2)}
-            </strong>
-
-        </div>
-
-        <div class="result-row">
-
-            <span>
-                Total Bank & Cash
-            </span>
-
-            <strong>
-                ₵ ${totalBankCash.toFixed(2)}
-            </strong>
-
-        </div>
-
-        <div class="result-row">
-
-            <span>
-                Remaining Goods
-            </span>
-
-            <strong>
-                ₵ ${remainingGoods.toFixed(2)}
-            </strong>
-
-        </div>
-
-        <div class="result-row">
-
-            <span>
-                Goods After Expenses
-            </span>
-
-            <strong>
-                ₵ ${goodsAfterExpenses.toFixed(2)}
-            </strong>
-
-        </div>
-
-        <div class="profit-box">
-
-            <small>
-                TOTAL PROFIT
-            </small>
-
-            <strong>
-                ₵ ${profit.toFixed(2)}
-            </strong>
-
-        </div>
-
-    `;
+currentUser=null;
+currentProfile=null;
 
 }
 
+});
 
 
-function resetRevenue() {
+/* =====================================================
+   START
+===================================================== */
 
-    document.getElementById(
-        "bank1"
-    ).value = "";
+document.addEventListener(
+"DOMContentLoaded",
+async function(){
 
-    document.getElementById(
-        "bank2"
-    ).value = "";
+createWeekOptions();
 
-    document.getElementById(
-        "bank3"
-    ).value = "";
+createRevenueWeekOptions();
 
-    document.getElementById(
-        "cash"
-    ).value = "";
+const {
+data:{
+session
+}
+} =
+await supabaseClient.auth.getSession();
 
-    document.getElementById(
-        "expenses"
-    ).value = "";
 
-    document.getElementById(
-        "totalGoods"
-    ).value = "";
+if(session && session.user){
 
-    document.getElementById(
-        "remainingGoods"
-    ).value = "";
+await startApp(session.user);
 
-    document.getElementById(
-        "revenueResults"
-    ).innerHTML = "";
+}else{
+
+document.getElementById("loginOverlay")
+.classList.remove("hidden");
 
 }
 
-
-
-/* CEDI */
-
-function calculateCedi() {
-
-    let denominations = [
-        200,
-        100,
-        50,
-        20,
-        10,
-        5,
-        2,
-        1
-    ];
-
-
-    let total = 0;
-
-
-    denominations.forEach(
-        function(value) {
-
-            let quantity =
-                Number(
-                    document.getElementById(
-                        "c" + value
-                    ).value
-                ) || 0;
-
-
-            let amount =
-                quantity * value;
-
-
-            total += amount;
-
-
-            document.getElementById(
-                "r" + value
-            ).textContent =
-                "GH₵" +
-                amount.toFixed(2);
-
-        }
-    );
-
-
-    document.getElementById(
-        "cediTotal"
-    ).textContent =
-        "GH₵" +
-        total.toFixed(2);
-
-}
-
-
-
-function resetCedi() {
-
-    let denominations = [
-        200,
-        100,
-        50,
-        20,
-        10,
-        5,
-        2,
-        1
-    ];
-
-
-    denominations.forEach(
-        function(value) {
-
-            document.getElementById(
-                "c" + value
-            ).value = "";
-
-
-            document.getElementById(
-                "r" + value
-            ).textContent =
-                "GH₵0.00";
-
-        }
-    );
-
-
-    document.getElementById(
-        "cediTotal"
-    ).textContent =
-        "GH₵0.00";
-
-}
-
-
-
-/* GOODS */
-
-let goods =
-    JSON.parse(
-        localStorage.getItem(
-            "oakCedarGoods"
-        )
-    ) || [];
-
-
-let selectedGoods = [];
-
-
-function saveGoods() {
-
-    localStorage.setItem(
-        "oakCedarGoods",
-        JSON.stringify(goods)
-    );
-
-}
-
-
-function loadGoods() {
-
-    goods =
-        JSON.parse(
-            localStorage.getItem(
-                "oakCedarGoods"
-            )
-        ) || [];
-
-}
-
-
-function addGoods() {
-
-    let name =
-        document.getElementById(
-            "goodsName"
-        ).value.trim();
-
-
-    let price =
-        Number(
-            document.getElementById(
-                "goodsPrice"
-            ).value
-        );
-
-
-    if (!name) {
-
-        alert(
-            "Please enter the goods name."
-        );
-
-        return;
-
-    }
-
-
-    if (
-        !price ||
-        price < 0
-    ) {
-
-        alert(
-            "Please enter a valid price."
-        );
-
-        return;
-
-    }
-
-
-    goods.push({
-
-        name: name,
-
-        price: price
-
-    });
-
-
-    saveGoods();
-
-
-    document.getElementById(
-        "goodsName"
-    ).value = "";
-
-
-    document.getElementById(
-        "goodsPrice"
-    ).value = "";
-
-
-    loadGoodsSelect();
-
-    displayGoods();
-
-
-    alert(
-        "Goods added successfully."
-    );
-
-}
-
-
-
-/* GOODS SEARCH */
-
-function loadGoodsSelect() {
-
-    let select =
-        document.getElementById(
-            "savedGoodSelect"
-        );
-
-
-    if (!select) {
-
-        return;
-
-    }
-
-
-    let searchInput =
-        document.getElementById(
-            "goodsSearch"
-        );
-
-
-    let search =
-        searchInput
-        ? searchInput.value
-            .toLowerCase()
-            .trim()
-        : "";
-
-
-    select.innerHTML =
-        '<option value="">Select saved goods</option>';
-
-
-    goods.forEach(
-        function(item, index) {
-
-            if (
-                search === "" ||
-                item.name
-                    .toLowerCase()
-                    .startsWith(search)
-            ) {
-
-                let option =
-                    document.createElement(
-                        "option"
-                    );
-
-
-                option.value =
-                    index;
-
-
-                option.textContent =
-                    item.name +
-                    " — GH₵" +
-                    Number(
-                        item.price
-                    ).toFixed(2);
-
-
-                select.appendChild(
-                    option
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-
-function addQuantityToList() {
-
-    let select =
-        document.getElementById(
-            "savedGoodSelect"
-        );
-
-
-    let quantity =
-        Number(
-            document.getElementById(
-                "newQuantity"
-            ).value
-        );
-
-
-    if (
-        select.value === "" ||
-        quantity < 1
-    ) {
-
-        alert(
-            "Please select a good and enter a quantity."
-        );
-
-        return;
-
-    }
-
-
-    let index =
-        Number(
-            select.value
-        );
-
-
-    let item =
-        goods[index];
-
-
-    let existing =
-        selectedGoods.find(
-            function(good) {
-
-                return good.index === index;
-
-            }
-        );
-
-
-    if (existing) {
-
-        existing.quantity +=
-            quantity;
-
-    } else {
-
-        selectedGoods.push({
-
-            index: index,
-
-            name: item.name,
-
-            price: Number(
-                item.price
-            ),
-
-            quantity: quantity
-
-        });
-
-    }
-
-
-    document.getElementById(
-        "newQuantity"
-    ).value = "";
-
-
-    select.value = "";
-
-
-    displayGoods();
-
-}
-
-
-
-function displayGoods() {
-
-    let list =
-        document.getElementById(
-            "goodsList"
-        );
-
-
-    if (!list) {
-
-        return;
-
-    }
-
-
-    if (
-        selectedGoods.length === 0
-    ) {
-
-        list.innerHTML = `
-
-            <div class="no-selected">
-                Enter a quantity for a saved good to add it here.
-            </div>
-
-        `;
-
-
-        document.getElementById(
-            "goodsGrandTotal"
-        ).textContent =
-            "GH₵0.00";
-
-
-        return;
-
-    }
-
-
-    list.innerHTML = `
-
-        <div class="goods-header">
-
-            <div>GOOD</div>
-            <div>PRICE</div>
-            <div>QTY</div>
-            <div>TOTAL</div>
-            <div></div>
-
-        </div>
-
-    `;
-
-
-    let grandTotal = 0;
-
-
-    selectedGoods.forEach(
-        function(item, index) {
-
-            let total =
-                item.price *
-                item.quantity;
-
-
-            grandTotal += total;
-
-
-            list.innerHTML += `
-
-                <div class="goods-row">
-
-                    <div class="goods-name">
-                        ${item.name}
-                    </div>
-
-                    <div class="goods-price">
-                        GH₵${item.price.toFixed(2)}
-                    </div>
-
-                    <input
-                        class="quantity"
-                        type="number"
-                        min="1"
-                        value="${item.quantity}"
-                        onchange="updateQuantity(${index}, this.value)"
-                    >
-
-                    <div class="item-total">
-                        GH₵${total.toFixed(2)}
-                    </div>
-
-                    <button
-                        class="delete-good"
-                        onclick="removeSelectedGood(${index})"
-                    >
-                        ×
-                    </button>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-
-    document.getElementById(
-        "goodsGrandTotal"
-    ).textContent =
-        "GH₵" +
-        grandTotal.toFixed(2);
-
-}
-
-
-
-function updateQuantity(
-    index,
-    value
-) {
-
-    let quantity =
-        Number(value);
-
-
-    if (quantity < 1) {
-
-        quantity = 1;
-
-    }
-
-
-    selectedGoods[index].quantity =
-        quantity;
-
-
-    displayGoods();
-
-}
-
-
-
-function removeSelectedGood(
-    index
-) {
-
-    selectedGoods.splice(
-        index,
-        1
-    );
-
-
-    displayGoods();
-
-}
-
-
-
-function calculateGoodsTotal() {
-
-    let total = 0;
-
-
-    selectedGoods.forEach(
-        function(item) {
-
-            total +=
-                item.price *
-                item.quantity;
-
-        }
-    );
-
-
-    document.getElementById(
-        "goodsGrandTotal"
-    ).textContent =
-        "GH₵" +
-        total.toFixed(2);
-
-}
-
-
-
-function clearQuantities() {
-
-    selectedGoods = [];
-
-
-    document.getElementById(
-        "newQuantity"
-    ).value = "";
-
-
-    document.getElementById(
-        "savedGoodSelect"
-    ).value = "";
-
-
-    displayGoods();
-
-}
-
-
-
-function deleteGood(index) {
-
-    let confirmDelete =
-        confirm(
-            "Are you sure you want to delete this good?"
-        );
-
-
-    if (!confirmDelete) {
-
-        return;
-
-    }
-
-
-    goods.splice(
-        index,
-        1
-    );
-
-
-    saveGoods();
-
-
-    selectedGoods =
-        selectedGoods.filter(
-            function(item) {
-
-                return item.index !== index;
-
-            }
-        );
-
-
-    loadGoodsSelect();
-
-    displayGoods();
-
-}
-
-
-
-/* SAVED RECORDS */
-
-let goodsRecords =
-    JSON.parse(
-        localStorage.getItem(
-            "oakCedarGoodsRecords"
-        )
-    ) || [];
-
-
-function saveGoodsRecord() {
-
-    if (
-        selectedGoods.length === 0
-    ) {
-
-        alert(
-            "Please add goods before saving a record."
-        );
-
-        return;
-
-    }
-
-
-    let total = 0;
-
-
-    let recordGoods =
-        selectedGoods.map(
-            function(item) {
-
-                let itemTotal =
-                    item.price *
-                    item.quantity;
-
-
-                total += itemTotal;
-
-
-                return {
-
-                    name: item.name,
-
-                    price: item.price,
-
-                    quantity:
-                        item.quantity,
-
-                    total:
-                        itemTotal
-
-                };
-
-            }
-        );
-
-
-    let record = {
-
-        date:
-            new Date().toLocaleString(),
-
-        total: total,
-
-        goods: recordGoods
-
-    };
-
-
-    goodsRecords.unshift(
-        record
-    );
-
-
-    localStorage.setItem(
-        "oakCedarGoodsRecords",
-        JSON.stringify(
-            goodsRecords
-        )
-    );
-
-
-    displayRecords();
-
-
-    alert(
-        "Record saved successfully."
-    );
-
-}
-
-
-
-function displayRecords() {
-
-    let container =
-        document.getElementById(
-            "recordsList"
-        );
-
-
-    if (!container) {
-
-        return;
-
-    }
-
-
-    if (
-        goodsRecords.length === 0
-    ) {
-
-        container.innerHTML = `
-
-            <div class="no-records">
-                No saved records yet.
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML = "";
-
-
-    goodsRecords.forEach(
-        function(record, index) {
-
-            let goodsHTML = "";
-
-
-            record.goods.forEach(
-                function(item) {
-
-                    goodsHTML += `
-
-                        <div class="record-good-line">
-
-                            <span>
-                                ${item.name}
-                                × ${item.quantity}
-                            </span>
-
-                            <strong>
-                                GH₵${Number(item.total).toFixed(2)}
-                            </strong>
-
-                        </div>
-
-                    `;
-
-                }
-            );
-
-
-            container.innerHTML += `
-
-                <div class="record-card">
-
-                    <div class="record-date">
-                        ${record.date}
-                    </div>
-
-                    <div class="record-total">
-                        Total:
-                        GH₵${Number(record.total).toFixed(2)}
-                    </div>
-
-                    <div class="record-goods">
-                        ${goodsHTML}
-                    </div>
-
-                    <button
-                        class="record-delete"
-                        onclick="deleteRecord(${index})"
-                    >
-                        DELETE RECORD
-                    </button>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-}
-
-
-
-function deleteRecord(index) {
-
-    let confirmDelete =
-        confirm(
-            "Are you sure you want to delete this record?"
-        );
-
-
-    if (!confirmDelete) {
-
-        return;
-
-    }
-
-
-    goodsRecords.splice(
-        index,
-        1
-    );
-
-
-    localStorage.setItem(
-        "oakCedarGoodsRecords",
-        JSON.stringify(
-            goodsRecords
-        )
-    );
-
-
-    displayRecords();
-
-}
-
-
-
-/* ADMIN */
-
-async function loadAdminUsers() {
-
-    let sessionResult =
-        await supabaseClient.auth.getSession();
-
-
-    let session =
-        sessionResult.data.session;
-
-
-    if (
-        !session ||
-        !session.user ||
-        session.user.email.toLowerCase() !==
-        ADMIN_EMAIL.toLowerCase()
-    ) {
-
-        alert(
-            "Access denied. Admin only."
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        let response =
-            await fetch(
-                SUPABASE_URL +
-                "/functions/v1/Admin-users",
-                {
-
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Authorization":
-                            "Bearer " +
-                            session.access_token
-
-                    },
-
-                    body:
-                        JSON.stringify({
-                            action: "list"
-                        })
-
-                }
-            );
-
-
-        let data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            alert(
-                data.error ||
-                "Unable to load users."
-            );
-
-            return;
-
-        }
-
-
-        let users =
-            data.users || [];
-
-
-        document.getElementById(
-            "userCount"
-        ).textContent =
-            users.length;
-
-
-        let list =
-            document.getElementById(
-                "adminUsersList"
-            );
-
-
-        if (users.length === 0) {
-
-            list.innerHTML = `
-
-                <div class="empty">
-                    No registered users.
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        list.innerHTML = "";
-
-
-        users.forEach(
-            function(user) {
-
-                let isAdmin =
-                    user.email &&
-                    user.email.toLowerCase() ===
-                    ADMIN_EMAIL.toLowerCase();
-
-
-                let created =
-                    user.created_at
-                    ? new Date(
-                        user.created_at
-                    ).toLocaleString()
-                    : "N/A";
-
-
-                let lastLogin =
-                    user.last_sign_in_at
-                    ? new Date(
-                        user.last_sign_in_at
-                    ).toLocaleString()
-                    : "Never";
-
-
-                list.innerHTML += `
-
-                    <div class="admin-user">
-
-                        <div class="admin-email">
-
-                            ${user.email}
-
-                            ${
-                                isAdmin
-                                ? '<span class="admin-badge">MAIN ADMIN</span>'
-                                : ''
-                            }
-
-                        </div>
-
-
-                        <div class="admin-date">
-                            Created:
-                            ${created}
-                        </div>
-
-
-                        <div class="admin-last-login">
-                            Last Login:
-                            ${lastLogin}
-                        </div>
-
-
-                        ${
-                            isAdmin
-                            ? ""
-                            : `
-
-                                <div class="admin-actions">
-
-                                    <button
-                                        class="record-delete admin-delete"
-                                        onclick="deleteAdminUser('${user.id}')"
-                                    >
-                                        DELETE USER
-                                    </button>
-
-                                </div>
-
-                            `
-                        }
-
-                    </div>
-
-                `;
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to connect to the admin system."
-        );
-
-    }
-
-}
-
-
-
-async function createAdminUser() {
-
-    let email =
-        document.getElementById(
-            "newUserEmail"
-        ).value.trim();
-
-
-    let password =
-        document.getElementById(
-            "newUserPassword"
-        ).value;
-
-
-    if (!email || !password) {
-
-        alert(
-            "Please enter email and password."
-        );
-
-        return;
-
-    }
-
-
-    if (password.length < 6) {
-
-        alert(
-            "Password must be at least 6 characters."
-        );
-
-        return;
-
-    }
-
-
-    let sessionResult =
-        await supabaseClient.auth.getSession();
-
-
-    let session =
-        sessionResult.data.session;
-
-
-    if (!session) {
-
-        alert(
-            "Admin session expired. Please login again."
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        let response =
-            await fetch(
-                SUPABASE_URL +
-                "/functions/v1/Admin-users",
-                {
-
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Authorization":
-                            "Bearer " +
-                            session.access_token
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            action:
-                                "create",
-
-                            email:
-                                email,
-
-                            password:
-                                password
-
-                        })
-
-                }
-            );
-
-
-        let data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            alert(
-                data.error ||
-                "Unable to create user."
-            );
-
-            return;
-
-        }
-
-
-        document.getElementById(
-            "newUserEmail"
-        ).value = "";
-
-
-        document.getElementById(
-            "newUserPassword"
-        ).value = "";
-
-
-        alert(
-            "User created successfully."
-        );
-
-
-        loadAdminUsers();
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to connect to the admin system."
-        );
-
-    }
-
-}
-
-
-
-async function deleteAdminUser(
-    userId
-) {
-
-    let confirmDelete =
-        confirm(
-            "Are you sure you want to delete this user?"
-        );
-
-
-    if (!confirmDelete) {
-
-        return;
-
-    }
-
-
-    let sessionResult =
-        await supabaseClient.auth.getSession();
-
-
-    let session =
-        sessionResult.data.session;
-
-
-    if (!session) {
-
-        alert(
-            "Admin session expired. Please login again."
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        let response =
-            await fetch(
-                SUPABASE_URL +
-                "/functions/v1/Admin-users",
-                {
-
-                    method: "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Authorization":
-                            "Bearer " +
-                            session.access_token
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            action:
-                                "delete",
-
-                            userId:
-                                userId
-
-                        })
-
-                }
-            );
-
-
-        let data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            alert(
-                data.error ||
-                "Unable to delete user."
-            );
-
-            return;
-
-        }
-
-
-        alert(
-            "User deleted successfully."
-        );
-
-
-        loadAdminUsers();
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to connect to the admin system."
-        );
-
-    }
-
-}
+});
 
 </script>
 
