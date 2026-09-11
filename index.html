@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Oak & Cedar Business Calculator</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -19,11 +20,34 @@ html{
 
 body{
   margin:0;
+  min-height:100vh;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   background:linear-gradient(135deg,#eef2ee,#dfe6df);
   color:#24452d;
-  min-height:100vh;
 }
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* ==============================
+   HEADER
+============================== */
 
 .header{
   background:#24452d;
@@ -33,16 +57,20 @@ body{
   box-shadow:0 3px 12px rgba(0,0,0,.15);
 }
 
-.logo{
-  width:58px;
-  height:58px;
-  border:3px solid white;
-  border-radius:50%;
-  margin:auto;
+.logo,
+.login-logo{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:800;
+  border:3px solid white;
+  border-radius:50%;
+  font-weight:900;
+}
+
+.logo{
+  width:58px;
+  height:58px;
+  margin:auto;
   font-size:19px;
 }
 
@@ -65,6 +93,76 @@ body{
   color:#526052;
   border-bottom:1px solid #dce4dc;
 }
+
+/* ==============================
+   LOGIN
+============================== */
+
+.login-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:linear-gradient(135deg,#eef2ee,#dfe6df);
+}
+
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 6px 25px rgba(36,69,45,.15);
+}
+
+.login-logo{
+  width:65px;
+  height:65px;
+  margin:0 auto 12px;
+  border-color:#24452d;
+  color:#24452d;
+  font-size:20px;
+}
+
+.login-card h2{
+  text-align:center;
+  margin:0 0 5px;
+}
+
+.login-card p{
+  text-align:center;
+  color:#687168;
+  font-size:13px;
+  margin:0 0 18px;
+}
+
+.login-message{
+  display:none;
+  margin-top:10px;
+  padding:11px;
+  border-radius:9px;
+  background:#f5f7f4;
+  color:#526052;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.login-toggle{
+  width:100%;
+  margin-top:12px;
+  padding:8px;
+  border:none;
+  background:transparent;
+  color:#527a58;
+  font-weight:800;
+}
+
+/* ==============================
+   TABS
+============================== */
 
 .tabs{
   display:flex;
@@ -93,6 +191,10 @@ body{
   color:white;
 }
 
+/* ==============================
+   LAYOUT
+============================== */
+
 .container{
   max-width:720px;
   margin:auto;
@@ -120,6 +222,10 @@ body{
   font-size:18px;
 }
 
+/* ==============================
+   FORM
+============================== */
+
 label{
   display:block;
   margin:10px 0 5px;
@@ -144,14 +250,9 @@ select:focus{
   border-color:#6b8e58;
 }
 
-button{
-  cursor:pointer;
-}
-
-button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
+/* ==============================
+   BUTTONS
+============================== */
 
 .main-btn{
   width:100%;
@@ -173,6 +274,20 @@ button:disabled{
 .logout-btn{
   background:#24452d;
 }
+
+.add-good-btn{
+  width:100%;
+  border:none;
+  background:#edf4eb;
+  color:#24452d;
+  padding:11px;
+  border-radius:9px;
+  font-weight:800;
+}
+
+/* ==============================
+   REVENUE
+============================== */
 
 .result{
   display:flex;
@@ -202,18 +317,59 @@ button:disabled{
 
 .profit strong{
   display:block;
-  font-size:25px;
   margin-top:4px;
   color:#111;
+  font-size:25px;
+}
+
+.revenue-date-box{
+  margin-top:12px;
+  padding:13px;
+  background:#f5f7f4;
+  border:1px solid #dce4dc;
+  border-radius:11px;
+}
+
+.date-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.date-label{
+  margin-bottom:5px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.auto-date{
+  background:#edf4eb;
+  color:#24452d;
+  font-weight:700;
+}
+
+.save-note{
+  margin-top:9px;
+  font-size:12px;
+  color:#697269;
+  line-height:1.4;
+}
+
+.info{
+  margin-top:10px;
+  padding:11px;
+  border-radius:10px;
+  background:#f5f7f4;
+  font-size:13px;
+  line-height:1.5;
 }
 
 .revenue-record{
+  margin-bottom:8px;
+  padding:12px;
   background:#edf4eb;
   border:1px solid #d7e2d6;
   border-radius:11px;
-  padding:12px;
-  margin-bottom:8px;
-  cursor:pointer;
 }
 
 .revenue-record-header{
@@ -221,6 +377,7 @@ button:disabled{
   justify-content:space-between;
   align-items:center;
   gap:8px;
+  cursor:pointer;
 }
 
 .revenue-record-header strong{
@@ -228,8 +385,8 @@ button:disabled{
 }
 
 .revenue-record-header span{
-  font-size:12px;
   color:#667066;
+  font-size:12px;
 }
 
 .revenue-record-details{
@@ -259,14 +416,18 @@ button:disabled{
 
 .record-delete{
   width:100%;
-  border:none;
   margin-top:10px;
   padding:10px;
+  border:none;
   border-radius:9px;
   background:#f3dddd;
   color:#8c2b2b;
   font-weight:800;
 }
+
+/* ==============================
+   CEDI
+============================== */
 
 .cedi-row{
   display:grid;
@@ -301,8 +462,8 @@ button:disabled{
 
 .cedi-total strong{
   display:block;
-  font-size:25px;
   color:#111;
+  font-size:25px;
 }
 
 .words{
@@ -319,6 +480,10 @@ button:disabled{
   color:#111;
   line-height:1.5;
 }
+
+/* ==============================
+   GOODS
+============================== */
 
 .choice-row{
   display:flex;
@@ -355,62 +520,52 @@ button:disabled{
 }
 
 .price-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:37px;
+  padding:9px 5px;
   background:#f1f5f0;
   border:1px solid #dce5dc;
   border-radius:8px;
-  padding:9px 5px;
   text-align:center;
   font-size:12px;
   font-weight:800;
   color:#111;
-  min-height:37px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
 .remove-btn{
+  min-height:37px;
+  padding:9px;
   border:none;
   border-radius:8px;
-  padding:9px;
   background:#f1dddd;
   color:#8b2c2c;
   font-weight:800;
-  min-height:37px;
-}
-
-.add-good-btn{
-  border:none;
-  background:#edf4eb;
-  color:#24452d;
-  padding:11px;
-  border-radius:9px;
-  font-weight:800;
-  width:100%;
 }
 
 .saved-status{
-  text-align:center;
+  padding:13px;
+  border-radius:10px;
   background:#edf4eb;
   border:1px solid #d5e2d4;
   color:#24452d;
-  padding:13px;
-  border-radius:10px;
+  text-align:center;
   font-weight:800;
 }
 
 .saved-status small{
   display:block;
   margin-top:4px;
-  font-weight:500;
   color:#5d695f;
+  font-weight:500;
 }
 
 .edit-current-btn{
   width:100%;
-  border:none;
   margin-top:9px;
   padding:11px;
+  border:none;
   border-radius:9px;
   background:#e8efe6;
   color:#24452d;
@@ -421,11 +576,11 @@ button:disabled{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  margin-bottom:8px;
+  padding:12px;
   background:#edf4eb;
   border:1px solid #d7e2d6;
   border-radius:11px;
-  padding:12px;
-  margin-bottom:8px;
   cursor:pointer;
 }
 
@@ -447,16 +602,16 @@ button:disabled{
 }
 
 .saved-record{
-  background:#edf4eb;
-  border:1px solid #d7e2d6;
-  border-radius:11px;
-  padding:12px;
-  margin-bottom:8px;
-  font-weight:800;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  margin-bottom:8px;
+  padding:12px;
+  background:#edf4eb;
+  border:1px solid #d7e2d6;
+  border-radius:11px;
   cursor:pointer;
+  font-weight:800;
 }
 
 .saved-record span{
@@ -466,12 +621,12 @@ button:disabled{
 
 .record-details{
   display:none;
+  margin-top:-8px;
+  margin-bottom:8px;
+  padding:10px;
   background:white;
   border:1px solid #dce4dc;
   border-radius:0 0 11px 11px;
-  padding:10px;
-  margin-top:-8px;
-  margin-bottom:8px;
 }
 
 .record-details.open{
@@ -512,29 +667,29 @@ td.money{
 }
 
 .table-total{
-  text-align:right;
   padding:10px 4px;
-  font-weight:800;
+  text-align:right;
   color:#111;
+  font-weight:800;
 }
 
 .sold{
-  text-align:right;
   padding:6px 4px 12px;
-  font-weight:800;
+  text-align:right;
   color:#24452d;
+  font-weight:800;
 }
 
 .balance-box{
+  display:flex;
+  justify-content:space-between;
   margin-top:10px;
   padding:14px;
   background:#edf4eb;
   border:2px solid #d5e2d4;
   border-radius:10px;
-  display:flex;
-  justify-content:space-between;
-  font-weight:900;
   scroll-margin-top:95px;
+  font-weight:900;
 }
 
 .balance-box span:last-child{
@@ -566,24 +721,9 @@ td.money{
   color:#8c2b2b;
 }
 
-.info{
-  background:#f5f7f4;
-  padding:11px;
-  border-radius:10px;
-  margin-top:10px;
-  font-size:13px;
-}
-
-.empty{
-  text-align:center;
-  padding:15px;
-  color:#777;
-  font-size:13px;
-}
-
-.hidden{
-  display:none!important;
-}
+/* ==============================
+   ADMIN
+============================== */
 
 .good-admin{
   display:flex;
@@ -599,112 +739,6 @@ td.money{
   color:#666;
 }
 
-.revenue-date-box{
-  margin-top:12px;
-  padding:13px;
-  background:#f5f7f4;
-  border:1px solid #dce4dc;
-  border-radius:11px;
-}
-
-.date-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.date-label{
-  font-size:12px;
-  font-weight:800;
-  margin-bottom:5px;
-}
-
-.auto-date{
-  background:#edf4eb;
-  color:#24452d;
-  font-weight:700;
-}
-
-.save-note{
-  margin-top:9px;
-  font-size:12px;
-  color:#697269;
-  line-height:1.4;
-}
-
-.login-overlay{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(135deg,#eef2ee,#dfe6df);
-  z-index:1000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-}
-
-.login-card{
-  width:100%;
-  max-width:420px;
-  background:white;
-  padding:25px;
-  border-radius:18px;
-  box-shadow:0 6px 25px rgba(36,69,45,.15);
-}
-
-.login-logo{
-  width:65px;
-  height:65px;
-  border:3px solid #24452d;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 12px;
-  font-weight:900;
-  color:#24452d;
-  font-size:20px;
-}
-
-.login-card h2{
-  text-align:center;
-  margin:0 0 5px;
-}
-
-.login-card p{
-  text-align:center;
-  color:#687168;
-  font-size:13px;
-  margin:0 0 18px;
-}
-
-.login-message{
-  margin-top:10px;
-  padding:10px;
-  border-radius:9px;
-  background:#f5f7f4;
-  color:#526052;
-  font-size:13px;
-  display:none;
-  line-height:1.5;
-}
-
-.login-toggle{
-  margin-top:12px;
-  width:100%;
-  border:none;
-  background:transparent;
-  color:#527a58;
-  font-weight:800;
-  padding:8px;
-}
-
-.loading{
-  text-align:center;
-  padding:20px;
-  color:#526052;
-}
-
 .admin-user{
   padding:12px 0;
   border-bottom:1px solid #e4e9e4;
@@ -716,8 +750,8 @@ td.money{
 
 .admin-user small{
   display:block;
-  color:#687168;
   margin-top:3px;
+  color:#687168;
 }
 
 .admin-user-controls{
@@ -729,12 +763,12 @@ td.money{
 
 .status-badge{
   display:inline-block;
+  margin-top:7px;
   padding:4px 8px;
   border-radius:7px;
   font-size:10px;
   font-weight:900;
   text-transform:uppercase;
-  margin-top:7px;
 }
 
 .status-pending{
@@ -752,6 +786,23 @@ td.money{
   color:#8c2b2b;
 }
 
+/* ==============================
+   GENERAL
+============================== */
+
+.empty{
+  padding:15px;
+  text-align:center;
+  color:#777;
+  font-size:13px;
+}
+
+.loading{
+  padding:20px;
+  text-align:center;
+  color:#526052;
+}
+
 .approval-box{
   margin-top:12px;
   padding:13px;
@@ -762,6 +813,10 @@ td.money{
   font-size:13px;
   line-height:1.5;
 }
+
+/* ==============================
+   MOBILE
+============================== */
 
 @media(max-width:520px){
 
@@ -785,13 +840,16 @@ td.money{
   .date-row{
     grid-template-columns:1fr 1fr;
   }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- =========================================================
+     LOGIN
+========================================================= -->
 
 <div id="loginOverlay" class="login-overlay">
 
@@ -812,6 +870,7 @@ td.money{
       <input
         id="signupName"
         type="text"
+        autocomplete="name"
         placeholder="Enter your full name">
 
     </div>
@@ -835,6 +894,7 @@ td.money{
     <button
       id="loginButton"
       class="main-btn"
+      type="button"
       onclick="handleAuth()">
       LOGIN
     </button>
@@ -842,6 +902,7 @@ td.money{
     <button
       id="authToggle"
       class="login-toggle"
+      type="button"
       onclick="toggleAuthMode()">
       Create a new account
     </button>
@@ -853,7 +914,9 @@ td.money{
 </div>
 
 
-<!-- HEADER -->
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <div class="header">
 
@@ -869,29 +932,35 @@ td.money{
 <div id="userBar" class="user-bar hidden"></div>
 
 
-<!-- TABS -->
+<!-- =========================================================
+     TABS
+========================================================= -->
 
 <div id="appTabs" class="tabs hidden">
 
   <button
+    type="button"
     class="tab active"
     onclick="showTab('revenue',this)">
     Revenue
   </button>
 
   <button
+    type="button"
     class="tab"
     onclick="showTab('cedi',this)">
     Cedi
   </button>
 
   <button
+    type="button"
     class="tab"
     onclick="showTab('goods',this)">
     Goods
   </button>
 
   <button
+    type="button"
     id="adminTab"
     class="tab hidden"
     onclick="showTab('admin',this)">
@@ -904,441 +973,494 @@ td.money{
 <div class="container">
 
 
-<!-- REVENUE -->
+<!-- =========================================================
+     REVENUE
+========================================================= -->
 
 <section id="revenue" class="section active">
 
-<div class="card">
+  <div class="card">
 
-<h2>Business Revenue Calculator</h2>
+    <h2>Business Revenue Calculator</h2>
 
-<label>Bank 1</label>
-<input id="bank1" type="number" inputmode="decimal" placeholder="0">
+    <label>Bank 1</label>
+    <input id="bank1" type="number" inputmode="decimal" placeholder="0">
 
-<label>Bank 2</label>
-<input id="bank2" type="number" inputmode="decimal" placeholder="0">
+    <label>Bank 2</label>
+    <input id="bank2" type="number" inputmode="decimal" placeholder="0">
 
-<label>Bank 3</label>
-<input id="bank3" type="number" inputmode="decimal" placeholder="0">
+    <label>Bank 3</label>
+    <input id="bank3" type="number" inputmode="decimal" placeholder="0">
 
-<label>Cash at Hand</label>
-<input id="cash" type="number" inputmode="decimal" placeholder="0">
+    <label>Cash at Hand</label>
+    <input id="cash" type="number" inputmode="decimal" placeholder="0">
 
-<label>Expenses</label>
-<input id="expenses" type="number" inputmode="decimal" placeholder="0">
+    <label>Expenses</label>
+    <input id="expenses" type="number" inputmode="decimal" placeholder="0">
 
-<label>Total Goods</label>
-<input id="totalGoods" type="number" inputmode="decimal" placeholder="0">
+    <label>Total Goods</label>
+    <input id="totalGoods" type="number" inputmode="decimal" placeholder="0">
 
-<label>Remaining Goods</label>
-<input id="remainingGoods" type="number" inputmode="decimal" placeholder="0">
+    <label>Remaining Goods</label>
+    <input id="remainingGoods" type="number" inputmode="decimal" placeholder="0">
 
-<button class="main-btn" onclick="calculateRevenue()">
-CALCULATE
-</button>
+    <button
+      type="button"
+      class="main-btn"
+      onclick="calculateRevenue()">
+      CALCULATE
+    </button>
 
-<button class="main-btn" onclick="openRevenueSave()">
-SAVE REVENUE RECORD
-</button>
+    <button
+      type="button"
+      class="main-btn"
+      onclick="openRevenueSave()">
+      SAVE REVENUE RECORD
+    </button>
 
-<button class="main-btn reset-btn" onclick="resetRevenue()">
-RESET
-</button>
+    <button
+      type="button"
+      class="main-btn reset-btn"
+      onclick="resetRevenue()">
+      RESET
+    </button>
 
-<button class="main-btn logout-btn" onclick="logoutApp()">
-LOGOUT
-</button>
+    <button
+      type="button"
+      class="main-btn logout-btn"
+      onclick="logoutApp()">
+      LOGOUT
+    </button>
 
-</div>
-
-
-<div class="card">
-
-<h2>Summary</h2>
-
-<div class="result">
-<strong>Total Banks</strong>
-<strong id="outBanks">GH₵0.00</strong>
-</div>
-
-<div class="result">
-<strong>Total Bank & Cash</strong>
-<strong id="outCash">GH₵0.00</strong>
-</div>
-
-<div class="result">
-<strong>Remaining Goods</strong>
-<strong id="outRemaining">GH₵0.00</strong>
-</div>
-
-<div class="result">
-<strong>Goods After Expenses</strong>
-<strong id="outGoodsAfter">GH₵0.00</strong>
-</div>
-
-<div class="profit">
-<small>TOTAL PROFIT</small>
-<strong id="outProfit">GH₵0.00</strong>
-</div>
-
-</div>
+  </div>
 
 
-<div class="card hidden" id="revenueSaveCard">
+  <div class="card">
 
-<h2>Save Revenue Record</h2>
+    <h2>Summary</h2>
 
-<label>Week</label>
+    <div class="result">
+      <strong>Total Banks</strong>
+      <strong id="outBanks">GH₵0.00</strong>
+    </div>
 
-<select id="revenueWeek"></select>
+    <div class="result">
+      <strong>Total Bank & Cash</strong>
+      <strong id="outCash">GH₵0.00</strong>
+    </div>
 
-<div class="revenue-date-box">
+    <div class="result">
+      <strong>Remaining Goods</strong>
+      <strong id="outRemaining">GH₵0.00</strong>
+    </div>
 
-<div class="date-row">
+    <div class="result">
+      <strong>Goods After Expenses</strong>
+      <strong id="outGoodsAfter">GH₵0.00</strong>
+    </div>
 
-<div>
+    <div class="profit">
+      <small>TOTAL PROFIT</small>
+      <strong id="outProfit">GH₵0.00</strong>
+    </div>
 
-<div class="date-label">START</div>
-
-<input
-id="revenueStartDate"
-type="date"
-onchange="updateRevenueEndDate()">
-
-</div>
-
-<div>
-
-<div class="date-label">TO</div>
-
-<input
-id="revenueEndDate"
-class="auto-date"
-type="date"
-readonly>
-
-</div>
-
-</div>
-
-<div class="save-note">
-Select the Start date. The To date will automatically be set to 4 days after the selected start date.
-</div>
-
-</div>
-
-<div class="info">
-The saved record will contain the Revenue Summary and Expenses. Profit will not be saved.
-</div>
-
-<button class="main-btn" onclick="confirmSaveRevenueRecord()">
-SAVE RECORD
-</button>
-
-<button class="main-btn reset-btn" onclick="closeRevenueSave()">
-CANCEL
-</button>
-
-</div>
+  </div>
 
 
-<div class="card">
+  <div class="card hidden" id="revenueSaveCard">
 
-<h2>Saved Revenue Records</h2>
+    <h2>Save Revenue Record</h2>
 
-<div id="revenueRecords">
-<div class="loading">Loading records...</div>
-</div>
+    <label>Week</label>
 
-</div>
+    <select id="revenueWeek"></select>
+
+    <div class="revenue-date-box">
+
+      <div class="date-row">
+
+        <div>
+
+          <div class="date-label">START</div>
+
+          <input
+            id="revenueStartDate"
+            type="date"
+            onchange="updateRevenueEndDate()">
+
+        </div>
+
+        <div>
+
+          <div class="date-label">TO</div>
+
+          <input
+            id="revenueEndDate"
+            class="auto-date"
+            type="date"
+            readonly>
+
+        </div>
+
+      </div>
+
+      <div class="save-note">
+        Select the Start date. The To date will automatically be set to 4 days after the selected start date.
+      </div>
+
+    </div>
+
+    <div class="info">
+      The saved record contains the Revenue Summary and Expenses. Profit is not saved.
+    </div>
+
+    <button
+      type="button"
+      class="main-btn"
+      onclick="confirmSaveRevenueRecord()">
+      SAVE RECORD
+    </button>
+
+    <button
+      type="button"
+      class="main-btn reset-btn"
+      onclick="closeRevenueSave()">
+      CANCEL
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Saved Revenue Records</h2>
+
+    <div id="revenueRecords">
+      <div class="loading">Loading records...</div>
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- CEDI -->
+<!-- =========================================================
+     CEDI
+========================================================= -->
 
 <section id="cedi" class="section">
 
-<div class="card">
+  <div class="card">
 
-<h2>Ghana Cedi Calculator</h2>
+    <h2>Ghana Cedi Calculator</h2>
 
-<div class="cedi-row">
-<div class="denom">GH₵200</div>
-<input class="cediQty" data-denom="200" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
-<div class="line-total" id="line200">GH₵0.00</div>
-</div>
+    <div class="cedi-row">
+      <div class="denom">GH₵200</div>
+      <input class="cediQty" data-denom="200" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+      <div class="line-total" id="line200">GH₵0.00</div>
+    </div>
 
-<div class="cedi-row">
-<div class="denom">GH₵100</div>
-<input class="cediQty" data-denom="100" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
-<div class="line-total" id="line100">GH₵0.00</div>
-</div>
+    <div class="cedi-row">
+      <div class="denom">GH₵100</div>
+      <input class="cediQty" data-denom="100" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+      <div class="line-total" id="line100">GH₵0.00</div>
+    </div>
 
-<div class="cedi-row">
-<div class="denom">GH₵50</div>
-<input class="cediQty" data-denom="50" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
-<div class="line-total" id="line50">GH₵0.00</div>
-</div>
+    <div class="cedi-row">
+      <div class="denom">GH₵50</div>
+      <input class="cediQty" data-denom="50" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+      <div class="line-total" id="line50">GH₵0.00</div>
+    </div>
 
-<div class="cedi-row">
-<div class="denom">GH₵20</div>
-<input class="cediQty" data-denom="20" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
-<div class="line-total" id="line20">GH₵0.00</div>
-</div>
+    <div class="cedi-row">
+      <div class="denom">GH₵20</div>
+      <input class="cediQty" data-denom="20" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+      <div class="line-total" id="line20">GH₵0.00</div>
+    </div>
 
-<div class="cedi-row">
-<div class="denom">GH₵10</div>
-<input class="cediQty" data-denom="10" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
-<div class="line-total" id="line10">GH₵0.00</div>
-</div>
+    <div class="cedi-row">
+      <div class="denom">GH₵10</div>
+      <input class="cediQty" data-denom="10" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+      <div class="line-total" id="line10">GH₵0.00</div>
+    </div>
 
-<div class="cedi-row">
-<div class="denom">GH₵5</div>
-<input class="cediQty" data-denom="5" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
-<div class="line-total" id="line5">GH₵0.00</div>
-</div>
+    <div class="cedi-row">
+      <div class="denom">GH₵5</div>
+      <input class="cediQty" data-denom="5" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+      <div class="line-total" id="line5">GH₵0.00</div>
+    </div>
 
-<div class="cedi-row">
-<div class="denom">GH₵2</div>
-<input class="cediQty" data-denom="2" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
-<div class="line-total" id="line2">GH₵0.00</div>
-</div>
+    <div class="cedi-row">
+      <div class="denom">GH₵2</div>
+      <input class="cediQty" data-denom="2" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+      <div class="line-total" id="line2">GH₵0.00</div>
+    </div>
 
-<div class="cedi-row">
-<div class="denom">GH₵1</div>
-<input class="cediQty" data-denom="1" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
-<div class="line-total" id="line1">GH₵0.00</div>
-</div>
+    <div class="cedi-row">
+      <div class="denom">GH₵1</div>
+      <input class="cediQty" data-denom="1" type="number" min="0" placeholder="Qty" oninput="updateCediLine(this)">
+      <div class="line-total" id="line1">GH₵0.00</div>
+    </div>
 
-<button class="main-btn" onclick="calculateCedi()">
-CALCULATE
-</button>
+    <button
+      type="button"
+      class="main-btn"
+      onclick="calculateCedi()">
+      CALCULATE
+    </button>
 
-<div class="cedi-total">
+    <div class="cedi-total">
 
-<small>TOTAL CASH</small>
+      <small>TOTAL CASH</small>
 
-<strong id="cediGrandTotal">GH₵0.00</strong>
+      <strong id="cediGrandTotal">GH₵0.00</strong>
 
-</div>
+    </div>
 
-<div class="words">
+    <div class="words">
 
-<strong>Amount in Words</strong>
+      <strong>Amount in Words</strong>
 
-<strong id="amountWords">
-Zero Ghana cedis only
-</strong>
+      <strong id="amountWords">
+        Zero Ghana cedis only
+      </strong>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 </section>
 
 
-<!-- GOODS -->
+<!-- =========================================================
+     GOODS
+========================================================= -->
 
 <section id="goods" class="section">
 
-<div class="card">
+  <div class="card">
 
-<h2>Weekly Goods Recording</h2>
+    <h2>Weekly Goods Recording</h2>
 
-<label>Select Week</label>
+    <label>Select Week</label>
 
-<select id="weekSelect" onchange="loadSelectedWeek()"></select>
+    <select id="weekSelect" onchange="loadSelectedWeek()"></select>
 
-<label>Date</label>
+    <label>Date</label>
 
-<input id="weekDate" type="date">
+    <input id="weekDate" type="date">
 
-<div class="info" id="previousInfo">
-Previous Week Remaining Goods: GH₵0.00
-</div>
+    <div class="info" id="previousInfo">
+      Previous Week Remaining Goods: GH₵0.00
+    </div>
 
-</div>
-
-
-<div class="card">
-
-<h2>What do you want to record?</h2>
-
-<div class="choice-row">
-
-<button
-id="startingChoice"
-class="choice-btn"
-onclick="chooseRecordType('starting')">
-Starting Goods
-</button>
-
-<button
-id="remainingChoice"
-class="choice-btn"
-onclick="chooseRecordType('remaining')">
-Remaining Goods
-</button>
-
-</div>
-
-</div>
+  </div>
 
 
-<div class="card hidden" id="startingCard">
+  <div class="card">
 
-<h2>Starting Goods</h2>
+    <h2>What do you want to record?</h2>
 
-<div id="startingEditorArea">
+    <div class="choice-row">
 
-<div id="startingList"></div>
+      <button
+        type="button"
+        id="startingChoice"
+        class="choice-btn"
+        onclick="chooseRecordType('starting')">
+        Starting Goods
+      </button>
 
-<button class="add-good-btn" onclick="addStartingRow()">
-ADD GOOD
-</button>
+      <button
+        type="button"
+        id="remainingChoice"
+        class="choice-btn"
+        onclick="chooseRecordType('remaining')">
+        Remaining Goods
+      </button>
 
-<button class="main-btn" onclick="saveStartingGoods()">
-SAVE STARTING GOODS
-</button>
+    </div>
 
-</div>
-
-<div id="startingSavedStatus" class="hidden">
-
-<div class="saved-status">
-
-Starting Goods Saved
-
-<small>
-Your Starting Goods have been recorded for this week.
-</small>
-
-</div>
-
-<button class="edit-current-btn" onclick="editCurrentStarting()">
-EDIT STARTING GOODS
-</button>
-
-</div>
-
-</div>
+  </div>
 
 
-<div class="card hidden" id="remainingCard">
+  <div class="card hidden" id="startingCard">
 
-<h2>Remaining Goods</h2>
+    <h2>Starting Goods</h2>
 
-<div id="remainingEditorArea">
+    <div id="startingEditorArea">
 
-<div id="remainingList"></div>
+      <div id="startingList"></div>
 
-<button class="add-good-btn" onclick="addRemainingRow()">
-ADD GOOD
-</button>
+      <button
+        type="button"
+        class="add-good-btn"
+        onclick="addStartingRow()">
+        ADD GOOD
+      </button>
 
-<button class="main-btn" onclick="saveRemainingGoods()">
-SAVE REMAINING GOODS
-</button>
+      <button
+        type="button"
+        class="main-btn"
+        onclick="saveStartingGoods()">
+        SAVE STARTING GOODS
+      </button>
 
-</div>
+    </div>
 
-<div id="remainingSavedStatus" class="hidden">
+    <div id="startingSavedStatus" class="hidden">
 
-<div class="saved-status">
+      <div class="saved-status">
 
-Remaining Goods Saved
+        Starting Goods Saved
 
-<small>
-Your Remaining Goods have been recorded for this week.
-</small>
+        <small>
+          Your Starting Goods have been recorded for this week.
+        </small>
 
-</div>
+      </div>
 
-<button class="edit-current-btn" onclick="editCurrentRemaining()">
-EDIT REMAINING GOODS
-</button>
+      <button
+        type="button"
+        class="edit-current-btn"
+        onclick="editCurrentStarting()">
+        EDIT STARTING GOODS
+      </button>
 
-</div>
+    </div>
 
-</div>
-
-
-<div class="card">
-
-<h2>Balance Records</h2>
-
-<div class="info">
-This section records only the weekly Balance value. Tap a Balance record to automatically open the exact Balance figure inside that week's saved record.
-</div>
-
-<div id="balanceRecords"></div>
-
-</div>
+  </div>
 
 
-<div class="card">
+  <div class="card hidden" id="remainingCard">
 
-<h2>Saved Weekly Records</h2>
+    <h2>Remaining Goods</h2>
 
-<div id="savedRecords"></div>
+    <div id="remainingEditorArea">
 
-</div>
+      <div id="remainingList"></div>
+
+      <button
+        type="button"
+        class="add-good-btn"
+        onclick="addRemainingRow()">
+        ADD GOOD
+      </button>
+
+      <button
+        type="button"
+        class="main-btn"
+        onclick="saveRemainingGoods()">
+        SAVE REMAINING GOODS
+      </button>
+
+    </div>
+
+    <div id="remainingSavedStatus" class="hidden">
+
+      <div class="saved-status">
+
+        Remaining Goods Saved
+
+        <small>
+          Your Remaining Goods have been recorded for this week.
+        </small>
+
+      </div>
+
+      <button
+        type="button"
+        class="edit-current-btn"
+        onclick="editCurrentRemaining()">
+        EDIT REMAINING GOODS
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Balance Records</h2>
+
+    <div class="info">
+      This section records the weekly Balance value. Tap a Balance record to open that week's saved record.
+    </div>
+
+    <div id="balanceRecords"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Saved Weekly Records</h2>
+
+    <div id="savedRecords"></div>
+
+  </div>
 
 </section>
 
 
-<!-- ADMIN -->
+<!-- =========================================================
+     ADMIN
+========================================================= -->
 
 <section id="admin" class="section">
 
-<div class="card">
+  <div class="card">
 
-<h2>Approved Goods & Prices</h2>
+    <h2>Approved Goods & Prices</h2>
 
-<div id="adminGoods"></div>
+    <div id="adminGoods"></div>
 
-<label>Good Name</label>
+    <label>Good Name</label>
 
-<input
-id="newGoodName"
-type="text"
-placeholder="Enter good name">
+    <input
+      id="newGoodName"
+      type="text"
+      placeholder="Enter good name">
 
-<label>Price</label>
+    <label>Price</label>
 
-<input
-id="newGoodPrice"
-type="number"
-inputmode="decimal"
-placeholder="Enter price">
+    <input
+      id="newGoodPrice"
+      type="number"
+      inputmode="decimal"
+      placeholder="Enter price">
 
-<button class="main-btn" onclick="addGood()">
-ADD GOOD & PRICE
-</button>
+    <button
+      type="button"
+      class="main-btn"
+      onclick="addGood()">
+      ADD GOOD & PRICE
+    </button>
 
-</div>
+  </div>
 
 
-<div class="card">
+  <div class="card">
 
-<h2>Registered Users</h2>
+    <h2>Registered Users</h2>
 
-<div class="info">
-New accounts remain Pending until the Administrator activates them. Only Active users can access Oak & Cedar.
-</div>
+    <div class="info">
+      New accounts remain Pending until the Administrator activates them. Only Active users can access Oak & Cedar.
+    </div>
 
-<div id="adminUsers">
-<div class="loading">Loading users...</div>
-</div>
+    <div id="adminUsers">
+      <div class="loading">Loading users...</div>
+    </div>
 
-<button
-class="main-btn reset-btn"
-onclick="loadAdminUsers()">
-REFRESH USERS
-</button>
+    <button
+      type="button"
+      class="main-btn reset-btn"
+      onclick="loadAdminUsers()">
+      REFRESH USERS
+    </button>
 
-</div>
+  </div>
 
 </section>
 
@@ -1346,27 +1468,26 @@ REFRESH USERS
 
 
 <script>
+"use strict";
 
-/* =====================================================
-   SUPABASE
-===================================================== */
+/* =========================================================
+   SUPABASE CONFIGURATION
+========================================================= */
 
 const SUPABASE_URL =
-"https://ywsmyynauytmgdiijwlo.supabase.co";
+  "https://ywsmyynauytmgdiijwlo.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_bgu7ouisQoyYNFP-90uxfA_IPAHAnYZ";
+  "sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
 
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+let supabaseClient = null;
+let supabaseReady = false;
+let appStarting = false;
 
 
-/* =====================================================
+/* =========================================================
    APP STATE
-===================================================== */
+========================================================= */
 
 const defaultGoods = [
   {name:"Bone Straight",price:500},
@@ -1387,4682 +1508,4287 @@ let currentProfile = null;
 let authMode = "login";
 
 
-/* =====================================================
-   LOGIN MESSAGE
-===================================================== */
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
 
 function showLoginMessage(message){
 
-const box =
-document.getElementById("loginMessage");
+  const box = $("loginMessage");
 
-if(!message){
+  if(!box){
+    return;
+  }
 
-box.style.display="none";
-box.textContent="";
-return;
+  if(!message){
+    box.style.display = "none";
+    box.textContent = "";
+    return;
+  }
 
+  box.style.display = "block";
+  box.textContent = message;
 }
 
-box.style.display="block";
-box.textContent=message;
-
-}
-
-
-/* =====================================================
-   AUTH MODE
-===================================================== */
-
-function toggleAuthMode(){
-
-if(authMode==="login"){
-
-authMode="signup";
-
-document.getElementById("loginTitle").textContent =
-"Create Oak & Cedar Account";
-
-document.getElementById("loginSubtitle").textContent =
-"Create an account to use the Business Calculator";
-
-document.getElementById("signupNameBox")
-.classList.remove("hidden");
-
-document.getElementById("loginButton").textContent =
-"CREATE ACCOUNT";
-
-document.getElementById("authToggle").textContent =
-"Back to login";
-
-document.getElementById("loginPassword")
-.setAttribute("autocomplete","new-password");
-
-}else{
-
-authMode="login";
-
-document.getElementById("loginTitle").textContent =
-"Oak & Cedar";
-
-document.getElementById("loginSubtitle").textContent =
-"Sign in to your Business Calculator";
-
-document.getElementById("signupNameBox")
-.classList.add("hidden");
-
-document.getElementById("loginButton").textContent =
-"LOGIN";
-
-document.getElementById("authToggle").textContent =
-"Create a new account";
-
-document.getElementById("loginPassword")
-.setAttribute("autocomplete","current-password");
-
-}
-
-showLoginMessage("");
-
-}
-
-
-/* =====================================================
-   APPROVAL CHECK
-===================================================== */
-
-async function checkUserApproval(user){
-
-if(!user){
-
-return {
-allowed:false,
-reason:"No user account found."
-};
-
-}
-
-
-const {data,error} =
-await supabaseClient
-.from("profiles")
-.select("*")
-.eq("id",user.id)
-.maybeSingle();
-
-
-if(error){
-
-console.error("Profile check error:",error);
-
-return {
-allowed:false,
-reason:
-"Your account could not be verified. Please try again."
-};
-
-}
-
-
-if(!data){
-
-return {
-allowed:false,
-reason:
-"Your account is waiting for registration by the Administrator."
-};
-
-}
-
-
-currentProfile=data;
-
-
-if(data.status==="pending"){
-
-return {
-allowed:false,
-reason:
-"Your account is waiting for Admin approval. You cannot access Oak & Cedar until the Administrator accepts your account."
-};
-
-}
-
-
-if(data.status!=="active"){
-
-return {
-allowed:false,
-reason:
-"Your Oak & Cedar account is currently disabled. Please contact the Administrator."
-};
-
-}
-
-
-return {
-allowed:true,
-profile:data
-};
-
-}
-
-
-/* =====================================================
-   HANDLE AUTH
-===================================================== */
-
-async function handleAuth(){
-
-const email =
-document.getElementById("loginEmail")
-.value.trim();
-
-const password =
-document.getElementById("loginPassword")
-.value;
-
-if(!email){
-
-showLoginMessage(
-"Please enter your email."
-);
-
-return;
-
-}
-
-if(!password){
-
-showLoginMessage(
-"Please enter your password."
-);
-
-return;
-
-}
-
-
-const button =
-document.getElementById("loginButton");
-
-button.disabled=true;
-
-showLoginMessage("");
-
-
-try{
-
-if(authMode==="login"){
-
-const {data,error} =
-await supabaseClient.auth.signInWithPassword({
-email:email,
-password:password
-});
-
-if(error){
-
-throw error;
-
-}
-
-
-const approval =
-await checkUserApproval(data.user);
-
-
-if(!approval.allowed){
-
-await supabaseClient.auth.signOut();
-
-showLoginMessage(
-approval.reason
-);
-
-return;
-
-}
-
-
-await startApp(
-data.user,
-approval.profile
-);
-
-}else{
-
-const fullName =
-document.getElementById("signupName")
-.value.trim();
-
-
-if(!fullName){
-
-showLoginMessage(
-"Please enter your full name."
-);
-
-return;
-
-}
-
-
-const {data,error} =
-await supabaseClient.auth.signUp({
-email:email,
-password:password,
-options:{
-data:{
-full_name:fullName
-}
-}
-});
-
-
-if(error){
-
-throw error;
-
-}
-
-
-if(data.session && data.user){
-
-const approval =
-await checkUserApproval(data.user);
-
-
-if(!approval.allowed){
-
-await supabaseClient.auth.signOut();
-
-showLoginMessage(
-"Account created successfully. "+
-approval.reason
-);
-
-return;
-
-}
-
-
-await startApp(
-data.user,
-approval.profile
-);
-
-}else{
-
-showLoginMessage(
-"Account created successfully. Your account is now waiting for Admin approval. Check your email if email confirmation is required."
-);
-
-}
-
-}
-
-}catch(error){
-
-console.error(error);
-
-showLoginMessage(
-error.message ||
-"Authentication failed."
-);
-
-}finally{
-
-button.disabled=false;
-
-}
-
-}
-
-
-/* =====================================================
-   START APP
-===================================================== */
-
-async function startApp(user,profile){
-
-if(!user){
-
-return;
-
-}
-
-
-currentUser=user;
-
-currentProfile=profile || null;
-
-
-/*
-  Always verify approval before opening
-  the actual calculator.
-*/
-
-const approval =
-await checkUserApproval(user);
-
-
-if(!approval.allowed){
-
-await supabaseClient.auth.signOut();
-
-currentUser=null;
-currentProfile=null;
-
-document.getElementById("appTabs")
-.classList.add("hidden");
-
-document.getElementById("userBar")
-.classList.add("hidden");
-
-document.getElementById("loginOverlay")
-.classList.remove("hidden");
-
-showLoginMessage(
-approval.reason
-);
-
-return;
-
-}
-
-
-currentProfile=approval.profile;
-
-
-if(!isActiveUser()){
-
-await supabaseClient.auth.signOut();
-
-currentUser=null;
-currentProfile=null;
-
-showLoginMessage(
-"Your account is not active."
-);
-
-return;
-
-}
-
-
-document.getElementById("loginOverlay")
-.classList.add("hidden");
-
-document.getElementById("appTabs")
-.classList.remove("hidden");
-
-document.getElementById("userBar")
-.classList.remove("hidden");
-
-
-await loadGoods();
-
-await loadRevenueRecords();
-
-await loadWeeklyRecords();
-
-await loadCediRecord();
-
-createWeekOptions();
-
-createRevenueWeekOptions();
-
-document.getElementById("weekSelect").value =
-"Week 1";
-
-selectedWeek="Week 1";
-
-updateUserInterface();
-
-renderAdminGoods();
-
-renderRevenueRecords();
-
-renderSavedRecords();
-
-renderBalanceRecords();
-
-loadSelectedWeek();
-
-}
-
-
-/* =====================================================
-   PROFILE
-===================================================== */
-
-async function loadProfile(){
-
-if(!currentUser){
-
-return null;
-
-}
-
-
-const {data,error} =
-await supabaseClient
-.from("profiles")
-.select("*")
-.eq("id",currentUser.id)
-.maybeSingle();
-
-
-if(error){
-
-console.error(error);
-
-return null;
-
-}
-
-
-if(data){
-
-currentProfile=data;
-
-return data;
-
-}
-
-
-/*
-  IMPORTANT:
-  Do NOT create a missing profile here.
-
-  The database trigger created in Supabase is
-  responsible for creating every new profile as
-  status = pending.
-
-  If the profile is missing, access is denied.
-*/
-
-currentProfile=null;
-
-return null;
-
-}
-
-
-/* =====================================================
-   USER INTERFACE
-===================================================== */
-
-function updateUserInterface(){
-
-const bar =
-document.getElementById("userBar");
-
-if(!currentUser || !currentProfile){
-
-bar.classList.add("hidden");
-
-return;
-
-}
-
-
-bar.textContent =
-currentUser.email+
-(
-currentProfile.role==="admin"
-?" | Admin"
-:" | User"
-);
-
-
-if(isAdmin()){
-
-document.getElementById("adminTab")
-.classList.remove("hidden");
-
-}else{
-
-document.getElementById("adminTab")
-.classList.add("hidden");
-
-}
-
-}
-
-
-/* =====================================================
-   USER STATUS
-===================================================== */
-
-function isAdmin(){
-
-return !!(
-currentProfile &&
-currentProfile.role==="admin" &&
-currentProfile.status==="active"
-);
-
-}
-
-
-function isActiveUser(){
-
-return !!(
-currentProfile &&
-currentProfile.status==="active"
-);
-
-}
-
-
-/* =====================================================
-   TABS
-===================================================== */
-
-function showTab(tabId,button){
-
-if(!isActiveUser()){
-
-alert(
-"Your account is not active."
-);
-
-return;
-
-}
-
-
-if(tabId==="admin" && !isAdmin()){
-
-alert(
-"Admin access required."
-);
-
-return;
-
-}
-
-
-document.querySelectorAll(".section")
-.forEach(function(section){
-
-section.classList.remove("active");
-
-});
-
-
-const target =
-document.getElementById(tabId);
-
-if(target){
-
-target.classList.add("active");
-
-}
-
-
-document.querySelectorAll(".tab")
-.forEach(function(tab){
-
-tab.classList.remove("active");
-
-});
-
-
-if(button){
-
-button.classList.add("active");
-
-}
-
-
-if(tabId==="goods"){
-
-loadSelectedWeek();
-
-renderSavedRecords();
-
-renderBalanceRecords();
-
-}
-
-
-if(tabId==="admin"){
-
-renderAdminGoods();
-
-loadAdminUsers();
-
-}
-
-
-if(tabId==="revenue"){
-
-renderRevenueRecords();
-
-}
-
-}
-
-
-/* =====================================================
-   MONEY
-===================================================== */
 
 function money(value){
 
-return "GH₵"+
-(Number(value)||0).toLocaleString(
-"en-GH",
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-);
-
+  return "GH₵" +
+    (Number(value) || 0).toLocaleString(
+      "en-GH",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
 }
 
 
 function escapeHTML(value){
 
-return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
-
-/* =====================================================
-   REVENUE
-===================================================== */
 
 function getNum(id){
 
-return Number(
-document.getElementById(id).value
-)||0;
-
+  return Number($(id)?.value) || 0;
 }
 
+
+function isAdmin(){
+
+  return !!(
+    currentProfile &&
+    currentProfile.role === "admin" &&
+    currentProfile.status === "active"
+  );
+}
+
+
+function isActiveUser(){
+
+  return !!(
+    currentProfile &&
+    currentProfile.status === "active"
+  );
+}
+
+
+/* =========================================================
+   SUPABASE INITIALIZATION
+========================================================= */
+
+function initializeSupabase(){
+
+  if(
+    !window.supabase ||
+    typeof window.supabase.createClient !== "function"
+  ){
+
+    supabaseReady = false;
+
+    showLoginMessage(
+      "The Supabase library could not load. Check your internet connection and refresh the page."
+    );
+
+    return false;
+  }
+
+  try{
+
+    supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+          auth:{
+            persistSession:true,
+            autoRefreshToken:true,
+            detectSessionInUrl:true
+          }
+        }
+      );
+
+    supabaseReady = true;
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Supabase initialization error:",
+      error
+    );
+
+    supabaseReady = false;
+
+    showLoginMessage(
+      "Oak & Cedar could not initialize Supabase. " +
+      (error.message || "Unknown error.")
+    );
+
+    return false;
+  }
+}
+
+
+/* =========================================================
+   SUPABASE ERROR HANDLER
+========================================================= */
+
+function friendlySupabaseError(error){
+
+  if(!error){
+    return "An unknown error occurred.";
+  }
+
+  const message =
+    String(error.message || error.error_description || error);
+
+  const lower =
+    message.toLowerCase();
+
+  if(
+    lower.includes("invalid api key") ||
+    lower.includes("apikey")
+  ){
+
+    return (
+      "Supabase rejected the API key. " +
+      "Make sure this website is using the current Publishable key " +
+      "from the same Supabase project."
+    );
+  }
+
+  if(
+    lower.includes("invalid login credentials")
+  ){
+
+    return "The email or password is incorrect.";
+  }
+
+  if(
+    lower.includes("email not confirmed")
+  ){
+
+    return "Your email has not been confirmed. Check your email and confirm the account first.";
+  }
+
+  if(
+    lower.includes("failed to fetch") ||
+    lower.includes("network")
+  ){
+
+    return "Could not connect to Supabase. Check your internet connection.";
+  }
+
+  if(
+    lower.includes("relation") &&
+    lower.includes("does not exist")
+  ){
+
+    return "A required Supabase database table does not exist.";
+  }
+
+  if(
+    lower.includes("permission denied") ||
+    lower.includes("row-level security") ||
+    lower.includes("not allowed")
+  ){
+
+    return "Supabase denied this action. Check the table permissions and Row Level Security policies.";
+  }
+
+  return message;
+}
+
+
+/* =========================================================
+   AUTH MODE
+========================================================= */
+
+function toggleAuthMode(){
+
+  if(authMode === "login"){
+
+    authMode = "signup";
+
+    $("loginTitle").textContent =
+      "Create Oak & Cedar Account";
+
+    $("loginSubtitle").textContent =
+      "Create an account to use the Business Calculator";
+
+    $("signupNameBox")
+      .classList.remove("hidden");
+
+    $("loginButton").textContent =
+      "CREATE ACCOUNT";
+
+    $("authToggle").textContent =
+      "Back to login";
+
+    $("loginPassword")
+      .setAttribute(
+        "autocomplete",
+        "new-password"
+      );
+
+  }else{
+
+    authMode = "login";
+
+    $("loginTitle").textContent =
+      "Oak & Cedar";
+
+    $("loginSubtitle").textContent =
+      "Sign in to your Business Calculator";
+
+    $("signupNameBox")
+      .classList.add("hidden");
+
+    $("loginButton").textContent =
+      "LOGIN";
+
+    $("authToggle").textContent =
+      "Create a new account";
+
+    $("loginPassword")
+      .setAttribute(
+        "autocomplete",
+        "current-password"
+      );
+  }
+
+  showLoginMessage("");
+}
+
+
+/* =========================================================
+   PROFILE / APPROVAL
+========================================================= */
+
+async function checkUserApproval(user){
+
+  if(!supabaseReady){
+
+    return {
+      allowed:false,
+      reason:"Supabase is not ready."
+    };
+  }
+
+  if(!user){
+
+    return {
+      allowed:false,
+      reason:"No user account found."
+    };
+  }
+
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id",user.id)
+      .maybeSingle();
+
+  if(error){
+
+    console.error(
+      "Profile check error:",
+      error
+    );
+
+    return {
+      allowed:false,
+      reason:friendlySupabaseError(error)
+    };
+  }
+
+  if(!data){
+
+    return {
+      allowed:false,
+      reason:
+        "Your account was created, but an Administrator has not registered your profile yet."
+    };
+  }
+
+  currentProfile = data;
+
+  if(data.status === "pending"){
+
+    return {
+      allowed:false,
+      reason:
+        "Your account is waiting for Admin approval. You cannot access Oak & Cedar until the Administrator accepts your account."
+    };
+  }
+
+  if(data.status !== "active"){
+
+    return {
+      allowed:false,
+      reason:
+        "Your Oak & Cedar account is currently disabled. Please contact the Administrator."
+    };
+  }
+
+  return {
+    allowed:true,
+    profile:data
+  };
+}
+
+
+/* =========================================================
+   HANDLE LOGIN / SIGNUP
+========================================================= */
+
+async function handleAuth(){
+
+  if(!supabaseReady){
+
+    showLoginMessage(
+      "Supabase is not ready. Refresh the page and try again."
+    );
+
+    return;
+  }
+
+  const email =
+    $("loginEmail").value.trim();
+
+  const password =
+    $("loginPassword").value;
+
+  if(!email){
+
+    showLoginMessage(
+      "Please enter your email."
+    );
+
+    return;
+  }
+
+  if(!password){
+
+    showLoginMessage(
+      "Please enter your password."
+    );
+
+    return;
+  }
+
+  const button =
+    $("loginButton");
+
+  button.disabled = true;
+
+  showLoginMessage("");
+
+  try{
+
+    if(authMode === "login"){
+
+      const {data,error} =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if(error){
+        throw error;
+      }
+
+      if(!data || !data.user){
+
+        throw new Error(
+          "Login completed but no user session was returned."
+        );
+      }
+
+      const approval =
+        await checkUserApproval(
+          data.user
+        );
+
+      if(!approval.allowed){
+
+        await supabaseClient.auth.signOut();
+
+        showLoginMessage(
+          approval.reason
+        );
+
+        return;
+      }
+
+      await startApp(
+        data.user,
+        approval.profile
+      );
+
+    }else{
+
+      const fullName =
+        $("signupName").value.trim();
+
+      if(!fullName){
+
+        showLoginMessage(
+          "Please enter your full name."
+        );
+
+        return;
+      }
+
+      const {data,error} =
+        await supabaseClient.auth.signUp({
+          email,
+          password,
+          options:{
+            data:{
+              full_name:fullName
+            }
+          }
+        });
+
+      if(error){
+        throw error;
+      }
+
+      if(data?.session && data?.user){
+
+        const approval =
+          await checkUserApproval(
+            data.user
+          );
+
+        if(!approval.allowed){
+
+          await supabaseClient.auth.signOut();
+
+          showLoginMessage(
+            "Account created successfully. " +
+            approval.reason
+          );
+
+          return;
+        }
+
+        await startApp(
+          data.user,
+          approval.profile
+        );
+
+      }else{
+
+        showLoginMessage(
+          "Account created successfully. Your account is waiting for Admin approval. If email confirmation is enabled, confirm your email first."
+        );
+      }
+    }
+
+  }catch(error){
+
+    console.error(
+      "Authentication error:",
+      error
+    );
+
+    showLoginMessage(
+      friendlySupabaseError(error)
+    );
+
+  }finally{
+
+    button.disabled = false;
+  }
+}
+
+
+/* =========================================================
+   START APPLICATION
+========================================================= */
+
+async function startApp(user,profile){
+
+  if(!user || appStarting){
+    return;
+  }
+
+  appStarting = true;
+
+  try{
+
+    currentUser = user;
+    currentProfile = profile || null;
+
+    const approval =
+      await checkUserApproval(user);
+
+    if(!approval.allowed){
+
+      await supabaseClient.auth.signOut();
+
+      resetApplicationState(false);
+
+      showLoginMessage(
+        approval.reason
+      );
+
+      return;
+    }
+
+    currentProfile =
+      approval.profile;
+
+    if(!isActiveUser()){
+
+      await supabaseClient.auth.signOut();
+
+      resetApplicationState(false);
+
+      showLoginMessage(
+        "Your account is not active."
+      );
+
+      return;
+    }
+
+    $("loginOverlay")
+      .classList.add("hidden");
+
+    $("appTabs")
+      .classList.remove("hidden");
+
+    $("userBar")
+      .classList.remove("hidden");
+
+    updateUserInterface();
+
+    await loadGoods();
+    await loadRevenueRecords();
+    await loadWeeklyRecords();
+    await loadCediRecord();
+
+    createWeekOptions();
+    createRevenueWeekOptions();
+
+    $("weekSelect").value =
+      selectedWeek;
+
+    renderRevenueRecords();
+    renderSavedRecords();
+    renderBalanceRecords();
+    loadSelectedWeek();
+
+  }catch(error){
+
+    console.error(
+      "Application startup error:",
+      error
+    );
+
+    showLoginMessage(
+      "Oak & Cedar could not load your data. " +
+      friendlySupabaseError(error)
+    );
+
+  }finally{
+
+    appStarting = false;
+  }
+}
+
+
+/* =========================================================
+   USER INTERFACE
+========================================================= */
+
+function updateUserInterface(){
+
+  const bar =
+    $("userBar");
+
+  if(!currentUser || !currentProfile){
+
+    bar.classList.add("hidden");
+
+    return;
+  }
+
+  bar.textContent =
+    currentUser.email +
+    (
+      currentProfile.role === "admin"
+        ? " | Admin"
+        : " | User"
+    );
+
+  if(isAdmin()){
+
+    $("adminTab")
+      .classList.remove("hidden");
+
+  }else{
+
+    $("adminTab")
+      .classList.add("hidden");
+  }
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+function showTab(tabId,button){
+
+  if(!isActiveUser()){
+
+    alert(
+      "Your account is not active."
+    );
+
+    return;
+  }
+
+  if(
+    tabId === "admin" &&
+    !isAdmin()
+  ){
+
+    alert(
+      "Admin access required."
+    );
+
+    return;
+  }
+
+  document
+    .querySelectorAll(".section")
+    .forEach(section=>{
+      section.classList.remove("active");
+    });
+
+  const target =
+    $(tabId);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(tab=>{
+      tab.classList.remove("active");
+    });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  if(tabId === "goods"){
+
+    loadSelectedWeek();
+    renderSavedRecords();
+    renderBalanceRecords();
+  }
+
+  if(tabId === "admin"){
+
+    renderAdminGoods();
+    loadAdminUsers();
+  }
+
+  if(tabId === "revenue"){
+
+    renderRevenueRecords();
+  }
+}
+
+
+/* =========================================================
+   REVENUE CALCULATOR
+========================================================= */
 
 function calculateRevenue(){
 
-const bank1=getNum("bank1");
-const bank2=getNum("bank2");
-const bank3=getNum("bank3");
-const cash=getNum("cash");
-const expenses=getNum("expenses");
-const totalGoods=getNum("totalGoods");
-const remainingGoods=getNum("remainingGoods");
+  const bank1 =
+    getNum("bank1");
 
-const totalBanks =
-bank1+bank2+bank3;
+  const bank2 =
+    getNum("bank2");
 
-const totalCash =
-totalBanks+cash;
+  const bank3 =
+    getNum("bank3");
 
-const goodsAfterExpenses =
-totalGoods-expenses;
+  const cash =
+    getNum("cash");
 
-let profit =
-totalCash+
-remainingGoods-
-goodsAfterExpenses;
+  const expenses =
+    getNum("expenses");
 
-if(profit<0){
+  const totalGoods =
+    getNum("totalGoods");
 
-profit=0;
+  const remainingGoods =
+    getNum("remainingGoods");
 
-}
+  const totalBanks =
+    bank1 + bank2 + bank3;
 
-document.getElementById("outBanks")
-.textContent=money(totalBanks);
+  const totalCash =
+    totalBanks + cash;
 
-document.getElementById("outCash")
-.textContent=money(totalCash);
+  const goodsAfterExpenses =
+    totalGoods - expenses;
 
-document.getElementById("outRemaining")
-.textContent=money(remainingGoods);
+  let profit =
+    totalCash +
+    remainingGoods -
+    goodsAfterExpenses;
 
-document.getElementById("outGoodsAfter")
-.textContent=money(goodsAfterExpenses);
+  if(profit < 0){
+    profit = 0;
+  }
 
-document.getElementById("outProfit")
-.textContent=money(profit);
+  $("outBanks").textContent =
+    money(totalBanks);
 
+  $("outCash").textContent =
+    money(totalCash);
+
+  $("outRemaining").textContent =
+    money(remainingGoods);
+
+  $("outGoodsAfter").textContent =
+    money(goodsAfterExpenses);
+
+  $("outProfit").textContent =
+    money(profit);
 }
 
 
 function openRevenueSave(){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
 
-alert("Active account required.");
+    alert("Active account required.");
 
-return;
+    return;
+  }
 
-}
+  calculateRevenue();
 
-calculateRevenue();
+  $("revenueSaveCard")
+    .classList.remove("hidden");
 
-document.getElementById("revenueSaveCard")
-.classList.remove("hidden");
+  const start =
+    $("revenueStartDate");
 
-const start =
-document.getElementById("revenueStartDate");
+  if(!start.value){
 
+    const today =
+      new Date();
 
-if(!start.value){
+    const yyyy =
+      today.getFullYear();
 
-const today=new Date();
+    const mm =
+      String(today.getMonth()+1)
+        .padStart(2,"0");
 
-const yyyy=
-today.getFullYear();
+    const dd =
+      String(today.getDate())
+        .padStart(2,"0");
 
-const mm=
-String(today.getMonth()+1).padStart(2,"0");
+    start.value =
+      `${yyyy}-${mm}-${dd}`;
+  }
 
-const dd=
-String(today.getDate()).padStart(2,"0");
+  updateRevenueEndDate();
 
-start.value=
-yyyy+"-"+mm+"-"+dd;
-
-}
-
-updateRevenueEndDate();
-
-setTimeout(function(){
-
-document.getElementById("revenueSaveCard")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-},100);
-
+  setTimeout(()=>{
+    $("revenueSaveCard")
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+  },100);
 }
 
 
 function updateRevenueEndDate(){
 
-const start =
-document.getElementById("revenueStartDate")
-.value;
+  const start =
+    $("revenueStartDate").value;
 
-if(!start){
+  if(!start){
 
-document.getElementById("revenueEndDate")
-.value="";
+    $("revenueEndDate").value="";
 
-return;
+    return;
+  }
 
-}
+  const date =
+    new Date(start+"T00:00:00");
 
-const date =
-new Date(start+"T00:00:00");
+  date.setDate(
+    date.getDate()+4
+  );
 
-date.setDate(
-date.getDate()+4
-);
+  const yyyy =
+    date.getFullYear();
 
-const yyyy=
-date.getFullYear();
+  const mm =
+    String(date.getMonth()+1)
+      .padStart(2,"0");
 
-const mm=
-String(date.getMonth()+1).padStart(2,"0");
+  const dd =
+    String(date.getDate())
+      .padStart(2,"0");
 
-const dd=
-String(date.getDate()).padStart(2,"0");
-
-document.getElementById("revenueEndDate")
-.value=
-yyyy+"-"+mm+"-"+dd;
-
+  $("revenueEndDate").value =
+    `${yyyy}-${mm}-${dd}`;
 }
 
 
 function formatDate(dateString){
 
-if(!dateString){
+  if(!dateString){
+    return "";
+  }
 
-return "";
+  const date =
+    new Date(
+      dateString+"T00:00:00"
+    );
 
+  return date.toLocaleDateString(
+    "en-GH",
+    {
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    }
+  );
 }
 
-const date =
-new Date(dateString+"T00:00:00");
 
-return date.toLocaleDateString(
-"en-GH",
-{
-day:"numeric",
-month:"long",
-year:"numeric"
-}
-);
-
-}
-
+/* =========================================================
+   SAVE REVENUE
+========================================================= */
 
 async function confirmSaveRevenueRecord(){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
 
-alert("Active account required.");
+    alert(
+      "Active account required."
+    );
 
-return;
+    return;
+  }
 
-}
+  const startDate =
+    $("revenueStartDate").value;
 
+  const endDate =
+    $("revenueEndDate").value;
 
-const startDate =
-document.getElementById("revenueStartDate")
-.value;
+  const week =
+    $("revenueWeek").value;
 
-const endDate =
-document.getElementById("revenueEndDate")
-.value;
+  if(!startDate){
 
-const week =
-document.getElementById("revenueWeek")
-.value;
+    alert(
+      "Please select the Start date."
+    );
 
+    return;
+  }
 
-if(!startDate){
+  if(!endDate){
 
-alert(
-"Please select the Start date."
-);
+    alert(
+      "Please select the Start date first."
+    );
 
-return;
+    return;
+  }
 
-}
+  const bank1 =
+    getNum("bank1");
 
+  const bank2 =
+    getNum("bank2");
 
-if(!endDate){
+  const bank3 =
+    getNum("bank3");
 
-alert(
-"Please select the Start date first."
-);
+  const cash =
+    getNum("cash");
 
-return;
+  const expenses =
+    getNum("expenses");
 
-}
+  const totalGoods =
+    getNum("totalGoods");
 
+  const remainingGoods =
+    getNum("remainingGoods");
 
-const bank1=getNum("bank1");
-const bank2=getNum("bank2");
-const bank3=getNum("bank3");
-const cash=getNum("cash");
-const expenses=getNum("expenses");
-const totalGoods=getNum("totalGoods");
-const remainingGoods=getNum("remainingGoods");
+  const totalBanks =
+    bank1 + bank2 + bank3;
 
-const totalBanks=
-bank1+bank2+bank3;
+  const totalCash =
+    totalBanks + cash;
 
-const totalCash=
-totalBanks+cash;
+  const goodsAfterExpenses =
+    totalGoods - expenses;
 
-const goodsAfterExpenses=
-totalGoods-expenses;
+  const {error} =
+    await supabaseClient
+      .from("revenue_records")
+      .insert({
+        user_id:currentUser.id,
+        week,
+        start_date:startDate,
+        to_date:endDate,
+        total_banks:totalBanks,
+        total_bank_cash:totalCash,
+        remaining_goods:remainingGoods,
+        goods_after_expenses:goodsAfterExpenses,
+        expenses
+      });
 
+  if(error){
 
-const {error} =
-await supabaseClient
-.from("revenue_records")
-.insert({
-user_id:currentUser.id,
-week:week,
-start_date:startDate,
-to_date:endDate,
-total_banks:totalBanks,
-total_bank_cash:totalCash,
-remaining_goods:remainingGoods,
-goods_after_expenses:goodsAfterExpenses,
-expenses:expenses
-});
+    alert(
+      "Could not save Revenue Record: " +
+      friendlySupabaseError(error)
+    );
 
+    return;
+  }
 
-if(error){
+  alert(
+    "Revenue record saved successfully."
+  );
 
-alert(
-"Could not save Revenue Record: "+
-error.message
-);
+  await loadRevenueRecords();
 
-return;
-
-}
-
-
-alert(
-"Revenue record saved successfully."
-);
-
-await loadRevenueRecords();
-
-closeRevenueSave();
-
+  closeRevenueSave();
 }
 
 
 function closeRevenueSave(){
 
-document.getElementById("revenueSaveCard")
-.classList.add("hidden");
-
+  $("revenueSaveCard")
+    .classList.add("hidden");
 }
 
 
-/* =====================================================
-   REVENUE CLOUD
-===================================================== */
+/* =========================================================
+   LOAD REVENUE RECORDS
+========================================================= */
 
 async function loadRevenueRecords(){
 
-if(!currentUser){
+  if(!currentUser){
+    return;
+  }
 
-return;
+  const {data,error} =
+    await supabaseClient
+      .from("revenue_records")
+      .select("*")
+      .eq("user_id",currentUser.id)
+      .order("created_at",{ascending:false});
 
-}
+  if(error){
 
+    console.error(
+      "Revenue records error:",
+      error
+    );
 
-const {data,error} =
-await supabaseClient
-.from("revenue_records")
-.select("*")
-.eq("user_id",currentUser.id)
-.order("created_at",{ascending:false});
+    revenueRecords=[];
 
+    renderRevenueRecords();
 
-if(error){
+    return;
+  }
 
-console.error(error);
+  revenueRecords =
+    (data || []).map(record=>({
 
-revenueRecords=[];
+      id:record.id,
+      week:record.week,
+      startDate:record.start_date,
+      endDate:record.to_date,
 
-}else{
+      dateSaved:
+        record.created_at
+          ? new Date(record.created_at)
+              .toLocaleString(
+                "en-GH",
+                {
+                  dateStyle:"medium",
+                  timeStyle:"short"
+                }
+              )
+          : "",
 
-revenueRecords=
-(data||[]).map(function(record){
+      totalBanks:
+        Number(record.total_banks)||0,
 
-return {
-id:record.id,
-week:record.week,
-startDate:record.start_date,
-endDate:record.to_date,
-dateSaved:record.created_at
-?new Date(record.created_at)
-.toLocaleString("en-GH",{
-dateStyle:"medium",
-timeStyle:"short"
-})
-:"",
-totalBanks:Number(record.total_banks)||0,
-totalBankCash:Number(record.total_bank_cash)||0,
-remainingGoods:Number(record.remaining_goods)||0,
-goodsAfterExpenses:Number(record.goods_after_expenses)||0,
-expenses:Number(record.expenses)||0
-};
+      totalBankCash:
+        Number(record.total_bank_cash)||0,
 
-});
+      remainingGoods:
+        Number(record.remaining_goods)||0,
 
-}
+      goodsAfterExpenses:
+        Number(record.goods_after_expenses)||0,
 
-renderRevenueRecords();
+      expenses:
+        Number(record.expenses)||0
 
+    }));
+
+  renderRevenueRecords();
 }
 
 
 function renderRevenueRecords(){
 
-const container =
-document.getElementById("revenueRecords");
+  const container =
+    $("revenueRecords");
 
-if(!container){
+  if(!container){
+    return;
+  }
 
-return;
+  container.innerHTML="";
 
-}
+  if(!revenueRecords.length){
 
-container.innerHTML="";
+    container.innerHTML =
+      '<div class="empty">No Revenue Records saved yet.</div>';
 
+    return;
+  }
 
-if(!revenueRecords.length){
+  revenueRecords.forEach(record=>{
 
-container.innerHTML=
-'<div class="empty">No Revenue Records saved yet.</div>';
+    const box =
+      document.createElement("div");
 
-return;
+    box.className =
+      "revenue-record";
 
-}
+    const header =
+      document.createElement("div");
 
+    header.className =
+      "revenue-record-header";
 
-revenueRecords.forEach(function(record){
+    header.innerHTML =
+      `<div>
+        <strong>${escapeHTML(record.week || "Revenue Record")}</strong>
+        <br>
+        <span>
+          ${formatDate(record.startDate)}
+          to
+          ${formatDate(record.endDate)}
+        </span>
+      </div>
+      <strong>View</strong>`;
 
-const box=
-document.createElement("div");
+    const details =
+      document.createElement("div");
 
-box.className="revenue-record";
+    details.className =
+      "revenue-record-details";
 
+    details.innerHTML =
+      `
+      <div class="revenue-line">
+        <strong>Total Banks</strong>
+        <strong>${money(record.totalBanks)}</strong>
+      </div>
 
-const header=
-document.createElement("div");
+      <div class="revenue-line">
+        <strong>Total Bank & Cash</strong>
+        <strong>${money(record.totalBankCash)}</strong>
+      </div>
 
-header.className=
-"revenue-record-header";
+      <div class="revenue-line">
+        <strong>Remaining Goods</strong>
+        <strong>${money(record.remainingGoods)}</strong>
+      </div>
 
+      <div class="revenue-line">
+        <strong>Goods After Expenses</strong>
+        <strong>${money(record.goodsAfterExpenses)}</strong>
+      </div>
 
-header.innerHTML=
-"<div>"+
-"<strong>"+
-escapeHTML(record.week||"Revenue Record")+
-"</strong>"+
-"<br>"+
-"<span>"+
-formatDate(record.startDate)+
-" to "+
-formatDate(record.endDate)+
-"</span>"+
-"</div>"+
-"<strong>View</strong>";
+      <div class="revenue-line">
+        <strong>Expenses</strong>
+        <strong>${money(record.expenses)}</strong>
+      </div>
 
+      <div class="revenue-line">
+        <strong>Week</strong>
+        <strong>${escapeHTML(record.week || "")}</strong>
+      </div>
 
-const details=
-document.createElement("div");
+      <div class="revenue-line">
+        <strong>Period</strong>
+        <strong>
+          ${formatDate(record.startDate)}
+          to
+          ${formatDate(record.endDate)}
+        </strong>
+      </div>
 
-details.className=
-"revenue-record-details";
+      <div class="revenue-line">
+        <strong>Saved</strong>
+        <strong>${escapeHTML(record.dateSaved || "")}</strong>
+      </div>
 
+      <button
+        type="button"
+        class="record-delete"
+        onclick="deleteRevenueRecord(event,${record.id})">
+        DELETE RECORD
+      </button>
+      `;
 
-details.innerHTML=
+    header.onclick=()=>{
+      details.classList.toggle("open");
+    };
 
-'<div class="revenue-line">'+
-"<strong>Total Banks</strong>"+
-"<strong>"+money(record.totalBanks)+"</strong>"+
-"</div>"+
+    box.appendChild(header);
+    box.appendChild(details);
 
-'<div class="revenue-line">'+
-"<strong>Total Bank & Cash</strong>"+
-"<strong>"+money(record.totalBankCash)+"</strong>"+
-"</div>"+
-
-'<div class="revenue-line">'+
-"<strong>Remaining Goods</strong>"+
-"<strong>"+money(record.remainingGoods)+"</strong>"+
-"</div>"+
-
-'<div class="revenue-line">'+
-"<strong>Goods After Expenses</strong>"+
-"<strong>"+money(record.goodsAfterExpenses)+"</strong>"+
-"</div>"+
-
-'<div class="revenue-line">'+
-"<strong>Expenses</strong>"+
-"<strong>"+money(record.expenses)+"</strong>"+
-"</div>"+
-
-'<div class="revenue-line">'+
-"<strong>Week</strong>"+
-"<strong>"+escapeHTML(record.week||"")+"</strong>"+
-"</div>"+
-
-'<div class="revenue-line">'+
-"<strong>Period</strong>"+
-"<strong>"+
-formatDate(record.startDate)+
-" to "+
-formatDate(record.endDate)+
-"</strong>"+
-"</div>"+
-
-'<div class="revenue-line">'+
-"<strong>Saved</strong>"+
-"<strong>"+escapeHTML(record.dateSaved||"")+"</strong>"+
-"</div>"+
-
-'<button class="record-delete" '+
-'onclick="deleteRevenueRecord(event,'+
-record.id+
-')">DELETE RECORD</button>';
-
-
-header.onclick=function(){
-
-details.classList.toggle("open");
-
-};
-
-
-box.appendChild(header);
-box.appendChild(details);
-
-container.appendChild(box);
-
-});
-
+    container.appendChild(box);
+  });
 }
 
 
 async function deleteRevenueRecord(event,id){
 
-event.stopPropagation();
+  event.stopPropagation();
 
+  if(!isActiveUser()){
+    return;
+  }
 
-if(!isActiveUser()){
+  if(!confirm(
+    "Delete this Revenue Record?"
+  )){
+    return;
+  }
 
-return;
+  const {error} =
+    await supabaseClient
+      .from("revenue_records")
+      .delete()
+      .eq("id",id)
+      .eq("user_id",currentUser.id);
 
+  if(error){
+
+    alert(
+      "Could not delete record: " +
+      friendlySupabaseError(error)
+    );
+
+    return;
+  }
+
+  await loadRevenueRecords();
 }
 
-
-if(!confirm(
-"Delete this Revenue Record?"
-)){
-
-return;
-
-}
-
-
-const {error} =
-await supabaseClient
-.from("revenue_records")
-.delete()
-.eq("id",id)
-.eq("user_id",currentUser.id);
-
-
-if(error){
-
-alert(
-"Could not delete record: "+
-error.message
-);
-
-return;
-
-}
-
-
-await loadRevenueRecords();
-
-}
-
-
-/* =====================================================
-   RESET REVENUE
-===================================================== */
 
 function resetRevenue(){
 
-[
-"bank1",
-"bank2",
-"bank3",
-"cash",
-"expenses",
-"totalGoods",
-"remainingGoods"
-].forEach(function(id){
+  [
+    "bank1",
+    "bank2",
+    "bank3",
+    "cash",
+    "expenses",
+    "totalGoods",
+    "remainingGoods"
+  ].forEach(id=>{
+    $(id).value="";
+  });
 
-document.getElementById(id).value="";
+  $("outBanks").textContent =
+    "GH₵0.00";
 
-});
+  $("outCash").textContent =
+    "GH₵0.00";
 
+  $("outRemaining").textContent =
+    "GH₵0.00";
 
-document.getElementById("outBanks")
-.textContent="GH₵0.00";
+  $("outGoodsAfter").textContent =
+    "GH₵0.00";
 
-document.getElementById("outCash")
-.textContent="GH₵0.00";
+  $("outProfit").textContent =
+    "GH₵0.00";
 
-document.getElementById("outRemaining")
-.textContent="GH₵0.00";
-
-document.getElementById("outGoodsAfter")
-.textContent="GH₵0.00";
-
-document.getElementById("outProfit")
-.textContent="GH₵0.00";
-
-closeRevenueSave();
-
+  closeRevenueSave();
 }
 
 
-/* =====================================================
+/* =========================================================
    CEDI
-===================================================== */
+========================================================= */
 
 function updateCediLine(input){
 
-const denomination=
-Number(input.dataset.denom)||0;
+  const denomination =
+    Number(input.dataset.denom)||0;
 
-const quantity=
-Number(input.value)||0;
+  const quantity =
+    Math.max(
+      0,
+      Number(input.value)||0
+    );
 
-const total=
-denomination*quantity;
+  const total =
+    denomination * quantity;
 
-document.getElementById(
-"line"+denomination
-).textContent=
-money(total);
+  const line =
+    $("line"+denomination);
 
+  if(line){
+    line.textContent =
+      money(total);
+  }
 }
 
 
 async function calculateCedi(){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
 
-alert("Active account required.");
+    alert(
+      "Active account required."
+    );
 
-return;
+    return;
+  }
 
+  let total=0;
+
+  const quantities={};
+
+  document
+    .querySelectorAll(".cediQty")
+    .forEach(input=>{
+
+      const denomination =
+        Number(input.dataset.denom)||0;
+
+      const quantity =
+        Math.max(
+          0,
+          Number(input.value)||0
+        );
+
+      quantities[String(denomination)] =
+        quantity;
+
+      total +=
+        denomination * quantity;
+
+      $("line"+denomination)
+        .textContent =
+        money(
+          denomination * quantity
+        );
+    });
+
+  $("cediGrandTotal")
+    .textContent =
+    money(total);
+
+  $("amountWords")
+    .textContent =
+    amountInWords(total);
+
+  await saveCediRecord(
+    quantities,
+    total
+  );
 }
 
 
-let total=0;
+async function saveCediRecord(
+  quantities,
+  total
+){
 
-const quantities={};
+  const {data,error} =
+    await supabaseClient
+      .from("cedi_records")
+      .select("id")
+      .eq("user_id",currentUser.id)
+      .order("created_at",{ascending:false})
+      .limit(1);
 
+  if(error){
 
-document.querySelectorAll(".cediQty")
-.forEach(function(input){
+    console.error(
+      "Cedi lookup error:",
+      error
+    );
 
-const denomination=
-Number(input.dataset.denom)||0;
+    return;
+  }
 
-const quantity=
-Number(input.value)||0;
+  if(data && data.length){
 
-quantities[String(denomination)]=
-quantity;
+    const result =
+      await supabaseClient
+        .from("cedi_records")
+        .update({
+          quantities,
+          total_cash:total
+        })
+        .eq("id",data[0].id)
+        .eq("user_id",currentUser.id);
 
-const lineTotal=
-denomination*quantity;
+    if(result.error){
 
-total+=lineTotal;
+      console.error(
+        "Cedi update error:",
+        result.error
+      );
+    }
 
-document.getElementById(
-"line"+denomination
-).textContent=
-money(lineTotal);
+  }else{
 
-});
+    const result =
+      await supabaseClient
+        .from("cedi_records")
+        .insert({
+          user_id:currentUser.id,
+          quantities,
+          total_cash:total
+        });
 
+    if(result.error){
 
-document.getElementById("cediGrandTotal")
-.textContent=
-money(total);
-
-document.getElementById("amountWords")
-.textContent=
-amountInWords(total);
-
-
-/*
-  Save the latest Cedi calculation.
-*/
-
-const {data:existing} =
-await supabaseClient
-.from("cedi_records")
-.select("id")
-.eq("user_id",currentUser.id)
-.order("created_at",{ascending:false})
-.limit(1);
-
-
-if(existing && existing.length){
-
-const {error} =
-await supabaseClient
-.from("cedi_records")
-.update({
-quantities:quantities,
-total_cash:total
-})
-.eq("id",existing[0].id)
-.eq("user_id",currentUser.id);
-
-
-if(error){
-
-console.error(
-"Cedi update error:",
-error
-);
-
+      console.error(
+        "Cedi insert error:",
+        result.error
+      );
+    }
+  }
 }
 
-}else{
-
-const {error} =
-await supabaseClient
-.from("cedi_records")
-.insert({
-user_id:currentUser.id,
-quantities:quantities,
-total_cash:total
-});
-
-
-if(error){
-
-console.error(
-"Cedi insert error:",
-error
-);
-
-}
-
-}
-
-}
-
-
-/* =====================================================
-   LOAD CEDI
-===================================================== */
 
 async function loadCediRecord(){
 
-if(!currentUser){
+  if(!currentUser){
+    return;
+  }
 
-return;
+  const {data,error} =
+    await supabaseClient
+      .from("cedi_records")
+      .select("*")
+      .eq("user_id",currentUser.id)
+      .order("created_at",{ascending:false})
+      .limit(1);
 
+  if(error){
+
+    console.error(
+      "Cedi load error:",
+      error
+    );
+
+    return;
+  }
+
+  if(!data || !data.length){
+    return;
+  }
+
+  const quantities =
+    data[0].quantities || {};
+
+  document
+    .querySelectorAll(".cediQty")
+    .forEach(input=>{
+
+      const denomination =
+        String(input.dataset.denom);
+
+      if(
+        quantities[denomination] !== undefined
+      ){
+
+        input.value =
+          quantities[denomination];
+
+        updateCediLine(input);
+      }
+    });
+
+  const total =
+    Number(data[0].total_cash)||0;
+
+  $("cediGrandTotal")
+    .textContent =
+    money(total);
+
+  $("amountWords")
+    .textContent =
+    amountInWords(total);
 }
 
 
-const {data,error} =
-await supabaseClient
-.from("cedi_records")
-.select("*")
-.eq("user_id",currentUser.id)
-.order("created_at",{ascending:false})
-.limit(1);
-
-
-if(error || !data || !data.length){
-
-return;
-
-}
-
-
-const quantities=
-data[0].quantities||{};
-
-
-document.querySelectorAll(".cediQty")
-.forEach(function(input){
-
-const denomination=
-String(input.dataset.denom);
-
-const quantity=
-quantities[denomination];
-
-if(quantity!==undefined){
-
-input.value=quantity;
-
-updateCediLine(input);
-
-}
-
-});
-
-
-const total=
-Number(data[0].total_cash)||0;
-
-
-document.getElementById("cediGrandTotal")
-.textContent=
-money(total);
-
-document.getElementById("amountWords")
-.textContent=
-amountInWords(total);
-
-}
-
-
-/* =====================================================
+/* =========================================================
    NUMBER TO WORDS
-===================================================== */
+========================================================= */
 
 function numberToWords(num){
 
-num=
-Math.floor(Number(num)||0);
+  num =
+    Math.floor(
+      Number(num)||0
+    );
 
+  if(num===0){
+    return "zero";
+  }
 
-if(num===0){
+  const ones=[
+    "",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen"
+  ];
 
-return "zero";
+  const tens=[
+    "",
+    "",
+    "twenty",
+    "thirty",
+    "forty",
+    "fifty",
+    "sixty",
+    "seventy",
+    "eighty",
+    "ninety"
+  ];
 
-}
+  function convert(n){
 
+    if(n<20){
+      return ones[n];
+    }
 
-const ones=[
-"",
-"one",
-"two",
-"three",
-"four",
-"five",
-"six",
-"seven",
-"eight",
-"nine",
-"ten",
-"eleven",
-"twelve",
-"thirteen",
-"fourteen",
-"fifteen",
-"sixteen",
-"seventeen",
-"eighteen",
-"nineteen"
-];
+    if(n<100){
 
+      return (
+        tens[Math.floor(n/10)] +
+        (n%10 ? " "+ones[n%10] : "")
+      );
+    }
 
-const tens=[
-"",
-"",
-"twenty",
-"thirty",
-"forty",
-"fifty",
-"sixty",
-"seventy",
-"eighty",
-"ninety"
-];
+    if(n<1000){
 
+      return (
+        ones[Math.floor(n/100)] +
+        " hundred" +
+        (
+          n%100
+            ? " "+convert(n%100)
+            : ""
+        )
+      );
+    }
 
-function convert(n){
+    if(n<1000000){
 
-if(n<20){
+      return (
+        convert(Math.floor(n/1000)) +
+        " thousand" +
+        (
+          n%1000
+            ? " "+convert(n%1000)
+            : ""
+        )
+      );
+    }
 
-return ones[n];
+    if(n<1000000000){
 
-}
+      return (
+        convert(Math.floor(n/1000000)) +
+        " million" +
+        (
+          n%1000000
+            ? " "+convert(n%1000000)
+            : ""
+        )
+      );
+    }
 
+    return (
+      convert(
+        Math.floor(n/1000000000)
+      ) +
+      " billion"
+    );
+  }
 
-if(n<100){
-
-return tens[Math.floor(n/10)] +
-(n%10?" "+ones[n%10]:"");
-
-}
-
-
-if(n<1000){
-
-return ones[Math.floor(n/100)] +
-" hundred"+
-(n%100?" "+convert(n%100):"");
-
-}
-
-
-if(n<1000000){
-
-return convert(Math.floor(n/1000))+
-" thousand"+
-(n%1000?" "+convert(n%1000):"");
-
-}
-
-
-if(n<1000000000){
-
-return convert(Math.floor(n/1000000))+
-" million"+
-(n%1000000?" "+convert(n%1000000):"");
-
-}
-
-
-return convert(
-Math.floor(n/1000000000)
-)+
-" billion";
-
-}
-
-
-return convert(num);
-
+  return convert(num);
 }
 
 
 function amountInWords(amount){
 
-amount=
-Number(amount)||0;
+  amount =
+    Number(amount)||0;
 
-const whole=
-Math.floor(amount);
+  const whole =
+    Math.floor(amount);
 
-const decimal=
-Math.round(
-(amount-whole)*100
-);
+  const decimal =
+    Math.round(
+      (amount-whole)*100
+    );
 
-let result=
-numberToWords(whole)+
-" Ghana cedis";
+  let result =
+    numberToWords(whole) +
+    " Ghana cedis";
 
+  if(decimal>0){
 
-if(decimal>0){
+    result +=
+      " and " +
+      numberToWords(decimal) +
+      " pesewas";
+  }
 
-result+=
-" and "+
-numberToWords(decimal)+
-" pesewas";
-
+  return result + " only";
 }
 
 
-return result+" only";
-
-}
-
-
-/* =====================================================
-   GOODS CLOUD
-===================================================== */
+/* =========================================================
+   GOODS
+========================================================= */
 
 async function loadGoods(){
 
-if(!currentUser){
+  if(!currentUser){
+    return;
+  }
 
-return;
+  const {data,error} =
+    await supabaseClient
+      .from("goods")
+      .select("*")
+      .order("name",{ascending:true});
 
+  if(error){
+
+    console.error(
+      "Goods loading error:",
+      error
+    );
+
+    goods=[];
+
+    renderAdminGoods();
+
+    return;
+  }
+
+  goods =
+    (data || []).map(item=>({
+      id:item.id,
+      name:item.name,
+      price:Number(item.price)||0,
+      user_id:item.user_id
+    }));
+
+  /*
+    Defaults are inserted only by an Admin
+    when the official goods table is empty.
+  */
+
+  if(
+    isAdmin() &&
+    goods.length===0
+  ){
+
+    for(const item of defaultGoods){
+
+      const {error:insertError} =
+        await supabaseClient
+          .from("goods")
+          .insert({
+            user_id:currentUser.id,
+            name:item.name,
+            price:item.price
+          });
+
+      if(insertError){
+
+        console.error(
+          "Default good error:",
+          insertError
+        );
+      }
+    }
+
+    const {data:reload} =
+      await supabaseClient
+        .from("goods")
+        .select("*")
+        .order("name",{ascending:true});
+
+    goods =
+      (reload || []).map(item=>({
+        id:item.id,
+        name:item.name,
+        price:Number(item.price)||0,
+        user_id:item.user_id
+      }));
+  }
+
+  renderAdminGoods();
 }
 
 
-const {data,error} =
-await supabaseClient
-.from("goods")
-.select("*")
-.order("name",{ascending:true});
+function goodsOptions(selectedName=""){
 
+  let html =
+    '<option value="">Select good</option>';
 
-if(error){
+  goods.forEach(good=>{
 
-console.error(
-"Goods loading error:",
-error
-);
+    const selected =
+      good.name === selectedName
+        ? "selected"
+        : "";
 
-goods=[];
+    html +=
+      `<option value="${escapeHTML(good.name)}" ${selected}>
+        ${escapeHTML(good.name)}
+      </option>`;
+  });
 
-renderAdminGoods();
-
-return;
-
-}
-
-
-goods=
-(data||[]).map(function(item){
-
-return {
-id:item.id,
-name:item.name,
-price:Number(item.price)||0,
-user_id:item.user_id
-};
-
-});
-
-
-/*
-  Add the default goods only when the Admin's
-  goods table is completely empty.
-*/
-
-if(isAdmin() && goods.length===0){
-
-for(const item of defaultGoods){
-
-const {error:insertError} =
-await supabaseClient
-.from("goods")
-.insert({
-user_id:currentUser.id,
-name:item.name,
-price:item.price
-});
-
-if(insertError){
-
-console.error(
-"Default good error:",
-insertError
-);
-
-}
-
-}
-
-
-const {data:reload} =
-await supabaseClient
-.from("goods")
-.select("*")
-.order("name",{ascending:true});
-
-
-goods=
-(reload||[]).map(function(item){
-
-return {
-id:item.id,
-name:item.name,
-price:Number(item.price)||0,
-user_id:item.user_id
-};
-
-});
-
-}
-
-
-renderAdminGoods();
-
-}
-
-
-/* =====================================================
-   GOODS OPTIONS
-===================================================== */
-
-function goodsOptions(selectedName){
-
-let html=
-'<option value="">Select good</option>';
-
-
-goods.forEach(function(good){
-
-const selected=
-good.name===selectedName
-?"selected"
-:"";
-
-
-html+=
-'<option value="'+
-escapeHTML(good.name)+
-'" '+
-selected+
-'>'+
-escapeHTML(good.name)+
-"</option>";
-
-});
-
-
-return html;
-
+  return html;
 }
 
 
 function getPrice(name){
 
-const found=
-goods.find(function(good){
+  const found =
+    goods.find(
+      good=>good.name===name
+    );
 
-return good.name===name;
-
-});
-
-
-return found
-?Number(found.price)||0
-:0;
-
+  return found
+    ? Number(found.price)||0
+    : 0;
 }
 
 
-/* =====================================================
-   WEEK FUNCTIONS
-===================================================== */
+/* =========================================================
+   WEEK OPTIONS
+========================================================= */
 
 function createWeekOptions(){
 
-const select=
-document.getElementById("weekSelect");
+  const select =
+    $("weekSelect");
 
-select.innerHTML="";
+  select.innerHTML="";
 
+  for(let i=1;i<=52;i++){
 
-for(let i=1;i<=52;i++){
+    const option =
+      document.createElement("option");
 
-const option=
-document.createElement("option");
+    option.value =
+      "Week "+i;
 
-option.value=
-"Week "+i;
+    option.textContent =
+      "Week "+i;
 
-option.textContent=
-"Week "+i;
-
-select.appendChild(option);
-
-}
-
+    select.appendChild(option);
+  }
 }
 
 
 function createRevenueWeekOptions(){
 
-const select=
-document.getElementById("revenueWeek");
+  const select =
+    $("revenueWeek");
 
-select.innerHTML="";
+  select.innerHTML="";
 
+  for(let i=1;i<=52;i++){
 
-for(let i=1;i<=52;i++){
+    const option =
+      document.createElement("option");
 
-const option=
-document.createElement("option");
+    option.value =
+      "Week "+i;
 
-option.value=
-"Week "+i;
+    option.textContent =
+      "Week "+i;
 
-option.textContent=
-"Week "+i;
-
-select.appendChild(option);
-
-}
-
+    select.appendChild(option);
+  }
 }
 
 
 function weekNumber(week){
 
-const match=
-String(week).match(/(\d+)/);
+  const match =
+    String(week).match(/(\d+)/);
 
-
-return match
-?Number(match[1])
-:0;
-
+  return match
+    ? Number(match[1])
+    : 0;
 }
 
 
-/* =====================================================
-   PREVIOUS REMAINING
-===================================================== */
+/* =========================================================
+   PREVIOUS WEEK
+========================================================= */
 
 function getPreviousRemainingGoods(){
 
-const number=
-weekNumber(selectedWeek);
+  const number =
+    weekNumber(selectedWeek);
 
+  if(number<=1){
+    return [];
+  }
 
-if(number<=1){
+  const previous =
+    weeks["Week "+(number-1)];
 
-return [];
+  if(
+    !previous ||
+    !previous.remainingGoodsSaved
+  ){
 
-}
+    return [];
+  }
 
-
-const previous=
-weeks["Week "+(number-1)];
-
-
-if(
-!previous ||
-!previous.remainingGoodsSaved
-){
-
-return [];
-
-}
-
-
-return previous.remainingGoods||[];
-
+  return previous.remainingGoods || [];
 }
 
 
 function getPreviousRemainingValue(){
 
-return getPreviousRemainingGoods()
-.reduce(function(sum,item){
-
-return sum+
-(Number(item.price)||0)*
-(Number(item.remainingQty)||0);
-
-},0);
-
+  return getPreviousRemainingGoods()
+    .reduce(
+      (sum,item)=>
+        sum +
+        (Number(item.price)||0) *
+        (Number(item.remainingQty)||0),
+      0
+    );
 }
 
 
-/* =====================================================
+/* =========================================================
    BALANCE
-===================================================== */
+========================================================= */
 
 function calculateBalance(week){
 
-const current=
-weeks[week];
+  const current =
+    weeks[week];
 
+  if(!current){
+    return 0;
+  }
 
-if(!current){
+  const currentStarting =
+    Number(
+      current.startingGoodsValue
+    ) || 0;
 
-return 0;
+  const currentRemaining =
+    Number(
+      current.remainingGoodsValue
+    ) || 0;
 
+  const number =
+    weekNumber(week);
+
+  if(number===1){
+
+    if(current.remainingGoodsSaved){
+      return currentRemaining;
+    }
+
+    return currentStarting;
+  }
+
+  const previous =
+    weeks["Week "+(number-1)];
+
+  const previousRemaining =
+    previous &&
+    previous.remainingGoodsSaved
+      ? Number(
+          previous.remainingGoodsValue
+        ) || 0
+      : 0;
+
+  if(previousRemaining>=1){
+
+    return (
+      previousRemaining +
+      currentStarting
+    );
+  }
+
+  return current.remainingGoodsSaved
+    ? currentRemaining
+    : currentStarting;
 }
 
 
-const currentStarting=
-Number(current.startingGoodsValue)||0;
-
-const currentRemaining=
-Number(current.remainingGoodsValue)||0;
-
-const number=
-weekNumber(week);
-
-
-if(number===1){
-
-if(current.remainingGoodsSaved){
-
-return currentRemaining;
-
-}
-
-return currentStarting;
-
-}
-
-
-const previous=
-weeks["Week "+(number-1)];
-
-
-const previousRemaining=
-previous &&
-previous.remainingGoodsSaved
-?Number(previous.remainingGoodsValue)||0
-:0;
-
-
-if(previousRemaining>=1){
-
-return previousRemaining+
-currentStarting;
-
-}
-
-
-return current.remainingGoodsSaved
-?currentRemaining
-:currentStarting;
-
-}
-
-
-/* =====================================================
-   LOAD WEEK
-===================================================== */
+/* =========================================================
+   LOAD SELECTED WEEK
+========================================================= */
 
 function loadSelectedWeek(){
 
-const select=
-document.getElementById("weekSelect");
+  const select =
+    $("weekSelect");
 
+  if(!select){
+    return;
+  }
 
-if(!select){
+  selectedWeek =
+    select.value || "Week 1";
 
-return;
+  const record =
+    weeks[selectedWeek];
 
+  $("weekDate").value =
+    record?.date || "";
+
+  $("previousInfo").textContent =
+    "Previous Week Remaining Goods: " +
+    money(
+      getPreviousRemainingValue()
+    );
+
+  clearEntryCards();
+
+  if(
+    record &&
+    record.startingGoodsSaved
+  ){
+
+    renderStartingEditor(
+      record.startingGoods || []
+    );
+
+    showStartingSavedStatus();
+  }
+
+  if(
+    record &&
+    record.remainingGoodsSaved
+  ){
+
+    renderRemainingEditor(
+      record.remainingGoods || []
+    );
+
+    showRemainingSavedStatus();
+  }
+
+  renderSavedRecords();
+  renderBalanceRecords();
 }
 
 
-selectedWeek=
-select.value;
-
-
-const record=
-weeks[selectedWeek];
-
-
-document.getElementById("weekDate")
-.value=
-record&&record.date
-?record.date
-:"";
-
-
-document.getElementById("previousInfo")
-.textContent=
-"Previous Week Remaining Goods: "+
-money(getPreviousRemainingValue());
-
-
-clearEntryCards();
-
-
-if(
-record &&
-record.startingGoodsSaved
-){
-
-renderStartingEditor(
-record.startingGoods||[]
-);
-
-showStartingSavedStatus();
-
-}
-
-
-if(
-record &&
-record.remainingGoodsSaved
-){
-
-renderRemainingEditor(
-record.remainingGoods||[]
-);
-
-showRemainingSavedStatus();
-
-}
-
-
-renderSavedRecords();
-
-renderBalanceRecords();
-
-}
-
-
-/* =====================================================
-   CHOOSE RECORD TYPE
-===================================================== */
+/* =========================================================
+   RECORD TYPE
+========================================================= */
 
 function chooseRecordType(type){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
 
-alert(
-"Active account required."
-);
+    alert(
+      "Active account required."
+    );
 
-return;
+    return;
+  }
 
+  selectedRecordType =
+    type;
+
+  $("startingCard")
+    .classList.toggle(
+      "hidden",
+      type !== "starting"
+    );
+
+  $("remainingCard")
+    .classList.toggle(
+      "hidden",
+      type !== "remaining"
+    );
+
+  $("startingChoice")
+    .classList.toggle(
+      "active",
+      type === "starting"
+    );
+
+  $("remainingChoice")
+    .classList.toggle(
+      "active",
+      type === "remaining"
+    );
+
+  if(type==="starting"){
+
+    const record =
+      weeks[selectedWeek];
+
+    if(
+      record &&
+      record.startingGoodsSaved
+    ){
+
+      renderStartingEditor(
+        record.startingGoods || []
+      );
+
+      showStartingSavedStatus();
+
+    }else{
+
+      hideStartingSavedStatus();
+
+      createStartingFromPrevious();
+    }
+  }
+
+  if(type==="remaining"){
+
+    const record =
+      weeks[selectedWeek];
+
+    if(
+      record &&
+      record.remainingGoodsSaved
+    ){
+
+      renderRemainingEditor(
+        record.remainingGoods || []
+      );
+
+      showRemainingSavedStatus();
+
+    }else{
+
+      hideRemainingSavedStatus();
+
+      createRemainingFromStarting();
+    }
+  }
 }
 
-
-selectedRecordType=
-type;
-
-
-document.getElementById("startingCard")
-.classList.toggle(
-"hidden",
-type!=="starting"
-);
-
-
-document.getElementById("remainingCard")
-.classList.toggle(
-"hidden",
-type!=="remaining"
-);
-
-
-document.getElementById("startingChoice")
-.classList.toggle(
-"active",
-type==="starting"
-);
-
-
-document.getElementById("remainingChoice")
-.classList.toggle(
-"active",
-type==="remaining"
-);
-
-
-if(type==="starting"){
-
-const record=
-weeks[selectedWeek];
-
-
-if(
-record &&
-record.startingGoodsSaved
-){
-
-renderStartingEditor(
-record.startingGoods||[]
-);
-
-showStartingSavedStatus();
-
-}else{
-
-hideStartingSavedStatus();
-
-createStartingFromPrevious();
-
-}
-
-}
-
-
-if(type==="remaining"){
-
-const record=
-weeks[selectedWeek];
-
-
-if(
-record &&
-record.remainingGoodsSaved
-){
-
-renderRemainingEditor(
-record.remainingGoods||[]
-);
-
-showRemainingSavedStatus();
-
-}else{
-
-hideRemainingSavedStatus();
-
-createRemainingFromStarting();
-
-}
-
-}
-
-}
-
-
-/* =====================================================
-   ENTRY STATUS
-===================================================== */
 
 function clearEntryCards(){
 
-document.getElementById("startingCard")
-.classList.add("hidden");
+  $("startingCard")
+    .classList.add("hidden");
 
-document.getElementById("remainingCard")
-.classList.add("hidden");
+  $("remainingCard")
+    .classList.add("hidden");
 
-document.getElementById("startingChoice")
-.classList.remove("active");
+  $("startingChoice")
+    .classList.remove("active");
 
-document.getElementById("remainingChoice")
-.classList.remove("active");
+  $("remainingChoice")
+    .classList.remove("active");
 
-selectedRecordType="";
-
+  selectedRecordType="";
 }
 
 
 function showStartingSavedStatus(){
 
-document.getElementById("startingEditorArea")
-.classList.add("hidden");
+  $("startingEditorArea")
+    .classList.add("hidden");
 
-document.getElementById("startingSavedStatus")
-.classList.remove("hidden");
-
+  $("startingSavedStatus")
+    .classList.remove("hidden");
 }
 
 
 function hideStartingSavedStatus(){
 
-document.getElementById("startingEditorArea")
-.classList.remove("hidden");
+  $("startingEditorArea")
+    .classList.remove("hidden");
 
-document.getElementById("startingSavedStatus")
-.classList.add("hidden");
-
+  $("startingSavedStatus")
+    .classList.add("hidden");
 }
 
 
 function showRemainingSavedStatus(){
 
-document.getElementById("remainingEditorArea")
-.classList.add("hidden");
+  $("remainingEditorArea")
+    .classList.add("hidden");
 
-document.getElementById("remainingSavedStatus")
-.classList.remove("hidden");
-
+  $("remainingSavedStatus")
+    .classList.remove("hidden");
 }
 
 
 function hideRemainingSavedStatus(){
 
-document.getElementById("remainingEditorArea")
-.classList.remove("hidden");
+  $("remainingEditorArea")
+    .classList.remove("hidden");
 
-document.getElementById("remainingSavedStatus")
-.classList.add("hidden");
-
+  $("remainingSavedStatus")
+    .classList.add("hidden");
 }
 
 
-/* =====================================================
+/* =========================================================
    STARTING GOODS
-===================================================== */
+========================================================= */
 
 function updateStartingPrice(select){
 
-const row=
-select.closest(".goods-row");
+  const row =
+    select.closest(".goods-row");
 
-const price=
-getPrice(select.value);
+  const price =
+    getPrice(select.value);
 
-
-row.querySelector(".start-price")
-.textContent=
-select.value
-?money(price)
-:"Price";
-
+  row.querySelector(".start-price")
+    .textContent =
+    select.value
+      ? money(price)
+      : "Price";
 }
 
 
-function addStartingRow(item){
+function addStartingRow(item={}){
 
-const container=
-document.getElementById("startingList");
+  const container =
+    $("startingList");
 
+  const row =
+    document.createElement("div");
 
-const row=
-document.createElement("div");
+  row.className =
+    "goods-row";
 
-row.className=
-"goods-row";
+  const name =
+    item.name || "";
 
+  const qty =
+    item.qty != null
+      ? item.qty
+      : "";
 
-const name=
-item&&item.name
-?item.name
-:"";
+  row.innerHTML =
+    `
+    <select
+      class="start-name"
+      onchange="updateStartingPrice(this)">
+      ${goodsOptions(name)}
+    </select>
 
+    <div class="price-box start-price">
+      ${name ? money(getPrice(name)) : "Price"}
+    </div>
 
-const qty=
-item&&item.qty!=null
-?item.qty
-:"";
+    <input
+      class="start-qty"
+      type="number"
+      min="0"
+      placeholder="Qty"
+      value="${escapeHTML(qty)}">
 
+    <button
+      type="button"
+      class="remove-btn"
+      onclick="this.parentElement.remove()">
+      REMOVE
+    </button>
+    `;
 
-row.innerHTML=
-'<select class="start-name" onchange="updateStartingPrice(this)">'+
-goodsOptions(name)+
-"</select>"+
-
-'<div class="price-box start-price">'+
-(name
-?money(getPrice(name))
-:"Price")+
-"</div>"+
-
-'<input class="start-qty" type="number" min="0" placeholder="Qty" value="'+
-escapeHTML(qty)+
-'">'+
-
-'<button class="remove-btn" onclick="this.parentElement.remove()">REMOVE</button>';
-
-
-container.appendChild(row);
-
+  container.appendChild(row);
 }
 
 
 function createStartingFromPrevious(){
 
-const previous=
-getPreviousRemainingGoods();
+  const previous =
+    getPreviousRemainingGoods();
 
+  $("startingList").innerHTML="";
 
-document.getElementById("startingList")
-.innerHTML="";
+  if(previous.length){
 
+    previous.forEach(item=>{
 
-if(previous.length){
+      addStartingRow({
+        name:item.name,
+        qty:item.remainingQty
+      });
+    });
 
-previous.forEach(function(item){
+  }else{
 
-addStartingRow({
-name:item.name,
-qty:item.remainingQty
-});
-
-});
-
-}else{
-
-addStartingRow();
-
-}
-
+    addStartingRow();
+  }
 }
 
 
 function renderStartingEditor(items){
 
-const container=
-document.getElementById("startingList");
+  const container =
+    $("startingList");
 
-container.innerHTML="";
+  container.innerHTML="";
 
+  if(items.length){
 
-if(items.length){
+    items.forEach(item=>{
+      addStartingRow(item);
+    });
 
-items.forEach(function(item){
+  }else{
 
-addStartingRow(item);
-
-});
-
-}else{
-
-addStartingRow();
-
-}
-
+    addStartingRow();
+  }
 }
 
 
 function collectStartingGoods(){
 
-const rows=
-document.querySelectorAll(
-"#startingList .goods-row"
-);
+  const rows =
+    document.querySelectorAll(
+      "#startingList .goods-row"
+    );
 
+  const result=[];
 
-const result=[];
+  rows.forEach(row=>{
 
+    const name =
+      row.querySelector(
+        ".start-name"
+      ).value;
 
-rows.forEach(function(row){
+    const qty =
+      Math.max(
+        0,
+        Number(
+          row.querySelector(
+            ".start-qty"
+          ).value
+        ) || 0
+      );
 
-const name=
-row.querySelector(".start-name").value;
+    if(name){
 
+      result.push({
+        name,
+        price:getPrice(name),
+        qty
+      });
+    }
+  });
 
-const qty=
-Number(
-row.querySelector(".start-qty").value
-)||0;
-
-
-if(name){
-
-result.push({
-name:name,
-price:getPrice(name),
-qty:qty
-});
-
-}
-
-});
-
-
-return result;
-
+  return result;
 }
 
 
 function calculateStartingValue(items){
 
-return items.reduce(function(sum,item){
-
-return sum+
-(Number(item.price)||0)*
-(Number(item.qty)||0);
-
-},0);
-
+  return items.reduce(
+    (sum,item)=>
+      sum +
+      (Number(item.price)||0) *
+      (Number(item.qty)||0),
+    0
+  );
 }
 
 
 async function saveStartingGoods(){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
 
-alert("Active account required.");
+    alert(
+      "Active account required."
+    );
 
-return;
+    return;
+  }
 
+  const items =
+    collectStartingGoods();
+
+  if(!items.length){
+
+    alert(
+      "Please select at least one good."
+    );
+
+    return;
+  }
+
+  const date =
+    $("weekDate").value;
+
+  if(!weeks[selectedWeek]){
+    weeks[selectedWeek]={};
+  }
+
+  weeks[selectedWeek].date =
+    date;
+
+  weeks[selectedWeek].startingGoods =
+    items;
+
+  weeks[selectedWeek].startingGoodsSaved =
+    true;
+
+  weeks[selectedWeek].startingGoodsValue =
+    calculateStartingValue(items);
+
+  recalculateRecord(selectedWeek);
+
+  const saved =
+    await saveWeekToCloud(
+      selectedWeek
+    );
+
+  if(!saved){
+    return;
+  }
+
+  showStartingSavedStatus();
+
+  renderSavedRecords();
+  renderBalanceRecords();
 }
 
-
-const items=
-collectStartingGoods();
-
-
-if(!items.length){
-
-alert(
-"Please select at least one good."
-);
-
-return;
-
-}
-
-
-const date=
-document.getElementById("weekDate")
-.value;
-
-
-if(!weeks[selectedWeek]){
-
-weeks[selectedWeek]={};
-
-}
-
-
-weeks[selectedWeek].date=
-date;
-
-weeks[selectedWeek].startingGoods=
-items;
-
-weeks[selectedWeek].startingGoodsSaved=
-true;
-
-weeks[selectedWeek].startingGoodsValue=
-calculateStartingValue(items);
-
-
-recalculateRecord(selectedWeek);
-
-
-await saveWeekToCloud(selectedWeek);
-
-
-showStartingSavedStatus();
-
-renderSavedRecords();
-
-renderBalanceRecords();
-
-}
-
-
-/* =====================================================
-   EDIT STARTING
-===================================================== */
 
 function editCurrentStarting(){
 
-hideStartingSavedStatus();
+  hideStartingSavedStatus();
 
-
-renderStartingEditor(
-weeks[selectedWeek].startingGoods||[]
-);
-
+  renderStartingEditor(
+    weeks[selectedWeek]
+      ?.startingGoods || []
+  );
 }
 
 
-/* =====================================================
+/* =========================================================
    REMAINING GOODS
-===================================================== */
+========================================================= */
 
 function updateRemainingPrice(select){
 
-const row=
-select.closest(".goods-row");
+  const row =
+    select.closest(".goods-row");
 
+  const price =
+    getPrice(select.value);
 
-const price=
-getPrice(select.value);
-
-
-row.querySelector(".remain-price")
-.textContent=
-select.value
-?money(price)
-:"Price";
-
+  row.querySelector(".remain-price")
+    .textContent =
+    select.value
+      ? money(price)
+      : "Price";
 }
 
 
-function addRemainingRow(item){
+function addRemainingRow(item={}){
 
-const container=
-document.getElementById("remainingList");
+  const container =
+    $("remainingList");
 
+  const row =
+    document.createElement("div");
 
-const row=
-document.createElement("div");
+  row.className =
+    "goods-row";
 
-row.className=
-"goods-row";
+  const name =
+    item.name || "";
 
+  const qty =
+    item.remainingQty != null
+      ? item.remainingQty
+      : "";
 
-const name=
-item&&item.name
-?item.name
-:"";
+  row.innerHTML =
+    `
+    <select
+      class="remain-name"
+      onchange="updateRemainingPrice(this)">
+      ${goodsOptions(name)}
+    </select>
 
+    <div class="price-box remain-price">
+      ${name ? money(getPrice(name)) : "Price"}
+    </div>
 
-const qty=
-item&&item.remainingQty!=null
-?item.remainingQty
-:"";
+    <input
+      class="remain-qty"
+      type="number"
+      min="0"
+      placeholder="Qty"
+      value="${escapeHTML(qty)}">
 
+    <button
+      type="button"
+      class="remove-btn"
+      onclick="this.parentElement.remove()">
+      REMOVE
+    </button>
+    `;
 
-row.innerHTML=
-'<select class="remain-name" onchange="updateRemainingPrice(this)">'+
-goodsOptions(name)+
-"</select>"+
-
-'<div class="price-box remain-price">'+
-(name
-?money(getPrice(name))
-:"Price")+
-"</div>"+
-
-'<input class="remain-qty" type="number" min="0" placeholder="Qty" value="'+
-escapeHTML(qty)+
-'">'+
-
-'<button class="remove-btn" onclick="this.parentElement.remove()">REMOVE</button>';
-
-
-container.appendChild(row);
-
+  container.appendChild(row);
 }
 
 
 function createRemainingFromStarting(){
 
-const record=
-weeks[selectedWeek];
+  const record =
+    weeks[selectedWeek];
 
+  $("remainingList").innerHTML="";
 
-document.getElementById("remainingList")
-.innerHTML="";
+  if(
+    record &&
+    record.startingGoodsSaved &&
+    record.startingGoods &&
+    record.startingGoods.length
+  ){
 
+    record.startingGoods.forEach(item=>{
 
-if(
-record &&
-record.startingGoodsSaved &&
-record.startingGoods &&
-record.startingGoods.length
-){
+      addRemainingRow({
+        name:item.name,
+        remainingQty:""
+      });
+    });
 
-record.startingGoods.forEach(function(item){
+  }else{
 
-addRemainingRow({
-name:item.name,
-remainingQty:""
-});
-
-});
-
-}else{
-
-addRemainingRow();
-
-}
-
+    addRemainingRow();
+  }
 }
 
 
 function renderRemainingEditor(items){
 
-const container=
-document.getElementById("remainingList");
+  const container =
+    $("remainingList");
 
+  container.innerHTML="";
 
-container.innerHTML="";
+  if(items.length){
 
+    items.forEach(item=>{
+      addRemainingRow(item);
+    });
 
-if(items.length){
+  }else{
 
-items.forEach(function(item){
-
-addRemainingRow(item);
-
-});
-
-}else{
-
-addRemainingRow();
-
-}
-
+    addRemainingRow();
+  }
 }
 
 
 function findStartingQty(name){
 
-const record=
-weeks[selectedWeek];
+  const record =
+    weeks[selectedWeek];
 
+  if(
+    !record ||
+    !record.startingGoodsSaved ||
+    !record.startingGoods
+  ){
 
-if(
-!record ||
-!record.startingGoodsSaved ||
-!record.startingGoods
-){
+    return 0;
+  }
 
-return 0;
+  const found =
+    record.startingGoods.find(
+      item=>item.name===name
+    );
 
-}
-
-
-const found=
-record.startingGoods.find(function(item){
-
-return item.name===name;
-
-});
-
-
-return found
-?Number(found.qty)||0
-:0;
-
+  return found
+    ? Number(found.qty)||0
+    : 0;
 }
 
 
 function collectRemainingGoods(){
 
-const rows=
-document.querySelectorAll(
-"#remainingList .goods-row"
-);
+  const rows =
+    document.querySelectorAll(
+      "#remainingList .goods-row"
+    );
 
+  const result=[];
 
-const result=[];
+  rows.forEach(row=>{
 
+    const name =
+      row.querySelector(
+        ".remain-name"
+      ).value;
 
-rows.forEach(function(row){
+    const remainingQty =
+      Math.max(
+        0,
+        Number(
+          row.querySelector(
+            ".remain-qty"
+          ).value
+        ) || 0
+      );
 
-const name=
-row.querySelector(".remain-name").value;
+    if(name){
 
+      result.push({
+        name,
+        price:getPrice(name),
+        startingQty:
+          findStartingQty(name),
+        remainingQty
+      });
+    }
+  });
 
-const remainingQty=
-Number(
-row.querySelector(".remain-qty").value
-)||0;
-
-
-if(name){
-
-result.push({
-name:name,
-price:getPrice(name),
-startingQty:findStartingQty(name),
-remainingQty:remainingQty
-});
-
-}
-
-});
-
-
-return result;
-
+  return result;
 }
 
 
 function calculateRemainingValue(items){
 
-return items.reduce(function(sum,item){
-
-return sum+
-(Number(item.price)||0)*
-(Number(item.remainingQty)||0);
-
-},0);
-
+  return items.reduce(
+    (sum,item)=>
+      sum +
+      (Number(item.price)||0) *
+      (Number(item.remainingQty)||0),
+    0
+  );
 }
 
 
 async function saveRemainingGoods(){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
 
-alert(
-"Active account required."
-);
+    alert(
+      "Active account required."
+    );
 
-return;
+    return;
+  }
 
+  const items =
+    collectRemainingGoods();
+
+  if(!items.length){
+
+    alert(
+      "Please select at least one good."
+    );
+
+    return;
+  }
+
+  const date =
+    $("weekDate").value;
+
+  if(!weeks[selectedWeek]){
+    weeks[selectedWeek]={};
+  }
+
+  weeks[selectedWeek].date =
+    date;
+
+  weeks[selectedWeek].remainingGoods =
+    items;
+
+  weeks[selectedWeek].remainingGoodsSaved =
+    true;
+
+  weeks[selectedWeek].remainingGoodsValue =
+    calculateRemainingValue(items);
+
+  recalculateRecord(selectedWeek);
+
+  const saved =
+    await saveWeekToCloud(
+      selectedWeek
+    );
+
+  if(!saved){
+    return;
+  }
+
+  showRemainingSavedStatus();
+
+  renderSavedRecords();
+  renderBalanceRecords();
 }
 
-
-const items=
-collectRemainingGoods();
-
-
-if(!items.length){
-
-alert(
-"Please select at least one good."
-);
-
-return;
-
-}
-
-
-const date=
-document.getElementById("weekDate")
-.value;
-
-
-if(!weeks[selectedWeek]){
-
-weeks[selectedWeek]={};
-
-}
-
-
-weeks[selectedWeek].date=
-date;
-
-weeks[selectedWeek].remainingGoods=
-items;
-
-weeks[selectedWeek].remainingGoodsSaved=
-true;
-
-weeks[selectedWeek].remainingGoodsValue=
-calculateRemainingValue(items);
-
-
-recalculateRecord(selectedWeek);
-
-
-await saveWeekToCloud(selectedWeek);
-
-
-showRemainingSavedStatus();
-
-renderSavedRecords();
-
-renderBalanceRecords();
-
-}
-
-
-/* =====================================================
-   EDIT REMAINING
-===================================================== */
 
 function editCurrentRemaining(){
 
-hideRemainingSavedStatus();
+  hideRemainingSavedStatus();
 
-
-renderRemainingEditor(
-weeks[selectedWeek].remainingGoods||[]
-);
-
+  renderRemainingEditor(
+    weeks[selectedWeek]
+      ?.remainingGoods || []
+  );
 }
 
 
-/* =====================================================
-   RECALCULATE
-===================================================== */
+/* =========================================================
+   WEEK CALCULATIONS
+========================================================= */
 
 function recalculateRecord(week){
 
-const record=
-weeks[week];
+  const record =
+    weeks[week];
 
+  if(!record){
+    return;
+  }
 
-if(!record){
+  record.startingGoodsValue =
+    record.startingGoodsSaved
+      ? calculateStartingValue(
+          record.startingGoods || []
+        )
+      : 0;
 
-return;
+  record.remainingGoodsValue =
+    record.remainingGoodsSaved
+      ? calculateRemainingValue(
+          record.remainingGoods || []
+        )
+      : 0;
 
+  if(
+    record.startingGoodsSaved &&
+    record.remainingGoodsSaved
+  ){
+
+    record.soldUsedValue =
+      Math.max(
+        0,
+        record.startingGoodsValue -
+        record.remainingGoodsValue
+      );
+
+  }else{
+
+    record.soldUsedValue=0;
+  }
+
+  record.balanceValue =
+    calculateBalance(week);
 }
 
 
-if(record.startingGoodsSaved){
-
-record.startingGoodsValue=
-calculateStartingValue(
-record.startingGoods||[]
-);
-
-}else{
-
-record.startingGoodsValue=0;
-
-}
-
-
-if(record.remainingGoodsSaved){
-
-record.remainingGoodsValue=
-calculateRemainingValue(
-record.remainingGoods||[]
-);
-
-}else{
-
-record.remainingGoodsValue=0;
-
-}
-
-
-if(
-record.startingGoodsSaved &&
-record.remainingGoodsSaved
-){
-
-record.soldUsedValue=
-Math.max(
-0,
-record.startingGoodsValue-
-record.remainingGoodsValue
-);
-
-}else{
-
-record.soldUsedValue=0;
-
-}
-
-
-record.balanceValue=
-calculateBalance(week);
-
-}
-
-
-/* =====================================================
-   SAVE WEEK
-===================================================== */
+/* =========================================================
+   SAVE WEEK TO SUPABASE
+========================================================= */
 
 async function saveWeekToCloud(week){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
+    return false;
+  }
 
-return;
+  const record =
+    weeks[week];
 
+  if(!record){
+    return false;
+  }
+
+  const payload = {
+    user_id:currentUser.id,
+    week:week,
+    record_date:
+      record.date || null,
+
+    starting_goods:
+      record.startingGoods || [],
+
+    starting_goods_value:
+      Number(
+        record.startingGoodsValue
+      ) || 0,
+
+    remaining_goods:
+      record.remainingGoods || [],
+
+    remaining_goods_value:
+      Number(
+        record.remainingGoodsValue
+      ) || 0,
+
+    remaining_goods_saved:
+      !!record.remainingGoodsSaved,
+
+    updated_at:
+      new Date().toISOString()
+  };
+
+  const {error} =
+    await supabaseClient
+      .from("weekly_records")
+      .upsert(
+        payload,
+        {
+          onConflict:"user_id,week"
+        }
+      );
+
+  if(error){
+
+    console.error(
+      "Weekly save error:",
+      error
+    );
+
+    alert(
+      "Could not save weekly record: " +
+      friendlySupabaseError(error)
+    );
+
+    return false;
+  }
+
+  return true;
 }
 
 
-const record=
-weeks[week];
-
-
-if(!record){
-
-return;
-
-}
-
-
-const payload={
-user_id:currentUser.id,
-week:week,
-record_date:record.date||null,
-starting_goods:record.startingGoods||[],
-starting_goods_value:
-Number(record.startingGoodsValue)||0,
-remaining_goods:
-record.remainingGoods||[],
-remaining_goods_value:
-Number(record.remainingGoodsValue)||0,
-remaining_goods_saved:
-!!record.remainingGoodsSaved,
-updated_at:
-new Date().toISOString()
-};
-
-
-const {data,error} =
-await supabaseClient
-.from("weekly_records")
-.upsert(
-payload,
-{
-onConflict:"user_id,week"
-}
-)
-.select()
-.single();
-
-
-if(error){
-
-console.error(
-"Weekly save error:",
-error
-);
-
-
-/*
-  Manual fallback if needed.
-*/
-
-const {data:existing} =
-await supabaseClient
-.from("weekly_records")
-.select("id")
-.eq("user_id",currentUser.id)
-.eq("week",week)
-.limit(1);
-
-
-if(existing && existing.length){
-
-const updateResult=
-await supabaseClient
-.from("weekly_records")
-.update(payload)
-.eq("id",existing[0].id)
-.eq("user_id",currentUser.id);
-
-
-if(updateResult.error){
-
-alert(
-"Could not save weekly record: "+
-updateResult.error.message
-);
-
-return;
-
-}
-
-}else{
-
-const insertResult=
-await supabaseClient
-.from("weekly_records")
-.insert(payload);
-
-
-if(insertResult.error){
-
-alert(
-"Could not save weekly record: "+
-insertResult.error.message
-);
-
-return;
-
-}
-
-}
-
-}else{
-
-if(data){
-
-weeks[week]={
-...record,
-date:data.record_date||"",
-startingGoods:
-data.starting_goods||[],
-startingGoodsValue:
-Number(data.starting_goods_value)||0,
-startingGoodsSaved:
-Array.isArray(data.starting_goods)&&
-data.starting_goods.length>0,
-remainingGoods:
-data.remaining_goods||[],
-remainingGoodsValue:
-Number(data.remaining_goods_value)||0,
-remainingGoodsSaved:
-!!data.remaining_goods_saved
-};
-
-recalculateRecord(week);
-
-}
-
-}
-
-}
-
-
-/* =====================================================
+/* =========================================================
    LOAD WEEKLY RECORDS
-===================================================== */
+========================================================= */
 
 async function loadWeeklyRecords(){
 
-if(!currentUser){
+  if(!currentUser){
+    return;
+  }
 
-return;
+  const {data,error} =
+    await supabaseClient
+      .from("weekly_records")
+      .select("*")
+      .eq("user_id",currentUser.id)
+      .order("week",{ascending:true});
 
+  if(error){
+
+    console.error(
+      "Weekly records error:",
+      error
+    );
+
+    weeks={};
+
+    return;
+  }
+
+  weeks={};
+
+  (data || []).forEach(record=>{
+
+    weeks[record.week] = {
+
+      id:record.id,
+
+      date:
+        record.record_date || "",
+
+      startingGoods:
+        record.starting_goods || [],
+
+      startingGoodsValue:
+        Number(
+          record.starting_goods_value
+        ) || 0,
+
+      startingGoodsSaved:
+        Array.isArray(
+          record.starting_goods
+        ) &&
+        record.starting_goods.length>0,
+
+      remainingGoods:
+        record.remaining_goods || [],
+
+      remainingGoodsValue:
+        Number(
+          record.remaining_goods_value
+        ) || 0,
+
+      remainingGoodsSaved:
+        !!record.remaining_goods_saved,
+
+      balanceValue:0,
+
+      soldUsedValue:0
+    };
+  });
+
+  Object.keys(weeks)
+    .forEach(week=>{
+      recalculateRecord(week);
+    });
 }
 
 
-const {data,error} =
-await supabaseClient
-.from("weekly_records")
-.select("*")
-.eq("user_id",currentUser.id)
-.order("week",{ascending:true});
-
-
-if(error){
-
-console.error(error);
-
-weeks={};
-
-return;
-
-}
-
-
-weeks={};
-
-
-(data||[]).forEach(function(record){
-
-weeks[record.week]={
-id:record.id,
-date:record.record_date||"",
-startingGoods:
-record.starting_goods||[],
-startingGoodsValue:
-Number(record.starting_goods_value)||0,
-startingGoodsSaved:
-Array.isArray(record.starting_goods)&&
-record.starting_goods.length>0,
-remainingGoods:
-record.remaining_goods||[],
-remainingGoodsValue:
-Number(record.remaining_goods_value)||0,
-remainingGoodsSaved:
-!!record.remaining_goods_saved,
-balanceValue:0,
-soldUsedValue:0
-};
-
-});
-
-
-Object.keys(weeks)
-.forEach(function(week){
-
-recalculateRecord(week);
-
-});
-
-}
-
-
-/* =====================================================
+/* =========================================================
    BALANCE RECORDS
-===================================================== */
+========================================================= */
 
 function renderBalanceRecords(){
 
-const container=
-document.getElementById("balanceRecords");
+  const container =
+    $("balanceRecords");
 
+  if(!container){
+    return;
+  }
 
-if(!container){
+  container.innerHTML="";
 
-return;
+  const names =
+    Object.keys(weeks)
+      .sort(
+        (a,b)=>
+          weekNumber(a) -
+          weekNumber(b)
+      );
 
-}
+  if(!names.length){
 
+    container.innerHTML =
+      '<div class="empty">No Balance records yet.</div>';
 
-container.innerHTML="";
+    return;
+  }
 
+  names.forEach(week=>{
 
-const names=
-Object.keys(weeks)
-.sort(function(a,b){
+    const record =
+      weeks[week];
 
-return weekNumber(a)-
-weekNumber(b);
+    recalculateRecord(week);
 
-});
+    const bar =
+      document.createElement("div");
 
+    bar.className =
+      "balance-record";
 
-if(!names.length){
+    bar.innerHTML =
+      `
+      <div class="balance-left">
+        ${escapeHTML(week)}
+        <small>
+          ${
+            record.date
+              ? escapeHTML(record.date)
+              : "No date"
+          }
+        </small>
+      </div>
 
-container.innerHTML=
-'<div class="empty">No Balance records yet.</div>';
+      <div class="balance-amount">
+        ${money(record.balanceValue)}
+      </div>
+      `;
 
-return;
+    bar.onclick=()=>{
+      openExactBalance(week);
+    };
 
-}
-
-
-names.forEach(function(week){
-
-const record=
-weeks[week];
-
-
-recalculateRecord(week);
-
-
-const bar=
-document.createElement("div");
-
-bar.className=
-"balance-record";
-
-
-bar.innerHTML=
-'<div class="balance-left">'+
-escapeHTML(week)+
-'<small>'+
-(
-record.date
-?escapeHTML(record.date)
-:"No date"
-)+
-"</small>"+
-"</div>"+
-'<div class="balance-amount">'+
-money(record.balanceValue)+
-"</div>";
-
-
-bar.onclick=function(){
-
-openExactBalance(week);
-
-};
-
-
-container.appendChild(bar);
-
-});
-
+    container.appendChild(bar);
+  });
 }
 
 
 function openExactBalance(week){
 
-const goodsTab=
-document.querySelectorAll(".tab")[2];
+  const goodsTab =
+    document.querySelectorAll(".tab")[2];
 
+  showTab(
+    "goods",
+    goodsTab
+  );
 
-showTab(
-"goods",
-goodsTab
-);
+  $("weekSelect").value =
+    week;
 
+  selectedWeek =
+    week;
 
-document.getElementById("weekSelect")
-.value=week;
+  renderSavedRecords();
 
+  const details =
+    $("details-"+week.replace(" ","-"));
 
-selectedWeek=week;
+  if(details){
+    details.classList.add("open");
+  }
 
+  setTimeout(()=>{
 
-renderSavedRecords();
+    const balanceElement =
+      $("balance-"+week.replace(" ","-"));
 
+    if(balanceElement){
 
-const details=
-document.getElementById(
-"details-"+week.replace(" ","-")
-);
+      balanceElement.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+    }
 
-
-if(details){
-
-details.classList.add("open");
-
+  },150);
 }
 
 
-setTimeout(function(){
-
-const balanceElement=
-document.getElementById(
-"balance-"+week.replace(" ","-")
-);
-
-
-if(balanceElement){
-
-balanceElement.scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
-
-}
-
-},150);
-
-}
-
-
-/* =====================================================
+/* =========================================================
    SAVED WEEKLY RECORDS
-===================================================== */
+========================================================= */
 
 function renderSavedRecords(){
 
-const container=
-document.getElementById("savedRecords");
+  const container =
+    $("savedRecords");
+
+  if(!container){
+    return;
+  }
+
+  container.innerHTML="";
+
+  const names =
+    Object.keys(weeks)
+      .sort(
+        (a,b)=>
+          weekNumber(a) -
+          weekNumber(b)
+      );
+
+  if(!names.length){
+
+    container.innerHTML =
+      '<div class="empty">No weekly records saved yet.</div>';
+
+    return;
+  }
+
+  names.forEach(week=>{
+
+    const record =
+      weeks[week];
+
+    recalculateRecord(week);
+
+    const wrapper =
+      document.createElement("div");
+
+    const bar =
+      document.createElement("div");
+
+    bar.className =
+      "saved-record";
+
+    bar.innerHTML =
+      `
+      <div>
+        ${escapeHTML(week)}
+        <br>
+        <span>
+          ${
+            record.date
+              ? escapeHTML(record.date)
+              : "No date"
+          }
+        </span>
+      </div>
+
+      <div>View</div>
+      `;
+
+    const details =
+      document.createElement("div");
+
+    details.className =
+      "record-details";
+
+    details.id =
+      "details-"+week.replace(" ","-");
+
+    bar.onclick=()=>{
+      details.classList.toggle("open");
+    };
+
+    let html="";
+
+    /* Starting goods */
+
+    if(record.startingGoodsSaved){
+
+      html +=
+        `
+        <h3 style="font-size:15px;margin:5px 0;">
+          Starting Goods
+        </h3>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Good</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+
+            <tbody>
+        `;
+
+      record.startingGoods
+        .forEach(item=>{
+
+          const value =
+            (Number(item.price)||0) *
+            (Number(item.qty)||0);
+
+          html +=
+            `
+            <tr>
+              <td>${escapeHTML(item.name)}</td>
+              <td class="money">
+                ${money(item.price)}
+              </td>
+              <td>
+                ${Number(item.qty)||0}
+              </td>
+              <td class="money">
+                ${money(value)}
+              </td>
+            </tr>
+            `;
+        });
+
+      html +=
+        `
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-total">
+          Total:
+          ${money(record.startingGoodsValue)}
+        </div>
+        `;
+    }
 
 
-if(!container){
+    /* Remaining goods */
 
-return;
+    if(record.remainingGoodsSaved){
 
+      html +=
+        `
+        <h3 style="font-size:15px;margin:16px 0 5px;">
+          Remaining Goods
+        </h3>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Good</th>
+                <th>Price</th>
+                <th>Starting Qty</th>
+                <th>Remaining Qty</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+
+            <tbody>
+        `;
+
+      record.remainingGoods
+        .forEach(item=>{
+
+          const value =
+            (Number(item.price)||0) *
+            (Number(item.remainingQty)||0);
+
+          html +=
+            `
+            <tr>
+              <td>${escapeHTML(item.name)}</td>
+
+              <td class="money">
+                ${money(item.price)}
+              </td>
+
+              <td>
+                ${Number(item.startingQty)||0}
+              </td>
+
+              <td>
+                ${Number(item.remainingQty)||0}
+              </td>
+
+              <td class="money">
+                ${money(value)}
+              </td>
+            </tr>
+            `;
+        });
+
+      html +=
+        `
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-total">
+          Total:
+          ${money(record.remainingGoodsValue)}
+        </div>
+        `;
+
+      if(record.startingGoodsSaved){
+
+        html +=
+          `
+          <div class="sold">
+            Sold:
+            ${money(record.soldUsedValue)}
+          </div>
+          `;
+      }
+    }
+
+
+    /* Balance */
+
+    html +=
+      `
+      <div
+        class="balance-box record-anchor"
+        id="balance-${week.replace(" ","-")}">
+
+        <span>Balance</span>
+
+        <span>
+          ${money(record.balanceValue)}
+        </span>
+
+      </div>
+
+      <div class="record-buttons">
+      `;
+
+
+    if(record.startingGoodsSaved){
+
+      html +=
+        `
+        <button
+          type="button"
+          class="small-btn edit-btn"
+          onclick="event.stopPropagation();editStarting('${escapeHTML(week)}')">
+          EDIT STARTING
+        </button>
+
+        <button
+          type="button"
+          class="small-btn delete-btn"
+          onclick="event.stopPropagation();deleteStarting('${escapeHTML(week)}')">
+          DELETE
+        </button>
+        `;
+    }
+
+
+    if(record.remainingGoodsSaved){
+
+      html +=
+        `
+        <button
+          type="button"
+          class="small-btn edit-btn"
+          onclick="event.stopPropagation();editRemaining('${escapeHTML(week)}')">
+          EDIT REMAINING
+        </button>
+
+        <button
+          type="button"
+          class="small-btn delete-btn"
+          onclick="event.stopPropagation();deleteRemaining('${escapeHTML(week)}')">
+          DELETE
+        </button>
+        `;
+    }
+
+
+    html +=
+      `
+      </div>
+      `;
+
+    details.innerHTML =
+      html;
+
+    wrapper.appendChild(bar);
+    wrapper.appendChild(details);
+
+    container.appendChild(wrapper);
+  });
 }
 
 
-container.innerHTML="";
-
-
-const names=
-Object.keys(weeks)
-.sort(function(a,b){
-
-return weekNumber(a)-
-weekNumber(b);
-
-});
-
-
-if(!names.length){
-
-container.innerHTML=
-'<div class="empty">No weekly records saved yet.</div>';
-
-return;
-
-}
-
-
-names.forEach(function(week){
-
-const record=
-weeks[week];
-
-
-recalculateRecord(week);
-
-
-const wrapper=
-document.createElement("div");
-
-
-const bar=
-document.createElement("div");
-
-bar.className=
-"saved-record";
-
-
-bar.innerHTML=
-"<div>"+
-escapeHTML(week)+
-"<br><span>"+
-(
-record.date
-?escapeHTML(record.date)
-:"No date"
-)+
-"</span>"+
-"</div>"+
-"<div>View</div>";
-
-
-const details=
-document.createElement("div");
-
-details.className=
-"record-details";
-
-
-details.id=
-"details-"+week.replace(" ","-");
-
-
-bar.onclick=function(){
-
-details.classList.toggle("open");
-
-};
-
-
-let html="";
-
-
-if(record.startingGoodsSaved){
-
-html+=
-"<h3 style='font-size:15px;margin:5px 0;'>"+
-"Starting Goods"+
-"</h3>";
-
-
-html+=
-'<div class="table-wrap">'+
-"<table>"+
-"<thead>"+
-"<tr>"+
-"<th>Good</th>"+
-"<th>Price</th>"+
-"<th>Qty</th>"+
-"<th>Value</th>"+
-"</tr>"+
-"</thead>"+
-"<tbody>";
-
-
-record.startingGoods.forEach(function(item){
-
-const value=
-(Number(item.price)||0)*
-(Number(item.qty)||0);
-
-
-html+=
-"<tr>"+
-"<td>"+escapeHTML(item.name)+"</td>"+
-"<td class='money'>"+money(item.price)+"</td>"+
-"<td>"+(Number(item.qty)||0)+"</td>"+
-"<td class='money'>"+money(value)+"</td>"+
-"</tr>";
-
-});
-
-
-html+=
-"</tbody></table></div>";
-
-
-html+=
-'<div class="table-total">Total: '+
-money(record.startingGoodsValue)+
-"</div>";
-
-}
-
-
-if(record.remainingGoodsSaved){
-
-html+=
-"<h3 style='font-size:15px;margin:16px 0 5px;'>"+
-"Remaining Goods"+
-"</h3>";
-
-
-html+=
-'<div class="table-wrap">'+
-"<table>"+
-"<thead>"+
-"<tr>"+
-"<th>Good</th>"+
-"<th>Price</th>"+
-"<th>Starting Qty</th>"+
-"<th>Remaining Qty</th>"+
-"<th>Value</th>"+
-"</tr>"+
-"</thead>"+
-"<tbody>";
-
-
-record.remainingGoods.forEach(function(item){
-
-const value=
-(Number(item.price)||0)*
-(Number(item.remainingQty)||0);
-
-
-html+=
-"<tr>"+
-"<td>"+escapeHTML(item.name)+"</td>"+
-"<td class='money'>"+money(item.price)+"</td>"+
-"<td>"+(Number(item.startingQty)||0)+"</td>"+
-"<td>"+(Number(item.remainingQty)||0)+"</td>"+
-"<td class='money'>"+money(value)+"</td>"+
-"</tr>";
-
-});
-
-
-html+=
-"</tbody></table></div>";
-
-
-html+=
-'<div class="table-total">Total: '+
-money(record.remainingGoodsValue)+
-"</div>";
-
-
-if(record.startingGoodsSaved){
-
-html+=
-'<div class="sold">Sold: '+
-money(record.soldUsedValue)+
-"</div>";
-
-}
-
-}
-
-
-html+=
-'<div class="balance-box record-anchor" id="balance-'+
-week.replace(" ","-")+
-'">'+
-"<span>Balance</span>"+
-"<span>"+
-money(record.balanceValue)+
-"</span>"+
-"</div>";
-
-
-html+=
-'<div class="record-buttons">';
-
-
-if(record.startingGoodsSaved){
-
-html+=
-'<button class="small-btn edit-btn" onclick="event.stopPropagation();editStarting(\''+
-escapeHTML(week)+
-'\')">EDIT STARTING</button>';
-
-html+=
-'<button class="small-btn delete-btn" onclick="event.stopPropagation();deleteStarting(\''+
-escapeHTML(week)+
-'\')">DELETE</button>';
-
-}
-
-
-if(record.remainingGoodsSaved){
-
-html+=
-'<button class="small-btn edit-btn" onclick="event.stopPropagation();editRemaining(\''+
-escapeHTML(week)+
-'\')">EDIT REMAINING</button>';
-
-html+=
-'<button class="small-btn delete-btn" onclick="event.stopPropagation();deleteRemaining(\''+
-escapeHTML(week)+
-'\')">DELETE</button>';
-
-}
-
-
-html+=
-"</div>";
-
-
-details.innerHTML=
-html;
-
-
-wrapper.appendChild(bar);
-wrapper.appendChild(details);
-
-container.appendChild(wrapper);
-
-});
-
-}
-
-
-/* =====================================================
-   EDIT WEEKLY
-===================================================== */
+/* =========================================================
+   EDIT WEEKLY RECORDS
+========================================================= */
 
 function editStarting(week){
 
-document.getElementById("weekSelect")
-.value=week;
+  $("weekSelect").value =
+    week;
 
+  selectedWeek =
+    week;
 
-selectedWeek=week;
+  chooseRecordType("starting");
 
+  renderStartingEditor(
+    weeks[week]?.startingGoods || []
+  );
 
-chooseRecordType("starting");
+  hideStartingSavedStatus();
 
+  setTimeout(()=>{
 
-renderStartingEditor(
-weeks[week].startingGoods||[]
-);
+    $("startingCard")
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
 
-
-hideStartingSavedStatus();
-
-
-setTimeout(function(){
-
-document.getElementById("startingCard")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-},100);
-
+  },100);
 }
 
 
 function editRemaining(week){
 
-document.getElementById("weekSelect")
-.value=week;
+  $("weekSelect").value =
+    week;
 
+  selectedWeek =
+    week;
 
-selectedWeek=week;
+  chooseRecordType("remaining");
 
+  renderRemainingEditor(
+    weeks[week]?.remainingGoods || []
+  );
 
-chooseRecordType("remaining");
+  hideRemainingSavedStatus();
 
+  setTimeout(()=>{
 
-renderRemainingEditor(
-weeks[week].remainingGoods||[]
-);
+    $("remainingCard")
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
 
-
-hideRemainingSavedStatus();
-
-
-setTimeout(function(){
-
-document.getElementById("remainingCard")
-.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-},100);
-
+  },100);
 }
 
 
-/* =====================================================
-   DELETE STARTING
-===================================================== */
+/* =========================================================
+   DELETE STARTING GOODS
+========================================================= */
 
 async function deleteStarting(week){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
+    return;
+  }
 
-return;
+  if(!confirm(
+    "Delete Starting Goods for " +
+    week +
+    "? This will keep the Remaining Goods for this week."
+  )){
 
+    return;
+  }
+
+  if(!weeks[week]){
+    return;
+  }
+
+  const {error} =
+    await supabaseClient
+      .from("weekly_records")
+      .update({
+        starting_goods:[],
+        starting_goods_value:0,
+        updated_at:
+          new Date().toISOString()
+      })
+      .eq("user_id",currentUser.id)
+      .eq("week",week);
+
+  if(error){
+
+    alert(
+      "Could not delete Starting Goods: " +
+      friendlySupabaseError(error)
+    );
+
+    return;
+  }
+
+  weeks[week].startingGoods=[];
+  weeks[week].startingGoodsValue=0;
+  weeks[week].startingGoodsSaved=false;
+
+  recalculateRecord(week);
+
+  renderSavedRecords();
+  renderBalanceRecords();
+
+  if(selectedWeek===week){
+    loadSelectedWeek();
+  }
 }
 
 
-if(!confirm(
-"Delete Starting Goods for "+
-week+
-"? This will keep the Remaining Goods for this week."
-)){
-
-return;
-
-}
-
-
-if(!weeks[week]){
-
-return;
-
-}
-
-
-/*
-  IMPORTANT:
-  Only starting goods are cleared.
-  The entire weekly record is NOT deleted.
-*/
-
-const {error} =
-await supabaseClient
-.from("weekly_records")
-.update({
-starting_goods:[],
-starting_goods_value:0,
-updated_at:
-new Date().toISOString()
-})
-.eq("user_id",currentUser.id)
-.eq("week",week);
-
-
-if(error){
-
-alert(
-"Could not delete Starting Goods: "+
-error.message
-);
-
-return;
-
-}
-
-
-weeks[week].startingGoods=[];
-weeks[week].startingGoodsValue=0;
-weeks[week].startingGoodsSaved=false;
-
-
-recalculateRecord(week);
-
-
-renderSavedRecords();
-
-renderBalanceRecords();
-
-
-if(selectedWeek===week){
-
-loadSelectedWeek();
-
-}
-
-}
-
-
-/* =====================================================
-   DELETE REMAINING
-===================================================== */
+/* =========================================================
+   DELETE REMAINING GOODS
+========================================================= */
 
 async function deleteRemaining(week){
 
-if(!isActiveUser()){
+  if(!isActiveUser()){
+    return;
+  }
 
-return;
+  if(!confirm(
+    "Delete Remaining Goods for " +
+    week +
+    "?"
+  )){
 
+    return;
+  }
+
+  if(!weeks[week]){
+    return;
+  }
+
+  weeks[week].remainingGoodsSaved=false;
+  weeks[week].remainingGoods=[];
+  weeks[week].remainingGoodsValue=0;
+  weeks[week].soldUsedValue=0;
+
+  recalculateRecord(week);
+
+  const saved =
+    await saveWeekToCloud(week);
+
+  if(!saved){
+    return;
+  }
+
+  renderSavedRecords();
+  renderBalanceRecords();
+
+  if(selectedWeek===week){
+    loadSelectedWeek();
+  }
 }
 
 
-if(!confirm(
-"Delete Remaining Goods for "+
-week+
-"?"
-)){
-
-return;
-
-}
-
-
-if(!weeks[week]){
-
-return;
-
-}
-
-
-weeks[week].remainingGoodsSaved=false;
-
-weeks[week].remainingGoods=[];
-
-weeks[week].remainingGoodsValue=0;
-
-weeks[week].soldUsedValue=0;
-
-
-recalculateRecord(week);
-
-
-await saveWeekToCloud(week);
-
-
-renderSavedRecords();
-
-renderBalanceRecords();
-
-
-if(selectedWeek===week){
-
-loadSelectedWeek();
-
-}
-
-}
-
-
-/* =====================================================
+/* =========================================================
    ADMIN GOODS
-===================================================== */
+========================================================= */
 
 function renderAdminGoods(){
 
-const container=
-document.getElementById("adminGoods");
+  const container =
+    $("adminGoods");
 
+  if(!container){
+    return;
+  }
 
-if(!container){
+  container.innerHTML="";
 
-return;
+  if(!isAdmin()){
 
+    container.innerHTML =
+      '<div class="empty">Admin access required.</div>';
+
+    return;
+  }
+
+  if(!goods.length){
+
+    container.innerHTML =
+      '<div class="empty">No goods saved.</div>';
+
+    return;
+  }
+
+  goods.forEach(good=>{
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "good-admin";
+
+    row.innerHTML =
+      `
+      <div>
+        <strong>
+          ${escapeHTML(good.name)}
+        </strong>
+
+        <small>
+          ${money(good.price)}
+        </small>
+      </div>
+
+      <div style="display:flex;gap:6px;">
+
+        <button
+          type="button"
+          class="small-btn edit-btn"
+          style="flex:0 0 65px;"
+          onclick="editGood(${good.id})">
+          EDIT
+        </button>
+
+        <button
+          type="button"
+          class="small-btn delete-btn"
+          style="flex:0 0 70px;"
+          onclick="deleteGood(${good.id})">
+          DELETE
+        </button>
+
+      </div>
+      `;
+
+    container.appendChild(row);
+  });
 }
 
 
-container.innerHTML="";
-
-
-if(!isAdmin()){
-
-container.innerHTML=
-'<div class="empty">Admin access required.</div>';
-
-return;
-
-}
-
-
-if(!goods.length){
-
-container.innerHTML=
-'<div class="empty">No goods saved.</div>';
-
-return;
-
-}
-
-
-goods.forEach(function(good){
-
-const row=
-document.createElement("div");
-
-row.className=
-"good-admin";
-
-
-row.innerHTML=
-"<div>"+
-"<strong>"+
-escapeHTML(good.name)+
-"</strong>"+
-"<small>"+
-money(good.price)+
-"</small>"+
-"</div>"+
-'<div style="display:flex;gap:6px;">'+
-'<button class="small-btn edit-btn" style="flex:0 0 65px;" onclick="editGood('+good.id+')">EDIT</button>'+
-'<button class="small-btn delete-btn" style="flex:0 0 70px;" onclick="deleteGood('+good.id+')">DELETE</button>'+
-"</div>";
-
-
-container.appendChild(row);
-
-});
-
-}
-
-
-/* =====================================================
+/* =========================================================
    ADMIN ADD GOOD
-===================================================== */
+========================================================= */
 
 async function addGood(){
 
-if(!isAdmin()){
+  if(!isAdmin()){
 
-alert(
-"Admin access required."
-);
+    alert(
+      "Admin access required."
+    );
 
-return;
+    return;
+  }
 
+  const name =
+    $("newGoodName")
+      .value.trim();
+
+  const price =
+    Number(
+      $("newGoodPrice").value
+    ) || 0;
+
+  if(!name){
+
+    alert(
+      "Please enter the good name."
+    );
+
+    return;
+  }
+
+  if(price<=0){
+
+    alert(
+      "Please enter a valid price."
+    );
+
+    return;
+  }
+
+  const existing =
+    goods.find(
+      good=>
+        good.name.toLowerCase() ===
+        name.toLowerCase()
+    );
+
+  if(existing){
+
+    alert(
+      "This good already exists."
+    );
+
+    return;
+  }
+
+  const {error} =
+    await supabaseClient
+      .from("goods")
+      .insert({
+        user_id:currentUser.id,
+        name,
+        price
+      });
+
+  if(error){
+
+    alert(
+      "Could not add good: " +
+      friendlySupabaseError(error)
+    );
+
+    return;
+  }
+
+  $("newGoodName").value="";
+  $("newGoodPrice").value="";
+
+  await loadGoods();
+
+  renderAdminGoods();
+
+  alert(
+    "Good and price added successfully."
+  );
 }
 
 
-const name=
-document.getElementById("newGoodName")
-.value.trim();
-
-
-const price=
-Number(
-document.getElementById("newGoodPrice")
-.value
-)||0;
-
-
-if(!name){
-
-alert(
-"Please enter the good name."
-);
-
-return;
-
-}
-
-
-if(price<=0){
-
-alert(
-"Please enter a valid price."
-);
-
-return;
-
-}
-
-
-const existing=
-goods.find(function(good){
-
-return good.name.toLowerCase()===
-name.toLowerCase();
-
-});
-
-
-if(existing){
-
-alert(
-"This good already exists."
-);
-
-return;
-
-}
-
-
-const {error} =
-await supabaseClient
-.from("goods")
-.insert({
-user_id:currentUser.id,
-name:name,
-price:price
-});
-
-
-if(error){
-
-alert(
-"Could not add good: "+
-error.message
-);
-
-return;
-
-}
-
-
-document.getElementById("newGoodName")
-.value="";
-
-
-document.getElementById("newGoodPrice")
-.value="";
-
-
-await loadGoods();
-
-renderAdminGoods();
-
-
-alert(
-"Good and price added successfully."
-);
-
-}
-
-
-/* =====================================================
+/* =========================================================
    ADMIN EDIT GOOD
-===================================================== */
+========================================================= */
 
 async function editGood(id){
 
-if(!isAdmin()){
+  if(!isAdmin()){
 
-alert(
-"Admin access required."
-);
+    alert(
+      "Admin access required."
+    );
 
-return;
+    return;
+  }
 
+  const good =
+    goods.find(
+      item =>
+        Number(item.id) ===
+        Number(id)
+    );
+
+  if(!good){
+    return;
+  }
+
+  const newName =
+    prompt(
+      "Enter the new good name:",
+      good.name
+    );
+
+  if(newName===null){
+    return;
+  }
+
+  const newPriceText =
+    prompt(
+      "Enter the new price:",
+      good.price
+    );
+
+  if(newPriceText===null){
+    return;
+  }
+
+  const newPrice =
+    Number(newPriceText);
+
+  if(
+    !newName.trim() ||
+    newPrice<=0
+  ){
+
+    alert(
+      "Please enter a valid name and price."
+    );
+
+    return;
+  }
+
+  const duplicate =
+    goods.find(
+      item =>
+        Number(item.id)!==
+          Number(id) &&
+        item.name.toLowerCase()===
+          newName.trim().toLowerCase()
+    );
+
+  if(duplicate){
+
+    alert(
+      "Another good already uses that name."
+    );
+
+    return;
+  }
+
+  const {error} =
+    await supabaseClient
+      .from("goods")
+      .update({
+        name:newName.trim(),
+        price:newPrice
+      })
+      .eq("id",id);
+
+  if(error){
+
+    alert(
+      "Could not update good: " +
+      friendlySupabaseError(error)
+    );
+
+    return;
+  }
+
+  await loadGoods();
+
+  renderAdminGoods();
+
+  alert(
+    "Good and price updated successfully."
+  );
 }
 
 
-const good=
-goods.find(function(item){
-
-return Number(item.id)===
-Number(id);
-
-});
-
-
-if(!good){
-
-return;
-
-}
-
-
-const newName=
-prompt(
-"Enter the new good name:",
-good.name
-);
-
-
-if(newName===null){
-
-return;
-
-}
-
-
-const newPriceText=
-prompt(
-"Enter the new price:",
-good.price
-);
-
-
-if(newPriceText===null){
-
-return;
-
-}
-
-
-const newPrice=
-Number(newPriceText);
-
-
-if(
-!newName.trim() ||
-newPrice<=0
-){
-
-alert(
-"Please enter a valid name and price."
-);
-
-return;
-
-}
-
-
-const duplicate=
-goods.find(function(item){
-
-return Number(item.id)!==
-Number(id) &&
-item.name.toLowerCase()===
-newName.trim().toLowerCase();
-
-});
-
-
-if(duplicate){
-
-alert(
-"Another good already uses that name."
-);
-
-return;
-
-}
-
-
-const {error} =
-await supabaseClient
-.from("goods")
-.update({
-name:newName.trim(),
-price:newPrice
-})
-.eq("id",id);
-
-
-if(error){
-
-alert(
-"Could not update good: "+
-error.message
-);
-
-return;
-
-}
-
-
-await loadGoods();
-
-renderAdminGoods();
-
-
-alert(
-"Good and price updated successfully."
-);
-
-}
-
-
-/* =====================================================
+/* =========================================================
    ADMIN DELETE GOOD
-===================================================== */
+========================================================= */
 
 async function deleteGood(id){
 
-if(!isAdmin()){
+  if(!isAdmin()){
 
-alert(
-"Admin access required."
-);
+    alert(
+      "Admin access required."
+    );
 
-return;
+    return;
+  }
 
+  const good =
+    goods.find(
+      item =>
+        Number(item.id) ===
+        Number(id)
+    );
+
+  if(!good){
+    return;
+  }
+
+  if(!confirm(
+    "Delete " +
+    good.name +
+    "? This removes it from the official goods list."
+  )){
+
+    return;
+  }
+
+  const {error} =
+    await supabaseClient
+      .from("goods")
+      .delete()
+      .eq("id",id);
+
+  if(error){
+
+    alert(
+      "Could not delete good: " +
+      friendlySupabaseError(error)
+    );
+
+    return;
+  }
+
+  await loadGoods();
+
+  renderAdminGoods();
 }
 
 
-const good=
-goods.find(function(item){
-
-return Number(item.id)===
-Number(id);
-
-});
-
-
-if(!good){
-
-return;
-
-}
-
-
-if(!confirm(
-"Delete "+
-good.name+
-"? This removes it from the official goods list."
-)){
-
-return;
-
-}
-
-
-const {error} =
-await supabaseClient
-.from("goods")
-.delete()
-.eq("id",id);
-
-
-if(error){
-
-alert(
-"Could not delete good: "+
-error.message
-);
-
-return;
-
-}
-
-
-await loadGoods();
-
-renderAdminGoods();
-
-}
-
-
-/* =====================================================
+/* =========================================================
    ADMIN USERS
-===================================================== */
+========================================================= */
 
 async function loadAdminUsers(){
 
-if(!isAdmin()){
+  if(!isAdmin()){
+    return;
+  }
 
-return;
+  const container =
+    $("adminUsers");
 
+  container.innerHTML =
+    '<div class="loading">Loading users...</div>';
+
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .order("email",{ascending:true});
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="empty">
+        ${escapeHTML(
+          friendlySupabaseError(error)
+        )}
+      </div>`;
+
+    return;
+  }
+
+  container.innerHTML="";
+
+  if(!data || !data.length){
+
+    container.innerHTML =
+      '<div class="empty">No users found.</div>';
+
+    return;
+  }
+
+  data.forEach(profile=>{
+
+    const box =
+      document.createElement("div");
+
+    box.className =
+      "admin-user";
+
+    let statusClass =
+      "status-inactive";
+
+    if(profile.status==="pending"){
+      statusClass =
+        "status-pending";
+    }
+
+    if(profile.status==="active"){
+      statusClass =
+        "status-active";
+    }
+
+    box.innerHTML =
+      `
+      <strong>
+        ${escapeHTML(profile.email || "")}
+      </strong>
+
+      <small>
+        Name:
+        ${escapeHTML(
+          profile.full_name ||
+          "Not provided"
+        )}
+      </small>
+
+      <small>
+        Role:
+        ${escapeHTML(
+          profile.role ||
+          "user"
+        )}
+      </small>
+
+      <span class="status-badge ${statusClass}">
+        ${escapeHTML(
+          profile.status ||
+          "unknown"
+        )}
+      </span>
+      `;
+
+    if(
+      profile.id !==
+      currentUser.id
+    ){
+
+      const controls =
+        document.createElement("div");
+
+      controls.className =
+        "admin-user-controls";
+
+      const roleButton =
+        document.createElement("button");
+
+      roleButton.type =
+        "button";
+
+      roleButton.className =
+        "small-btn edit-btn";
+
+      roleButton.textContent =
+        profile.role === "admin"
+          ? "MAKE USER"
+          : "MAKE ADMIN";
+
+      roleButton.onclick=()=>{
+        changeUserRole(
+          profile.id,
+          profile.role === "admin"
+            ? "user"
+            : "admin"
+        );
+      };
+
+      const statusButton =
+        document.createElement("button");
+
+      statusButton.type =
+        "button";
+
+      if(profile.status==="pending"){
+
+        statusButton.className =
+          "small-btn edit-btn";
+
+        statusButton.textContent =
+          "ACCEPT";
+
+        statusButton.onclick=()=>{
+          changeUserStatus(
+            profile.id,
+            "active"
+          );
+        };
+
+      }else if(
+        profile.status==="active"
+      ){
+
+        statusButton.className =
+          "small-btn delete-btn";
+
+        statusButton.textContent =
+          "DEACTIVATE";
+
+        statusButton.onclick=()=>{
+          changeUserStatus(
+            profile.id,
+            "inactive"
+          );
+        };
+
+      }else{
+
+        statusButton.className =
+          "small-btn edit-btn";
+
+        statusButton.textContent =
+          "ACTIVATE";
+
+        statusButton.onclick=()=>{
+          changeUserStatus(
+            profile.id,
+            "active"
+          );
+        };
+      }
+
+      controls.appendChild(
+        roleButton
+      );
+
+      controls.appendChild(
+        statusButton
+      );
+
+      box.appendChild(
+        controls
+      );
+    }
+
+    container.appendChild(box);
+  });
 }
 
 
-const container=
-document.getElementById("adminUsers");
-
-
-container.innerHTML=
-'<div class="loading">Loading users...</div>';
-
-
-const {data,error} =
-await supabaseClient
-.from("profiles")
-.select("*")
-.order("email",{ascending:true});
-
-
-if(error){
-
-container.innerHTML=
-'<div class="empty">'+
-escapeHTML(error.message)+
-"</div>";
-
-return;
-
-}
-
-
-container.innerHTML="";
-
-
-if(!data || !data.length){
-
-container.innerHTML=
-'<div class="empty">No users found.</div>';
-
-return;
-
-}
-
-
-data.forEach(function(profile){
-
-const box=
-document.createElement("div");
-
-box.className=
-"admin-user";
-
-
-let statusClass=
-"status-inactive";
-
-
-if(profile.status==="pending"){
-
-statusClass=
-"status-pending";
-
-}else if(profile.status==="active"){
-
-statusClass=
-"status-active";
-
-}
-
-
-box.innerHTML=
-"<strong>"+
-escapeHTML(profile.email||"")+
-"</strong>"+
-
-"<small>"+
-"Name: "+
-escapeHTML(
-profile.full_name||
-"Not provided"
-)+
-"</small>"+
-
-"<small>"+
-"Role: "+
-escapeHTML(
-profile.role||
-"user"
-)+
-"</small>"+
-
-'<span class="status-badge '+
-statusClass+
-'">'+
-escapeHTML(
-profile.status||
-"unknown"
-)+
-"</span>";
-
-
-/*
-  Admin cannot change their own
-  account through these controls.
-*/
-
-if(profile.id!==currentUser.id){
-
-const controls=
-document.createElement("div");
-
-controls.className=
-"admin-user-controls";
-
-
-const roleButton=
-document.createElement("button");
-
-roleButton.className=
-"small-btn edit-btn";
-
-
-roleButton.textContent=
-profile.role==="admin"
-?"MAKE USER"
-:"MAKE ADMIN";
-
-
-roleButton.onclick=function(){
-
-changeUserRole(
-profile.id,
-profile.role==="admin"
-?"user"
-:"admin"
-);
-
-};
-
-
-const statusButton=
-document.createElement("button");
-
-
-if(profile.status==="pending"){
-
-statusButton.className=
-"small-btn edit-btn";
-
-statusButton.textContent=
-"ACCEPT";
-
-statusButton.onclick=function(){
-
-changeUserStatus(
-profile.id,
-"active"
-);
-
-};
-
-}else if(profile.status==="active"){
-
-statusButton.className=
-"small-btn delete-btn";
-
-statusButton.textContent=
-"DEACTIVATE";
-
-statusButton.onclick=function(){
-
-changeUserStatus(
-profile.id,
-"inactive"
-);
-
-};
-
-}else{
-
-statusButton.className=
-"small-btn edit-btn";
-
-statusButton.textContent=
-"ACTIVATE";
-
-statusButton.onclick=function(){
-
-changeUserStatus(
-profile.id,
-"active"
-);
-
-};
-
-}
-
-
-controls.appendChild(roleButton);
-
-controls.appendChild(statusButton);
-
-box.appendChild(controls);
-
-}
-
-
-container.appendChild(box);
-
-});
-
-}
-
-
-/* =====================================================
-   ADMIN CHANGE ROLE
-===================================================== */
+/* =========================================================
+   ADMIN ROLE
+========================================================= */
 
 async function changeUserRole(id,role){
 
-if(!isAdmin()){
+  if(!isAdmin()){
+    return;
+  }
 
-return;
+  if(!confirm(
+    "Change this user's role to " +
+    role +
+    "?"
+  )){
 
+    return;
+  }
+
+  const {error} =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        role
+      })
+      .eq("id",id);
+
+  if(error){
+
+    alert(
+      "Could not change role: " +
+      friendlySupabaseError(error)
+    );
+
+    return;
+  }
+
+  await loadAdminUsers();
 }
 
 
-if(!confirm(
-"Change this user's role to "+
-role+
-"?"
-)){
+/* =========================================================
+   ADMIN STATUS
+========================================================= */
 
-return;
+async function changeUserStatus(
+  id,
+  status
+){
 
+  if(!isAdmin()){
+    return;
+  }
+
+  const message =
+    status === "active"
+      ? "Accept and activate this user?"
+      : "Deactivate this user?";
+
+  if(!confirm(message)){
+    return;
+  }
+
+  const {error} =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        status
+      })
+      .eq("id",id);
+
+  if(error){
+
+    alert(
+      "Could not change status: " +
+      friendlySupabaseError(error)
+    );
+
+    return;
+  }
+
+  await loadAdminUsers();
 }
 
 
-const {error} =
-await supabaseClient
-.from("profiles")
-.update({
-role:role
-})
-.eq("id",id);
-
-
-if(error){
-
-alert(
-"Could not change role: "+
-error.message
-);
-
-return;
-
-}
-
-
-await loadAdminUsers();
-
-}
-
-
-/* =====================================================
-   ADMIN CHANGE STATUS
-===================================================== */
-
-async function changeUserStatus(id,status){
-
-if(!isAdmin()){
-
-return;
-
-}
-
-
-let message;
-
-
-if(status==="active"){
-
-message=
-"Accept and activate this user?";
-
-}else{
-
-message=
-"Deactivate this user?";
-
-}
-
-
-if(!confirm(message)){
-
-return;
-
-}
-
-
-const {error} =
-await supabaseClient
-.from("profiles")
-.update({
-status:status
-})
-.eq("id",id);
-
-
-if(error){
-
-alert(
-"Could not change status: "+
-error.message
-);
-
-return;
-
-}
-
-
-await loadAdminUsers();
-
-}
-
-
-/* =====================================================
+/* =========================================================
    LOGOUT
-===================================================== */
+========================================================= */
 
 async function logoutApp(){
 
-if(!currentUser){
+  if(!currentUser){
+    return;
+  }
 
-return;
+  if(!confirm(
+    "Log out of Oak & Cedar?"
+  )){
 
+    return;
+  }
+
+  const {error} =
+    await supabaseClient.auth.signOut();
+
+  if(error){
+
+    alert(
+      "Could not log out: " +
+      friendlySupabaseError(error)
+    );
+
+    return;
+  }
+
+  resetApplicationState(true);
 }
 
 
-if(!confirm(
-"Log out of Oak & Cedar?"
-)){
+/* =========================================================
+   RESET APP STATE
+========================================================= */
 
-return;
+function resetApplicationState(
+  showMessage=true
+){
 
+  currentUser=null;
+  currentProfile=null;
+
+  goods=[];
+  weeks={};
+  revenueRecords=[];
+
+  $("appTabs")
+    .classList.add("hidden");
+
+  $("adminTab")
+    .classList.add("hidden");
+
+  $("userBar")
+    .classList.add("hidden");
+
+  $("loginOverlay")
+    .classList.remove("hidden");
+
+  $("loginEmail").value="";
+  $("loginPassword").value="";
+  $("signupName").value="";
+
+  authMode="login";
+
+  $("loginTitle").textContent =
+    "Oak & Cedar";
+
+  $("loginSubtitle").textContent =
+    "Sign in to your Business Calculator";
+
+  $("signupNameBox")
+    .classList.add("hidden");
+
+  $("loginButton").textContent =
+    "LOGIN";
+
+  $("authToggle").textContent =
+    "Create a new account";
+
+  if(showMessage){
+    showLoginMessage("");
+  }
 }
 
 
-const {error} =
-await supabaseClient.auth.signOut();
+/* =========================================================
+   AUTH SESSION LISTENER
+========================================================= */
+
+function setupAuthListener(){
+
+  if(!supabaseReady){
+    return;
+  }
+
+  supabaseClient.auth.onAuthStateChange(
+    async function(event,session){
+
+      console.log(
+        "Supabase auth event:",
+        event
+      );
+
+      if(
+        event === "SIGNED_IN" &&
+        session?.user
+      ){
+
+        /*
+          handleAuth() already starts the application.
+          This listener only restores a session when the
+          page is reopened or refreshed.
+        */
+
+        if(
+          !currentUser &&
+          !appStarting
+        ){
+
+          setTimeout(async()=>{
+
+            if(
+              currentUser ||
+              appStarting
+            ){
+              return;
+            }
+
+            const approval =
+              await checkUserApproval(
+                session.user
+              );
+
+            if(!approval.allowed){
+
+              await supabaseClient
+                .auth
+                .signOut();
+
+              resetApplicationState(
+                false
+              );
+
+              showLoginMessage(
+                approval.reason
+              );
+
+              return;
+            }
+
+            await startApp(
+              session.user,
+              approval.profile
+            );
+
+          },0);
+        }
+      }
 
 
-if(error){
+      if(event === "SIGNED_OUT"){
 
-alert(
-"Could not log out: "+
-error.message
-);
+        if(!appStarting){
 
-return;
+          resetApplicationState(
+            false
+          );
+        }
+      }
 
+    }
+  );
 }
 
 
-resetApplicationState();
-
-}
-
-
-/* =====================================================
-   RESET APPLICATION STATE
-===================================================== */
-
-function resetApplicationState(){
-
-currentUser=null;
-
-currentProfile=null;
-
-goods=[];
-
-weeks={};
-
-revenueRecords=[];
-
-
-document.getElementById("appTabs")
-.classList.add("hidden");
-
-
-document.getElementById("adminTab")
-.classList.add("hidden");
-
-
-document.getElementById("userBar")
-.classList.add("hidden");
-
-
-document.getElementById("loginOverlay")
-.classList.remove("hidden");
-
-
-document.getElementById("loginEmail")
-.value="";
-
-
-document.getElementById("loginPassword")
-.value="";
-
-
-document.getElementById("signupName")
-.value="";
-
-
-authMode="login";
-
-
-document.getElementById("loginTitle")
-.textContent=
-"Oak & Cedar";
-
-
-document.getElementById("loginSubtitle")
-.textContent=
-"Sign in to your Business Calculator";
-
-
-document.getElementById("signupNameBox")
-.classList.add("hidden");
-
-
-document.getElementById("loginButton")
-.textContent=
-"LOGIN";
-
-
-document.getElementById("authToggle")
-.textContent=
-"Create a new account";
-
-
-showLoginMessage("");
-
-}
-
-
-/* =====================================================
-   AUTH SESSION
-===================================================== */
-
-supabaseClient.auth.onAuthStateChange(
-async function(event,session){
-
-if(event==="SIGNED_IN" &&
-session &&
-session.user){
-
-/*
-  Do not allow the authentication event
-  to bypass the approval check.
-*/
-
-if(!currentUser){
-
-setTimeout(async function(){
-
-if(!currentUser){
-
-const approval=
-await checkUserApproval(
-session.user
-);
-
-
-if(!approval.allowed){
-
-await supabaseClient.auth.signOut();
-
-currentUser=null;
-currentProfile=null;
-
-document.getElementById("appTabs")
-.classList.add("hidden");
-
-document.getElementById("userBar")
-.classList.add("hidden");
-
-document.getElementById("loginOverlay")
-.classList.remove("hidden");
-
-showLoginMessage(
-approval.reason
-);
-
-return;
-
-}
-
-
-await startApp(
-session.user,
-approval.profile
-);
-
-}
-
-},0);
-
-}
-
-}
-
-
-if(event==="SIGNED_OUT"){
-
-currentUser=null;
-
-currentProfile=null;
-
-document.getElementById("appTabs")
-.classList.add("hidden");
-
-document.getElementById("userBar")
-.classList.add("hidden");
-
-document.getElementById("adminTab")
-.classList.add("hidden");
-
-document.getElementById("loginOverlay")
-.classList.remove("hidden");
-
-}
-
-});
-
-
-/* =====================================================
-   START
-===================================================== */
+/* =========================================================
+   START PAGE
+========================================================= */
 
 document.addEventListener(
-"DOMContentLoaded",
-async function(){
+  "DOMContentLoaded",
+  async function(){
 
-createWeekOptions();
+    createWeekOptions();
 
-createRevenueWeekOptions();
+    createRevenueWeekOptions();
 
+    const ready =
+      initializeSupabase();
 
-const {
-data:{
-session
-}
-} =
-await supabaseClient.auth.getSession();
+    if(!ready){
+      return;
+    }
 
+    setupAuthListener();
 
-if(session && session.user){
+    try{
 
-const approval=
-await checkUserApproval(
-session.user
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .auth
+          .getSession();
+
+      if(error){
+
+        console.error(
+          "Session error:",
+          error
+        );
+
+        showLoginMessage(
+          friendlySupabaseError(error)
+        );
+
+        return;
+      }
+
+      if(
+        data?.session?.user
+      ){
+
+        const approval =
+          await checkUserApproval(
+            data.session.user
+          );
+
+        if(approval.allowed){
+
+          await startApp(
+            data.session.user,
+            approval.profile
+          );
+
+        }else{
+
+          await supabaseClient
+            .auth
+            .signOut();
+
+          resetApplicationState(
+            false
+          );
+
+          showLoginMessage(
+            approval.reason
+          );
+        }
+
+      }else{
+
+        $("loginOverlay")
+          .classList.remove("hidden");
+      }
+
+    }catch(error){
+
+      console.error(
+        "Startup error:",
+        error
+      );
+
+      showLoginMessage(
+        friendlySupabaseError(error)
+      );
+    }
+
+  }
 );
-
-
-if(approval.allowed){
-
-await startApp(
-session.user,
-approval.profile
-);
-
-}else{
-
-await supabaseClient.auth.signOut();
-
-currentUser=null;
-currentProfile=null;
-
-document.getElementById("appTabs")
-.classList.add("hidden");
-
-document.getElementById("userBar")
-.classList.add("hidden");
-
-document.getElementById("loginOverlay")
-.classList.remove("hidden");
-
-showLoginMessage(
-approval.reason
-);
-
-}
-
-}else{
-
-document.getElementById("loginOverlay")
-.classList.remove("hidden");
-
-}
-
-});
 
 </script>
 
