@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oak & Cedar Business Calculator</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
@@ -22,86 +15,215 @@
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(
-    135deg,
-    #eef2ee,
-    #dfe6df
-  );
+  background:linear-gradient(135deg,#eef2ee,#dfe6df);
   color:#24452d;
 }
 
-header{
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.container{
+  max-width:720px;
+  margin:auto;
+  padding-bottom:40px;
+}
+
+/* HEADER */
+
+.header{
   background:#24452d;
   color:white;
-  padding:16px;
+  padding:18px 15px;
   display:flex;
   align-items:center;
-  gap:12px;
-  position:sticky;
-  top:0;
-  z-index:20;
+  gap:13px;
 }
 
 .logo{
   width:58px;
   height:58px;
-  border:2px solid white;
+  min-width:58px;
+  border:3px solid white;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:bold;
-  font-size:19px;
-  flex-shrink:0;
+  font-size:20px;
+  letter-spacing:-1px;
 }
 
-.header-text h1{
-  margin:0;
-  font-size:22px;
+.header-title{
+  font-size:24px;
+  font-weight:bold;
 }
 
-.header-text p{
-  margin:3px 0 0;
+.header-subtitle{
   font-size:13px;
   opacity:.85;
+  margin-top:3px;
 }
 
-.container{
+/* LOGIN */
+
+.login-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-card{
   width:100%;
-  max-width:720px;
-  margin:auto;
+  max-width:430px;
+  background:white;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+
+.login-logo{
+  width:70px;
+  height:70px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  background:#24452d;
+  color:white;
+  border:4px solid #6b8e58;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  font-weight:bold;
+}
+
+.login-title{
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+  color:#24452d;
+}
+
+.login-subtitle{
+  text-align:center;
+  color:#667066;
+  font-size:14px;
+  margin:6px 0 22px;
+}
+
+.form-group{
+  margin-bottom:14px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+  color:#24452d;
+}
+
+.form-group input,
+.form-group select,
+.input{
+  width:100%;
+  border:1px solid #cbd6cb;
+  border-radius:9px;
   padding:12px;
+  outline:none;
+  background:white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.input:focus{
+  border-color:#6b8e58;
+}
+
+.main-btn{
+  width:100%;
+  border:0;
+  background:#24452d;
+  color:white;
+  padding:13px;
+  border-radius:9px;
+  font-weight:bold;
+  margin-top:5px;
+}
+
+.main-btn:hover{
+  background:#1c3824;
+}
+
+.secondary-btn{
+  width:100%;
+  border:0;
+  background:#6b8e58;
+  color:white;
+  padding:12px;
+  border-radius:9px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.login-toggle{
+  text-align:center;
+  margin-top:16px;
+  color:#527a58;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.login-message{
+  margin-top:12px;
+  text-align:center;
+  font-size:13px;
+  color:#a33;
+}
+
+/* APP */
+
+#app{
+  display:none;
 }
 
 .tabs{
   position:sticky;
-  top:90px;
-  z-index:10;
-  background:#eef2ee;
-  display:flex;
-  gap:6px;
-  padding:8px 0;
+  top:0;
+  z-index:20;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:white;
+  border-bottom:1px solid #d1dbd1;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
 
-.tab-btn{
-  flex:1;
-  border:none;
-  padding:12px 5px;
-  border-radius:8px;
-  background:#edf4eb;
-  color:#24452d;
+.tab{
+  padding:13px 5px;
+  border:0;
+  background:white;
+  color:#527a58;
   font-weight:bold;
-  cursor:pointer;
   font-size:13px;
 }
 
-.tab-btn.active{
-  background:#6b8e58;
-  color:white;
+.tab.active{
+  background:#edf4eb;
+  color:#24452d;
+  border-bottom:3px solid #6b8e58;
 }
 
 .section{
   display:none;
+  padding:15px;
 }
 
 .section.active{
@@ -110,51 +232,17 @@ header{
 
 .card{
   background:white;
-  border-radius:12px;
+  border-radius:14px;
   padding:16px;
-  margin-bottom:14px;
-  box-shadow:0 3px 12px rgba(36,69,45,.10);
+  margin-bottom:15px;
+  box-shadow:0 4px 15px rgba(0,0,0,.07);
 }
 
-.card h2{
-  margin:0 0 14px;
+.card-title{
   color:#24452d;
   font-size:18px;
-}
-
-.card h3{
-  color:#24452d;
-  font-size:15px;
-  margin:18px 0 10px;
-}
-
-label{
-  display:block;
-  font-size:13px;
   font-weight:bold;
-  margin-bottom:6px;
-  color:#24452d;
-}
-
-input,
-select{
-  width:100%;
-  padding:12px;
-  border:1px solid #cbd6ca;
-  border-radius:8px;
-  font-size:15px;
-  background:white;
-  color:#24452d;
-  outline:none;
-}
-
-input:focus,
-select:focus{
-  border-color:#6b8e58;
-}
-
-.field{
-  margin-bottom:12px;
+  margin-bottom:14px;
 }
 
 .grid{
@@ -163,63 +251,89 @@ select:focus{
   gap:10px;
 }
 
-button{
-  border:none;
-  border-radius:8px;
-  padding:12px 15px;
-  cursor:pointer;
-  font-weight:bold;
-  font-size:13px;
+.full{
+  grid-column:1/-1;
 }
 
-.primary{
+.field{
+  margin-bottom:11px;
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:5px;
+  color:#527a58;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ccd7cc;
+  border-radius:8px;
+  outline:none;
+  background:white;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:#6b8e58;
+}
+
+.calculate-btn,
+.save-btn{
+  width:100%;
+  border:0;
+  padding:12px;
+  border-radius:9px;
   background:#6b8e58;
   color:white;
+  font-weight:bold;
+  margin-top:5px;
 }
 
-.secondary{
-  background:#527a58;
-  color:white;
-}
-
-.danger{
-  background:#a94442;
-  color:white;
-}
-
-.light{
-  background:#edf4eb;
-  color:#24452d;
-}
-
-.full{
+.reset-btn{
   width:100%;
+  border:0;
+  padding:11px;
+  border-radius:9px;
+  background:#edf2ed;
+  color:#24452d;
+  font-weight:bold;
+  margin-top:9px;
 }
 
-.button-row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+.logout-btn{
+  width:100%;
+  border:0;
+  padding:11px;
+  border-radius:9px;
+  background:#24452d;
+  color:white;
+  font-weight:bold;
   margin-top:10px;
 }
 
 .summary{
-  margin-top:15px;
   background:#edf4eb;
   border-radius:10px;
-  padding:12px;
+  overflow:hidden;
+  margin-top:15px;
 }
 
 .summary-row{
   display:flex;
   justify-content:space-between;
   gap:10px;
-  padding:9px 0;
-  border-bottom:1px solid #d6e1d5;
+  padding:11px 12px;
+  border-bottom:1px solid #d8e3d8;
+  font-size:14px;
 }
 
 .summary-row:last-child{
-  border-bottom:none;
+  border-bottom:0;
 }
 
 .summary-row strong{
@@ -227,133 +341,66 @@ button{
 }
 
 .profit{
+  background:#dcebd9;
+  font-size:16px;
+}
+
+.profit strong{
   font-size:18px;
-  font-weight:bold;
 }
 
-.info{
-  background:#edf2ed;
-  border-left:4px solid #6b8e58;
-  padding:11px;
-  border-radius:7px;
-  font-size:13px;
-  line-height:1.5;
-  margin-top:10px;
-}
+/* CEDI */
 
-.hidden{
-  display:none !important;
-}
-
-.login-screen{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(
-    135deg,
-    #eef2ee,
-    #dfe6df
-  );
-  display:flex;
+.cedi-row{
+  display:grid;
+  grid-template-columns:70px 1fr 1fr;
+  gap:8px;
   align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:1000;
-}
-
-.login-card{
-  width:100%;
-  max-width:420px;
-  background:white;
-  border-radius:14px;
-  padding:25px;
-  box-shadow:0 5px 25px rgba(36,69,45,.15);
-}
-
-.login-logo{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:#24452d;
-  color:white;
-  border:3px solid #6b8e58;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 12px;
-  font-size:22px;
-  font-weight:bold;
-}
-
-.login-card h1{
-  text-align:center;
-  color:#24452d;
-  margin:5px 0;
-}
-
-.login-card p{
-  text-align:center;
-  color:#527a58;
-  margin-bottom:20px;
-  font-size:13px;
-}
-
-.status{
-  padding:10px;
-  border-radius:8px;
-  background:#edf4eb;
-  color:#24452d;
-  margin-bottom:12px;
-  font-size:13px;
-}
-
-.good-row,
-.record-row,
-.week-row{
-  background:#edf4eb;
-  padding:11px;
-  border-radius:9px;
   margin-bottom:8px;
 }
 
-.good-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.good-info{
-  flex:1;
-}
-
-.good-name{
+.cedi-denom{
   font-weight:bold;
   color:#24452d;
 }
 
-.good-price{
-  margin-top:3px;
-  font-size:13px;
-  color:#527a58;
+.cedi-row input{
+  width:100%;
+  padding:9px;
+  border:1px solid #ccd7cc;
+  border-radius:7px;
 }
 
-.delete-btn{
-  background:#a94442;
-  color:white;
-  padding:8px 10px;
-  font-size:11px;
+.cedi-total{
+  text-align:right;
+  font-weight:bold;
+  color:#24452d;
 }
 
-.choice-row{
+.words{
+  background:#edf4eb;
+  border-radius:9px;
+  padding:12px;
+  margin-top:12px;
+  font-size:14px;
+}
+
+/* WEEKLY GOODS */
+
+.choice-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:8px;
+  gap:9px;
+  margin-bottom:15px;
 }
 
 .choice-btn{
-  background:#edf4eb;
+  border:1px solid #cbd8cb;
+  background:#edf2ed;
   color:#24452d;
-  border:1px solid #cbd8c9;
+  padding:11px;
+  border-radius:8px;
+  font-weight:bold;
 }
 
 .choice-btn.active{
@@ -361,878 +408,672 @@ button{
   color:white;
 }
 
-.item-row{
+.goods-row{
+  display:grid;
+  grid-template-columns:1.5fr .8fr .7fr auto;
+  gap:7px;
+  margin-bottom:9px;
+  align-items:center;
+}
+
+.goods-row select,
+.goods-row input{
+  width:100%;
+  min-width:0;
+  padding:9px;
+  border:1px solid #ccd7cc;
+  border-radius:7px;
+}
+
+.remove-btn{
+  border:0;
+  background:#edf2ed;
+  color:#24452d;
+  width:34px;
+  height:34px;
+  border-radius:7px;
+  font-weight:bold;
+}
+
+.add-row-btn{
+  border:1px solid #6b8e58;
+  background:white;
+  color:#527a58;
+  padding:9px 12px;
+  border-radius:8px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.saved-status{
   background:#edf4eb;
-  padding:10px;
+  padding:11px;
+  border-radius:8px;
+  margin-top:10px;
+  font-size:13px;
+  color:#24452d;
+}
+
+.edit-btn{
+  border:0;
+  background:#527a58;
+  color:white;
+  padding:8px 12px;
+  border-radius:7px;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.balance-box{
+  background:#edf4eb;
+  border-radius:10px;
+  padding:13px;
+  margin-top:10px;
+}
+
+.balance-line{
+  display:flex;
+  justify-content:space-between;
+  padding:6px 0;
+  border-bottom:1px solid #d8e3d8;
+}
+
+.balance-line:last-child{
+  border-bottom:0;
+}
+
+/* ADMIN */
+
+.admin-good{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  padding:11px;
+  border-bottom:1px solid #e0e7e0;
+}
+
+.admin-good:last-child{
+  border-bottom:0;
+}
+
+.admin-good-name{
+  font-weight:bold;
+  color:#24452d;
+}
+
+.admin-good-price{
+  font-size:13px;
+  color:#527a58;
+}
+
+.delete-btn{
+  border:0;
+  background:#edf2ed;
+  color:#24452d;
+  border-radius:7px;
+  padding:7px 9px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.record{
+  border:1px solid #d5dfd5;
   border-radius:9px;
   margin-bottom:9px;
+  overflow:hidden;
 }
 
-.item-grid{
-  display:grid;
-  grid-template-columns:1.4fr .8fr .7fr auto;
-  gap:6px;
-  align-items:end;
-}
-
-.item-grid input,
-.item-grid select{
-  padding:10px 7px;
-  font-size:13px;
-}
-
-.remove-item{
-  background:#a94442;
-  color:white;
-  padding:10px;
-}
-
-.small{
-  font-size:12px;
-}
-
-.amount-words{
-  margin-top:10px;
-  padding:10px;
-  border-radius:8px;
+.record-header{
+  padding:11px;
   background:#edf4eb;
+  font-weight:bold;
+  color:#24452d;
+  cursor:pointer;
+}
+
+.record-body{
+  padding:11px;
+  display:none;
   font-size:13px;
-  line-height:1.5;
+}
+
+.record-body.show{
+  display:block;
+}
+
+.record-delete{
+  margin-top:9px;
+  border:0;
+  background:#edf2ed;
+  color:#24452d;
+  padding:7px 10px;
+  border-radius:7px;
+  font-weight:bold;
+}
+
+.info{
+  background:#edf2ed;
+  border-radius:9px;
+  padding:11px;
+  margin-top:10px;
+  font-size:13px;
+  color:#527a58;
 }
 
 .empty{
   text-align:center;
-  padding:15px;
-  color:#527a58;
-  font-size:13px;
+  padding:18px;
+  color:#777;
+  font-size:14px;
 }
 
-@media(max-width:600px){
+.hidden{
+  display:none !important;
+}
 
+@media(max-width:520px){
   .grid{
     grid-template-columns:1fr;
   }
 
-  .item-grid{
-    grid-template-columns:1fr 1fr;
+  .full{
+    grid-column:auto;
   }
 
-  .item-grid select{
-    grid-column:1 / -1;
+  .goods-row{
+    grid-template-columns:1.3fr .7fr .6fr auto;
   }
 
-  .remove-item{
-    grid-column:2;
+  .header-title{
+    font-size:21px;
   }
 
-  .tabs{
-    top:90px;
+  .tab{
+    font-size:12px;
   }
-
-  .tab-btn{
-    font-size:11px;
-    padding:11px 3px;
-  }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- LOGIN SCREEN -->
 
-<div
-  id="loginScreen"
-  class="login-screen"
->
+<div id="loginScreen" class="login-screen">
 
   <div class="login-card">
 
-    <div class="login-logo">
-      O&C
-    </div>
+    <div class="login-logo">O&C</div>
 
-    <h1>Oak & Cedar</h1>
+    <div class="login-title">Oak & Cedar</div>
+    <div class="login-subtitle">Business Calculator</div>
 
-    <p>
-      Business Calculator
-    </p>
+    <div id="loginForm">
 
-    <div
-      id="loginStatus"
-      class="status hidden"
-    ></div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email">
+      </div>
 
-    <div class="field">
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password">
+      </div>
 
-      <label>
-        Email
-      </label>
+      <button class="main-btn" onclick="loginUser()">LOGIN</button>
 
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="Enter your email"
-      >
+      <div class="login-toggle" onclick="showSignup()">
+        Create a new account
+      </div>
 
     </div>
 
-    <div class="field">
+    <div id="signupForm" class="hidden">
 
-      <label>
-        Password
-      </label>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="signupName" placeholder="Enter your full name">
+      </div>
 
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Enter your password"
-      >
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="Enter your email">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signupPassword" placeholder="Create a password">
+      </div>
+
+      <button class="main-btn" onclick="createAccount()">CREATE ACCOUNT</button>
+
+      <div class="login-toggle" onclick="showLogin()">
+        Back to login
+      </div>
 
     </div>
 
-    <button
-      id="loginButton"
-      class="primary full"
-      onclick="loginApp()"
-    >
-      LOGIN
-    </button>
-
-    <button
-      id="createButton"
-      class="light full"
-      onclick="createAccount()"
-      style="margin-top:8px"
-    >
-      CREATE ACCOUNT
-    </button>
+    <div id="loginMessage" class="login-message"></div>
 
   </div>
 
 </div>
 
 
-<header>
+<!-- MAIN APP -->
 
-  <div class="logo">
-    O&C
-  </div>
+<div id="app">
 
-  <div class="header-text">
+  <div class="container">
 
-    <h1>
-      Oak & Cedar
-    </h1>
+    <div class="header">
 
-    <p>
-      Business Calculator
-    </p>
+      <div class="logo">O&C</div>
 
-  </div>
-
-</header>
-
-
-<div class="container">
-
-  <!-- TABS -->
-
-  <div class="tabs">
-
-    <button
-      id="tabRevenue"
-      class="tab-btn active"
-      onclick="showTab('revenue')"
-    >
-      Revenue
-    </button>
-
-    <button
-      id="tabCedi"
-      class="tab-btn"
-      onclick="showTab('cedi')"
-    >
-      Cedi
-    </button>
-
-    <button
-      id="tabGoods"
-      class="tab-btn"
-      onclick="showTab('goods')"
-    >
-      Goods
-    </button>
-
-    <button
-      id="tabAdmin"
-      class="tab-btn hidden"
-      onclick="showTab('admin')"
-    >
-      Admin
-    </button>
-
-  </div>
-
-
-  <!-- ================= REVENUE ================= -->
-
-  <section
-    id="revenue"
-    class="section active"
-  >
-
-    <div class="card">
-
-      <h2>
-        Revenue Calculator
-      </h2>
-
-      <div class="grid">
-
-        <div class="field">
-
-          <label>
-            Bank 1
-          </label>
-
-          <input
-            id="bank1"
-            type="number"
-            min="0"
-            placeholder="0"
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Bank 2
-          </label>
-
-          <input
-            id="bank2"
-            type="number"
-            min="0"
-            placeholder="0"
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Bank 3
-          </label>
-
-          <input
-            id="bank3"
-            type="number"
-            min="0"
-            placeholder="0"
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Cash at Hand
-          </label>
-
-          <input
-            id="cash"
-            type="number"
-            min="0"
-            placeholder="0"
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Expenses
-          </label>
-
-          <input
-            id="expenses"
-            type="number"
-            min="0"
-            placeholder="0"
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Total Goods
-          </label>
-
-          <input
-            id="totalGoods"
-            type="number"
-            min="0"
-            placeholder="0"
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Remaining Goods
-          </label>
-
-          <input
-            id="remainingGoods"
-            type="number"
-            min="0"
-            placeholder="0"
-          >
-
-        </div>
-
-      </div>
-
-      <div class="button-row">
-
-        <button
-          class="primary"
-          onclick="calculateRevenue()"
-        >
-          CALCULATE
-        </button>
-
-        <button
-          class="light"
-          onclick="resetRevenue()"
-        >
-          RESET
-        </button>
-
-      </div>
-
-      <div
-        id="revenueSummary"
-        class="summary"
-      >
-
-        <div class="summary-row">
-          <span>Total Banks</span>
-          <strong id="outTotalBanks">GH₵0.00</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Total Bank & Cash</span>
-          <strong id="outTotalBankCash">GH₵0.00</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Remaining Goods</span>
-          <strong id="outRemainingGoods">GH₵0.00</strong>
-        </div>
-
-        <div class="summary-row">
-          <span>Goods After Expenses</span>
-          <strong id="outGoodsAfterExpenses">GH₵0.00</strong>
-        </div>
-
-        <div class="summary-row profit">
-          <span>TOTAL PROFIT</span>
-          <strong id="outProfit">GH₵0.00</strong>
-        </div>
-
+      <div>
+        <div class="header-title">Oak & Cedar</div>
+        <div class="header-subtitle">Business Calculator</div>
       </div>
 
     </div>
 
 
-    <div class="card">
+    <!-- TABS -->
 
-      <h2>
-        Save Revenue Record
-      </h2>
+    <div class="tabs">
 
-      <div class="field">
+      <button class="tab active" id="tabRevenue" onclick="showTab('revenue')">
+        Revenue
+      </button>
 
-        <label>
-          Week
-        </label>
+      <button class="tab" id="tabCedi" onclick="showTab('cedi')">
+        Cedi
+      </button>
 
-        <select id="revenueWeek"></select>
+      <button class="tab" id="tabGoods" onclick="showTab('goods')">
+        Goods
+      </button>
+
+      <button class="tab hidden" id="tabAdmin" onclick="showTab('admin')">
+        Admin
+      </button>
+
+    </div>
+
+
+    <!-- REVENUE -->
+
+    <section id="revenue" class="section active">
+
+      <div class="card">
+
+        <div class="card-title">Revenue Calculator</div>
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Bank 1</label>
+            <input type="number" id="bank1" min="0" placeholder="0">
+          </div>
+
+          <div class="field">
+            <label>Bank 2</label>
+            <input type="number" id="bank2" min="0" placeholder="0">
+          </div>
+
+          <div class="field">
+            <label>Bank 3</label>
+            <input type="number" id="bank3" min="0" placeholder="0">
+          </div>
+
+          <div class="field">
+            <label>Cash at Hand</label>
+            <input type="number" id="cash" min="0" placeholder="0">
+          </div>
+
+          <div class="field">
+            <label>Expenses</label>
+            <input type="number" id="expenses" min="0" placeholder="0">
+          </div>
+
+          <div class="field">
+            <label>Total Goods</label>
+            <input type="number" id="totalGoods" min="0" placeholder="0">
+          </div>
+
+          <div class="field full">
+            <label>Remaining Goods</label>
+            <input type="number" id="remainingGoods" min="0" placeholder="0">
+          </div>
+
+        </div>
+
+        <button class="calculate-btn" onclick="calculateRevenue()">
+          CALCULATE
+        </button>
+
+        <div id="revenueSummary" class="summary">
+
+          <div class="summary-row">
+            <span>Total Banks</span>
+            <strong id="outBanks">GH₵0.00</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Total Bank & Cash</span>
+            <strong id="outBankCash">GH₵0.00</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Remaining Goods</span>
+            <strong id="outRemaining">GH₵0.00</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Goods After Expenses</span>
+            <strong id="outGoodsAfter">GH₵0.00</strong>
+          </div>
+
+          <div class="summary-row profit">
+            <span>TOTAL PROFIT</span>
+            <strong id="outProfit">GH₵0.00</strong>
+          </div>
+
+        </div>
+
+        <button class="save-btn" onclick="openRevenueSave()">
+          SAVE REVENUE RECORD
+        </button>
+
+        <button class="reset-btn" onclick="resetRevenue()">
+          RESET
+        </button>
+
+        <button class="logout-btn" onclick="logoutApp()">
+          LOGOUT
+        </button>
 
       </div>
 
-      <div class="field">
 
-        <label>
-          Start Date
-        </label>
+      <!-- SAVE REVENUE -->
 
-        <input
-          id="revenueStartDate"
-          type="date"
-          onchange="updateRevenueEndDate()"
-        >
+      <div id="revenueSaveCard" class="card hidden">
 
-      </div>
+        <div class="card-title">Save Revenue Record</div>
 
-      <div class="field">
+        <div class="field">
+          <label>Week</label>
+          <select id="revenueWeek"></select>
+        </div>
 
-        <label>
-          To Date
-        </label>
+        <div class="field">
+          <label>Start Date</label>
+          <input type="date" id="revenueStartDate" onchange="updateRevenueEndDate()">
+        </div>
 
-        <input
-          id="revenueEndDate"
-          type="date"
-          readonly
-        >
+        <div class="field">
+          <label>To Date</label>
+          <input type="date" id="revenueEndDate" readonly>
+        </div>
 
-      </div>
+        <div class="info">
+          The period covers 5 days, including the selected start date.
+        </div>
 
-      <div class="info">
-        The period covers 5 days, starting from the selected start date.
-      </div>
-
-      <div class="button-row">
-
-        <button
-          class="primary"
-          onclick="saveRevenueRecord()"
-        >
+        <button class="save-btn" onclick="saveRevenueRecord()">
           SAVE RECORD
         </button>
 
-        <button
-          class="light"
-          onclick="cancelRevenueSave()"
-        >
+        <button class="reset-btn" onclick="closeRevenueSave()">
           CANCEL
         </button>
 
       </div>
 
-    </div>
 
+      <!-- SAVED REVENUE RECORDS -->
 
-    <div class="card">
+      <div class="card">
 
-      <h2>
-        Saved Revenue Records
-      </h2>
+        <div class="card-title">Saved Revenue Records</div>
 
-      <div id="savedRevenueRecords"></div>
-
-    </div>
-
-
-    <div class="card">
-
-      <button
-        class="danger full"
-        onclick="logoutApp()"
-      >
-        LOGOUT
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= CEDI ================= -->
-
-  <section
-    id="cedi"
-    class="section"
-  >
-
-    <div class="card">
-
-      <h2>
-        Ghana Cedi Calculator
-      </h2>
-
-      <div id="cediRows"></div>
-
-      <button
-        class="primary full"
-        onclick="calculateCedi()"
-        style="margin-top:10px"
-      >
-        CALCULATE
-      </button>
-
-      <div class="summary">
-
-        <div class="summary-row">
-
-          <span>
-            TOTAL CASH
-          </span>
-
-          <strong id="cediTotal">
-            GH₵0.00
-          </strong>
-
-        </div>
+        <div id="revenueRecords"></div>
 
       </div>
 
-      <div
-        id="amountWords"
-        class="amount-words"
-      >
-        Amount in Words: Zero Ghana Cedis
-      </div>
-
-    </div>
-
-  </section>
+    </section>
 
 
-  <!-- ================= GOODS ================= -->
+    <!-- CEDI -->
 
-  <section
-    id="goods"
-    class="section"
-  >
+    <section id="cedi" class="section">
 
-    <div class="card">
+      <div class="card">
 
-      <h2>
-        Weekly Goods Recording
-      </h2>
+        <div class="card-title">Cedi Calculator</div>
 
-      <div class="grid">
+        <div id="cediRows"></div>
 
-        <div class="field">
-
-          <label>
-            Select Week
-          </label>
-
-          <select
-            id="goodsWeek"
-            onchange="loadSelectedWeek()"
-          ></select>
-
-        </div>
-
-        <div class="field">
-
-          <label>
-            Date
-          </label>
-
-          <input
-            id="goodsDate"
-            type="date"
-          >
-
-        </div>
-
-      </div>
-
-      <div class="field">
-
-        <label>
-          Previous Week Remaining Goods
-        </label>
-
-        <input
-          id="previousRemaining"
-          type="number"
-          readonly
-          value="0"
-        >
-
-      </div>
-
-      <h3>
-        What do you want to record?
-      </h3>
-
-      <div class="choice-row">
-
-        <button
-          id="startingChoice"
-          class="choice-btn active"
-          onclick="selectGoodsMode('starting')"
-        >
-          Starting Goods
+        <button class="calculate-btn" onclick="calculateCedi()">
+          CALCULATE
         </button>
 
-        <button
-          id="remainingChoice"
-          class="choice-btn"
-          onclick="selectGoodsMode('remaining')"
-        >
-          Remaining Goods
-        </button>
+        <div class="summary">
+
+          <div class="summary-row">
+            <span>TOTAL CASH</span>
+            <strong id="cediGrandTotal">GH₵0.00</strong>
+          </div>
+
+        </div>
+
+        <div class="words">
+          <strong>Amount in Words:</strong>
+          <span id="cediWords">Zero Ghana Cedis</span>
+        </div>
 
       </div>
 
-    </div>
+    </section>
 
 
-    <!-- STARTING GOODS -->
+    <!-- GOODS -->
 
-    <div
-      id="startingCard"
-      class="card"
-    >
+    <section id="goods" class="section">
 
-      <h2>
-        Starting Goods
-      </h2>
+      <div class="card">
 
-      <div
-        id="startingItems"
-      ></div>
+        <div class="card-title">Weekly Goods Recording</div>
 
-      <button
-        class="light full"
-        onclick="addStartingItem()"
-      >
-        + ADD GOODS
-      </button>
+        <div class="grid">
 
-      <div class="button-row">
+          <div class="field">
+            <label>Select Week</label>
+            <select id="goodsWeek" onchange="loadSelectedWeek()"></select>
+          </div>
 
-        <button
-          class="primary"
-          onclick="saveStartingGoods()"
-        >
+          <div class="field">
+            <label>Date</label>
+            <input type="date" id="goodsDate">
+          </div>
+
+          <div class="field full">
+            <label>Previous Week Remaining Goods</label>
+            <input type="text" id="previousRemaining" readonly value="GH₵0.00">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-title">What do you want to record?</div>
+
+        <div class="choice-buttons">
+
+          <button
+            id="startingChoice"
+            class="choice-btn active"
+            onclick="selectGoodsType('starting')">
+            Starting Goods
+          </button>
+
+          <button
+            id="remainingChoice"
+            class="choice-btn"
+            onclick="selectGoodsType('remaining')">
+            Remaining Goods
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- STARTING GOODS -->
+
+      <div id="startingCard" class="card">
+
+        <div class="card-title">Starting Goods</div>
+
+        <div id="startingRows"></div>
+
+        <button class="add-row-btn" onclick="addGoodsRow('starting')">
+          + ADD GOODS
+        </button>
+
+        <button class="save-btn" onclick="saveStartingGoods()">
           SAVE STARTING GOODS
         </button>
 
-        <button
-          id="editStartingBtn"
-          class="secondary hidden"
-          onclick="editStartingGoods()"
-        >
-          EDIT STARTING GOODS
-        </button>
+        <div id="startingStatus"></div>
 
       </div>
 
-      <div
-        id="startingStatus"
-        class="info hidden"
-      ></div>
 
-    </div>
+      <!-- REMAINING GOODS -->
 
+      <div id="remainingCard" class="card hidden">
 
-    <!-- REMAINING GOODS -->
+        <div class="card-title">Remaining Goods</div>
 
-    <div
-      id="remainingCard"
-      class="card hidden"
-    >
+        <div id="remainingRows"></div>
 
-      <h2>
-        Remaining Goods
-      </h2>
+        <button class="add-row-btn" onclick="addGoodsRow('remaining')">
+          + ADD GOODS
+        </button>
 
-      <div
-        id="remainingItems"
-      ></div>
-
-      <button
-        class="light full"
-        onclick="addRemainingItem()"
-      >
-        + ADD GOODS
-      </button>
-
-      <div class="button-row">
-
-        <button
-          class="primary"
-          onclick="saveRemainingGoods()"
-        >
+        <button class="save-btn" onclick="saveRemainingGoods()">
           SAVE REMAINING GOODS
         </button>
 
-        <button
-          id="editRemainingBtn"
-          class="secondary hidden"
-          onclick="editRemainingGoods()"
-        >
-          EDIT REMAINING GOODS
+        <div id="remainingStatus"></div>
+
+      </div>
+
+
+      <!-- BALANCE -->
+
+      <div class="card">
+
+        <div class="card-title">Balance Records</div>
+
+        <div id="balanceRecords" class="balance-box">
+          No record calculated yet.
+        </div>
+
+      </div>
+
+
+      <!-- WEEKLY RECORDS -->
+
+      <div class="card">
+
+        <div class="card-title">Saved Weekly Records</div>
+
+        <div id="weeklyRecords"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ADMIN -->
+
+    <section id="admin" class="section">
+
+      <div class="card">
+
+        <div class="card-title">Approved Goods & Prices</div>
+
+        <div id="adminGoodsList"></div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-title">Add Good & Price</div>
+
+        <div class="field">
+
+          <label>Good Name</label>
+
+          <input
+            type="text"
+            id="newGoodName"
+            placeholder="Enter good name">
+
+        </div>
+
+        <div class="field">
+
+          <label>Price</label>
+
+          <input
+            type="number"
+            id="newGoodPrice"
+            min="0"
+            step="0.01"
+            placeholder="Enter price">
+
+        </div>
+
+        <button class="save-btn" onclick="addGood()">
+          ADD GOOD & PRICE
         </button>
 
       </div>
 
-      <div
-        id="remainingStatus"
-        class="info hidden"
-      ></div>
 
-    </div>
+      <div class="card">
 
+        <div class="card-title">Account</div>
 
-    <!-- BALANCE -->
+        <div id="adminAccountInfo" class="info"></div>
 
-    <div class="card">
-
-      <h2>
-        Balance Records
-      </h2>
-
-      <div class="summary">
-
-        <div class="summary-row">
-
-          <span>
-            Starting Goods Value
-          </span>
-
-          <strong id="balanceStarting">
-            GH₵0.00
-          </strong>
-
-        </div>
-
-        <div class="summary-row">
-
-          <span>
-            Remaining Goods Value
-          </span>
-
-          <strong id="balanceRemaining">
-            GH₵0.00
-          </strong>
-
-        </div>
-
-        <div class="summary-row">
-
-          <span>
-            Sold / Used
-          </span>
-
-          <strong id="balanceSold">
-            GH₵0.00
-          </strong>
-
-        </div>
-
-        <div class="summary-row profit">
-
-          <span>
-            BALANCE
-          </span>
-
-          <strong id="balanceValue">
-            GH₵0.00
-          </strong>
-
-        </div>
+        <button class="logout-btn" onclick="logoutApp()">
+          LOGOUT
+        </button>
 
       </div>
 
-    </div>
+    </section>
 
-
-    <!-- SAVED WEEKLY RECORDS -->
-
-    <div class="card">
-
-      <h2>
-        Saved Weekly Records
-      </h2>
-
-      <div id="savedWeeklyRecords"></div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= ADMIN ================= -->
-
-  <section
-    id="admin"
-    class="section"
-  >
-
-    <div class="card">
-
-      <h2>
-        Approved Goods & Prices
-      </h2>
-
-      <div
-        id="adminGoodsList"
-      ></div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h2>
-        Add Good & Price
-      </h2>
-
-      <div class="field">
-
-        <label>
-          Good Name
-        </label>
-
-        <input
-          id="newGoodName"
-          type="text"
-          placeholder="Enter good name"
-        >
-
-      </div>
-
-      <div class="field">
-
-        <label>
-          Price
-        </label>
-
-        <input
-          id="newGoodPrice"
-          type="number"
-          min="0"
-          placeholder="Enter price"
-        >
-
-      </div>
-
-      <button
-        class="primary full"
-        onclick="addGood()"
-      >
-        ADD GOOD & PRICE
-      </button>
-
-    </div>
-
-  </section>
+  </div>
 
 </div>
 
 
 <script>
 
-/* =====================================================
+/* =========================================================
    SUPABASE
-===================================================== */
+========================================================= */
 
 const SUPABASE_URL =
   "https://ywsmyynauytmgdiijwlo.supabase.co";
@@ -1240,26 +1081,25 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
 
-const db =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-      auth:{
-        persistSession:true,
-        autoRefreshToken:true,
-        detectSessionInUrl:true
-      }
+const db = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
     }
-  );
+  }
+);
+
+let session = null;
+let currentProfile = null;
 
 
-/* =====================================================
-   STORAGE
-===================================================== */
-
-const GOODS_KEY =
-  "oc_demo_goods";
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
 
 const WEEKS_KEY =
   "oc_demo_weeks_fresh_2026_09";
@@ -1267,428 +1107,359 @@ const WEEKS_KEY =
 const REVENUE_KEY =
   "oc_demo_revenue_records_2026_09";
 
-const CLEAR_OLD_WEEKS_KEY =
-  "oc_demo_old_weeks_cleared_2026_09";
+
+let weeklyRecords =
+  JSON.parse(localStorage.getItem(WEEKS_KEY) || "{}");
+
+let revenueRecords =
+  JSON.parse(localStorage.getItem(REVENUE_KEY) || "[]");
 
 
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let session = null;
-
-let userProfile = null;
-
-let isAdminUser = false;
-
-let goods = [];
-
-let weeks = JSON.parse(
-  localStorage.getItem(WEEKS_KEY) || "{}"
-);
-
-let revenueRecords = JSON.parse(
-  localStorage.getItem(REVENUE_KEY) || "[]"
-);
-
-let currentGoodsMode = "starting";
-
-
-/* =====================================================
-   HELPERS
-===================================================== */
-
-function $(id){
-  return document.getElementById(id);
-}
-
+/* =========================================================
+   GENERAL HELPERS
+========================================================= */
 
 function money(value){
 
-  const number =
-    Number(value) || 0;
+  value = Number(value) || 0;
 
-  return (
-    "GH₵" +
-    number.toLocaleString(
-      "en-GH",
-      {
-        minimumFractionDigits:2,
-        maximumFractionDigits:2
-      }
-    )
+  return "GH₵" + value.toLocaleString(
+    "en-GH",
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
   );
-
 }
 
 
-function numberValue(id){
+function num(id){
 
   return Number(
-    $(id).value
+    document.getElementById(id)?.value
   ) || 0;
-
 }
 
 
-function saveWeeks(){
+function saveLocalData(){
 
   localStorage.setItem(
     WEEKS_KEY,
-    JSON.stringify(weeks)
+    JSON.stringify(weeklyRecords)
   );
-
-}
-
-
-function saveRevenue(){
 
   localStorage.setItem(
     REVENUE_KEY,
     JSON.stringify(revenueRecords)
   );
-
 }
 
 
-/* =====================================================
-   LOGIN
-===================================================== */
+/* =========================================================
+   LOGIN / SIGNUP
+========================================================= */
 
-async function loginApp(){
+function showSignup(){
+
+  document.getElementById("loginForm")
+    .classList.add("hidden");
+
+  document.getElementById("signupForm")
+    .classList.remove("hidden");
+
+  document.getElementById("loginMessage")
+    .textContent = "";
+}
+
+
+function showLogin(){
+
+  document.getElementById("signupForm")
+    .classList.add("hidden");
+
+  document.getElementById("loginForm")
+    .classList.remove("hidden");
+
+  document.getElementById("loginMessage")
+    .textContent = "";
+}
+
+
+async function loginUser(){
 
   const email =
-    $("loginEmail")
-      .value
-      .trim();
+    document.getElementById("loginEmail").value.trim();
 
   const password =
-    $("loginPassword")
-      .value;
+    document.getElementById("loginPassword").value;
+
+  const message =
+    document.getElementById("loginMessage");
 
   if(!email || !password){
 
-    showLoginStatus(
-      "Please enter your email and password."
-    );
+    message.textContent =
+      "Please enter your email and password.";
 
     return;
-
   }
 
-  showLoginStatus(
-    "Logging in..."
-  );
+  message.textContent = "Logging in...";
 
-  const result =
+  const {data,error} =
     await db.auth.signInWithPassword({
-      email:email,
-      password:password
+      email,
+      password
     });
 
-  if(result.error){
+  if(error){
 
-    showLoginStatus(
-      result.error.message
-    );
+    message.textContent = error.message;
 
     return;
-
   }
 
-  session =
-    result.data.session;
+  session = data.session;
 
-  await initializeApp();
+  await loadUserProfile();
 
 }
 
 
 async function createAccount(){
 
+  const fullName =
+    document.getElementById("signupName")
+      .value.trim();
+
   const email =
-    $("loginEmail")
-      .value
-      .trim();
+    document.getElementById("signupEmail")
+      .value.trim();
 
   const password =
-    $("loginPassword")
+    document.getElementById("signupPassword")
       .value;
 
-  if(!email || !password){
+  const message =
+    document.getElementById("loginMessage");
 
-    showLoginStatus(
-      "Please enter an email and password."
-    );
+  if(!fullName || !email || !password){
+
+    message.textContent =
+      "Please complete all fields.";
 
     return;
-
   }
 
   if(password.length < 6){
 
-    showLoginStatus(
-      "Password must be at least 6 characters."
-    );
+    message.textContent =
+      "Password must contain at least 6 characters.";
 
     return;
-
   }
 
-  showLoginStatus(
-    "Creating account..."
-  );
+  message.textContent =
+    "Creating account...";
 
-  const result =
+  const {data,error} =
     await db.auth.signUp({
+
       email:email,
-      password:password
+
+      password:password,
+
+      options:{
+        data:{
+          full_name:fullName
+        }
+      }
+
     });
 
-  if(result.error){
+  if(error){
 
-    showLoginStatus(
-      result.error.message
-    );
+    message.textContent = error.message;
 
     return;
-
   }
 
-  if(result.data.session){
+  message.textContent =
+    "Account created. You can now log in.";
 
-    session =
-      result.data.session;
-
-    await initializeApp();
-
-  }else{
-
-    showLoginStatus(
-      "Account created. Check your email if confirmation is required, then log in."
-    );
-
-  }
+  showLogin();
 
 }
 
-
-function showLoginStatus(message){
-
-  const box =
-    $("loginStatus");
-
-  box.textContent =
-    message;
-
-  box.classList.remove(
-    "hidden"
-  );
-
-}
-
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
-async function initializeApp(){
-
-  if(!session){
-
-    return;
-
-  }
-
-  $("loginScreen")
-    .classList.add(
-      "hidden"
-    );
-
-  await loadProfile();
-
-  await loadGoods();
-
-  populateWeeks();
-
-  populateRevenueWeeks();
-
-  populateCedi();
-
-  renderAdminGoods();
-
-  renderSavedRevenueRecords();
-
-  renderSavedWeeklyRecords();
-
-  setTodayDates();
-
-  loadSelectedWeek();
-
-}
-
-
-/* =====================================================
-   PROFILE
-===================================================== */
-
-async function loadProfile(){
-
-  const result =
-    await db
-      .from("profiles")
-      .select("*")
-      .eq(
-        "id",
-        session.user.id
-      )
-      .maybeSingle();
-
-  if(result.error){
-
-    console.error(
-      "Profile error:",
-      result.error
-    );
-
-    userProfile = null;
-
-    isAdminUser = false;
-
-    $("tabAdmin")
-      .classList.add(
-        "hidden"
-      );
-
-    return;
-
-  }
-
-  userProfile =
-    result.data;
-
-  isAdminUser =
-    userProfile &&
-    userProfile.role === "admin" &&
-    userProfile.status === "active";
-
-  if(isAdminUser){
-
-    $("tabAdmin")
-      .classList.remove(
-        "hidden"
-      );
-
-  }else{
-
-    $("tabAdmin")
-      .classList.add(
-        "hidden"
-      );
-
-  }
-
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
 
 async function logoutApp(){
 
   await db.auth.signOut();
 
   session = null;
+  currentProfile = null;
 
-  userProfile = null;
+  document.getElementById("app")
+    .style.display = "none";
 
-  isAdminUser = false;
+  document.getElementById("loginScreen")
+    .style.display = "flex";
 
-  $("loginScreen")
-    .classList.remove(
-      "hidden"
-    );
-
-  $("loginPassword").value = "";
-
-  showLoginStatus(
-    "You have been logged out."
-  );
+  showLogin();
 
 }
 
 
-/* =====================================================
+/* =========================================================
+   PROFILE
+========================================================= */
+
+async function loadUserProfile(){
+
+  if(!session){
+
+    return;
+  }
+
+  const {data,error} =
+    await db
+      .from("profiles")
+      .select("*")
+      .eq("id",session.user.id)
+      .maybeSingle();
+
+  if(error){
+
+    alert(
+      "Unable to load your profile: " +
+      error.message
+    );
+
+    return;
+  }
+
+  currentProfile = data;
+
+  if(!currentProfile){
+
+    alert(
+      "Your account profile was not found."
+    );
+
+    await logoutApp();
+
+    return;
+  }
+
+  if(currentProfile.status &&
+     currentProfile.status !== "active"){
+
+    alert(
+      "Your account is not active."
+    );
+
+    await logoutApp();
+
+    return;
+  }
+
+  openApplication();
+
+}
+
+
+function openApplication(){
+
+  document.getElementById("loginScreen")
+    .style.display = "none";
+
+  document.getElementById("app")
+    .style.display = "block";
+
+  const adminTab =
+    document.getElementById("tabAdmin");
+
+  if(
+    currentProfile &&
+    currentProfile.role === "admin"
+  ){
+
+    adminTab.classList.remove("hidden");
+
+  }else{
+
+    adminTab.classList.add("hidden");
+
+  }
+
+  document.getElementById("adminAccountInfo")
+    .textContent =
+      session.user.email +
+      " — " +
+      (
+        currentProfile.role || "user"
+      ).toUpperCase();
+
+  loadRevenueWeeks();
+
+  loadCedi();
+
+  loadGoods();
+
+  renderRevenueRecords();
+
+  renderWeeklyRecords();
+
+  loadSelectedWeek();
+
+}
+
+
+/* =========================================================
    TABS
-===================================================== */
+========================================================= */
 
 function showTab(tab){
 
+  if(
+    tab === "admin" &&
+    (!currentProfile ||
+     currentProfile.role !== "admin")
+  ){
+
+    return;
+  }
+
   document
     .querySelectorAll(".section")
-    .forEach(
-      section =>
-        section.classList.remove(
-          "active"
-        )
-    );
+    .forEach(section=>{
+      section.classList.remove("active");
+    });
 
   document
-    .querySelectorAll(".tab-btn")
-    .forEach(
-      button =>
-        button.classList.remove(
-          "active"
-        )
+    .querySelectorAll(".tab")
+    .forEach(button=>{
+      button.classList.remove("active");
+    });
+
+  document
+    .getElementById(tab)
+    .classList.add("active");
+
+  const tabButton =
+    document.getElementById(
+      "tab" +
+      tab.charAt(0).toUpperCase() +
+      tab.slice(1)
     );
 
-  $(tab)
-    .classList.add(
-      "active"
-    );
+  if(tabButton){
 
-  if(tab === "revenue"){
-
-    $("tabRevenue")
-      .classList.add(
-        "active"
-      );
-
-  }
-
-  if(tab === "cedi"){
-
-    $("tabCedi")
-      .classList.add(
-        "active"
-      );
-
-  }
-
-  if(tab === "goods"){
-
-    $("tabGoods")
-      .classList.add(
-        "active"
-      );
+    tabButton.classList.add("active");
 
   }
 
   if(tab === "admin"){
-
-    if(!isAdminUser){
-
-      showTab("revenue");
-
-      return;
-
-    }
-
-    $("tabAdmin")
-      .classList.add(
-        "active"
-      );
 
     renderAdminGoods();
 
@@ -1697,409 +1468,28 @@ function showTab(tab){
 }
 
 
-/* =====================================================
-   GOODS FROM SUPABASE
-===================================================== */
-
-async function loadGoods(){
-
-  if(!session){
-
-    return;
-
-  }
-
-  const result =
-    await db
-      .from("goods")
-      .select("*")
-      .order(
-        "name",
-        {
-          ascending:true
-        }
-      );
-
-  if(result.error){
-
-    console.error(
-      "Load goods error:",
-      result.error
-    );
-
-    alert(
-      "Could not load goods:\n\n" +
-      result.error.message
-    );
-
-    return;
-
-  }
-
-  goods =
-    result.data || [];
-
-  renderAllGoodSelects();
-
-  renderAdminGoods();
-
-}
-
-
-function renderAllGoodSelects(){
-
-  document
-    .querySelectorAll(
-      ".good-select"
-    )
-    .forEach(
-      select =>
-        fillGoodSelect(
-          select
-        )
-    );
-
-}
-
-
-function fillGoodSelect(select){
-
-  const oldValue =
-    select.value;
-
-  select.innerHTML =
-    `<option value="">Select Good</option>`;
-
-  goods.forEach(
-    good => {
-
-      const option =
-        document.createElement(
-          "option"
-        );
-
-      option.value =
-        good.id;
-
-      option.textContent =
-        good.name;
-
-      option.dataset.price =
-        good.price;
-
-      select.appendChild(
-        option
-      );
-
-    }
-  );
-
-  if(oldValue){
-
-    select.value =
-      oldValue;
-
-  }
-
-}
-
-
-/* =====================================================
-   ADMIN GOODS
-===================================================== */
-
-function renderAdminGoods(){
-
-  const box =
-    $("adminGoodsList");
-
-  if(!box){
-
-    return;
-
-  }
-
-  box.innerHTML = "";
-
-  if(!isAdminUser){
-
-    box.innerHTML =
-      `<div class="empty">Admin access only.</div>`;
-
-    return;
-
-  }
-
-  if(!goods.length){
-
-    box.innerHTML =
-      `<div class="empty">No goods have been added yet.</div>`;
-
-    return;
-
-  }
-
-  goods.forEach(
-    good => {
-
-      const row =
-        document.createElement(
-          "div"
-        );
-
-      row.className =
-        "good-row";
-
-      row.innerHTML = `
-        <div class="good-info">
-
-          <div class="good-name">
-            ${escapeHtml(good.name)}
-          </div>
-
-          <div class="good-price">
-            ${money(good.price)}
-          </div>
-
-        </div>
-
-        <button
-          class="delete-btn"
-          onclick="deleteGood('${good.id}')"
-        >
-          DELETE
-        </button>
-      `;
-
-      box.appendChild(
-        row
-      );
-
-    }
-  );
-
-}
-
-
-async function addGood(){
-
-  if(!isAdminUser){
-
-    alert(
-      "Only the admin can add goods."
-    );
-
-    return;
-
-  }
-
-  if(!session){
-
-    alert(
-      "Please log in first."
-    );
-
-    return;
-
-  }
-
-  const name =
-    $("newGoodName")
-      .value
-      .trim();
-
-  const price =
-    Number(
-      $("newGoodPrice").value
-    );
-
-  if(!name){
-
-    alert(
-      "Please enter the good name."
-    );
-
-    return;
-
-  }
-
-  if(price <= 0){
-
-    alert(
-      "Please enter a valid price."
-    );
-
-    return;
-
-  }
-
-  const duplicate =
-    goods.some(
-      good =>
-        good.name.toLowerCase() ===
-        name.toLowerCase()
-    );
-
-  if(duplicate){
-
-    alert(
-      "This good already exists."
-    );
-
-    return;
-
-  }
-
-  /*
-    IMPORTANT:
-    The goods table requires user_id.
-    The logged-in admin's user ID is saved
-    with the good.
-  */
-
-  const result =
-    await db
-      .from("goods")
-      .insert({
-
-        user_id:
-          session.user.id,
-
-        name:
-          name,
-
-        price:
-          price
-
-      });
-
-  if(result.error){
-
-    console.error(
-      "Add good error:",
-      result.error
-    );
-
-    alert(
-      "Could not add good:\n\n" +
-      result.error.message
-    );
-
-    return;
-
-  }
-
-  $("newGoodName")
-    .value = "";
-
-  $("newGoodPrice")
-    .value = "";
-
-  await loadGoods();
-
-  renderAdminGoods();
-
-  alert(
-    "Good and price added successfully."
-  );
-
-}
-
-
-async function deleteGood(id){
-
-  if(!isAdminUser){
-
-    alert(
-      "Only the admin can delete goods."
-    );
-
-    return;
-
-  }
-
-  const confirmed =
-    confirm(
-      "Delete this good and its price?"
-    );
-
-  if(!confirmed){
-
-    return;
-
-  }
-
-  const result =
-    await db
-      .from("goods")
-      .delete()
-      .eq(
-        "id",
-        id
-      );
-
-  if(result.error){
-
-    console.error(
-      "Delete good error:",
-      result.error
-    );
-
-    alert(
-      "Could not delete good:\n\n" +
-      result.error.message
-    );
-
-    return;
-
-  }
-
-  await loadGoods();
-
-  renderAdminGoods();
-
-}
-
-
-/* =====================================================
+/* =========================================================
    REVENUE
-===================================================== */
+========================================================= */
 
 function calculateRevenue(){
 
-  const bank1 =
-    numberValue("bank1");
-
-  const bank2 =
-    numberValue("bank2");
-
-  const bank3 =
-    numberValue("bank3");
-
-  const cash =
-    numberValue("cash");
-
-  const expenses =
-    numberValue("expenses");
-
-  const totalGoods =
-    numberValue("totalGoods");
-
-  const remainingGoods =
-    numberValue("remainingGoods");
+  const bank1 = num("bank1");
+  const bank2 = num("bank2");
+  const bank3 = num("bank3");
+  const cash = num("cash");
+  const expenses = num("expenses");
+  const totalGoods = num("totalGoods");
+  const remainingGoods = num("remainingGoods");
 
   const totalBanks =
-    bank1 +
-    bank2 +
-    bank3;
+    bank1 + bank2 + bank3;
 
   const totalCash =
-    totalBanks +
-    cash;
+    totalBanks + cash;
 
   const goodsAfterExpenses =
-    totalGoods -
-    expenses;
+    totalGoods - expenses;
 
   let profit =
     totalCash +
@@ -2112,47 +1502,20 @@ function calculateRevenue(){
 
   }
 
-  $("outTotalBanks")
-    .textContent =
-      money(totalBanks);
+  document.getElementById("outBanks")
+    .textContent = money(totalBanks);
 
-  $("outTotalBankCash")
-    .textContent =
-      money(totalCash);
+  document.getElementById("outBankCash")
+    .textContent = money(totalCash);
 
-  $("outRemainingGoods")
-    .textContent =
-      money(remainingGoods);
+  document.getElementById("outRemaining")
+    .textContent = money(remainingGoods);
 
-  $("outGoodsAfterExpenses")
-    .textContent =
-      money(goodsAfterExpenses);
+  document.getElementById("outGoodsAfter")
+    .textContent = money(goodsAfterExpenses);
 
-  $("outProfit")
-    .textContent =
-      money(profit);
-
-  return {
-
-    totalBanks:
-      totalBanks,
-
-    totalBankCash:
-      totalCash,
-
-    remainingGoods:
-      remainingGoods,
-
-    goodsAfterExpenses:
-      goodsAfterExpenses,
-
-    expenses:
-      expenses,
-
-    profit:
-      profit
-
-  };
+  document.getElementById("outProfit")
+    .textContent = money(profit);
 
 }
 
@@ -2167,63 +1530,70 @@ function resetRevenue(){
     "expenses",
     "totalGoods",
     "remainingGoods"
-  ].forEach(
-    id =>
-      $(id).value = ""
-  );
+  ].forEach(id=>{
 
-  $("outTotalBanks")
-    .textContent =
-      money(0);
+    document.getElementById(id).value = "";
 
-  $("outTotalBankCash")
-    .textContent =
-      money(0);
+  });
 
-  $("outRemainingGoods")
-    .textContent =
-      money(0);
+  document.getElementById("outBanks")
+    .textContent = money(0);
 
-  $("outGoodsAfterExpenses")
-    .textContent =
-      money(0);
+  document.getElementById("outBankCash")
+    .textContent = money(0);
 
-  $("outProfit")
-    .textContent =
-      money(0);
+  document.getElementById("outRemaining")
+    .textContent = money(0);
+
+  document.getElementById("outGoodsAfter")
+    .textContent = money(0);
+
+  document.getElementById("outProfit")
+    .textContent = money(0);
 
 }
 
 
-function populateRevenueWeeks(){
+function loadRevenueWeeks(){
 
   const select =
-    $("revenueWeek");
+    document.getElementById("revenueWeek");
 
   select.innerHTML = "";
 
-  for(
-    let i = 1;
-    i <= 52;
-    i++
-  ){
+  for(let i=1;i<=52;i++){
 
     const option =
-      document.createElement(
-        "option"
-      );
+      document.createElement("option");
 
-    option.value =
-      i;
+    option.value = i;
 
     option.textContent =
-      `Week ${i}`;
+      "Week " + i;
 
-    select.appendChild(
-      option
-    );
+    select.appendChild(option);
 
   }
+
+}
+
+
+function openRevenueSave(){
+
+  calculateRevenue();
+
+  document
+    .getElementById("revenueSaveCard")
+    .classList.remove("hidden");
+
+}
+
+
+function closeRevenueSave(){
+
+  document
+    .getElementById("revenueSaveCard")
+    .classList.add("hidden");
 
 }
 
@@ -2231,105 +1601,118 @@ function populateRevenueWeeks(){
 function updateRevenueEndDate(){
 
   const start =
-    $("revenueStartDate")
-      .value;
+    document.getElementById(
+      "revenueStartDate"
+    ).value;
 
   if(!start){
-
-    $("revenueEndDate")
-      .value = "";
 
     return;
 
   }
 
   const date =
-    new Date(
-      start + "T00:00:00"
-    );
+    new Date(start + "T00:00:00");
 
   date.setDate(
     date.getDate() + 4
   );
 
-  $("revenueEndDate")
-    .value =
-      formatDateInput(
-        date
-      );
+  document.getElementById(
+    "revenueEndDate"
+  ).value =
+    date.toISOString().split("T")[0];
 
 }
 
 
 function saveRevenueRecord(){
 
-  const result =
-    calculateRevenue();
+  calculateRevenue();
 
   const week =
     Number(
-      $("revenueWeek").value
+      document.getElementById(
+        "revenueWeek"
+      ).value
     );
 
   const startDate =
-    $("revenueStartDate")
-      .value;
+    document.getElementById(
+      "revenueStartDate"
+    ).value;
 
   const endDate =
-    $("revenueEndDate")
-      .value;
+    document.getElementById(
+      "revenueEndDate"
+    ).value;
 
   if(!startDate){
 
-    alert(
-      "Please select the start date."
-    );
+    alert("Please select a start date.");
 
     return;
 
   }
 
+  const bank1 = num("bank1");
+  const bank2 = num("bank2");
+  const bank3 = num("bank3");
+  const cash = num("cash");
+  const expenses = num("expenses");
+  const totalGoods = num("totalGoods");
+  const remainingGoods = num("remainingGoods");
+
+  const totalBanks =
+    bank1 + bank2 + bank3;
+
+  const totalBankCash =
+    totalBanks + cash;
+
+  const goodsAfterExpenses =
+    totalGoods - expenses;
+
   const record = {
 
-    id:
-      Date.now(),
+    id:Date.now(),
 
-    week:
-      week,
+    week,
 
-    startDate:
-      startDate,
+    startDate,
 
-    endDate:
-      endDate,
+    endDate,
 
     dateSaved:
       new Date().toISOString(),
 
-    totalBanks:
-      result.totalBanks,
+    totalBanks,
 
-    totalBankCash:
-      result.totalBankCash,
+    totalBankCash,
 
-    remainingGoods:
-      result.remainingGoods,
+    remainingGoods,
 
-    goodsAfterExpenses:
-      result.goodsAfterExpenses,
+    goodsAfterExpenses,
 
-    expenses:
-      result.expenses
+    expenses
 
   };
 
-  revenueRecords.unshift(
-    record
+  revenueRecords =
+    revenueRecords.filter(
+      r => r.week !== week
+    );
+
+  revenueRecords.push(record);
+
+  revenueRecords.sort(
+    (a,b)=>a.week-b.week
   );
 
-  saveRevenue();
+  saveLocalData();
 
-  renderSavedRevenueRecords();
+  renderRevenueRecords();
+
+  closeRevenueSave();
 
   alert(
     "Revenue record saved successfully."
@@ -2338,110 +1721,104 @@ function saveRevenueRecord(){
 }
 
 
-function cancelRevenueSave(){
+function renderRevenueRecords(){
 
-  $("revenueStartDate")
-    .value = "";
-
-  $("revenueEndDate")
-    .value = "";
-
-}
-
-
-function renderSavedRevenueRecords(){
-
-  const box =
-    $("savedRevenueRecords");
-
-  box.innerHTML = "";
+  const container =
+    document.getElementById(
+      "revenueRecords"
+    );
 
   if(!revenueRecords.length){
 
-    box.innerHTML =
-      `<div class="empty">No revenue records saved yet.</div>`;
+    container.innerHTML =
+      '<div class="empty">No saved revenue records.</div>';
 
     return;
 
   }
 
-  revenueRecords.forEach(
-    record => {
+  container.innerHTML = "";
 
-      const row =
-        document.createElement(
-          "div"
-        );
+  revenueRecords.forEach(record=>{
 
-      row.className =
-        "record-row";
+    const wrapper =
+      document.createElement("div");
 
-      row.innerHTML = `
-        <div class="summary-row">
-          <span>Week</span>
-          <strong>Week ${record.week}</strong>
-        </div>
+    wrapper.className = "record";
 
-        <div class="summary-row">
-          <span>Period</span>
-          <strong>
-            ${escapeHtml(record.startDate)}
-            -
-            ${escapeHtml(record.endDate)}
-          </strong>
-        </div>
+    const header =
+      document.createElement("div");
 
-        <div class="summary-row">
-          <span>Total Banks</span>
-          <strong>${money(record.totalBanks)}</strong>
-        </div>
+    header.className =
+      "record-header";
 
-        <div class="summary-row">
-          <span>Total Bank & Cash</span>
-          <strong>${money(record.totalBankCash)}</strong>
-        </div>
+    header.textContent =
+      "Week " +
+      record.week +
+      " — " +
+      record.startDate;
 
-        <div class="summary-row">
-          <span>Remaining Goods</span>
-          <strong>${money(record.remainingGoods)}</strong>
-        </div>
+    const body =
+      document.createElement("div");
 
-        <div class="summary-row">
-          <span>Goods After Expenses</span>
-          <strong>${money(record.goodsAfterExpenses)}</strong>
-        </div>
+    body.className =
+      "record-body";
 
-        <div class="summary-row">
-          <span>Expenses</span>
-          <strong>${money(record.expenses)}</strong>
-        </div>
+    body.innerHTML = `
 
-        <button
-          class="delete-btn"
-          onclick="deleteRevenueRecord(${record.id})"
-        >
-          DELETE RECORD
-        </button>
-      `;
+      <div>Total Banks:
+        <strong>${money(record.totalBanks)}</strong>
+      </div>
 
-      box.appendChild(
-        row
-      );
+      <div>Total Bank & Cash:
+        <strong>${money(record.totalBankCash)}</strong>
+      </div>
 
-    }
-  );
+      <div>Remaining Goods:
+        <strong>${money(record.remainingGoods)}</strong>
+      </div>
+
+      <div>Goods After Expenses:
+        <strong>${money(record.goodsAfterExpenses)}</strong>
+      </div>
+
+      <div>Expenses:
+        <strong>${money(record.expenses)}</strong>
+      </div>
+
+      <div>Period:
+        <strong>${record.startDate}
+        to
+        ${record.endDate}</strong>
+      </div>
+
+      <button
+        class="record-delete"
+        onclick="deleteRevenueRecord(${record.id})">
+        DELETE RECORD
+      </button>
+
+    `;
+
+    header.onclick = ()=>{
+
+      body.classList.toggle("show");
+
+    };
+
+    wrapper.appendChild(header);
+    wrapper.appendChild(body);
+
+    container.appendChild(wrapper);
+
+  });
 
 }
 
 
 function deleteRevenueRecord(id){
 
-  const confirmed =
-    confirm(
-      "Delete this revenue record?"
-    );
-
-  if(!confirmed){
+  if(!confirm("Delete this revenue record?")){
 
     return;
 
@@ -2449,77 +1826,62 @@ function deleteRevenueRecord(id){
 
   revenueRecords =
     revenueRecords.filter(
-      record =>
-        record.id !== id
+      r=>r.id !== id
     );
 
-  saveRevenue();
+  saveLocalData();
 
-  renderSavedRevenueRecords();
+  renderRevenueRecords();
 
 }
 
 
-/* =====================================================
-   CEDI CALCULATOR
-===================================================== */
+/* =========================================================
+   CEDI
+========================================================= */
 
-const denominations = [
-  200,
-  100,
-  50,
-  20,
-  10,
-  5,
-  2,
-  1
-];
+const denominations =
+  [200,100,50,20,10,5,2,1];
 
 
-function populateCedi(){
+function loadCedi(){
 
-  const box =
-    $("cediRows");
+  const container =
+    document.getElementById("cediRows");
 
-  box.innerHTML = "";
+  container.innerHTML = "";
 
-  denominations.forEach(
-    denomination => {
+  denominations.forEach(denom=>{
 
-      const row =
-        document.createElement(
-          "div"
-        );
+    const row =
+      document.createElement("div");
 
-      row.className =
-        "summary-row";
+    row.className =
+      "cedi-row";
 
-      row.innerHTML = `
-        <span>
-          GH₵${denomination}
-        </span>
+    row.innerHTML = `
 
-        <input
-          id="cedi_${denomination}"
-          type="number"
-          min="0"
-          placeholder="Quantity"
-          style="width:120px"
-        >
+      <div class="cedi-denom">
+        GH₵${denom}
+      </div>
 
-        <strong
-          id="cediTotal_${denomination}"
-        >
-          GH₵0.00
-        </strong>
-      `;
+      <input
+        type="number"
+        min="0"
+        id="cediQty${denom}"
+        placeholder="Quantity">
 
-      box.appendChild(
-        row
-      );
+      <div
+        class="cedi-total"
+        id="cediTotal${denom}">
+        GH₵0.00
+      </div>
 
-    }
-  );
+    `;
+
+    container.appendChild(row);
+
+  });
 
 }
 
@@ -2528,58 +1890,48 @@ function calculateCedi(){
 
   let total = 0;
 
-  denominations.forEach(
-    denomination => {
+  denominations.forEach(denom=>{
 
-      const quantity =
-        Number(
-          $(
-            `cedi_${denomination}`
-          ).value
-        ) || 0;
+    const quantity =
+      Number(
+        document.getElementById(
+          "cediQty" + denom
+        ).value
+      ) || 0;
 
-      const lineTotal =
-        quantity *
-        denomination;
+    const lineTotal =
+      denom * quantity;
 
-      total +=
-        lineTotal;
+    total += lineTotal;
 
-      $(
-        `cediTotal_${denomination}`
-      ).textContent =
-        money(lineTotal);
+    document.getElementById(
+      "cediTotal" + denom
+    ).textContent =
+      money(lineTotal);
 
-    }
-  );
+  });
 
-  $("cediTotal")
-    .textContent =
-      money(total);
+  document.getElementById(
+    "cediGrandTotal"
+  ).textContent =
+    money(total);
 
-  $("amountWords")
-    .textContent =
-      "Amount in Words: " +
-      numberToWords(total) +
-      " Ghana Cedis";
+  document.getElementById(
+    "cediWords"
+  ).textContent =
+    numberToWords(total);
 
 }
 
 
-/* =====================================================
-   NUMBER TO WORDS
-===================================================== */
+function numberToWords(amount){
 
-function numberToWords(number){
+  amount =
+    Math.round(Number(amount) || 0);
 
-  number =
-    Math.floor(
-      Number(number) || 0
-    );
+  if(amount === 0){
 
-  if(number === 0){
-
-    return "Zero";
+    return "Zero Ghana Cedis";
 
   }
 
@@ -2629,804 +1981,838 @@ function numberToWords(number){
 
     if(n < 100){
 
-      return (
-        tens[
-          Math.floor(n / 10)
-        ] +
-        (
-          n % 10
-            ? " " + ones[n % 10]
-            : ""
-        )
-      );
+      return tens[Math.floor(n/10)] +
+        (n%10 ? " " + ones[n%10] : "");
 
     }
 
     if(n < 1000){
 
-      return (
-        ones[
-          Math.floor(n / 100)
-        ] +
+      return ones[Math.floor(n/100)] +
         " Hundred" +
-        (
-          n % 100
-            ? " " + convert(n % 100)
-            : ""
-        )
-      );
+        (n%100 ?
+          " " + convert(n%100) :
+          "");
 
     }
 
     if(n < 1000000){
 
-      return (
-        convert(
-          Math.floor(n / 1000)
-        ) +
-        " Thousand" +
-        (
-          n % 1000
-            ? " " + convert(n % 1000)
-            : ""
-        )
-      );
+      return convert(
+        Math.floor(n/1000)
+      ) +
+      " Thousand" +
+      (n%1000 ?
+        " " + convert(n%1000) :
+        "");
 
     }
 
     if(n < 1000000000){
 
-      return (
-        convert(
-          Math.floor(n / 1000000)
-        ) +
-        " Million" +
-        (
-          n % 1000000
-            ? " " + convert(n % 1000000)
-            : ""
-        )
-      );
+      return convert(
+        Math.floor(n/1000000)
+      ) +
+      " Million" +
+      (n%1000000 ?
+        " " + convert(n%1000000) :
+        "");
 
     }
 
-    return String(n);
+    return convert(
+      Math.floor(n/1000000000)
+    ) +
+    " Billion" +
+    (n%1000000000 ?
+      " " + convert(n%1000000000) :
+      "");
 
   }
 
-  return convert(number);
+  return convert(amount) +
+    " Ghana Cedis";
 
 }
 
 
-/* =====================================================
-   WEEKLY GOODS
-===================================================== */
+/* =========================================================
+   SUPABASE GOODS
+========================================================= */
 
-function populateWeeks(){
+let approvedGoods = [];
+
+
+async function loadGoods(){
+
+  const {data,error} =
+    await db
+      .from("goods")
+      .select("*")
+      .order("name");
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to load approved goods: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  approvedGoods = data || [];
+
+  renderAdminGoods();
+
+  refreshGoodsSelects();
+
+}
+
+
+function refreshGoodsSelects(){
+
+  document
+    .querySelectorAll(
+      ".goods-select"
+    )
+    .forEach(select=>{
+
+      const oldValue =
+        select.value;
+
+      select.innerHTML =
+        '<option value="">Select Good</option>';
+
+      approvedGoods.forEach(good=>{
+
+        const option =
+          document.createElement("option");
+
+        option.value =
+          good.id;
+
+        option.textContent =
+          good.name;
+
+        option.dataset.price =
+          good.price;
+
+        select.appendChild(option);
+
+      });
+
+      if(oldValue){
+
+        select.value = oldValue;
+
+      }
+
+    });
+
+}
+
+
+function createGoodsSelect(){
 
   const select =
-    $("goodsWeek");
+    document.createElement("select");
+
+  select.className =
+    "goods-select";
+
+  select.innerHTML =
+    '<option value="">Select Good</option>';
+
+  approvedGoods.forEach(good=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value =
+      good.id;
+
+    option.textContent =
+      good.name;
+
+    option.dataset.price =
+      good.price;
+
+    select.appendChild(option);
+
+  });
+
+  return select;
+
+}
+
+
+/* =========================================================
+   ADMIN GOODS
+========================================================= */
+
+async function addGood(){
+
+  if(
+    !session ||
+    !currentProfile ||
+    currentProfile.role !== "admin"
+  ){
+
+    alert(
+      "Only the administrator can add goods."
+    );
+
+    return;
+
+  }
+
+  const name =
+    document.getElementById(
+      "newGoodName"
+    ).value.trim();
+
+  const price =
+    Number(
+      document.getElementById(
+        "newGoodPrice"
+      ).value
+    );
+
+  if(!name){
+
+    alert("Please enter the good name.");
+
+    return;
+
+  }
+
+  if(!Number.isFinite(price) || price < 0){
+
+    alert("Please enter a valid price.");
+
+    return;
+
+  }
+
+
+  /*
+    IMPORTANT:
+    user_id is intentionally NOT included here.
+
+    The Supabase database column now has:
+
+    DEFAULT auth.uid()
+
+    so Supabase automatically assigns
+    the ID of the logged-in user.
+  */
+
+  const result =
+    await db
+      .from("goods")
+      .insert({
+        name:name,
+        price:price
+      });
+
+  if(result.error){
+
+    console.error(result.error);
+
+    alert(
+      "Unable to add good: " +
+      result.error.message
+    );
+
+    return;
+
+  }
+
+  document.getElementById(
+    "newGoodName"
+  ).value = "";
+
+  document.getElementById(
+    "newGoodPrice"
+  ).value = "";
+
+  await loadGoods();
+
+  alert(
+    "Good and price added successfully."
+  );
+
+}
+
+
+async function deleteGood(id){
+
+  if(
+    !currentProfile ||
+    currentProfile.role !== "admin"
+  ){
+
+    alert(
+      "Only the administrator can delete goods."
+    );
+
+    return;
+
+  }
+
+  if(!confirm(
+    "Delete this good and price?"
+  )){
+
+    return;
+
+  }
+
+  const {error} =
+    await db
+      .from("goods")
+      .delete()
+      .eq("id",id);
+
+  if(error){
+
+    alert(
+      "Unable to delete good: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  await loadGoods();
+
+}
+
+
+function renderAdminGoods(){
+
+  const container =
+    document.getElementById(
+      "adminGoodsList"
+    );
+
+  if(!container){
+
+    return;
+
+  }
+
+  if(!approvedGoods.length){
+
+    container.innerHTML =
+      '<div class="empty">No approved goods yet.</div>';
+
+    return;
+
+  }
+
+  container.innerHTML = "";
+
+  approvedGoods.forEach(good=>{
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "admin-good";
+
+    row.innerHTML = `
+
+      <div>
+        <div class="admin-good-name">
+          ${escapeHtml(good.name)}
+        </div>
+
+        <div class="admin-good-price">
+          ${money(good.price)}
+        </div>
+      </div>
+
+      <button
+        class="delete-btn"
+        onclick="deleteGood(${good.id})">
+        DELETE
+      </button>
+
+    `;
+
+    container.appendChild(row);
+
+  });
+
+}
+
+
+function escapeHtml(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   WEEKLY GOODS
+========================================================= */
+
+let currentGoodsType = "starting";
+
+
+function loadGoodsWeeks(){
+
+  const select =
+    document.getElementById(
+      "goodsWeek"
+    );
 
   select.innerHTML = "";
 
-  for(
-    let i = 1;
-    i <= 52;
-    i++
-  ){
+  for(let i=1;i<=52;i++){
 
     const option =
-      document.createElement(
-        "option"
-      );
+      document.createElement("option");
 
-    option.value =
-      i;
+    option.value = i;
 
     option.textContent =
-      `Week ${i}`;
+      "Week " + i;
 
-    select.appendChild(
-      option
-    );
+    select.appendChild(option);
 
   }
 
 }
 
 
-function setTodayDates(){
+function selectGoodsType(type){
 
-  const today =
-    new Date();
+  currentGoodsType = type;
 
-  const dateString =
-    formatDateInput(
-      today
+  document
+    .getElementById("startingChoice")
+    .classList.toggle(
+      "active",
+      type === "starting"
     );
 
-  if(!$("goodsDate").value){
+  document
+    .getElementById("remainingChoice")
+    .classList.toggle(
+      "active",
+      type === "remaining"
+    );
 
-    $("goodsDate")
-      .value =
-        dateString;
+  document
+    .getElementById("startingCard")
+    .classList.toggle(
+      "hidden",
+      type !== "starting"
+    );
 
-  }
-
-  if(!$("revenueStartDate").value){
-
-    $("revenueStartDate")
-      .value =
-        dateString;
-
-    updateRevenueEndDate();
-
-  }
-
-}
-
-
-function selectGoodsMode(mode){
-
-  currentGoodsMode =
-    mode;
-
-  if(mode === "starting"){
-
-    $("startingCard")
-      .classList.remove(
-        "hidden"
-      );
-
-    $("remainingCard")
-      .classList.add(
-        "hidden"
-      );
-
-    $("startingChoice")
-      .classList.add(
-        "active"
-      );
-
-    $("remainingChoice")
-      .classList.remove(
-        "active"
-      );
-
-  }else{
-
-    $("startingCard")
-      .classList.add(
-        "hidden"
-      );
-
-    $("remainingCard")
-      .classList.remove(
-        "hidden"
-      );
-
-    $("startingChoice")
-      .classList.remove(
-        "active"
-      );
-
-    $("remainingChoice")
-      .classList.add(
-        "active"
-      );
-
-  }
-
-  updateBalance();
+  document
+    .getElementById("remainingCard")
+    .classList.toggle(
+      "hidden",
+      type !== "remaining"
+    );
 
 }
 
 
 function loadSelectedWeek(){
 
+  loadGoodsWeeksIfNeeded();
+
   const week =
     Number(
-      $("goodsWeek").value
-    );
+      document.getElementById(
+        "goodsWeek"
+      ).value
+    ) || 1;
 
-  if(!week){
+  const record =
+    weeklyRecords[week];
 
-    return;
-
-  }
+  document.getElementById(
+    "goodsDate"
+  ).value =
+    record?.date ||
+    new Date().toISOString().split("T")[0];
 
   const previous =
-    weeks[
-      `week_${week - 1}`
-    ];
+    getPreviousRemainingValue(week);
 
-  let previousValue = 0;
-
-  if(
-    week > 1 &&
-    previous &&
-    previous.remainingSaved
-  ){
-
-    previousValue =
-      calculateItemsValue(
-        previous.remainingGoods || []
-      );
-
-  }
-
-  $("previousRemaining")
-    .value =
-      previousValue.toFixed(2);
-
-  const current =
-    weeks[
-      `week_${week}`
-    ];
-
-  $("startingItems")
-    .innerHTML = "";
-
-  $("remainingItems")
-    .innerHTML = "";
-
-  $("startingStatus")
-    .classList.add(
-      "hidden"
-    );
-
-  $("remainingStatus")
-    .classList.add(
-      "hidden"
-    );
-
-  $("editStartingBtn")
-    .classList.add(
-      "hidden"
-    );
-
-  $("editRemainingBtn")
-    .classList.add(
-      "hidden"
-    );
-
-  if(current){
-
-    if(current.date){
-
-      $("goodsDate")
-        .value =
-          current.date;
-
-    }
-
-    if(
-      current.startingSaved &&
-      current.startingGoods
-    ){
-
-      current.startingGoods.forEach(
-        item =>
-          addStartingItem(
-            item
-          )
-      );
-
-      disableStartingItems();
-
-      $("startingStatus")
-        .textContent =
-          "Starting goods have been saved.";
-
-      $("startingStatus")
-        .classList.remove(
-          "hidden"
-        );
-
-      $("editStartingBtn")
-        .classList.remove(
-          "hidden"
-        );
-
-    }
-
-    if(
-      current.remainingSaved &&
-      current.remainingGoods
-    ){
-
-      current.remainingGoods.forEach(
-        item =>
-          addRemainingItem(
-            item
-          )
-      );
-
-      disableRemainingItems();
-
-      $("remainingStatus")
-        .textContent =
-          "Remaining goods have been saved.";
-
-      $("remainingStatus")
-        .classList.remove(
-          "hidden"
-        );
-
-      $("editRemainingBtn")
-        .classList.remove(
-          "hidden"
-        );
-
-    }
-
-  }
-
-  if(
-    !$("startingItems").children.length
-  ){
-
-    addStartingItem();
-
-  }
-
-  if(
-    !$("remainingItems").children.length
-  ){
-
-    addRemainingItem();
-
-  }
-
-  updateBalance();
-
-}
-
-
-function addStartingItem(item = null){
-
-  const box =
-    $("startingItems");
-
-  const row =
-    document.createElement(
-      "div"
-    );
-
-  row.className =
-    "item-row";
-
-  row.innerHTML = `
-
-    <div class="item-grid">
-
-      <div>
-
-        <label>
-          Good
-        </label>
-
-        <select
-          class="good-select starting-good"
-          onchange="updateItemPrice(this)"
-        >
-          <option value="">
-            Select Good
-          </option>
-        </select>
-
-      </div>
-
-      <div>
-
-        <label>
-          Price
-        </label>
-
-        <input
-          class="item-price"
-          type="number"
-          readonly
-          value=""
-        >
-
-      </div>
-
-      <div>
-
-        <label>
-          Qty
-        </label>
-
-        <input
-          class="item-qty"
-          type="number"
-          min="0"
-          value=""
-          placeholder="0"
-          oninput="updateBalance()"
-        >
-
-      </div>
-
-      <button
-        class="remove-item"
-        onclick="this.closest('.item-row').remove(); updateBalance();"
-      >
-        ×
-      </button>
-
-    </div>
-
-  `;
-
-  box.appendChild(
-    row
-  );
-
-  const select =
-    row.querySelector(
-      ".good-select"
-    );
-
-  fillGoodSelect(
-    select
-  );
-
-  if(item){
-
-    select.value =
-      item.id ||
-      findGoodIdByName(
-        item.name
-      );
-
-    updateItemPrice(
-      select
-    );
-
-    row.querySelector(
-      ".item-qty"
-    ).value =
-      item.qty || 0;
-
-  }
-
-}
-
-
-function addRemainingItem(item = null){
-
-  const box =
-    $("remainingItems");
-
-  const row =
-    document.createElement(
-      "div"
-    );
-
-  row.className =
-    "item-row";
-
-  row.innerHTML = `
-
-    <div class="item-grid">
-
-      <div>
-
-        <label>
-          Good
-        </label>
-
-        <select
-          class="good-select remaining-good"
-          onchange="updateItemPrice(this)"
-        >
-          <option value="">
-            Select Good
-          </option>
-        </select>
-
-      </div>
-
-      <div>
-
-        <label>
-          Price
-        </label>
-
-        <input
-          class="item-price"
-          type="number"
-          readonly
-          value=""
-        >
-
-      </div>
-
-      <div>
-
-        <label>
-          Remaining Qty
-        </label>
-
-        <input
-          class="item-qty"
-          type="number"
-          min="0"
-          value=""
-          placeholder="0"
-          oninput="updateBalance()"
-        >
-
-      </div>
-
-      <button
-        class="remove-item"
-        onclick="this.closest('.item-row').remove(); updateBalance();"
-      >
-        ×
-      </button>
-
-    </div>
-
-  `;
-
-  box.appendChild(
-    row
-  );
-
-  const select =
-    row.querySelector(
-      ".good-select"
-    );
-
-  fillGoodSelect(
-    select
-  );
-
-  if(item){
-
-    select.value =
-      item.id ||
-      findGoodIdByName(
-        item.name
-      );
-
-    updateItemPrice(
-      select
-    );
-
-    row.querySelector(
-      ".item-qty"
-    ).value =
-      item.remainingQty || 0;
-
-  }
-
-}
-
-
-function updateItemPrice(select){
-
-  const row =
-    select.closest(
-      ".item-row"
-    );
-
-  const option =
-    select.options[
-      select.selectedIndex
-    ];
-
-  const price =
-    option &&
-    option.dataset
-      ? option.dataset.price
-      : "";
-
-  row.querySelector(
-    ".item-price"
+  document.getElementById(
+    "previousRemaining"
   ).value =
-    price || "";
+    money(previous);
 
-  updateBalance();
+  renderWeekEditors();
+
+  renderBalance(week);
 
 }
 
 
-function findGoodIdByName(name){
+function loadGoodsWeeksIfNeeded(){
 
-  const good =
-    goods.find(
-      item =>
-        item.name === name
+  const select =
+    document.getElementById(
+      "goodsWeek"
     );
 
-  return good
-    ? good.id
-    : "";
+  if(!select.options.length){
+
+    loadGoodsWeeks();
+
+  }
 
 }
 
 
-function collectStartingItems(){
+function getPreviousRemainingValue(week){
 
-  const rows =
-    document.querySelectorAll(
-      "#startingItems .item-row"
-    );
-
-  const result = [];
-
-  rows.forEach(
-    row => {
-
-      const select =
-        row.querySelector(
-          ".good-select"
-        );
-
-      const price =
-        Number(
-          row.querySelector(
-            ".item-price"
-          ).value
-        ) || 0;
-
-      const qty =
-        Number(
-          row.querySelector(
-            ".item-qty"
-          ).value
-        ) || 0;
-
-      if(
-        select.value &&
-        qty > 0
-      ){
-
-        const good =
-          goods.find(
-            item =>
-              String(item.id) ===
-              String(select.value)
-          );
-
-        if(good){
-
-          result.push({
-
-            id:
-              good.id,
-
-            name:
-              good.name,
-
-            price:
-              price,
-
-            qty:
-              qty
-
-          });
-
-        }
-
-      }
-
-    }
-  );
-
-  return result;
-
-}
-
-
-function collectRemainingItems(){
-
-  const rows =
-    document.querySelectorAll(
-      "#remainingItems .item-row"
-    );
-
-  const result = [];
-
-  rows.forEach(
-    row => {
-
-      const select =
-        row.querySelector(
-          ".good-select"
-        );
-
-      const price =
-        Number(
-          row.querySelector(
-            ".item-price"
-          ).value
-        ) || 0;
-
-      const remainingQty =
-        Number(
-          row.querySelector(
-            ".item-qty"
-          ).value
-        ) || 0;
-
-      if(select.value){
-
-        const good =
-          goods.find(
-            item =>
-              String(item.id) ===
-              String(select.value)
-          );
-
-        if(good){
-
-          result.push({
-
-            id:
-              good.id,
-
-            name:
-              good.name,
-
-            price:
-              price,
-
-            startingQty:
-              findStartingQty(
-                good.id
-              ),
-
-            remainingQty:
-              remainingQty
-
-          });
-
-        }
-
-      }
-
-    }
-  );
-
-  return result;
-
-}
-
-
-function findStartingQty(id){
-
-  const current =
-    weeks[
-      `week_${Number(
-        $("goodsWeek").value
-      )}`
-    ];
-
-  if(
-    !current ||
-    !current.startingGoods
-  ){
+  if(week <= 1){
 
     return 0;
 
   }
 
-  const item =
-    current.startingGoods.find(
-      good =>
-        String(good.id) ===
-        String(id)
+  const previous =
+    weeklyRecords[week - 1];
+
+  if(!previous ||
+     !previous.remainingGoods){
+
+    return 0;
+
+  }
+
+  return calculateRemainingValue(
+    previous.remainingGoods
+  );
+
+}
+
+
+function calculateStartingValue(goods){
+
+  if(!goods){
+
+    return 0;
+
+  }
+
+  return goods.reduce(
+    (sum,item)=>
+      sum +
+      (Number(item.price)||0) *
+      (Number(item.qty)||0),
+    0
+  );
+
+}
+
+
+function calculateRemainingValue(goods){
+
+  if(!goods){
+
+    return 0;
+
+  }
+
+  return goods.reduce(
+    (sum,item)=>
+      sum +
+      (Number(item.price)||0) *
+      (Number(item.remainingQty ?? item.qty)||0),
+    0
+  );
+
+}
+
+
+function renderWeekEditors(){
+
+  const week =
+    Number(
+      document.getElementById(
+        "goodsWeek"
+      ).value
+    ) || 1;
+
+  const record =
+    weeklyRecords[week];
+
+  const startingContainer =
+    document.getElementById(
+      "startingRows"
     );
 
-  return item
-    ? Number(item.qty) || 0
-    : 0;
+  const remainingContainer =
+    document.getElementById(
+      "remainingRows"
+    );
+
+  startingContainer.innerHTML = "";
+
+  remainingContainer.innerHTML = "";
+
+  if(record?.startingGoods?.length){
+
+    record.startingGoods.forEach(item=>{
+
+      addGoodsRow(
+        "starting",
+        item
+      );
+
+    });
+
+  }else{
+
+    addGoodsRow("starting");
+
+  }
+
+  if(record?.remainingGoods?.length){
+
+    record.remainingGoods.forEach(item=>{
+
+      addGoodsRow(
+        "remaining",
+        item
+      );
+
+    });
+
+  }else{
+
+    addGoodsRow("remaining");
+
+  }
+
+  renderSavedStatus(
+    "startingStatus",
+    !!record?.startingSaved
+  );
+
+  renderSavedStatus(
+    "remainingStatus",
+    !!record?.remainingSaved
+  );
+
+}
+
+
+function addGoodsRow(type,item=null){
+
+  const container =
+    document.getElementById(
+      type === "starting"
+        ? "startingRows"
+        : "remainingRows"
+    );
+
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "goods-row";
+
+  const select =
+    createGoodsSelect();
+
+  const priceInput =
+    document.createElement("input");
+
+  priceInput.type = "number";
+  priceInput.placeholder = "Price";
+  priceInput.readOnly = true;
+
+  const qtyInput =
+    document.createElement("input");
+
+  qtyInput.type = "number";
+  qtyInput.min = "0";
+  qtyInput.placeholder =
+    type === "starting"
+      ? "Qty"
+      : "Remaining";
+
+  const remove =
+    document.createElement("button");
+
+  remove.className =
+    "remove-btn";
+
+  remove.textContent = "×";
+
+  select.addEventListener(
+    "change",
+    ()=>{
+
+      const option =
+        select.options[
+          select.selectedIndex
+        ];
+
+      priceInput.value =
+        option?.dataset?.price || "";
+
+    }
+  );
+
+  if(item){
+
+    const found =
+      approvedGoods.find(
+        good =>
+          String(good.id) ===
+          String(item.goodId)
+      );
+
+    if(found){
+
+      select.value =
+        found.id;
+
+      priceInput.value =
+        found.price;
+
+    }else{
+
+      select.value = "";
+
+      priceInput.value =
+        item.price || "";
+
+    }
+
+    qtyInput.value =
+      type === "starting"
+        ? item.qty
+        : item.remainingQty;
+
+  }
+
+  remove.onclick = ()=>{
+
+    row.remove();
+
+  };
+
+  row.appendChild(select);
+  row.appendChild(priceInput);
+  row.appendChild(qtyInput);
+  row.appendChild(remove);
+
+  container.appendChild(row);
+
+}
+
+
+function collectGoodsRows(type){
+
+  const container =
+    document.getElementById(
+      type === "starting"
+        ? "startingRows"
+        : "remainingRows"
+    );
+
+  const rows =
+    [...container.querySelectorAll(
+      ".goods-row"
+    )];
+
+  const goods = [];
+
+  rows.forEach(row=>{
+
+    const select =
+      row.querySelector(
+        ".goods-select"
+      );
+
+    const inputs =
+      row.querySelectorAll(
+        "input"
+      );
+
+    const selectedId =
+      select.value;
+
+    if(!selectedId){
+
+      return;
+
+    }
+
+    const good =
+      approvedGoods.find(
+        g =>
+          String(g.id) ===
+          String(selectedId)
+      );
+
+    if(!good){
+
+      return;
+
+    }
+
+    const qty =
+      Number(inputs[1].value) || 0;
+
+    if(type === "starting"){
+
+      goods.push({
+
+        goodId:good.id,
+
+        name:good.name,
+
+        price:Number(good.price),
+
+        qty
+
+      });
+
+    }else{
+
+      goods.push({
+
+        goodId:good.id,
+
+        name:good.name,
+
+        price:Number(good.price),
+
+        remainingQty:qty
+
+      });
+
+    }
+
+  });
+
+  return goods;
 
 }
 
@@ -3435,62 +2821,51 @@ function saveStartingGoods(){
 
   const week =
     Number(
-      $("goodsWeek").value
-    );
+      document.getElementById(
+        "goodsWeek"
+      ).value
+    ) || 1;
 
-  const date =
-    $("goodsDate")
-      .value;
+  const goods =
+    collectGoodsRows("starting");
 
-  const items =
-    collectStartingItems();
-
-  if(!items.length){
+  if(!goods.length){
 
     alert(
-      "Please add at least one starting good."
+      "Please add at least one good."
     );
 
     return;
 
   }
 
-  if(!weeks[`week_${week}`]){
+  if(!weeklyRecords[week]){
 
-    weeks[`week_${week}`] = {};
+    weeklyRecords[week] = {};
 
   }
 
-  weeks[`week_${week}`].date =
-    date;
+  weeklyRecords[week].date =
+    document.getElementById(
+      "goodsDate"
+    ).value;
 
-  weeks[`week_${week}`].startingGoods =
-    items;
+  weeklyRecords[week].startingGoods =
+    goods;
 
-  weeks[`week_${week}`].startingSaved =
+  weeklyRecords[week].startingSaved =
     true;
 
-  saveWeeks();
+  saveLocalData();
 
-  disableStartingItems();
+  renderSavedStatus(
+    "startingStatus",
+    true
+  );
 
-  $("startingStatus")
-    .textContent =
-      "Starting goods have been saved.";
+  renderBalance(week);
 
-  $("startingStatus")
-    .classList.remove(
-      "hidden"
-    );
-
-  $("editStartingBtn")
-    .classList.remove(
-      "hidden"
-    );
-
-  renderSavedWeeklyRecords();
-
-  updateBalance();
+  renderWeeklyRecords();
 
   alert(
     "Starting goods saved successfully."
@@ -3503,62 +2878,51 @@ function saveRemainingGoods(){
 
   const week =
     Number(
-      $("goodsWeek").value
-    );
+      document.getElementById(
+        "goodsWeek"
+      ).value
+    ) || 1;
 
-  const date =
-    $("goodsDate")
-      .value;
+  const goods =
+    collectGoodsRows("remaining");
 
-  const items =
-    collectRemainingItems();
-
-  if(!items.length){
+  if(!goods.length){
 
     alert(
-      "Please add at least one remaining good."
+      "Please add at least one good."
     );
 
     return;
 
   }
 
-  if(!weeks[`week_${week}`]){
+  if(!weeklyRecords[week]){
 
-    weeks[`week_${week}`] = {};
+    weeklyRecords[week] = {};
 
   }
 
-  weeks[`week_${week}`].date =
-    date;
+  weeklyRecords[week].date =
+    document.getElementById(
+      "goodsDate"
+    ).value;
 
-  weeks[`week_${week}`].remainingGoods =
-    items;
+  weeklyRecords[week].remainingGoods =
+    goods;
 
-  weeks[`week_${week}`].remainingSaved =
+  weeklyRecords[week].remainingSaved =
     true;
 
-  saveWeeks();
+  saveLocalData();
 
-  disableRemainingItems();
+  renderSavedStatus(
+    "remainingStatus",
+    true
+  );
 
-  $("remainingStatus")
-    .textContent =
-      "Remaining goods have been saved.";
+  renderBalance(week);
 
-  $("remainingStatus")
-    .classList.remove(
-      "hidden"
-    );
-
-  $("editRemainingBtn")
-    .classList.remove(
-      "hidden"
-    );
-
-  renderSavedWeeklyRecords();
-
-  updateBalance();
+  renderWeeklyRecords();
 
   alert(
     "Remaining goods saved successfully."
@@ -3567,476 +2931,336 @@ function saveRemainingGoods(){
 }
 
 
-function editStartingGoods(){
+function renderSavedStatus(id,saved){
 
-  enableStartingItems();
+  const container =
+    document.getElementById(id);
 
-  $("startingStatus")
-    .classList.add(
-      "hidden"
-    );
+  if(!saved){
 
-  $("editStartingBtn")
-    .classList.add(
-      "hidden"
-    );
+    container.innerHTML = "";
 
-}
+    return;
 
+  }
 
-function editRemainingGoods(){
+  container.innerHTML = `
 
-  enableRemainingItems();
+    <div class="saved-status">
+      Saved successfully.
+      <br>
 
-  $("remainingStatus")
-    .classList.add(
-      "hidden"
-    );
+      <button
+        class="edit-btn"
+        onclick="editGoods('${id}')">
+        EDIT
+      </button>
+    </div>
 
-  $("editRemainingBtn")
-    .classList.add(
-      "hidden"
-    );
+  `;
 
 }
 
 
-function disableStartingItems(){
+function editGoods(statusId){
 
-  document
-    .querySelectorAll(
-      "#startingItems select, #startingItems input, #startingItems button"
-    )
-    .forEach(
-      element => {
-
-        element.disabled =
-          true;
-
-      }
-    );
-
-}
-
-
-function enableStartingItems(){
-
-  document
-    .querySelectorAll(
-      "#startingItems select, #startingItems input, #startingItems button"
-    )
-    .forEach(
-      element => {
-
-        element.disabled =
-          false;
-
-      }
-    );
-
-}
-
-
-function disableRemainingItems(){
-
-  document
-    .querySelectorAll(
-      "#remainingItems select, #remainingItems input, #remainingItems button"
-    )
-    .forEach(
-      element => {
-
-        element.disabled =
-          true;
-
-      }
-    );
-
-}
-
-
-function enableRemainingItems(){
-
-  document
-    .querySelectorAll(
-      "#remainingItems select, #remainingItems input, #remainingItems button"
-    )
-    .forEach(
-      element => {
-
-        element.disabled =
-          false;
-
-      }
-    );
-
-}
-
-
-function calculateItemsValue(items){
-
-  return items.reduce(
-    (
-      total,
-      item
-    ) => {
-
-      const qty =
-        Number(
-          item.qty ??
-          item.remainingQty ??
-          0
-        ) || 0;
-
-      const price =
-        Number(
-          item.price
-        ) || 0;
-
-      return (
-        total +
-        qty * price
-      );
-
-    },
-    0
-  );
-
-}
-
-
-function updateBalance(){
+  const type =
+    statusId === "startingStatus"
+      ? "starting"
+      : "remaining";
 
   const week =
     Number(
-      $("goodsWeek").value
+      document.getElementById(
+        "goodsWeek"
+      ).value
+    ) || 1;
+
+  if(weeklyRecords[week]){
+
+    if(type === "starting"){
+
+      weeklyRecords[week].startingSaved =
+        false;
+
+    }else{
+
+      weeklyRecords[week].remainingSaved =
+        false;
+
+    }
+
+    saveLocalData();
+
+  }
+
+  renderSavedStatus(
+    statusId,
+    false
+  );
+
+  selectGoodsType(type);
+
+}
+
+
+function renderBalance(week){
+
+  const container =
+    document.getElementById(
+      "balanceRecords"
     );
 
-  const current =
-    weeks[
-      `week_${week}`
-    ] || {};
+  const record =
+    weeklyRecords[week];
 
-  let startingValue = 0;
+  if(!record){
 
-  let remainingValue = 0;
+    container.innerHTML =
+      "No record calculated yet.";
 
-  if(
-    current.startingSaved &&
-    current.startingGoods
-  ){
-
-    startingValue =
-      calculateItemsValue(
-        current.startingGoods
-      );
-
-  }else{
-
-    startingValue =
-      calculateItemsValue(
-        collectStartingItems()
-      );
+    return;
 
   }
 
-  if(
-    current.remainingSaved &&
-    current.remainingGoods
-  ){
+  const startingValue =
+    calculateStartingValue(
+      record.startingGoods
+    );
 
-    remainingValue =
-      calculateItemsValue(
-        current.remainingGoods
-      );
+  const remainingValue =
+    calculateRemainingValue(
+      record.remainingGoods
+    );
 
-  }else{
+  const previousValue =
+    getPreviousRemainingValue(
+      week
+    );
 
-    remainingValue =
-      calculateItemsValue(
-        collectRemainingItems()
-      );
-
-  }
-
-  const sold =
+  const soldUsed =
     Math.max(
       0,
       startingValue -
       remainingValue
     );
 
-  $("balanceStarting")
-    .textContent =
-      money(startingValue);
+  let balanceValue;
 
-  $("balanceRemaining")
-    .textContent =
-      money(remainingValue);
+  if(week === 1){
 
-  $("balanceSold")
-    .textContent =
-      money(sold);
+    balanceValue =
+      record.remainingSaved
+        ? remainingValue
+        : startingValue;
 
-  $("balanceValue")
-    .textContent =
-      money(remainingValue);
+  }else{
+
+    balanceValue =
+      previousValue +
+      (
+        record.remainingSaved
+          ? remainingValue
+          : startingValue
+      );
+
+  }
+
+  container.innerHTML = `
+
+    <div class="balance-line">
+      <span>Previous Remaining</span>
+      <strong>${money(previousValue)}</strong>
+    </div>
+
+    <div class="balance-line">
+      <span>Starting Goods</span>
+      <strong>${money(startingValue)}</strong>
+    </div>
+
+    <div class="balance-line">
+      <span>Remaining Goods</span>
+      <strong>${money(remainingValue)}</strong>
+    </div>
+
+    <div class="balance-line">
+      <span>Sold / Used</span>
+      <strong>${money(soldUsed)}</strong>
+    </div>
+
+    <div class="balance-line">
+      <span>Balance Value</span>
+      <strong>${money(balanceValue)}</strong>
+    </div>
+
+  `;
 
 }
 
 
-function renderSavedWeeklyRecords(){
+function renderWeeklyRecords(){
 
-  const box =
-    $("savedWeeklyRecords");
-
-  box.innerHTML = "";
-
-  const keys =
-    Object.keys(
-      weeks
+  const container =
+    document.getElementById(
+      "weeklyRecords"
     );
 
-  if(!keys.length){
+  const weeks =
+    Object.keys(weeklyRecords)
+      .map(Number)
+      .sort((a,b)=>a-b);
 
-    box.innerHTML =
-      `<div class="empty">No weekly records saved yet.</div>`;
+  if(!weeks.length){
+
+    container.innerHTML =
+      '<div class="empty">No saved weekly records.</div>';
 
     return;
 
   }
 
-  keys
-    .sort(
-      (a,b) => {
+  container.innerHTML = "";
 
-        const wa =
-          Number(
-            a.replace(
-              "week_",
-              ""
-            )
-          );
+  weeks.forEach(week=>{
 
-        const wb =
-          Number(
-            b.replace(
-              "week_",
-              ""
-            )
-          );
+    const record =
+      weeklyRecords[week];
 
-        return wa - wb;
+    const startingValue =
+      calculateStartingValue(
+        record.startingGoods
+      );
 
-      }
-    )
-    .forEach(
-      key => {
+    const remainingValue =
+      calculateRemainingValue(
+        record.remainingGoods
+      );
 
-        const week =
-          weeks[key];
+    const soldUsed =
+      Math.max(
+        0,
+        startingValue -
+        remainingValue
+      );
 
-        const startingValue =
-          calculateItemsValue(
-            week.startingGoods || []
-          );
+    const wrapper =
+      document.createElement("div");
 
-        const remainingValue =
-          calculateItemsValue(
-            week.remainingGoods || []
-          );
+    wrapper.className =
+      "record";
 
-        const sold =
-          Math.max(
-            0,
-            startingValue -
-            remainingValue
-          );
+    const header =
+      document.createElement("div");
 
-        const row =
-          document.createElement(
-            "div"
-          );
+    header.className =
+      "record-header";
 
-        row.className =
-          "week-row";
+    header.textContent =
+      "Week " +
+      week +
+      " — " +
+      (record.date || "");
 
-        row.innerHTML = `
-          <div class="summary-row">
-            <span>Week</span>
-            <strong>
-              ${key.replace("week_","")}
-            </strong>
-          </div>
+    const body =
+      document.createElement("div");
 
-          <div class="summary-row">
-            <span>Date</span>
-            <strong>
-              ${escapeHtml(week.date || "")}
-            </strong>
-          </div>
+    body.className =
+      "record-body";
 
-          <div class="summary-row">
-            <span>Starting Goods</span>
-            <strong>${money(startingValue)}</strong>
-          </div>
+    body.innerHTML = `
 
-          <div class="summary-row">
-            <span>Remaining Goods</span>
-            <strong>${money(remainingValue)}</strong>
-          </div>
+      <div>
+        Starting Goods:
+        <strong>${money(startingValue)}</strong>
+      </div>
 
-          <div class="summary-row">
-            <span>Sold / Used</span>
-            <strong>${money(sold)}</strong>
-          </div>
-        `;
+      <div>
+        Remaining Goods:
+        <strong>${money(remainingValue)}</strong>
+      </div>
 
-        box.appendChild(
-          row
-        );
+      <div>
+        Sold / Used:
+        <strong>${money(soldUsed)}</strong>
+      </div>
 
-      }
-    );
+      <div>
+        Starting Saved:
+        <strong>${record.startingSaved ? "Yes" : "No"}</strong>
+      </div>
+
+      <div>
+        Remaining Saved:
+        <strong>${record.remainingSaved ? "Yes" : "No"}</strong>
+      </div>
+
+    `;
+
+    header.onclick = ()=>{
+
+      body.classList.toggle("show");
+
+    };
+
+    wrapper.appendChild(header);
+    wrapper.appendChild(body);
+
+    container.appendChild(wrapper);
+
+  });
 
 }
 
 
-/* =====================================================
-   UTILITIES
-===================================================== */
-
-function formatDateInput(date){
-
-  const year =
-    date.getFullYear();
-
-  const month =
-    String(
-      date.getMonth() + 1
-    ).padStart(
-      2,
-      "0"
-    );
-
-  const day =
-    String(
-      date.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
-
-  return (
-    year +
-    "-" +
-    month +
-    "-" +
-    day
-  );
-
-}
-
-
-function escapeHtml(value){
-
-  return String(
-    value ?? ""
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
-  );
-
-}
-
-
-/* =====================================================
+/* =========================================================
    START APP
-===================================================== */
+========================================================= */
 
-(async function(){
+async function initializeApp(){
 
-  const result =
+  loadRevenueWeeks();
+
+  loadGoodsWeeks();
+
+  loadCedi();
+
+  const {
+    data
+  } =
     await db.auth.getSession();
 
-  if(result.data.session){
+  if(data.session){
 
     session =
-      result.data.session;
+      data.session;
 
-    await initializeApp();
+    await loadUserProfile();
 
   }else{
 
-    $("loginScreen")
-      .classList.remove(
-        "hidden"
-      );
+    document.getElementById(
+      "loginScreen"
+    ).style.display = "flex";
+
+    document.getElementById(
+      "app"
+    ).style.display = "none";
 
   }
 
-})();
+}
 
-
-/* =====================================================
-   AUTH STATE
-===================================================== */
 
 db.auth.onAuthStateChange(
-  async (
-    event,
-    currentSession
-  ) => {
+  async (_event,newSession)=>{
 
-    if(
-      event ===
-      "SIGNED_IN"
-    ){
-
-      session =
-        currentSession;
-
-      await initializeApp();
-
-    }
-
-    if(
-      event ===
-      "SIGNED_OUT"
-    ){
-
-      session = null;
-
-      userProfile = null;
-
-      isAdminUser = false;
-
-      $("loginScreen")
-        .classList.remove(
-          "hidden"
-        );
-
-    }
+    session = newSession;
 
   }
 );
+
+
+initializeApp();
 
 </script>
 
