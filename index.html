@@ -9,468 +9,520 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#eef2ee,#dfe6df);
-  color:#24452d;
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:linear-gradient(135deg,#eef2ee,#dfe6df);
+color:#24452d;
 }
 
 header{
-  background:#24452d;
-  color:white;
-  padding:18px 15px;
-  display:flex;
-  align-items:center;
-  gap:14px;
+background:#24452d;
+color:white;
+padding:18px 15px;
+display:flex;
+align-items:center;
+gap:14px;
 }
 
 .logo{
-  width:58px;
-  height:58px;
-  border:3px solid white;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-size:20px;
+width:58px;
+height:58px;
+border:3px solid white;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+font-size:20px;
 }
 
 .header-title{
-  font-size:23px;
-  font-weight:bold;
+font-size:23px;
+font-weight:bold;
 }
 
 .header-subtitle{
-  font-size:13px;
-  opacity:.85;
-  margin-top:3px;
+font-size:13px;
+opacity:.85;
+margin-top:3px;
 }
 
 .container{
-  max-width:720px;
-  margin:auto;
-  padding:15px;
+max-width:720px;
+margin:auto;
+padding:15px;
 }
 
 .tabs{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:#eef2ee;
-  display:flex;
-  gap:6px;
-  padding:10px 0;
+position:sticky;
+top:0;
+z-index:20;
+background:#eef2ee;
+display:flex;
+gap:6px;
+padding:10px 0;
 }
 
 .tab{
-  flex:1;
-  border:none;
-  background:#d8e2d8;
-  color:#24452d;
-  padding:12px 5px;
-  border-radius:9px;
-  font-weight:bold;
-  cursor:pointer;
+flex:1;
+border:none;
+background:#d8e2d8;
+color:#24452d;
+padding:12px 5px;
+border-radius:9px;
+font-weight:bold;
+cursor:pointer;
 }
 
 .tab.active{
-  background:#6b8e58;
-  color:white;
+background:#6b8e58;
+color:white;
 }
 
 .section{
-  display:none;
+display:none;
 }
 
 .section.active{
-  display:block;
+display:block;
 }
 
 .card{
-  background:white;
-  border-radius:13px;
-  padding:17px;
-  margin-bottom:15px;
-  box-shadow:0 3px 12px rgba(36,69,45,.08);
+background:white;
+border-radius:13px;
+padding:17px;
+margin-bottom:15px;
+box-shadow:0 3px 12px rgba(36,69,45,.08);
 }
 
 .card h2{
-  margin:0 0 15px;
-  font-size:19px;
+margin:0 0 15px;
+font-size:19px;
 }
 
 .card h3{
-  margin:0 0 12px;
-  font-size:16px;
+margin:0 0 12px;
+font-size:16px;
 }
 
 label{
-  display:block;
-  font-weight:bold;
-  margin-top:10px;
-  margin-bottom:5px;
+display:block;
+font-weight:bold;
+margin-top:10px;
+margin-bottom:5px;
 }
 
 input,select{
-  width:100%;
-  padding:11px;
-  border:1px solid #cbd6cb;
-  border-radius:8px;
-  font-size:15px;
-  background:white;
+width:100%;
+padding:11px;
+border:1px solid #cbd6cb;
+border-radius:8px;
+font-size:15px;
+background:white;
 }
 
 button{
-  font-family:inherit;
+font-family:inherit;
 }
 
 .main-btn{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#6b8e58;
-  color:white;
-  font-weight:bold;
-  margin-top:12px;
-  cursor:pointer;
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#6b8e58;
+color:white;
+font-weight:bold;
+margin-top:12px;
+cursor:pointer;
 }
 
 .secondary-btn{
-  width:100%;
-  padding:11px;
-  border:none;
-  border-radius:8px;
-  background:#527a58;
-  color:white;
-  font-weight:bold;
-  margin-top:10px;
-  cursor:pointer;
+width:100%;
+padding:11px;
+border:none;
+border-radius:8px;
+background:#527a58;
+color:white;
+font-weight:bold;
+margin-top:10px;
+cursor:pointer;
 }
 
 .danger-btn{
-  padding:9px 12px;
-  border:none;
-  border-radius:7px;
-  background:#a94b4b;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+padding:9px 12px;
+border:none;
+border-radius:7px;
+background:#a94b4b;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
 .approve-btn{
-  padding:9px 12px;
-  border:none;
-  border-radius:7px;
-  background:#6b8e58;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+padding:9px 12px;
+border:none;
+border-radius:7px;
+background:#6b8e58;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
 .reject-btn{
-  padding:9px 12px;
-  border:none;
-  border-radius:7px;
-  background:#777;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+padding:9px 12px;
+border:none;
+border-radius:7px;
+background:#777;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
 .remove-btn{
-  padding:9px 12px;
-  border:none;
-  border-radius:7px;
-  background:#a94b4b;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+padding:9px 12px;
+border:none;
+border-radius:7px;
+background:#a94b4b;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
 .reset-btn{
-  width:100%;
-  padding:11px;
-  border:none;
-  border-radius:8px;
-  background:#d8e2d8;
-  color:#24452d;
-  font-weight:bold;
-  margin-top:10px;
-  cursor:pointer;
+width:100%;
+padding:11px;
+border:none;
+border-radius:8px;
+background:#d8e2d8;
+color:#24452d;
+font-weight:bold;
+margin-top:10px;
+cursor:pointer;
 }
 
 .row{
-  display:flex;
-  gap:8px;
-  align-items:end;
+display:flex;
+gap:8px;
+align-items:end;
 }
 
 .row>div{
-  flex:1;
+flex:1;
 }
 
 .money{
-  color:#111;
-  font-weight:bold;
+color:#111;
+font-weight:bold;
 }
 
 .summary{
-  background:#edf4eb;
-  border-radius:10px;
-  padding:12px;
-  margin-top:12px;
+background:#edf4eb;
+border-radius:10px;
+padding:12px;
+margin-top:12px;
 }
 
 .summary-row{
-  display:flex;
-  justify-content:space-between;
-  padding:7px 0;
-  border-bottom:1px solid #d8e2d8;
+display:flex;
+justify-content:space-between;
+padding:7px 0;
+border-bottom:1px solid #d8e2d8;
 }
 
 .summary-row:last-child{
-  border-bottom:none;
+border-bottom:none;
 }
 
 .profit{
-  font-size:21px;
-  font-weight:bold;
+font-size:21px;
+font-weight:bold;
 }
 
 .cedi-row{
-  display:grid;
-  grid-template-columns:70px 1fr 1fr;
-  gap:8px;
-  align-items:center;
-  margin-bottom:8px;
+display:grid;
+grid-template-columns:70px 1fr 1fr;
+gap:8px;
+align-items:center;
+margin-bottom:8px;
 }
 
 .cedi-denom{
-  font-weight:bold;
-  color:#24452d;
+font-weight:bold;
+color:#24452d;
 }
 
 .cedi-total{
-  color:#111;
-  font-weight:bold;
+color:#111;
+font-weight:bold;
 }
 
 .good-row{
-  display:grid;
-  grid-template-columns:1.4fr .8fr .7fr auto;
-  gap:7px;
-  align-items:center;
-  margin-bottom:8px;
+display:grid;
+grid-template-columns:1.4fr .8fr .7fr auto;
+gap:7px;
+align-items:center;
+margin-bottom:8px;
 }
 
 .small-btn{
-  border:none;
-  border-radius:7px;
-  padding:9px;
-  background:#a94b4b;
-  color:white;
-  cursor:pointer;
+border:none;
+border-radius:7px;
+padding:9px;
+background:#a94b4b;
+color:white;
+cursor:pointer;
 }
 
 .status{
-  padding:10px;
-  border-radius:8px;
-  background:#edf4eb;
-  margin-top:10px;
-  font-size:14px;
+padding:10px;
+border-radius:8px;
+background:#edf4eb;
+margin-top:10px;
+font-size:14px;
 }
 
 .account-item,
 .request-item,
 .saved-item{
-  border:1px solid #d8e2d8;
-  border-radius:9px;
-  padding:12px;
-  margin-bottom:9px;
-  background:#fafcf9;
+border:1px solid #d8e2d8;
+border-radius:9px;
+padding:12px;
+margin-bottom:9px;
+background:#fafcf9;
 }
 
 .item-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-start;
+display:flex;
+justify-content:space-between;
+gap:10px;
+align-items:flex-start;
 }
 
 .item-actions{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  margin-top:10px;
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+margin-top:10px;
 }
 
 .badge{
-  display:inline-block;
-  padding:5px 8px;
-  border-radius:6px;
-  background:#edf2ed;
-  font-size:12px;
-  font-weight:bold;
+display:inline-block;
+padding:5px 8px;
+border-radius:6px;
+background:#edf2ed;
+font-size:12px;
+font-weight:bold;
 }
 
 .login-screen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
 }
 
 .login-box{
-  width:100%;
-  max-width:420px;
-  background:white;
-  border-radius:15px;
-  padding:22px;
-  box-shadow:0 4px 18px rgba(36,69,45,.12);
+width:100%;
+max-width:420px;
+background:white;
+border-radius:15px;
+padding:22px;
+box-shadow:0 4px 18px rgba(36,69,45,.12);
 }
 
 .login-logo{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:#24452d;
-  color:white;
-  border:3px solid #6b8e58;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 12px;
-  font-size:23px;
-  font-weight:bold;
+width:70px;
+height:70px;
+border-radius:50%;
+background:#24452d;
+color:white;
+border:3px solid #6b8e58;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 12px;
+font-size:23px;
+font-weight:bold;
 }
 
 .login-title{
-  text-align:center;
-  color:#24452d;
-  font-size:24px;
-  font-weight:bold;
+text-align:center;
+color:#24452d;
+font-size:24px;
+font-weight:bold;
 }
 
 .login-subtitle{
-  text-align:center;
-  color:#527a58;
-  margin-bottom:20px;
+text-align:center;
+color:#527a58;
+margin-bottom:20px;
 }
 
 .login-message{
-  background:#edf4eb;
-  padding:10px;
-  border-radius:8px;
-  font-size:14px;
-  margin-top:10px;
-  display:none;
+background:#edf4eb;
+padding:10px;
+border-radius:8px;
+font-size:14px;
+margin-top:10px;
+display:none;
 }
 
 .hidden{
-  display:none !important;
+display:none !important;
 }
 
 @media(max-width:600px){
-  .good-row{
-    grid-template-columns:1fr 1fr;
-  }
 
-  .good-row input:first-child,
-  .good-row select:first-child{
-    grid-column:1 / -1;
-  }
+.good-row{
+grid-template-columns:1fr 1fr;
+}
 
-  .item-top{
-    flex-direction:column;
-  }
+.good-row input:first-child,
+.good-row select:first-child{
+grid-column:1 / -1;
+}
 
-  .tabs{
-    gap:4px;
-  }
+.item-top{
+flex-direction:column;
+}
 
-  .tab{
-    font-size:12px;
-    padding:11px 3px;
-  }
+.tabs{
+gap:4px;
+}
+
+.tab{
+font-size:12px;
+padding:11px 3px;
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- =====================================================
+LOGIN
+===================================================== -->
+
 <div id="loginScreen" class="login-screen">
 
-  <div class="login-box">
+<div class="login-box">
 
-    <div class="login-logo">O&C</div>
+<div class="login-logo">O&C</div>
 
-    <div class="login-title">Oak & Cedar</div>
-    <div class="login-subtitle">Business Calculator</div>
+<div class="login-title">Oak & Cedar</div>
 
-    <div id="loginFields">
+<div class="login-subtitle">
+Business Calculator
+</div>
 
-      <label>Email</label>
-      <input type="email" id="loginEmail" placeholder="Enter your email">
+<div id="loginFields">
 
-      <label>Password</label>
-      <input type="password" id="loginPassword" placeholder="Enter your password">
+<label>Email</label>
 
-      <button class="main-btn" onclick="loginUser()">LOGIN</button>
+<input
+type="email"
+id="loginEmail"
+placeholder="Enter your email"
+>
 
-      <button class="reset-btn" onclick="showCreateAccount()">
-        CREATE ACCOUNT
-      </button>
+<label>Password</label>
 
-    </div>
+<input
+type="password"
+id="loginPassword"
+placeholder="Enter your password"
+>
 
-    <div id="createFields" class="hidden">
+<button
+class="main-btn"
+onclick="loginUser()">
+LOGIN
+</button>
 
-      <label>Full Name</label>
-      <input type="text" id="createName" placeholder="Enter your name">
-
-      <label>Email</label>
-      <input type="email" id="createEmail" placeholder="Enter your email">
-
-      <label>Password</label>
-      <input type="password" id="createPassword" placeholder="Create a password">
-
-      <button class="main-btn" onclick="createAccount()">
-        CREATE ACCOUNT
-      </button>
-
-      <button class="reset-btn" onclick="showLogin()">
-        BACK TO LOGIN
-      </button>
-
-    </div>
-
-    <div id="loginMessage" class="login-message"></div>
-
-  </div>
+<button
+class="reset-btn"
+onclick="showCreateAccount()">
+CREATE ACCOUNT
+</button>
 
 </div>
 
 
-<!-- APP -->
+<div id="createFields" class="hidden">
+
+<label>Full Name</label>
+
+<input
+type="text"
+id="createName"
+placeholder="Enter your name"
+>
+
+<label>Email</label>
+
+<input
+type="email"
+id="createEmail"
+placeholder="Enter your email"
+>
+
+<label>Password</label>
+
+<input
+type="password"
+id="createPassword"
+placeholder="Create a password"
+>
+
+<button
+class="main-btn"
+onclick="createAccount()">
+CREATE ACCOUNT
+</button>
+
+<button
+class="reset-btn"
+onclick="showLogin()">
+BACK TO LOGIN
+</button>
+
+</div>
+
+<div id="loginMessage" class="login-message"></div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+MAIN APP
+===================================================== -->
+
 <div id="app" class="hidden">
 
 <header>
 
-  <div class="logo">O&C</div>
+<div class="logo">O&C</div>
 
-  <div>
-    <div class="header-title">Oak & Cedar</div>
-    <div class="header-subtitle">Business Calculator</div>
-  </div>
+<div>
+
+<div class="header-title">
+Oak & Cedar
+</div>
+
+<div class="header-subtitle">
+Business Calculator
+</div>
+
+</div>
 
 </header>
 
@@ -479,121 +531,218 @@ button{
 
 <div class="tabs">
 
-  <button class="tab active" onclick="showTab('revenue',this)">
-    Revenue
-  </button>
+<button
+class="tab active"
+onclick="showTab('revenue',this)">
+Revenue
+</button>
 
-  <button class="tab" onclick="showTab('cedi',this)">
-    Cedi
-  </button>
+<button
+class="tab"
+onclick="showTab('cedi',this)">
+Cedi
+</button>
 
-  <button class="tab" onclick="showTab('goods',this)">
-    Goods
-  </button>
+<button
+class="tab"
+onclick="showTab('goods',this)">
+Goods
+</button>
 
-  <button id="adminTab" class="tab hidden" onclick="showTab('admin',this)">
-    Admin
-  </button>
+<button
+id="adminTab"
+class="tab hidden"
+onclick="showTab('admin',this)">
+Admin
+</button>
 
 </div>
 
 
 <!-- =====================================================
-     REVENUE
-     ===================================================== -->
+REVENUE
+===================================================== -->
 
-<section id="revenue" class="section active">
+<section
+id="revenue"
+class="section active">
 
 <div class="card">
 
 <h2>Revenue Calculator</h2>
 
 <label>Bank 1</label>
-<input type="number" id="bank1" value="">
+
+<input
+type="number"
+id="bank1"
+value=""
+>
 
 <label>Bank 2</label>
-<input type="number" id="bank2" value="">
+
+<input
+type="number"
+id="bank2"
+value=""
+>
 
 <label>Bank 3</label>
-<input type="number" id="bank3" value="">
+
+<input
+type="number"
+id="bank3"
+value=""
+>
 
 <label>Cash at Hand</label>
-<input type="number" id="cashAtHand" value="">
+
+<input
+type="number"
+id="cashAtHand"
+value=""
+>
 
 <label>Expenses</label>
-<input type="number" id="expenses" value="">
+
+<input
+type="number"
+id="expenses"
+value=""
+>
 
 <label>Total Goods</label>
-<input type="number" id="totalGoods" value="">
+
+<input
+type="number"
+id="totalGoods"
+value=""
+>
 
 <label>Remaining Goods</label>
-<input type="number" id="remainingGoods" value="">
 
-<button class="main-btn" onclick="calculateRevenue()">
+<input
+type="number"
+id="remainingGoods"
+value=""
+>
+
+<button
+class="main-btn"
+onclick="calculateRevenue()">
 CALCULATE
 </button>
+
 
 <div class="summary">
 
 <div class="summary-row">
 <span>Total Banks</span>
-<strong class="money" id="totalBanks">GH₵0.00</strong>
+<strong
+class="money"
+id="totalBanks">
+GH₵0.00
+</strong>
 </div>
 
 <div class="summary-row">
 <span>Total Bank & Cash</span>
-<strong class="money" id="totalBankCash">GH₵0.00</strong>
+<strong
+class="money"
+id="totalBankCash">
+GH₵0.00
+</strong>
 </div>
 
 <div class="summary-row">
 <span>Remaining Goods</span>
-<strong class="money" id="summaryRemainingGoods">GH₵0.00</strong>
+<strong
+class="money"
+id="summaryRemainingGoods">
+GH₵0.00
+</strong>
 </div>
 
 <div class="summary-row">
 <span>Goods After Expenses</span>
-<strong class="money" id="goodsAfterExpenses">GH₵0.00</strong>
+<strong
+class="money"
+id="goodsAfterExpenses">
+GH₵0.00
+</strong>
 </div>
 
 <div class="summary-row">
 <span>TOTAL PROFIT</span>
-<strong class="money profit" id="totalProfit">GH₵0.00</strong>
+<strong
+class="money profit"
+id="totalProfit">
+GH₵0.00
+</strong>
 </div>
 
 </div>
 
-<button class="secondary-btn" onclick="showRevenueSave()">
+
+<button
+class="secondary-btn"
+onclick="showRevenueSave()">
 SAVE REVENUE RECORD
 </button>
 
-<div id="revenueSaveBox" class="card hidden">
+
+<div
+id="revenueSaveBox"
+class="card hidden">
 
 <h3>Save Revenue Record</h3>
 
 <label>Week</label>
+
 <select id="revenueWeek"></select>
 
 <label>Start Date</label>
-<input type="date" id="revenueStartDate" onchange="setRevenueEndDate()">
+
+<input
+type="date"
+id="revenueStartDate"
+onchange="setRevenueEndDate()"
+>
 
 <label>To Date</label>
-<input type="date" id="revenueEndDate" readonly>
 
-<button class="main-btn" onclick="saveRevenueRecord()">
+<input
+type="date"
+id="revenueEndDate"
+readonly
+>
+
+<button
+class="main-btn"
+onclick="saveRevenueRecord()">
 SAVE RECORD
 </button>
 
-<button class="reset-btn" onclick="cancelRevenueSave()">
+<button
+class="reset-btn"
+onclick="cancelRevenueSave()">
 CANCEL
 </button>
 
 </div>
 
-<button class="reset-btn" onclick="resetRevenue()">
+
+<button
+class="reset-btn"
+onclick="resetRevenue()">
 RESET
 </button>
 
-<button class="danger-btn" style="width:100%;margin-top:10px" onclick="logoutUser()">
+
+<button
+class="danger-btn"
+style="width:100%;margin-top:10px"
+onclick="logoutUser()">
 LOGOUT
 </button>
 
@@ -614,10 +763,12 @@ No saved revenue records.
 
 
 <!-- =====================================================
-     CEDI
-     ===================================================== -->
+CEDI
+===================================================== -->
 
-<section id="cedi" class="section">
+<section
+id="cedi"
+class="section">
 
 <div class="card">
 
@@ -625,24 +776,36 @@ No saved revenue records.
 
 <div id="cediRows"></div>
 
-<button class="main-btn" onclick="calculateCedi()">
+<button
+class="main-btn"
+onclick="calculateCedi()">
 CALCULATE
 </button>
+
 
 <div class="summary">
 
 <div class="summary-row">
+
 <span>TOTAL CASH</span>
-<strong class="money" id="cediGrandTotal">
+
+<strong
+class="money"
+id="cediGrandTotal">
 GH₵0.00
 </strong>
+
 </div>
 
+
 <div class="summary-row">
+
 <span>Amount in Words</span>
+
 <strong id="cediWords">
 Zero Ghana Cedis
 </strong>
+
 </div>
 
 </div>
@@ -653,38 +816,64 @@ Zero Ghana Cedis
 
 
 <!-- =====================================================
-     GOODS
-     ===================================================== -->
+GOODS
+===================================================== -->
 
-<section id="goods" class="section">
+<section
+id="goods"
+class="section">
 
 
-<!-- NORMAL USER GOOD REQUEST -->
+<!-- REQUEST GOOD -->
 
 <div class="card">
 
 <h2>Request a New Good</h2>
 
-<p style="font-size:14px;color:#527a58">
+<p
+style="font-size:14px;color:#527a58">
+
 If the good you need is not on the approved goods list,
 enter the name and price below. An admin must approve it
 before it is added to the official goods list.
+
 </p>
 
+
 <label>Good Name</label>
-<input type="text" id="requestGoodName" placeholder="Enter good name">
+
+<input
+type="text"
+id="requestGoodName"
+placeholder="Enter good name"
+>
+
 
 <label>Price</label>
-<input type="number" id="requestGoodPrice" placeholder="Enter price">
 
-<button class="main-btn" onclick="submitGoodRequest()">
+<input
+type="number"
+id="requestGoodPrice"
+placeholder="Enter price"
+>
+
+
+<button
+class="main-btn"
+onclick="submitGoodRequest()">
 REQUEST GOOD
 </button>
 
-<div id="requestMessage" class="status hidden"></div>
+
+<div
+id="requestMessage"
+class="status hidden">
+</div>
 
 </div>
 
+
+<!-- MY REQUESTS -->
 
 <div class="card">
 
@@ -704,37 +893,68 @@ No requests yet.
 <h2>Weekly Goods Recording</h2>
 
 <label>Select Week</label>
-<select id="goodsWeek" onchange="loadSelectedWeek()"></select>
+
+<select
+id="goodsWeek"
+onchange="loadSelectedWeek()">
+</select>
+
 
 <label>Date</label>
-<input type="date" id="goodsDate">
+
+<input
+type="date"
+id="goodsDate"
+>
+
 
 <label>Previous Week Remaining Goods</label>
-<input type="text" id="previousRemainingDisplay" readonly value="None">
 
-<div style="display:flex;gap:7px;margin-top:12px">
+<input
+type="text"
+id="previousRemainingDisplay"
+readonly
+value="None"
+>
 
-<button class="tab active" id="startingBtn" onclick="showGoodsMode('starting',this)">
+
+<div
+style="display:flex;gap:7px;margin-top:12px">
+
+<button
+class="tab active"
+id="startingBtn"
+onclick="showGoodsMode('starting',this)">
 Starting Goods
 </button>
 
-<button class="tab" id="remainingBtn" onclick="showGoodsMode('remaining',this)">
+<button
+class="tab"
+id="remainingBtn"
+onclick="showGoodsMode('remaining',this)">
 Remaining Goods
 </button>
 
 </div>
 
-<div id="startingGoodsBox" style="margin-top:15px">
+
+<div
+id="startingGoodsBox"
+style="margin-top:15px">
 
 <h3>Starting Goods</h3>
 
 <div id="startingGoodsRows"></div>
 
-<button class="secondary-btn" onclick="addStartingGoodRow()">
+<button
+class="secondary-btn"
+onclick="addStartingGoodRow()">
 ADD GOOD
 </button>
 
-<button class="main-btn" onclick="saveStartingGoods()">
+<button
+class="main-btn"
+onclick="saveStartingGoods()">
 SAVE STARTING GOODS
 </button>
 
@@ -743,17 +963,24 @@ SAVE STARTING GOODS
 </div>
 
 
-<div id="remainingGoodsBox" class="hidden" style="margin-top:15px">
+<div
+id="remainingGoodsBox"
+class="hidden"
+style="margin-top:15px">
 
 <h3>Remaining Goods</h3>
 
 <div id="remainingGoodsRows"></div>
 
-<button class="secondary-btn" onclick="addRemainingGoodRow()">
+<button
+class="secondary-btn"
+onclick="addRemainingGoodRow()">
 ADD GOOD
 </button>
 
-<button class="main-btn" onclick="saveRemainingGoods()">
+<button
+class="main-btn"
+onclick="saveRemainingGoods()">
 SAVE REMAINING GOODS
 </button>
 
@@ -789,10 +1016,12 @@ No saved weekly records.
 
 
 <!-- =====================================================
-     ADMIN
-     ===================================================== -->
+ADMIN
+===================================================== -->
 
-<section id="admin" class="section">
+<section
+id="admin"
+class="section">
 
 
 <!-- ACCOUNTS -->
@@ -801,8 +1030,11 @@ No saved weekly records.
 
 <h2>Registered Accounts</h2>
 
-<p style="font-size:14px;color:#527a58">
+<p
+style="font-size:14px;color:#527a58">
+
 Approve new accounts or remove users from the site.
+
 </p>
 
 <div id="accountsList">
@@ -818,9 +1050,12 @@ Loading accounts...
 
 <h2>Good Requests</h2>
 
-<p style="font-size:14px;color:#527a58">
+<p
+style="font-size:14px;color:#527a58">
+
 Normal users must receive approval before their requested
 good and price are added to the official goods list.
+
 </p>
 
 <div id="adminGoodRequests">
@@ -840,30 +1075,45 @@ Loading requests...
 Loading goods...
 </div>
 
+
 <label>Good Name</label>
-<input type="text" id="adminGoodName" placeholder="Good name">
+
+<input
+type="text"
+id="adminGoodName"
+placeholder="Good name"
+>
+
 
 <label>Price</label>
-<input type="number" id="adminGoodPrice" placeholder="Price">
 
-<button class="main-btn" onclick="addGood()">
+<input
+type="number"
+id="adminGoodPrice"
+placeholder="Price"
+>
+
+
+<button
+class="main-btn"
+onclick="addGood()">
 ADD GOOD & PRICE
 </button>
 
 </div>
 
-
 </section>
 
 </div>
+
 </div>
 
 
 <script>
 
 /* =====================================================
-   SUPABASE
-   ===================================================== */
+SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://ywsmyynauytmgdiijwlo.supabase.co";
@@ -875,22 +1125,26 @@ const db = supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY,
 {
-  auth:{
-    persistSession:true,
-    autoRefreshToken:true,
-    detectSessionInUrl:true
-  }
+auth:{
+persistSession:true,
+autoRefreshToken:true,
+detectSessionInUrl:true
+}
 }
 );
 
 
 /* =====================================================
-   CONSTANTS
-   ===================================================== */
+CONSTANTS
+===================================================== */
 
 const GOODS_KEY="oc_demo_goods";
-const WEEKS_KEY="oc_demo_weeks_fresh_2026_09";
-const REVENUE_KEY="oc_demo_revenue_records_2026_09";
+
+const WEEKS_KEY=
+"oc_demo_weeks_fresh_2026_09";
+
+const REVENUE_KEY=
+"oc_demo_revenue_records_2026_09";
 
 let currentUser=null;
 let currentProfile=null;
@@ -898,18 +1152,21 @@ let goods=[];
 
 
 /* =====================================================
-   LOGIN / ACCOUNT CREATION
-   ===================================================== */
+LOGIN
+===================================================== */
 
 function showCreateAccount(){
 
-document.getElementById("loginFields")
+document
+.getElementById("loginFields")
 .classList.add("hidden");
 
-document.getElementById("createFields")
+document
+.getElementById("createFields")
 .classList.remove("hidden");
 
-document.getElementById("loginMessage")
+document
+.getElementById("loginMessage")
 .style.display="none";
 
 }
@@ -917,13 +1174,16 @@ document.getElementById("loginMessage")
 
 function showLogin(){
 
-document.getElementById("createFields")
+document
+.getElementById("createFields")
 .classList.add("hidden");
 
-document.getElementById("loginFields")
+document
+.getElementById("loginFields")
 .classList.remove("hidden");
 
-document.getElementById("loginMessage")
+document
+.getElementById("loginMessage")
 .style.display="none";
 
 }
@@ -931,24 +1191,34 @@ document.getElementById("loginMessage")
 
 function showLoginMessage(message){
 
-const box=document.getElementById("loginMessage");
+const box=
+document.getElementById("loginMessage");
 
 box.textContent=message;
+
 box.style.display="block";
 
 }
 
 
+/* =====================================================
+CREATE ACCOUNT
+===================================================== */
+
 async function createAccount(){
 
 const name=
-document.getElementById("createName").value.trim();
+document.getElementById("createName")
+.value.trim();
 
 const email=
-document.getElementById("createEmail").value.trim();
+document.getElementById("createEmail")
+.value.trim();
 
 const password=
-document.getElementById("createPassword").value;
+document.getElementById("createPassword")
+.value;
+
 
 if(!name || !email || !password){
 
@@ -958,6 +1228,7 @@ showLoginMessage(
 
 return;
 }
+
 
 if(password.length<6){
 
@@ -969,9 +1240,11 @@ return;
 }
 
 
-const {data,error}=await db.auth.signUp({
+const {data,error}=
+await db.auth.signUp({
 
 email:email,
+
 password:password,
 
 options:{
@@ -986,16 +1259,11 @@ full_name:name
 if(error){
 
 showLoginMessage(error.message);
+
 return;
 
 }
 
-
-/*
-New users are created as pending by the database
-trigger. They cannot use the calculator until
-the admin approves them.
-*/
 
 if(data.session){
 
@@ -1003,9 +1271,11 @@ await db.auth.signOut();
 
 }
 
+
 showLoginMessage(
 "Account created successfully. Your account is waiting for admin approval. You cannot log in until an admin approves your account."
 );
+
 
 document.getElementById("createName").value="";
 document.getElementById("createEmail").value="";
@@ -1014,13 +1284,20 @@ document.getElementById("createPassword").value="";
 }
 
 
+/* =====================================================
+LOGIN
+===================================================== */
+
 async function loginUser(){
 
 const email=
-document.getElementById("loginEmail").value.trim();
+document.getElementById("loginEmail")
+.value.trim();
 
 const password=
-document.getElementById("loginPassword").value;
+document.getElementById("loginPassword")
+.value;
+
 
 if(!email || !password){
 
@@ -1029,12 +1306,15 @@ showLoginMessage(
 );
 
 return;
+
 }
 
 
-const {data,error}=await db.auth.signInWithPassword({
+const {data,error}=
+await db.auth.signInWithPassword({
 
 email:email,
+
 password:password
 
 });
@@ -1043,9 +1323,11 @@ password:password
 if(error){
 
 showLoginMessage(error.message);
+
 return;
 
 }
+
 
 currentUser=data.user;
 
@@ -1054,15 +1336,21 @@ await loadUserProfile();
 }
 
 
+/* =====================================================
+PROFILE
+===================================================== */
+
 async function loadUserProfile(){
 
 if(!currentUser){
 
-const result=await db.auth.getUser();
+const result=
+await db.auth.getUser();
 
 currentUser=result.data.user;
 
 }
+
 
 if(!currentUser){
 
@@ -1071,7 +1359,8 @@ return;
 }
 
 
-const {data,error}=await db
+const {data,error}=
+await db
 .from("profiles")
 .select("*")
 .eq("id",currentUser.id)
@@ -1124,7 +1413,7 @@ return;
 }
 
 
-/* ONLY ACTIVE USERS */
+/* ONLY ACTIVE */
 
 if(data.status!=="active"){
 
@@ -1141,21 +1430,25 @@ return;
 
 /* OPEN APP */
 
-document.getElementById("loginScreen")
+document
+.getElementById("loginScreen")
 .classList.add("hidden");
 
-document.getElementById("app")
+document
+.getElementById("app")
 .classList.remove("hidden");
 
 
 if(data.role==="admin"){
 
-document.getElementById("adminTab")
+document
+.getElementById("adminTab")
 .classList.remove("hidden");
 
 }else{
 
-document.getElementById("adminTab")
+document
+.getElementById("adminTab")
 .classList.add("hidden");
 
 }
@@ -1164,16 +1457,24 @@ document.getElementById("adminTab")
 /* LOAD DATA */
 
 await loadGoods();
+
 loadRevenueRecords();
+
 loadWeeks();
+
 loadCediRows();
+
 loadSelectedWeek();
+
 loadMyGoodRequests();
+
 
 if(data.role==="admin"){
 
 await loadAccounts();
+
 await loadAdminGoodRequests();
+
 await loadAdminGoods();
 
 }
@@ -1182,8 +1483,8 @@ await loadAdminGoods();
 
 
 /* =====================================================
-   LOGOUT
-   ===================================================== */
+LOGOUT
+===================================================== */
 
 async function logoutUser(){
 
@@ -1192,10 +1493,12 @@ await db.auth.signOut();
 currentUser=null;
 currentProfile=null;
 
-document.getElementById("app")
+document
+.getElementById("app")
 .classList.add("hidden");
 
-document.getElementById("loginScreen")
+document
+.getElementById("loginScreen")
 .classList.remove("hidden");
 
 showLogin();
@@ -1204,27 +1507,42 @@ showLogin();
 
 
 /* =====================================================
-   TABS
-   ===================================================== */
+TABS
+===================================================== */
 
 function showTab(id,button){
 
-document.querySelectorAll(".section")
-.forEach(x=>x.classList.remove("active"));
+document
+.querySelectorAll(".section")
+.forEach(x=>{
+x.classList.remove("active");
+});
 
-document.getElementById(id)
+
+document
+.getElementById(id)
 .classList.add("active");
 
-document.querySelectorAll(".tab")
-.forEach(x=>x.classList.remove("active"));
+
+document
+.querySelectorAll(".tab")
+.forEach(x=>{
+x.classList.remove("active");
+});
+
 
 button.classList.add("active");
 
 
-if(id==="admin" && currentProfile?.role==="admin"){
+if(
+id==="admin" &&
+currentProfile?.role==="admin"
+){
 
 loadAccounts();
+
 loadAdminGoodRequests();
+
 loadAdminGoods();
 
 }
@@ -1233,12 +1551,13 @@ loadAdminGoods();
 
 
 /* =====================================================
-   REVENUE
-   ===================================================== */
+MONEY
+===================================================== */
 
 function money(value){
 
-return "GH₵"+Number(value||0)
+return "GH₵"+
+Number(value||0)
 .toLocaleString("en-GH",{
 minimumFractionDigits:2,
 maximumFractionDigits:2
@@ -1247,25 +1566,49 @@ maximumFractionDigits:2
 }
 
 
+/* =====================================================
+REVENUE
+===================================================== */
+
 function calculateRevenue(){
 
-const b1=Number(document.getElementById("bank1").value)||0;
-const b2=Number(document.getElementById("bank2").value)||0;
-const b3=Number(document.getElementById("bank3").value)||0;
-const cash=Number(document.getElementById("cashAtHand").value)||0;
-const expenses=Number(document.getElementById("expenses").value)||0;
-const totalGoods=Number(document.getElementById("totalGoods").value)||0;
-const remaining=Number(document.getElementById("remainingGoods").value)||0;
+const b1=
+Number(document.getElementById("bank1").value)||0;
 
-const totalBanks=b1+b2+b3;
-const totalCash=totalBanks+cash;
+const b2=
+Number(document.getElementById("bank2").value)||0;
 
-const goodsAfterExpenses=totalGoods-expenses;
+const b3=
+Number(document.getElementById("bank3").value)||0;
+
+const cash=
+Number(document.getElementById("cashAtHand").value)||0;
+
+const expenses=
+Number(document.getElementById("expenses").value)||0;
+
+const totalGoods=
+Number(document.getElementById("totalGoods").value)||0;
+
+const remaining=
+Number(document.getElementById("remainingGoods").value)||0;
+
+
+const totalBanks=
+b1+b2+b3;
+
+const totalCash=
+totalBanks+cash;
+
+const goodsAfterExpenses=
+totalGoods-expenses;
+
 
 let profit=
 totalCash+
 remaining-
 goodsAfterExpenses;
+
 
 if(profit<0){
 profit=0;
@@ -1304,6 +1647,7 @@ function resetRevenue(){
 document.getElementById(id).value="";
 });
 
+
 [
 "totalBanks",
 "totalBankCash",
@@ -1311,7 +1655,8 @@ document.getElementById(id).value="";
 "goodsAfterExpenses",
 "totalProfit"
 ].forEach(id=>{
-document.getElementById(id).textContent="GH₵0.00";
+document.getElementById(id)
+.textContent="GH₵0.00";
 });
 
 }
@@ -1319,7 +1664,8 @@ document.getElementById(id).textContent="GH₵0.00";
 
 function showRevenueSave(){
 
-document.getElementById("revenueSaveBox")
+document
+.getElementById("revenueSaveBox")
 .classList.remove("hidden");
 
 }
@@ -1327,7 +1673,8 @@ document.getElementById("revenueSaveBox")
 
 function cancelRevenueSave(){
 
-document.getElementById("revenueSaveBox")
+document
+.getElementById("revenueSaveBox")
 .classList.add("hidden");
 
 }
@@ -1340,27 +1687,34 @@ document.getElementById("revenueStartDate").value;
 
 if(!start)return;
 
-const d=new Date(start+"T00:00:00");
+const d=
+new Date(start+"T00:00:00");
 
 d.setDate(d.getDate()+4);
 
 document.getElementById("revenueEndDate")
-.value=d.toISOString().split("T")[0];
+.value=
+d.toISOString().split("T")[0];
 
 }
 
 
 function loadRevenueWeeks(){
 
-const select=document.getElementById("revenueWeek");
+const select=
+document.getElementById("revenueWeek");
+
+if(!select)return;
 
 select.innerHTML="";
 
 for(let i=1;i<=52;i++){
 
-const option=document.createElement("option");
+const option=
+document.createElement("option");
 
 option.value=i;
+
 option.textContent="Week "+i;
 
 select.appendChild(option);
@@ -1375,26 +1729,56 @@ async function saveRevenueRecord(){
 calculateRevenue();
 
 const records=
-JSON.parse(localStorage.getItem(REVENUE_KEY)||"[]");
+JSON.parse(
+localStorage.getItem(REVENUE_KEY)||"[]"
+);
 
-const b1=Number(document.getElementById("bank1").value)||0;
-const b2=Number(document.getElementById("bank2").value)||0;
-const b3=Number(document.getElementById("bank3").value)||0;
-const cash=Number(document.getElementById("cashAtHand").value)||0;
-const expenses=Number(document.getElementById("expenses").value)||0;
-const totalGoods=Number(document.getElementById("totalGoods").value)||0;
-const remaining=Number(document.getElementById("remainingGoods").value)||0;
 
-const totalBanks=b1+b2+b3;
-const totalBankCash=totalBanks+cash;
-const goodsAfterExpenses=totalGoods-expenses;
+const b1=
+Number(document.getElementById("bank1").value)||0;
+
+const b2=
+Number(document.getElementById("bank2").value)||0;
+
+const b3=
+Number(document.getElementById("bank3").value)||0;
+
+const cash=
+Number(document.getElementById("cashAtHand").value)||0;
+
+const expenses=
+Number(document.getElementById("expenses").value)||0;
+
+const totalGoods=
+Number(document.getElementById("totalGoods").value)||0;
+
+const remaining=
+Number(document.getElementById("remainingGoods").value)||0;
+
+
+const totalBanks=
+b1+b2+b3;
+
+const totalBankCash=
+totalBanks+cash;
+
+const goodsAfterExpenses=
+totalGoods-expenses;
+
 
 records.push({
 
-week:document.getElementById("revenueWeek").value,
-startDate:document.getElementById("revenueStartDate").value,
-endDate:document.getElementById("revenueEndDate").value,
-dateSaved:new Date().toISOString(),
+week:
+document.getElementById("revenueWeek").value,
+
+startDate:
+document.getElementById("revenueStartDate").value,
+
+endDate:
+document.getElementById("revenueEndDate").value,
+
+dateSaved:
+new Date().toISOString(),
 
 totalBanks,
 totalBankCash,
@@ -1404,12 +1788,15 @@ expenses
 
 });
 
+
 localStorage.setItem(
 REVENUE_KEY,
 JSON.stringify(records)
 );
 
-document.getElementById("revenueSaveBox")
+
+document
+.getElementById("revenueSaveBox")
 .classList.add("hidden");
 
 loadRevenueRecords();
@@ -1419,40 +1806,72 @@ loadRevenueRecords();
 
 function loadRevenueRecords(){
 
-const box=document.getElementById("savedRevenueRecords");
+const box=
+document.getElementById("savedRevenueRecords");
+
+if(!box)return;
 
 const records=
-JSON.parse(localStorage.getItem(REVENUE_KEY)||"[]");
+JSON.parse(
+localStorage.getItem(REVENUE_KEY)||"[]"
+);
+
 
 if(!records.length){
 
-box.textContent="No saved revenue records.";
+box.textContent=
+"No saved revenue records.";
+
 return;
 
 }
 
+
 box.innerHTML="";
+
 
 records.forEach((r,index)=>{
 
-const div=document.createElement("div");
+const div=
+document.createElement("div");
 
 div.className="saved-item";
+
 
 div.innerHTML=`
 
 <strong>Week ${r.week}</strong><br>
-${r.startDate||""} to ${r.endDate||""}
+
+${r.startDate||""}
+to
+${r.endDate||""}
 
 <div style="margin-top:8px">
-Total Banks: ${money(r.totalBanks)}<br>
-Total Bank & Cash: ${money(r.totalBankCash)}<br>
-Remaining Goods: ${money(r.remainingGoods)}<br>
-Goods After Expenses: ${money(r.goodsAfterExpenses)}<br>
-Expenses: ${money(r.expenses)}
+
+Total Banks:
+${money(r.totalBanks)}
+<br>
+
+Total Bank & Cash:
+${money(r.totalBankCash)}
+<br>
+
+Remaining Goods:
+${money(r.remainingGoods)}
+<br>
+
+Goods After Expenses:
+${money(r.goodsAfterExpenses)}
+<br>
+
+Expenses:
+${money(r.expenses)}
+
 </div>
 
-<button class="danger-btn"
+
+<button
+class="danger-btn"
 style="margin-top:9px"
 onclick="deleteRevenueRecord(${index})">
 DELETE
@@ -1470,7 +1889,9 @@ box.appendChild(div);
 function deleteRevenueRecord(index){
 
 const records=
-JSON.parse(localStorage.getItem(REVENUE_KEY)||"[]");
+JSON.parse(
+localStorage.getItem(REVENUE_KEY)||"[]"
+);
 
 records.splice(index,1);
 
@@ -1485,8 +1906,8 @@ loadRevenueRecords();
 
 
 /* =====================================================
-   CEDI
-   ===================================================== */
+CEDI
+===================================================== */
 
 function loadCediRows(){
 
@@ -1494,15 +1915,22 @@ const denominations=[
 200,100,50,20,10,5,2,1
 ];
 
-const box=document.getElementById("cediRows");
+const box=
+document.getElementById("cediRows");
+
+if(!box)return;
 
 box.innerHTML="";
 
-denominations.forEach((denom,index)=>{
 
-const row=document.createElement("div");
+denominations.forEach(
+(denom,index)=>{
+
+const row=
+document.createElement("div");
 
 row.className="cedi-row";
+
 
 row.innerHTML=`
 
@@ -1540,36 +1968,58 @@ const denominations=[
 
 let total=0;
 
-denominations.forEach((denom,index)=>{
+
+denominations.forEach(
+(denom,index)=>{
 
 const qty=
-Number(document.getElementById("cediQty"+index).value)||0;
+Number(
+document.getElementById(
+"cediQty"+index
+).value
+)||0;
 
-const line=denom*qty;
+
+const line=
+denom*qty;
 
 total+=line;
 
-document.getElementById("cediTotal"+index)
+
+document
+.getElementById(
+"cediTotal"+index
+)
 .textContent=money(line);
 
 });
 
-document.getElementById("cediGrandTotal")
+
+document
+.getElementById("cediGrandTotal")
 .textContent=money(total);
 
-document.getElementById("cediWords")
-.textContent=amountInWords(total);
+document
+.getElementById("cediWords")
+.textContent=
+amountInWords(total);
 
 }
 
 
 function amountInWords(num){
 
-num=Math.floor(Number(num)||0);
+num=Math.floor(
+Number(num)||0
+);
+
 
 if(num===0){
+
 return "Zero Ghana Cedis";
+
 }
+
 
 const ones=[
 "",
@@ -1584,6 +2034,7 @@ const ones=[
 "Nine"
 ];
 
+
 const teens=[
 "Ten",
 "Eleven",
@@ -1596,6 +2047,7 @@ const teens=[
 "Eighteen",
 "Nineteen"
 ];
+
 
 const tens=[
 "",
@@ -1610,26 +2062,36 @@ const tens=[
 "Ninety"
 ];
 
+
 function under1000(n){
 
 let result="";
 
+
 if(n>=100){
 
-result+=ones[Math.floor(n/100)]+" Hundred";
+result+=
+ones[Math.floor(n/100)]
++" Hundred";
+
 n%=100;
 
 if(n>0)result+=" ";
 
 }
 
+
 if(n>=20){
 
-result+=tens[Math.floor(n/10)];
+result+=
+tens[Math.floor(n/10)];
+
 n%=10;
 
 if(n>0){
+
 result+=" "+ones[n];
+
 }
 
 }else if(n>=10){
@@ -1642,6 +2104,7 @@ result+=ones[n];
 
 }
 
+
 return result;
 
 }
@@ -1649,9 +2112,13 @@ return result;
 
 let result="";
 
+
 if(num>=1000000){
 
-result+=under1000(Math.floor(num/1000000))
+result+=
+under1000(
+Math.floor(num/1000000)
+)
 +" Million";
 
 num%=1000000;
@@ -1660,9 +2127,13 @@ if(num>0)result+=" ";
 
 }
 
+
 if(num>=1000){
 
-result+=under1000(Math.floor(num/1000))
+result+=
+under1000(
+Math.floor(num/1000)
+)
 +" Thousand";
 
 num%=1000;
@@ -1671,36 +2142,44 @@ if(num>0)result+=" ";
 
 }
 
+
 if(num>0){
 
 result+=under1000(num);
 
 }
 
-return result+" Ghana Cedis";
+
+return result+
+" Ghana Cedis";
 
 }
 
 
 /* =====================================================
-   GOODS FROM SUPABASE
-   ===================================================== */
+GOODS
+===================================================== */
 
 async function loadGoods(){
 
-const {data,error}=await db
+const {data,error}=
+await db
 .from("goods")
 .select("*")
 .order("name",{ascending:true});
 
+
 if(error){
 
 console.error(error);
+
 return;
 
 }
 
+
 goods=data||[];
+
 
 localStorage.setItem(
 GOODS_KEY,
@@ -1713,18 +2192,27 @@ JSON.stringify(goods)
 function goodsOptions(){
 
 let html=
-`<option value="">Select Good</option>`;
+`<option value="">
+Select Good
+</option>`;
+
 
 goods.forEach(g=>{
 
 html+=`
-<option value="${g.id}"
+
+<option
+value="${g.id}"
 data-price="${g.price}">
+
 ${escapeHtml(g.name)}
+
 </option>
+
 `;
 
 });
+
 
 return html;
 
@@ -1733,7 +2221,8 @@ return html;
 
 function escapeHtml(text){
 
-const div=document.createElement("div");
+const div=
+document.createElement("div");
 
 div.textContent=text;
 
@@ -1743,56 +2232,81 @@ return div.innerHTML;
 
 
 /* =====================================================
-   ADMIN GOODS
-   ===================================================== */
+ADMIN GOODS
+===================================================== */
 
 async function loadAdminGoods(){
 
 if(currentProfile?.role!=="admin")return;
 
-const box=document.getElementById("adminGoodsList");
+const box=
+document.getElementById("adminGoodsList");
 
-box.textContent="Loading goods...";
+box.textContent=
+"Loading goods...";
 
-const {data,error}=await db
+
+const {data,error}=
+await db
 .from("goods")
 .select("*")
 .order("name",{ascending:true});
 
+
 if(error){
 
 box.textContent=error.message;
+
 return;
 
 }
+
 
 goods=data||[];
 
+
 if(!goods.length){
 
-box.textContent="No approved goods.";
+box.textContent=
+"No approved goods.";
+
 return;
 
 }
 
+
 box.innerHTML="";
+
 
 goods.forEach(g=>{
 
-const div=document.createElement("div");
+const div=
+document.createElement("div");
 
 div.className="account-item";
+
 
 div.innerHTML=`
 
 <div class="item-top">
 
 <div>
-<strong>${escapeHtml(g.name)}</strong><br>
-<span class="money">${money(g.price)}</span>
+
+<strong>
+${escapeHtml(g.name)}
+</strong>
+
+<br>
+
+<span class="money">
+${money(g.price)}
+</span>
+
 </div>
 
-<button class="remove-btn"
+
+<button
+class="remove-btn"
 onclick="deleteGood(${g.id})">
 DELETE
 </button>
@@ -1800,6 +2314,7 @@ DELETE
 </div>
 
 `;
+
 
 box.appendChild(div);
 
@@ -1812,28 +2327,42 @@ async function addGood(){
 
 if(currentProfile?.role!=="admin"){
 
-alert("Only the admin can add goods.");
+alert(
+"Only the admin can add goods."
+);
+
 return;
 
 }
 
+
 const name=
-document.getElementById("adminGoodName")
+document
+.getElementById("adminGoodName")
 .value.trim();
 
+
 const price=
-Number(document.getElementById("adminGoodPrice").value);
+Number(
+document
+.getElementById("adminGoodPrice")
+.value
+);
 
 
 if(!name || !price || price<=0){
 
-alert("Enter a good name and a valid price.");
+alert(
+"Enter a good name and a valid price."
+);
+
 return;
 
 }
 
 
-const {error}=await db
+const {error}=
+await db
 .from("goods")
 .insert({
 name:name,
@@ -1844,18 +2373,28 @@ price:price
 if(error){
 
 alert(error.message);
+
 return;
 
 }
 
 
-document.getElementById("adminGoodName").value="";
-document.getElementById("adminGoodPrice").value="";
+document
+.getElementById("adminGoodName")
+.value="";
+
+document
+.getElementById("adminGoodPrice")
+.value="";
+
 
 await loadGoods();
+
 await loadAdminGoods();
 
-alert("Good added successfully.");
+alert(
+"Good added successfully."
+);
 
 }
 
@@ -1864,145 +2403,223 @@ async function deleteGood(id){
 
 if(currentProfile?.role!=="admin")return;
 
-if(!confirm("Delete this good from the official goods list?")){
+
+if(!confirm(
+"Delete this good from the official goods list?"
+)){
+
 return;
+
 }
 
-const {error}=await db
+
+const {error}=
+await db
 .from("goods")
 .delete()
 .eq("id",id);
 
+
 if(error){
 
 alert(error.message);
+
 return;
 
 }
 
+
 await loadGoods();
+
 await loadAdminGoods();
 
 }
 
 
 /* =====================================================
-   GOOD REQUESTS — NORMAL USERS
-   ===================================================== */
+NORMAL USER GOOD REQUEST
+===================================================== */
 
 async function submitGoodRequest(){
 
 if(!currentUser){
 
-alert("Please log in first.");
+alert(
+"Please log in first."
+);
+
 return;
 
 }
 
+
 const name=
-document.getElementById("requestGoodName")
+document
+.getElementById("requestGoodName")
 .value.trim();
 
+
 const price=
-Number(document.getElementById("requestGoodPrice").value);
+Number(
+document
+.getElementById("requestGoodPrice")
+.value
+);
 
 
 if(!name || !price || price<=0){
 
-alert("Enter the good name and a valid price.");
+alert(
+"Enter the good name and a valid price."
+);
+
 return;
 
 }
 
 
-const {error}=await db
+const {error}=
+await db
 .from("good_requests")
 .insert({
+
 user_id:currentUser.id,
+
 name:name,
+
 price:price,
+
 status:"pending"
+
 });
 
 
 if(error){
 
 alert(error.message);
+
 return;
 
 }
 
 
-document.getElementById("requestGoodName").value="";
-document.getElementById("requestGoodPrice").value="";
+document
+.getElementById("requestGoodName")
+.value="";
+
+document
+.getElementById("requestGoodPrice")
+.value="";
 
 
-const msg=document.getElementById("requestMessage");
+const msg=
+document.getElementById(
+"requestMessage"
+);
 
 msg.textContent=
 "Your good request has been sent to the admin for approval.";
 
 msg.classList.remove("hidden");
 
+
 loadMyGoodRequests();
 
 }
 
 
+/* =====================================================
+MY GOOD REQUESTS
+===================================================== */
+
 async function loadMyGoodRequests(){
 
 if(!currentUser)return;
 
-const box=document.getElementById("myGoodRequests");
 
-const {data,error}=await db
+const box=
+document.getElementById("myGoodRequests");
+
+if(!box)return;
+
+
+const {data,error}=
+await db
 .from("good_requests")
 .select("*")
 .eq("user_id",currentUser.id)
 .order("created_at",{ascending:false});
 
+
 if(error){
 
 box.textContent=error.message;
+
 return;
 
 }
+
 
 if(!data || !data.length){
 
-box.textContent="No requests yet.";
+box.textContent=
+"No requests yet.";
+
 return;
 
 }
 
+
 box.innerHTML="";
+
 
 data.forEach(r=>{
 
-const div=document.createElement("div");
+const div=
+document.createElement("div");
 
 div.className="request-item";
+
 
 div.innerHTML=`
 
 <div class="item-top">
 
 <div>
-<strong>${escapeHtml(r.name)}</strong><br>
-<span class="money">${money(r.price)}</span>
-</div>
 
-<span class="badge">
-${r.status.toUpperCase()}
+<strong>
+${escapeHtml(r.name)}
+</strong>
+
+<br>
+
+<span class="money">
+${money(r.price)}
 </span>
 
 </div>
 
-<div style="font-size:12px;color:#777;margin-top:7px">
-${new Date(r.created_at).toLocaleString()}
+
+<span class="badge">
+${String(r.status).toUpperCase()}
+</span>
+
+</div>
+
+
+<div
+style="font-size:12px;
+color:#777;
+margin-top:7px">
+
+${new Date(
+r.created_at
+).toLocaleString()}
+
 </div>
 
 `;
+
 
 box.appendChild(div);
 
@@ -2012,19 +2629,23 @@ box.appendChild(div);
 
 
 /* =====================================================
-   ADMIN — ACCOUNT MANAGEMENT
-   ===================================================== */
+ADMIN ACCOUNTS
+===================================================== */
 
 async function loadAccounts(){
 
 if(currentProfile?.role!=="admin")return;
 
-const box=document.getElementById("accountsList");
 
-box.textContent="Loading accounts...";
+const box=
+document.getElementById("accountsList");
+
+box.textContent=
+"Loading accounts...";
 
 
-const {data,error}=await db
+const {data,error}=
+await db
 .from("profiles")
 .select("*")
 .order("created_at",{ascending:false});
@@ -2033,18 +2654,22 @@ const {data,error}=await db
 if(error){
 
 box.textContent=error.message;
+
 return;
 
 }
 
 
-const users=(data||[])
+const users=
+(data||[])
 .filter(p=>p.role!=="admin");
 
 
 if(!users.length){
 
-box.textContent="No normal user accounts found.";
+box.textContent=
+"No normal user accounts found.";
+
 return;
 
 }
@@ -2055,23 +2680,28 @@ box.innerHTML="";
 
 users.forEach(user=>{
 
-const div=document.createElement("div");
+const div=
+document.createElement("div");
 
 div.className="account-item";
 
 
 let buttons="";
 
+
 if(user.status==="pending"){
 
 buttons=`
 
-<button class="approve-btn"
+<button
+class="approve-btn"
 onclick="approveUser('${user.id}')">
 APPROVE
 </button>
 
-<button class="remove-btn"
+
+<button
+class="remove-btn"
 onclick="removeUser('${user.id}')">
 REMOVE
 </button>
@@ -2082,7 +2712,8 @@ REMOVE
 
 buttons=`
 
-<button class="remove-btn"
+<button
+class="remove-btn"
 onclick="removeUser('${user.id}')">
 REMOVE
 </button>
@@ -2107,28 +2738,54 @@ div.innerHTML=`
 <div class="item-top">
 
 <div>
-<strong>${escapeHtml(user.email||"No email")}</strong>
 
-<div style="font-size:12px;color:#777;margin-top:5px">
+<strong>
+${escapeHtml(
+user.email||"No email"
+)}
+</strong>
+
+
+<div
+style="font-size:12px;
+color:#777;
+margin-top:5px">
+
 Created:
-${user.created_at
-?new Date(user.created_at).toLocaleString()
-:""}
+${
+user.created_at
+?
+new Date(
+user.created_at
+).toLocaleString()
+:
+""
+}
+
 </div>
 
 </div>
+
 
 <span class="badge">
-${String(user.status||"unknown").toUpperCase()}
+
+${
+String(
+user.status||"unknown"
+).toUpperCase()
+}
+
 </span>
 
 </div>
+
 
 <div class="item-actions">
 ${buttons}
 </div>
 
 `;
+
 
 box.appendChild(div);
 
@@ -2137,45 +2794,58 @@ box.appendChild(div);
 }
 
 
-/* APPROVE USER */
+/* =====================================================
+APPROVE USER
+===================================================== */
 
 async function approveUser(userId){
 
 if(currentProfile?.role!=="admin")return;
 
-const {error}=await db.rpc(
+
+const {error}=
+await db.rpc(
 "approve_user",
 {
 p_user_id:userId
 }
 );
 
+
 if(error){
 
 alert(error.message);
+
 return;
 
 }
+
 
 await loadAccounts();
 
 }
 
 
-/* REMOVE USER */
+/* =====================================================
+REMOVE USER
+===================================================== */
 
 async function removeUser(userId){
 
 if(currentProfile?.role!=="admin")return;
 
+
 if(!confirm(
 "Remove this account from the Oak & Cedar site?"
 )){
+
 return;
+
 }
 
 
-const {error}=await db.rpc(
+const {error}=
+await db.rpc(
 "remove_user",
 {
 p_user_id:userId
@@ -2186,9 +2856,11 @@ p_user_id:userId
 if(error){
 
 alert(error.message);
+
 return;
 
 }
+
 
 await loadAccounts();
 
@@ -2196,48 +2868,102 @@ await loadAccounts();
 
 
 /* =====================================================
-   ADMIN — GOOD REQUEST APPROVAL
-   ===================================================== */
+ADMIN GOOD REQUESTS
+FIXED VERSION
+===================================================== */
 
 async function loadAdminGoodRequests(){
 
 if(currentProfile?.role!=="admin")return;
 
+
 const box=
-document.getElementById("adminGoodRequests");
+document.getElementById(
+"adminGoodRequests"
+);
 
-box.textContent="Loading requests...";
+box.textContent=
+"Loading requests...";
 
 
-const {data,error}=await db
+/*
+IMPORTANT:
+
+We do NOT use:
+
+profiles:user_id(email)
+
+because there is no foreign-key
+relationship between good_requests
+and profiles.
+
+We get requests first, then get
+the emails separately.
+*/
+
+const {
+data:requests,
+error
+}=
+await db
 .from("good_requests")
-.select(`
-  id,
-  user_id,
-  name,
-  price,
-  status,
-  created_at,
-  profiles:user_id(email)
-`)
+.select("*")
 .order("created_at",{ascending:false});
 
 
 if(error){
 
 box.textContent=error.message;
+
 return;
 
 }
 
 
-const requests=data||[];
+if(!requests || !requests.length){
 
+box.textContent=
+"No good requests.";
 
-if(!requests.length){
-
-box.textContent="No good requests.";
 return;
+
+}
+
+
+/*
+Get all user IDs from the requests.
+*/
+
+const userIds=[
+...new Set(
+requests
+.map(r=>r.user_id)
+.filter(Boolean)
+)
+];
+
+
+let profiles=[];
+
+
+if(userIds.length){
+
+const {
+data:profileData,
+error:profileError
+}=
+await db
+.from("profiles")
+.select("id,email")
+.in("id",userIds);
+
+
+if(!profileError){
+
+profiles=
+profileData||[];
+
+}
 
 }
 
@@ -2247,23 +2973,39 @@ box.innerHTML="";
 
 requests.forEach(r=>{
 
-const div=document.createElement("div");
+const profile=
+profiles.find(
+p=>p.id===r.user_id
+);
+
+
+const email=
+profile?.email||
+"Unknown user";
+
+
+const div=
+document.createElement("div");
 
 div.className="request-item";
 
 
 let actions="";
 
+
 if(r.status==="pending"){
 
 actions=`
 
-<button class="approve-btn"
+<button
+class="approve-btn"
 onclick="approveGoodRequest(${r.id})">
 APPROVE
 </button>
 
-<button class="reject-btn"
+
+<button
+class="reject-btn"
 onclick="rejectGoodRequest(${r.id})">
 REJECT
 </button>
@@ -2273,9 +3015,11 @@ REJECT
 }else{
 
 actions=`
+
 <span class="badge">
 ${String(r.status).toUpperCase()}
 </span>
+
 `;
 
 }
@@ -2285,28 +3029,53 @@ div.innerHTML=`
 
 <div>
 
-<strong>${escapeHtml(r.name)}</strong>
+<strong>
+${escapeHtml(r.name)}
+</strong>
 
-<div class="money" style="margin-top:4px">
+
+<div
+class="money"
+style="margin-top:4px">
+
 ${money(r.price)}
+
 </div>
 
-<div style="font-size:13px;color:#527a58;margin-top:6px">
+
+<div
+style="font-size:13px;
+color:#527a58;
+margin-top:6px">
+
 Requested by:
-${escapeHtml(r.profiles?.email||"Unknown user")}
-</div>
-
-<div style="font-size:12px;color:#777;margin-top:4px">
-${new Date(r.created_at).toLocaleString()}
-</div>
+${escapeHtml(email)}
 
 </div>
+
+
+<div
+style="font-size:12px;
+color:#777;
+margin-top:4px">
+
+${new Date(
+r.created_at
+).toLocaleString()}
+
+</div>
+
+</div>
+
 
 <div class="item-actions">
+
 ${actions}
+
 </div>
 
 `;
+
 
 box.appendChild(div);
 
@@ -2315,20 +3084,26 @@ box.appendChild(div);
 }
 
 
-/* APPROVE GOOD */
+/* =====================================================
+APPROVE GOOD REQUEST
+===================================================== */
 
 async function approveGoodRequest(id){
 
 if(currentProfile?.role!=="admin")return;
 
+
 if(!confirm(
 "Approve this good and add it to the official goods list?"
 )){
+
 return;
+
 }
 
 
-const {error}=await db.rpc(
+const {error}=
+await db.rpc(
 "approve_good_request",
 {
 p_request_id:id
@@ -2338,19 +3113,17 @@ p_request_id:id
 
 if(error){
 
-/*
-If the database function is not available,
-show the exact database message.
-*/
-
 alert(error.message);
+
 return;
 
 }
 
 
 await loadGoods();
+
 await loadAdminGoods();
+
 await loadAdminGoodRequests();
 
 alert(
@@ -2360,20 +3133,26 @@ alert(
 }
 
 
-/* REJECT GOOD */
+/* =====================================================
+REJECT GOOD REQUEST
+===================================================== */
 
 async function rejectGoodRequest(id){
 
 if(currentProfile?.role!=="admin")return;
 
+
 if(!confirm(
 "Reject this good request?"
 )){
+
 return;
+
 }
 
 
-const {error}=await db.rpc(
+const {error}=
+await db.rpc(
 "reject_good_request",
 {
 p_request_id:id
@@ -2384,6 +3163,7 @@ p_request_id:id
 if(error){
 
 alert(error.message);
+
 return;
 
 }
@@ -2395,35 +3175,52 @@ await loadAdminGoodRequests();
 
 
 /* =====================================================
-   WEEKLY GOODS
-   ===================================================== */
+WEEKLY GOODS
+===================================================== */
 
 function loadWeeks(){
 
-const select=document.getElementById("goodsWeek");
+const select=
+document.getElementById(
+"goodsWeek"
+);
+
+if(!select)return;
+
 
 select.innerHTML="";
 
+
 for(let i=1;i<=52;i++){
 
-const option=document.createElement("option");
+const option=
+document.createElement("option");
 
 option.value=i;
-option.textContent="Week "+i;
+
+option.textContent=
+"Week "+i;
 
 select.appendChild(option);
 
 }
 
 
-const date=document.getElementById("goodsDate");
+const date=
+document.getElementById(
+"goodsDate"
+);
+
 
 if(!date.value){
 
 date.value=
-new Date().toISOString().split("T")[0];
+new Date()
+.toISOString()
+.split("T")[0];
 
 }
+
 
 loadRevenueWeeks();
 
@@ -2433,7 +3230,9 @@ loadRevenueWeeks();
 function getWeeks(){
 
 return JSON.parse(
-localStorage.getItem(WEEKS_KEY)||"{}"
+localStorage.getItem(
+WEEKS_KEY
+)||"{}"
 );
 
 }
@@ -2452,21 +3251,37 @@ JSON.stringify(data)
 function loadSelectedWeek(){
 
 const week=
-document.getElementById("goodsWeek").value;
-
-const weeks=getWeeks();
-
-const record=weeks[week]||{};
+document.getElementById(
+"goodsWeek"
+).value;
 
 
-document.getElementById("startingGoodsRows")
+const weeks=
+getWeeks();
+
+
+const record=
+weeks[week]||{};
+
+
+document
+.getElementById(
+"startingGoodsRows"
+)
 .innerHTML="";
 
-document.getElementById("remainingGoodsRows")
+
+document
+.getElementById(
+"remainingGoodsRows"
+)
 .innerHTML="";
 
 
-if(record.starting && record.starting.length){
+if(
+record.starting &&
+record.starting.length
+){
 
 record.starting.forEach(g=>{
 addStartingGoodRow(g);
@@ -2479,7 +3294,10 @@ addStartingGoodRow();
 }
 
 
-if(record.remaining && record.remaining.length){
+if(
+record.remaining &&
+record.remaining.length
+){
 
 record.remaining.forEach(g=>{
 addRemainingGoodRow(g);
@@ -2504,28 +3322,44 @@ renderSavedWeeklyRecords();
 function updatePreviousRemaining(){
 
 const week=
-Number(document.getElementById("goodsWeek").value);
+Number(
+document.getElementById(
+"goodsWeek"
+).value
+);
+
 
 if(week<=1){
 
-document.getElementById(
+document
+.getElementById(
 "previousRemainingDisplay"
-).value="None";
+)
+.value="None";
 
 return;
 
 }
 
 
-const weeks=getWeeks();
+const weeks=
+getWeeks();
 
-const previous=weeks[week-1];
 
-if(!previous || !previous.remaining){
+const previous=
+weeks[week-1];
 
-document.getElementById(
+
+if(
+!previous ||
+!previous.remaining
+){
+
+document
+.getElementById(
 "previousRemainingDisplay"
-).value="None";
+)
+.value="None";
 
 return;
 
@@ -2534,16 +3368,22 @@ return;
 
 let total=0;
 
+
 previous.remaining.forEach(g=>{
 
-total+=Number(g.price||0)*
+total+=
+Number(g.price||0)*
 Number(g.remainingQty||0);
 
 });
 
-document.getElementById(
+
+document
+.getElementById(
 "previousRemainingDisplay"
-).value=money(total);
+)
+.value=
+money(total);
 
 }
 
@@ -2551,18 +3391,26 @@ document.getElementById(
 function addStartingGoodRow(data={}){
 
 const box=
-document.getElementById("startingGoodsRows");
+document.getElementById(
+"startingGoodsRows"
+);
 
-const row=document.createElement("div");
+const row=
+document.createElement("div");
 
 row.className="good-row";
 
+
 row.innerHTML=`
 
-<select class="starting-name"
+<select
+class="starting-name"
 onchange="setRowPrice(this)">
+
 ${goodsOptions()}
+
 </select>
+
 
 <input
 class="starting-price"
@@ -2570,6 +3418,7 @@ type="number"
 placeholder="Price"
 value="${data.price||""}"
 >
+
 
 <input
 class="starting-qty"
@@ -2579,18 +3428,23 @@ placeholder="Qty"
 value="${data.qty||""}"
 >
 
-<button class="small-btn"
+
+<button
+class="small-btn"
 onclick="this.parentElement.remove()">
 X
 </button>
 
 `;
 
+
 box.appendChild(row);
+
 
 if(data.id){
 
-row.querySelector(".starting-name")
+row
+.querySelector(".starting-name")
 .value=data.id;
 
 }
@@ -2601,18 +3455,26 @@ row.querySelector(".starting-name")
 function addRemainingGoodRow(data={}){
 
 const box=
-document.getElementById("remainingGoodsRows");
+document.getElementById(
+"remainingGoodsRows"
+);
 
-const row=document.createElement("div");
+const row=
+document.createElement("div");
 
 row.className="good-row";
 
+
 row.innerHTML=`
 
-<select class="remaining-name"
+<select
+class="remaining-name"
 onchange="setRowPrice(this)">
+
 ${goodsOptions()}
+
 </select>
+
 
 <input
 class="remaining-price"
@@ -2620,6 +3482,7 @@ type="number"
 placeholder="Price"
 value="${data.price||""}"
 >
+
 
 <input
 class="remaining-qty"
@@ -2629,18 +3492,23 @@ placeholder="Remaining Qty"
 value="${data.remainingQty||""}"
 >
 
-<button class="small-btn"
+
+<button
+class="small-btn"
 onclick="this.parentElement.remove()">
 X
 </button>
 
 `;
 
+
 box.appendChild(row);
+
 
 if(data.id){
 
-row.querySelector(".remaining-name")
+row
+.querySelector(".remaining-name")
 .value=data.id;
 
 }
@@ -2651,18 +3519,27 @@ row.querySelector(".remaining-name")
 function setRowPrice(select){
 
 const option=
-select.options[select.selectedIndex];
+select.options[
+select.selectedIndex
+];
+
 
 if(!option)return;
 
-const price=option.dataset.price||"";
 
-const row=select.parentElement;
+const price=
+option.dataset.price||"";
+
+
+const row=
+select.parentElement;
+
 
 const input=
 row.querySelector(
 ".starting-price,.remaining-price"
 );
+
 
 if(input){
 
@@ -2677,26 +3554,45 @@ function showGoodsMode(mode,button){
 
 if(mode==="starting"){
 
-document.getElementById("startingGoodsBox")
+document
+.getElementById(
+"startingGoodsBox"
+)
 .classList.remove("hidden");
 
-document.getElementById("remainingGoodsBox")
+
+document
+.getElementById(
+"remainingGoodsBox"
+)
 .classList.add("hidden");
 
 }else{
 
-document.getElementById("startingGoodsBox")
+document
+.getElementById(
+"startingGoodsBox"
+)
 .classList.add("hidden");
 
-document.getElementById("remainingGoodsBox")
+
+document
+.getElementById(
+"remainingGoodsBox"
+)
 .classList.remove("hidden");
 
 }
 
 
-document.querySelectorAll(
+document
+.querySelectorAll(
 "#startingBtn,#remainingBtn"
-).forEach(x=>x.classList.remove("active"));
+)
+.forEach(x=>{
+x.classList.remove("active");
+});
+
 
 button.classList.add("active");
 
@@ -2706,33 +3602,58 @@ button.classList.add("active");
 function saveStartingGoods(){
 
 const week=
-document.getElementById("goodsWeek").value;
+document
+.getElementById(
+"goodsWeek"
+)
+.value;
+
 
 const rows=
 document.querySelectorAll(
 "#startingGoodsRows .good-row"
 );
 
+
 const starting=[];
+
 
 rows.forEach(row=>{
 
 const select=
-row.querySelector(".starting-name");
+row.querySelector(
+".starting-name"
+);
 
 const price=
-Number(row.querySelector(".starting-price").value)||0;
+Number(
+row.querySelector(
+".starting-price"
+).value
+)||0;
+
 
 const qty=
-Number(row.querySelector(".starting-qty").value)||0;
+Number(
+row.querySelector(
+".starting-qty"
+).value
+)||0;
+
 
 if(select.value && qty>0){
 
 starting.push({
 
 id:select.value,
-name:select.options[select.selectedIndex].textContent,
+
+name:
+select.options[
+select.selectedIndex
+].textContent,
+
 price:price,
+
 qty:qty
 
 });
@@ -2744,20 +3665,36 @@ qty:qty
 
 const weeks=getWeeks();
 
-if(!weeks[week])weeks[week]={};
 
-weeks[week].starting=starting;
+if(!weeks[week])
+weeks[week]={};
+
+
+weeks[week].starting=
+starting;
+
 
 weeks[week].date=
-document.getElementById("goodsDate").value;
+document.getElementById(
+"goodsDate"
+).value;
+
 
 saveWeeks(weeks);
 
-document.getElementById("startingSavedStatus")
+
+document
+.getElementById(
+"startingSavedStatus"
+)
 .innerHTML=
-`<div class="status">Starting goods saved.</div>`;
+`<div class="status">
+Starting goods saved.
+</div>`;
+
 
 renderBalanceRecords();
+
 renderSavedWeeklyRecords();
 
 }
@@ -2766,34 +3703,60 @@ renderSavedWeeklyRecords();
 function saveRemainingGoods(){
 
 const week=
-document.getElementById("goodsWeek").value;
+document
+.getElementById(
+"goodsWeek"
+)
+.value;
+
 
 const rows=
 document.querySelectorAll(
 "#remainingGoodsRows .good-row"
 );
 
+
 const remaining=[];
+
 
 rows.forEach(row=>{
 
 const select=
-row.querySelector(".remaining-name");
+row.querySelector(
+".remaining-name"
+);
 
 const price=
-Number(row.querySelector(".remaining-price").value)||0;
+Number(
+row.querySelector(
+".remaining-price"
+).value
+)||0;
+
 
 const remainingQty=
-Number(row.querySelector(".remaining-qty").value)||0;
+Number(
+row.querySelector(
+".remaining-qty"
+).value
+)||0;
+
 
 if(select.value){
 
 remaining.push({
 
 id:select.value,
-name:select.options[select.selectedIndex].textContent,
+
+name:
+select.options[
+select.selectedIndex
+].textContent,
+
 price:price,
-remainingQty:remainingQty
+
+remainingQty:
+remainingQty
 
 });
 
@@ -2804,20 +3767,36 @@ remainingQty:remainingQty
 
 const weeks=getWeeks();
 
-if(!weeks[week])weeks[week]={};
 
-weeks[week].remaining=remaining;
+if(!weeks[week])
+weeks[week]={};
+
+
+weeks[week].remaining=
+remaining;
+
 
 weeks[week].date=
-document.getElementById("goodsDate").value;
+document.getElementById(
+"goodsDate"
+).value;
+
 
 saveWeeks(weeks);
 
-document.getElementById("remainingSavedStatus")
+
+document
+.getElementById(
+"remainingSavedStatus"
+)
 .innerHTML=
-`<div class="status">Remaining goods saved.</div>`;
+`<div class="status">
+Remaining goods saved.
+</div>`;
+
 
 renderBalanceRecords();
+
 renderSavedWeeklyRecords();
 
 }
@@ -2825,11 +3804,17 @@ renderSavedWeeklyRecords();
 
 function renderBalanceRecords(){
 
-const box=document.getElementById("balanceRecords");
+const box=
+document.getElementById(
+"balanceRecords"
+);
 
-const weeks=getWeeks();
+const weeks=
+getWeeks();
+
 
 let html="";
+
 
 for(let i=1;i<=52;i++){
 
@@ -2837,43 +3822,65 @@ const r=weeks[i];
 
 if(!r)continue;
 
+
 let startingValue=0;
+
 let remainingValue=0;
+
 
 if(r.starting){
 
 r.starting.forEach(g=>{
+
 startingValue+=
 Number(g.price||0)*
 Number(g.qty||0);
+
 });
 
 }
+
 
 if(r.remaining){
 
 r.remaining.forEach(g=>{
+
 remainingValue+=
 Number(g.price||0)*
 Number(g.remainingQty||0);
+
 });
 
 }
 
+
 const soldUsed=
-Math.max(0,startingValue-remainingValue);
+Math.max(
+0,
+startingValue-
+remainingValue
+);
+
 
 html+=`
 
 <div class="saved-item">
 
-<strong>Week ${i}</strong><br>
+<strong>
+Week ${i}
+</strong>
+
+<br>
 
 Starting Goods:
-${money(startingValue)}<br>
+${money(startingValue)}
+
+<br>
 
 Remaining Goods:
-${money(remainingValue)}<br>
+${money(remainingValue)}
+
+<br>
 
 Sold / Used:
 ${money(soldUsed)}
@@ -2884,6 +3891,7 @@ ${money(soldUsed)}
 
 }
 
+
 box.innerHTML=
 html||"No balance records.";
 
@@ -2893,11 +3901,16 @@ html||"No balance records.";
 function renderSavedWeeklyRecords(){
 
 const box=
-document.getElementById("savedWeeklyRecords");
+document.getElementById(
+"savedWeeklyRecords"
+);
 
-const weeks=getWeeks();
+const weeks=
+getWeeks();
+
 
 let html="";
+
 
 for(let i=1;i<=52;i++){
 
@@ -2905,22 +3918,38 @@ const r=weeks[i];
 
 if(!r)continue;
 
+
 html+=`
 
 <div class="saved-item">
 
-<strong>Week ${i}</strong><br>
-Date: ${r.date||""}<br>
+<strong>
+Week ${i}
+</strong>
+
+<br>
+
+Date:
+${r.date||""}
+
+<br>
+
 Starting Goods:
-${r.starting?.length||0} item(s)<br>
+${r.starting?.length||0}
+item(s)
+
+<br>
+
 Remaining Goods:
-${r.remaining?.length||0} item(s)
+${r.remaining?.length||0}
+item(s)
 
 </div>
 
 `;
 
 }
+
 
 box.innerHTML=
 html||"No saved weekly records.";
@@ -2929,12 +3958,14 @@ html||"No saved weekly records.";
 
 
 /* =====================================================
-   AUTH SESSION CHECK
-   ===================================================== */
+EXISTING SESSION
+===================================================== */
 
 async function checkExistingSession(){
 
-const {data}=await db.auth.getSession();
+const {data}=
+await db.auth.getSession();
+
 
 if(!data.session){
 
@@ -2942,7 +3973,10 @@ return;
 
 }
 
-currentUser=data.session.user;
+
+currentUser=
+data.session.user;
+
 
 await loadUserProfile();
 
@@ -2950,10 +3984,11 @@ await loadUserProfile();
 
 
 /* =====================================================
-   START
-   ===================================================== */
+START
+===================================================== */
 
 loadRevenueWeeks();
+
 loadCediRows();
 
 checkExistingSession();
