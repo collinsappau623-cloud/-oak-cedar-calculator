@@ -1,90 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Oak & Cedar Business Calculator</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
 }
 
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  background:linear-gradient(135deg,#eef2ee,#dfe6df);
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(
+    135deg,
+    #eef2ee,
+    #dfe6df
+  );
   color:#24452d;
-  min-height:100vh;
 }
 
-.header{
+header{
   background:#24452d;
   color:white;
-  padding:18px 15px;
-  text-align:center;
-  box-shadow:0 3px 12px #0002;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:20;
 }
 
 .logo{
   width:58px;
   height:58px;
-  border:3px solid white;
+  border:2px solid white;
   border-radius:50%;
-  margin:auto;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:800;
+  font-weight:bold;
   font-size:19px;
+  flex-shrink:0;
 }
 
-.header h1{
-  margin:9px 0 2px;
+.header-text h1{
+  margin:0;
   font-size:22px;
 }
 
-.header p{
-  margin:0;
+.header-text p{
+  margin:3px 0 0;
   font-size:13px;
   opacity:.85;
 }
 
-.tabs{
-  display:flex;
-  gap:7px;
-  padding:10px;
-  background:white;
-  position:sticky;
-  top:0;
-  z-index:20;
-  box-shadow:0 2px 8px #0001;
+.container{
+  width:100%;
+  max-width:720px;
+  margin:auto;
+  padding:12px;
 }
 
-.tab{
+.tabs{
+  position:sticky;
+  top:90px;
+  z-index:10;
+  background:#eef2ee;
+  display:flex;
+  gap:6px;
+  padding:8px 0;
+}
+
+.tab-btn{
   flex:1;
   border:none;
   padding:12px 5px;
-  border-radius:10px;
-  background:#edf2ed;
+  border-radius:8px;
+  background:#edf4eb;
   color:#24452d;
-  font-weight:700;
+  font-weight:bold;
+  cursor:pointer;
   font-size:13px;
 }
 
-.tab.active{
+.tab-btn.active{
   background:#6b8e58;
   color:white;
-}
-
-.container{
-  max-width:720px;
-  margin:auto;
-  padding:14px;
 }
 
 .section{
@@ -97,33 +110,41 @@ body{
 
 .card{
   background:white;
-  border-radius:16px;
+  border-radius:12px;
   padding:16px;
   margin-bottom:14px;
-  box-shadow:0 4px 14px #24452d17;
+  box-shadow:0 3px 12px rgba(36,69,45,.10);
 }
 
 .card h2{
-  margin:0 0 13px;
+  margin:0 0 14px;
+  color:#24452d;
   font-size:18px;
+}
+
+.card h3{
+  color:#24452d;
+  font-size:15px;
+  margin:18px 0 10px;
 }
 
 label{
   display:block;
-  margin:10px 0 5px;
   font-size:13px;
-  font-weight:700;
+  font-weight:bold;
+  margin-bottom:6px;
+  color:#24452d;
 }
 
 input,
 select{
   width:100%;
   padding:12px;
-  border:1px solid #cbd5cb;
-  border-radius:10px;
-  background:#fafcf9;
-  color:#222;
+  border:1px solid #cbd6ca;
+  border-radius:8px;
   font-size:15px;
+  background:white;
+  color:#24452d;
   outline:none;
 }
 
@@ -132,174 +153,207 @@ select:focus{
   border-color:#6b8e58;
 }
 
-.main-btn{
-  width:100%;
+.field{
+  margin-bottom:12px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+button{
   border:none;
-  padding:13px;
-  margin-top:12px;
-  border-radius:10px;
-  background:#527a58;
-  color:white;
-  font-weight:800;
-  font-size:14px;
-}
-
-.reset-btn{
-  background:#e9eee9;
-  color:#24452d;
-}
-
-.logout-btn{
-  background:#24452d;
-}
-
-.result{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:10px 0;
-  border-bottom:1px solid #e4e9e4;
-}
-
-.result strong:last-child{
-  color:#111;
-  text-align:right;
-}
-
-.profit,
-.cedi-total{
-  margin-top:10px;
-  padding:15px;
-  border-radius:12px;
-  background:#edf4eb;
-  text-align:center;
-}
-
-.profit small,
-.cedi-total small{
-  display:block;
-  font-weight:700;
-}
-
-.profit strong,
-.cedi-total strong{
-  display:block;
-  font-size:25px;
-  margin-top:4px;
-  color:#111;
-}
-
-.revenue-record,
-.saved-record{
-  background:#edf4eb;
-  border:1px solid #d7e2d6;
-  border-radius:11px;
-  padding:12px;
-  margin-bottom:8px;
+  border-radius:8px;
+  padding:12px 15px;
   cursor:pointer;
-}
-
-.revenue-record-header,
-.balance-record,
-.saved-record{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-}
-
-.revenue-record-header span,
-.saved-record span,
-.balance-left small{
-  font-size:12px;
-  color:#667066;
-}
-
-.revenue-record-details,
-.record-details{
-  display:none;
-  margin-top:12px;
-  padding-top:10px;
-  border-top:1px solid #d8e2d7;
-}
-
-.revenue-record-details.open,
-.record-details.open{
-  display:block;
-}
-
-.revenue-line{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:8px 0;
-  border-bottom:1px solid #e7ebe7;
+  font-weight:bold;
   font-size:13px;
 }
 
-.revenue-line strong:last-child{
-  color:#111;
-  text-align:right;
+.primary{
+  background:#6b8e58;
+  color:white;
 }
 
-.record-delete,
-.delete-btn{
+.secondary{
+  background:#527a58;
+  color:white;
+}
+
+.danger{
+  background:#a94442;
+  color:white;
+}
+
+.light{
+  background:#edf4eb;
+  color:#24452d;
+}
+
+.full{
   width:100%;
-  border:none;
-  margin-top:10px;
-  padding:10px;
-  border-radius:9px;
-  background:#f3dddd;
-  color:#8c2b2b;
-  font-weight:800;
 }
 
-.cedi-row{
-  display:grid;
-  grid-template-columns:75px 1fr 110px;
-  gap:7px;
+.button-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.summary{
+  margin-top:15px;
+  background:#edf4eb;
+  border-radius:10px;
+  padding:12px;
+}
+
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid #d6e1d5;
+}
+
+.summary-row:last-child{
+  border-bottom:none;
+}
+
+.summary-row strong{
+  color:#24452d;
+}
+
+.profit{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.info{
+  background:#edf2ed;
+  border-left:4px solid #6b8e58;
+  padding:11px;
+  border-radius:7px;
+  font-size:13px;
+  line-height:1.5;
+  margin-top:10px;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.login-screen{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(
+    135deg,
+    #eef2ee,
+    #dfe6df
+  );
+  display:flex;
   align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:1000;
+}
+
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:white;
+  border-radius:14px;
+  padding:25px;
+  box-shadow:0 5px 25px rgba(36,69,45,.15);
+}
+
+.login-logo{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:#24452d;
+  color:white;
+  border:3px solid #6b8e58;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 12px;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.login-card h1{
+  text-align:center;
+  color:#24452d;
+  margin:5px 0;
+}
+
+.login-card p{
+  text-align:center;
+  color:#527a58;
+  margin-bottom:20px;
+  font-size:13px;
+}
+
+.status{
+  padding:10px;
+  border-radius:8px;
+  background:#edf4eb;
+  color:#24452d;
+  margin-bottom:12px;
+  font-size:13px;
+}
+
+.good-row,
+.record-row,
+.week-row{
+  background:#edf4eb;
+  padding:11px;
+  border-radius:9px;
   margin-bottom:8px;
 }
 
-.denom{
-  font-weight:800;
+.good-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
 }
 
-.line-total{
-  text-align:right;
-  font-weight:700;
-  color:#111;
+.good-info{
+  flex:1;
 }
 
-.words{
-  margin-top:12px;
-  padding:13px;
-  border-radius:10px;
-  background:#f5f7f4;
-  border:1px solid #dce4dc;
+.good-name{
+  font-weight:bold;
+  color:#24452d;
 }
 
-.words strong{
-  display:block;
-  margin-top:5px;
-  color:#111;
-  line-height:1.5;
+.good-price{
+  margin-top:3px;
+  font-size:13px;
+  color:#527a58;
+}
+
+.delete-btn{
+  background:#a94442;
+  color:white;
+  padding:8px 10px;
+  font-size:11px;
 }
 
 .choice-row{
-  display:flex;
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:8px;
 }
 
 .choice-btn{
-  flex:1;
-  padding:12px 5px;
-  border:none;
-  border-radius:10px;
-  background:#edf2ed;
+  background:#edf4eb;
   color:#24452d;
-  font-weight:800;
+  border:1px solid #cbd8c9;
 }
 
 .choice-btn.active{
@@ -307,901 +361,919 @@ select:focus{
   color:white;
 }
 
-.goods-row{
+.item-row{
+  background:#edf4eb;
+  padding:10px;
+  border-radius:9px;
+  margin-bottom:9px;
+}
+
+.item-grid{
   display:grid;
-  grid-template-columns:minmax(130px,1fr) 75px 105px 42px;
+  grid-template-columns:1.4fr .8fr .7fr auto;
   gap:6px;
-  align-items:center;
-  margin-bottom:8px;
+  align-items:end;
 }
 
-.goods-row select,
-.goods-row input{
-  padding:9px;
+.item-grid input,
+.item-grid select{
+  padding:10px 7px;
   font-size:13px;
 }
 
-.price-box{
-  background:#f1f5f0;
-  border:1px solid #dce5dc;
-  border-radius:8px;
-  padding:9px 5px;
-  text-align:center;
-  font-size:12px;
-  font-weight:800;
-  color:#111;
-  min-height:37px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.remove-item{
+  background:#a94442;
+  color:white;
+  padding:10px;
 }
 
-.remove-btn{
-  border:none;
-  border-radius:8px;
-  padding:9px;
-  background:#f1dddd;
-  color:#8b2c2c;
-  font-weight:800;
-  height:37px;
-}
-
-.add-good-btn{
-  border:none;
-  background:#edf4eb;
-  color:#24452d;
-  padding:11px;
-  border-radius:9px;
-  font-weight:800;
-  width:100%;
-}
-
-.saved-status{
-  background:#edf4eb;
-  border:1px solid #d5e2d4;
-  color:#24452d;
-  padding:13px;
-  border-radius:10px;
-  font-weight:800;
-  text-align:center;
-}
-
-.saved-status small{
-  display:block;
-  margin-top:4px;
-  font-weight:500;
-  color:#5d695f;
-}
-
-.edit-current-btn{
-  width:100%;
-  border:none;
-  margin-top:9px;
-  padding:11px;
-  border-radius:9px;
-  background:#e8efe6;
-  color:#24452d;
-  font-weight:800;
-}
-
-.balance-record{
-  background:#edf4eb;
-  border:1px solid #d7e2d6;
-  border-radius:11px;
-  padding:12px;
-  margin-bottom:8px;
-  cursor:pointer;
-}
-
-.balance-left{
-  font-weight:800;
-}
-
-.balance-amount{
-  color:#111;
-  font-weight:900;
-  font-size:15px;
-}
-
-.table-wrap{
-  overflow-x:auto;
-  margin-top:8px;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:500px;
-}
-
-th,
-td{
-  padding:8px 6px;
-  border-bottom:1px solid #e2e7e2;
-  text-align:left;
+.small{
   font-size:12px;
 }
 
-th{
-  background:#edf4eb;
-}
-
-td.money,
-.table-total{
-  text-align:right;
-  color:#111;
-  font-weight:700;
-}
-
-.sold{
-  text-align:right;
-  padding:6px 4px 12px;
-  font-weight:800;
-  color:#24452d;
-}
-
-.balance-box{
+.amount-words{
   margin-top:10px;
-  padding:14px;
-  background:#edf4eb;
-  border:2px solid #d5e2d4;
-  border-radius:10px;
-  display:flex;
-  justify-content:space-between;
-  font-weight:900;
-}
-
-.balance-box span:last-child{
-  color:#111;
-  font-size:17px;
-}
-
-.record-buttons{
-  display:flex;
-  gap:7px;
-  margin-top:10px;
-}
-
-.small-btn{
-  flex:1;
-  padding:9px;
-  border:none;
+  padding:10px;
   border-radius:8px;
-  font-weight:800;
-}
-
-.edit-btn{
-  background:#e8efe6;
-  color:#24452d;
-}
-
-.info{
-  background:#f5f7f4;
-  padding:11px;
-  border-radius:10px;
-  margin-top:10px;
+  background:#edf4eb;
   font-size:13px;
+  line-height:1.5;
 }
 
 .empty{
   text-align:center;
   padding:15px;
-  color:#777;
+  color:#527a58;
   font-size:13px;
 }
 
-.hidden{
-  display:none !important;
-}
+@media(max-width:600px){
 
-.good-admin{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-  padding:10px;
-  border-bottom:1px solid #e4e9e4;
-}
-
-.good-admin small{
-  display:block;
-  color:#666;
-}
-
-.revenue-date-box{
-  margin-top:12px;
-  padding:13px;
-  background:#f5f7f4;
-  border:1px solid #dce4dc;
-  border-radius:11px;
-}
-
-.date-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.date-label{
-  font-size:12px;
-  font-weight:800;
-  margin-bottom:5px;
-}
-
-.auto-date{
-  background:#edf4eb;
-  color:#24452d;
-  font-weight:700;
-}
-
-.save-note{
-  margin-top:9px;
-  font-size:12px;
-  color:#697269;
-  line-height:1.4;
-}
-
-/* LOGIN */
-.login-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(36,69,45,.94);
-  z-index:1000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.login-box{
-  width:100%;
-  max-width:390px;
-  background:white;
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 10px 35px #0004;
-}
-
-.login-logo{
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  background:#24452d;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:auto;
-  font-weight:800;
-  font-size:19px;
-}
-
-.login-box h2{
-  text-align:center;
-  margin:12px 0 4px;
-  color:#24452d;
-}
-
-.login-box p{
-  text-align:center;
-  color:#667066;
-  font-size:13px;
-  margin:0 0 15px;
-}
-
-.auth-message{
-  margin-top:10px;
-  font-size:13px;
-  text-align:center;
-  line-height:1.4;
-}
-
-@media(max-width:520px){
-  .goods-row{
-    grid-template-columns:minmax(105px,1fr) 65px 85px 38px;
+  .grid{
+    grid-template-columns:1fr;
   }
 
-  .goods-row select,
-  .goods-row input{
-    font-size:12px;
+  .item-grid{
+    grid-template-columns:1fr 1fr;
   }
 
-  .price-box{
+  .item-grid select{
+    grid-column:1 / -1;
+  }
+
+  .remove-item{
+    grid-column:2;
+  }
+
+  .tabs{
+    top:90px;
+  }
+
+  .tab-btn{
     font-size:11px;
+    padding:11px 3px;
   }
 
-  .tab{
-    font-size:12px;
-  }
 }
+
 </style>
+
 </head>
 
 <body>
 
-<!-- LOGIN GATE -->
-<div id="loginOverlay" class="login-overlay">
+<!-- LOGIN -->
 
-  <div class="login-box">
+<div
+  id="loginScreen"
+  class="login-screen"
+>
 
-    <div class="login-logo">O&C</div>
+  <div class="login-card">
 
-    <h2>Oak & Cedar</h2>
-    <p>Business Calculator</p>
+    <div class="login-logo">
+      O&C
+    </div>
 
-    <label>Email</label>
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="Enter your email"
-      autocomplete="email"
+    <h1>Oak & Cedar</h1>
+
+    <p>
+      Business Calculator
+    </p>
+
+    <div
+      id="loginStatus"
+      class="status hidden"
+    ></div>
+
+    <div class="field">
+
+      <label>
+        Email
+      </label>
+
+      <input
+        id="loginEmail"
+        type="email"
+        placeholder="Enter your email"
+      >
+
+    </div>
+
+    <div class="field">
+
+      <label>
+        Password
+      </label>
+
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Enter your password"
+      >
+
+    </div>
+
+    <button
+      id="loginButton"
+      class="primary full"
+      onclick="loginApp()"
     >
-
-    <label>Password</label>
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="Enter your password"
-      autocomplete="current-password"
-    >
-
-    <button class="main-btn" onclick="loginApp()">
       LOGIN
     </button>
 
-    <div id="authMessage" class="auth-message"></div>
+    <button
+      id="createButton"
+      class="light full"
+      onclick="createAccount()"
+      style="margin-top:8px"
+    >
+      CREATE ACCOUNT
+    </button>
 
   </div>
 
 </div>
 
-<div class="header">
 
-  <div class="logo">O&C</div>
+<header>
 
-  <h1>Oak & Cedar</h1>
+  <div class="logo">
+    O&C
+  </div>
 
-  <p>Business Calculator</p>
+  <div class="header-text">
 
-</div>
+    <h1>
+      Oak & Cedar
+    </h1>
 
-<div class="tabs">
+    <p>
+      Business Calculator
+    </p>
 
-  <button
-    class="tab active"
-    onclick="showTab('revenue',this)"
-  >
-    Revenue
-  </button>
+  </div>
 
-  <button
-    class="tab"
-    onclick="showTab('cedi',this)"
-  >
-    Cedi
-  </button>
+</header>
 
-  <button
-    class="tab"
-    onclick="showTab('goods',this)"
-  >
-    Goods
-  </button>
-
-  <button
-    id="adminTab"
-    class="tab hidden"
-    onclick="showTab('admin',this)"
-  >
-    Admin
-  </button>
-
-</div>
 
 <div class="container">
 
-<!-- ========================================================= -->
-<!-- REVENUE -->
-<!-- ========================================================= -->
+  <!-- TABS -->
 
-<section id="revenue" class="section active">
+  <div class="tabs">
 
-  <div class="card">
-
-    <h2>Business Revenue Calculator</h2>
-
-    <label>Bank 1</label>
-    <input id="bank1" type="number" inputmode="decimal" placeholder="0">
-
-    <label>Bank 2</label>
-    <input id="bank2" type="number" inputmode="decimal" placeholder="0">
-
-    <label>Bank 3</label>
-    <input id="bank3" type="number" inputmode="decimal" placeholder="0">
-
-    <label>Cash at Hand</label>
-    <input id="cash" type="number" inputmode="decimal" placeholder="0">
-
-    <label>Expenses</label>
-    <input id="expenses" type="number" inputmode="decimal" placeholder="0">
-
-    <label>Total Goods</label>
-    <input id="totalGoods" type="number" inputmode="decimal" placeholder="0">
-
-    <label>Remaining Goods</label>
-    <input id="remainingGoods" type="number" inputmode="decimal" placeholder="0">
-
-    <button class="main-btn" onclick="calculateRevenue()">
-      CALCULATE
+    <button
+      id="tabRevenue"
+      class="tab-btn active"
+      onclick="showTab('revenue')"
+    >
+      Revenue
     </button>
 
-    <button class="main-btn" onclick="openRevenueSave()">
-      SAVE REVENUE RECORD
+    <button
+      id="tabCedi"
+      class="tab-btn"
+      onclick="showTab('cedi')"
+    >
+      Cedi
     </button>
 
-    <button class="main-btn reset-btn" onclick="resetRevenue()">
-      RESET
+    <button
+      id="tabGoods"
+      class="tab-btn"
+      onclick="showTab('goods')"
+    >
+      Goods
     </button>
 
-    <button class="main-btn logout-btn" onclick="logoutApp()">
-      LOGOUT
+    <button
+      id="tabAdmin"
+      class="tab-btn hidden"
+      onclick="showTab('admin')"
+    >
+      Admin
     </button>
 
   </div>
 
 
-  <div class="card">
+  <!-- ================= REVENUE ================= -->
 
-    <h2>Summary</h2>
-
-    <div class="result">
-      <strong>Total Banks</strong>
-      <strong id="outBanks">GH₵0.00</strong>
-    </div>
-
-    <div class="result">
-      <strong>Total Bank & Cash</strong>
-      <strong id="outCash">GH₵0.00</strong>
-    </div>
-
-    <div class="result">
-      <strong>Remaining Goods</strong>
-      <strong id="outRemaining">GH₵0.00</strong>
-    </div>
-
-    <div class="result">
-      <strong>Goods After Expenses</strong>
-      <strong id="outGoodsAfter">GH₵0.00</strong>
-    </div>
-
-    <div class="profit">
-
-      <small>TOTAL PROFIT</small>
-
-      <strong id="outProfit">
-        GH₵0.00
-      </strong>
-
-    </div>
-
-  </div>
-
-
-  <div
-    class="card hidden"
-    id="revenueSaveCard"
+  <section
+    id="revenue"
+    class="section active"
   >
 
-    <h2>Save Revenue Record</h2>
+    <div class="card">
 
-    <label>Week</label>
+      <h2>
+        Revenue Calculator
+      </h2>
 
-    <select id="revenueWeek"></select>
+      <div class="grid">
 
-    <div class="revenue-date-box">
+        <div class="field">
 
-      <div class="date-row">
-
-        <div>
-
-          <div class="date-label">
-            START
-          </div>
+          <label>
+            Bank 1
+          </label>
 
           <input
-            id="revenueStartDate"
-            type="date"
-            onchange="updateRevenueEndDate()"
+            id="bank1"
+            type="number"
+            min="0"
+            placeholder="0"
           >
 
         </div>
 
-        <div>
+        <div class="field">
 
-          <div class="date-label">
-            TO
-          </div>
+          <label>
+            Bank 2
+          </label>
 
           <input
-            id="revenueEndDate"
-            class="auto-date"
-            type="date"
-            readonly
+            id="bank2"
+            type="number"
+            min="0"
+            placeholder="0"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Bank 3
+          </label>
+
+          <input
+            id="bank3"
+            type="number"
+            min="0"
+            placeholder="0"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Cash at Hand
+          </label>
+
+          <input
+            id="cash"
+            type="number"
+            min="0"
+            placeholder="0"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Expenses
+          </label>
+
+          <input
+            id="expenses"
+            type="number"
+            min="0"
+            placeholder="0"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Total Goods
+          </label>
+
+          <input
+            id="totalGoods"
+            type="number"
+            min="0"
+            placeholder="0"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Remaining Goods
+          </label>
+
+          <input
+            id="remainingGoods"
+            type="number"
+            min="0"
+            placeholder="0"
           >
 
         </div>
 
       </div>
 
-      <div class="save-note">
-        Select the Start date. The To date will automatically be set to 5 days from the selected start date.
+      <div class="button-row">
+
+        <button
+          class="primary"
+          onclick="calculateRevenue()"
+        >
+          CALCULATE
+        </button>
+
+        <button
+          class="light"
+          onclick="resetRevenue()"
+        >
+          RESET
+        </button>
+
+      </div>
+
+      <div
+        id="revenueSummary"
+        class="summary"
+      >
+
+        <div class="summary-row">
+          <span>Total Banks</span>
+          <strong id="outTotalBanks">GH₵0.00</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Total Bank & Cash</span>
+          <strong id="outTotalBankCash">GH₵0.00</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Remaining Goods</span>
+          <strong id="outRemainingGoods">GH₵0.00</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Goods After Expenses</span>
+          <strong id="outGoodsAfterExpenses">GH₵0.00</strong>
+        </div>
+
+        <div class="summary-row profit">
+          <span>TOTAL PROFIT</span>
+          <strong id="outProfit">GH₵0.00</strong>
+        </div>
+
       </div>
 
     </div>
 
-    <div class="info">
 
-      The saved record will contain the Revenue Summary and Expenses.
+    <div class="card">
 
-      <br><br>
+      <h2>
+        Save Revenue Record
+      </h2>
 
-      Profit will not be saved.
+      <div class="field">
 
-    </div>
+        <label>
+          Week
+        </label>
 
-    <button
-      class="main-btn"
-      onclick="confirmSaveRevenueRecord()"
-    >
-      SAVE RECORD
-    </button>
+        <select id="revenueWeek"></select>
 
-    <button
-      class="main-btn reset-btn"
-      onclick="closeRevenueSave()"
-    >
-      CANCEL
-    </button>
+      </div>
 
-  </div>
+      <div class="field">
 
+        <label>
+          Start Date
+        </label>
 
-  <div class="card">
+        <input
+          id="revenueStartDate"
+          type="date"
+          onchange="updateRevenueEndDate()"
+        >
 
-    <h2>Saved Revenue Records</h2>
+      </div>
 
-    <div id="revenueRecords"></div>
+      <div class="field">
 
-  </div>
+        <label>
+          To Date
+        </label>
 
-</section>
+        <input
+          id="revenueEndDate"
+          type="date"
+          readonly
+        >
 
+      </div>
 
-<!-- ========================================================= -->
-<!-- CEDI -->
-<!-- ========================================================= -->
+      <div class="info">
+        The period covers 5 days, starting from the selected start date.
+      </div>
 
-<section id="cedi" class="section">
+      <div class="button-row">
 
-  <div class="card">
+        <button
+          class="primary"
+          onclick="saveRevenueRecord()"
+        >
+          SAVE RECORD
+        </button>
 
-    <h2>Ghana Cedi Calculator</h2>
+        <button
+          class="light"
+          onclick="cancelRevenueSave()"
+        >
+          CANCEL
+        </button>
 
-    <div id="cediRows"></div>
-
-    <button
-      class="main-btn"
-      onclick="calculateCedi()"
-    >
-      CALCULATE
-    </button>
-
-    <div class="cedi-total">
-
-      <small>TOTAL CASH</small>
-
-      <strong id="cediGrandTotal">
-        GH₵0.00
-      </strong>
-
-    </div>
-
-    <div class="words">
-
-      <strong>Amount in Words</strong>
-
-      <strong id="amountWords">
-        Zero Ghana cedis only
-      </strong>
+      </div>
 
     </div>
 
-  </div>
 
-</section>
+    <div class="card">
 
+      <h2>
+        Saved Revenue Records
+      </h2>
 
-<!-- ========================================================= -->
-<!-- GOODS -->
-<!-- ========================================================= -->
+      <div id="savedRevenueRecords"></div>
 
-<section id="goods" class="section">
-
-  <div class="card">
-
-    <h2>Weekly Goods Recording</h2>
-
-    <label>Select Week</label>
-
-    <select
-      id="weekSelect"
-      onchange="loadSelectedWeek()"
-    ></select>
-
-    <label>Date</label>
-
-    <input
-      id="weekDate"
-      type="date"
-    >
-
-    <div
-      class="info"
-      id="previousInfo"
-    >
-      Previous Week Remaining Goods: GH₵0.00
     </div>
 
-  </div>
 
-
-  <div class="card">
-
-    <h2>What do you want to record?</h2>
-
-    <div class="choice-row">
+    <div class="card">
 
       <button
-        id="startingChoice"
-        class="choice-btn"
-        onclick="chooseRecordType('starting')"
+        class="danger full"
+        onclick="logoutApp()"
       >
+        LOGOUT
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= CEDI ================= -->
+
+  <section
+    id="cedi"
+    class="section"
+  >
+
+    <div class="card">
+
+      <h2>
+        Ghana Cedi Calculator
+      </h2>
+
+      <div id="cediRows"></div>
+
+      <button
+        class="primary full"
+        onclick="calculateCedi()"
+        style="margin-top:10px"
+      >
+        CALCULATE
+      </button>
+
+      <div class="summary">
+
+        <div class="summary-row">
+
+          <span>
+            TOTAL CASH
+          </span>
+
+          <strong id="cediTotal">
+            GH₵0.00
+          </strong>
+
+        </div>
+
+      </div>
+
+      <div
+        id="amountWords"
+        class="amount-words"
+      >
+        Amount in Words: Zero Ghana Cedis
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= GOODS ================= -->
+
+  <section
+    id="goods"
+    class="section"
+  >
+
+    <div class="card">
+
+      <h2>
+        Weekly Goods Recording
+      </h2>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label>
+            Select Week
+          </label>
+
+          <select
+            id="goodsWeek"
+            onchange="loadSelectedWeek()"
+          ></select>
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Date
+          </label>
+
+          <input
+            id="goodsDate"
+            type="date"
+          >
+
+        </div>
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Previous Week Remaining Goods
+        </label>
+
+        <input
+          id="previousRemaining"
+          type="number"
+          readonly
+          value="0"
+        >
+
+      </div>
+
+      <h3>
+        What do you want to record?
+      </h3>
+
+      <div class="choice-row">
+
+        <button
+          id="startingChoice"
+          class="choice-btn active"
+          onclick="selectGoodsMode('starting')"
+        >
+          Starting Goods
+        </button>
+
+        <button
+          id="remainingChoice"
+          class="choice-btn"
+          onclick="selectGoodsMode('remaining')"
+        >
+          Remaining Goods
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- STARTING GOODS -->
+
+    <div
+      id="startingCard"
+      class="card"
+    >
+
+      <h2>
         Starting Goods
-      </button>
+      </h2>
+
+      <div
+        id="startingItems"
+      ></div>
 
       <button
-        id="remainingChoice"
-        class="choice-btn"
-        onclick="chooseRecordType('remaining')"
+        class="light full"
+        onclick="addStartingItem()"
       >
+        + ADD GOODS
+      </button>
+
+      <div class="button-row">
+
+        <button
+          class="primary"
+          onclick="saveStartingGoods()"
+        >
+          SAVE STARTING GOODS
+        </button>
+
+        <button
+          id="editStartingBtn"
+          class="secondary hidden"
+          onclick="editStartingGoods()"
+        >
+          EDIT STARTING GOODS
+        </button>
+
+      </div>
+
+      <div
+        id="startingStatus"
+        class="info hidden"
+      ></div>
+
+    </div>
+
+
+    <!-- REMAINING GOODS -->
+
+    <div
+      id="remainingCard"
+      class="card hidden"
+    >
+
+      <h2>
         Remaining Goods
+      </h2>
+
+      <div
+        id="remainingItems"
+      ></div>
+
+      <button
+        class="light full"
+        onclick="addRemainingItem()"
+      >
+        + ADD GOODS
       </button>
+
+      <div class="button-row">
+
+        <button
+          class="primary"
+          onclick="saveRemainingGoods()"
+        >
+          SAVE REMAINING GOODS
+        </button>
+
+        <button
+          id="editRemainingBtn"
+          class="secondary hidden"
+          onclick="editRemainingGoods()"
+        >
+          EDIT REMAINING GOODS
+        </button>
+
+      </div>
+
+      <div
+        id="remainingStatus"
+        class="info hidden"
+      ></div>
 
     </div>
 
-  </div>
+
+    <!-- BALANCE -->
+
+    <div class="card">
+
+      <h2>
+        Balance Records
+      </h2>
+
+      <div class="summary">
+
+        <div class="summary-row">
+
+          <span>
+            Starting Goods Value
+          </span>
+
+          <strong id="balanceStarting">
+            GH₵0.00
+          </strong>
+
+        </div>
+
+        <div class="summary-row">
+
+          <span>
+            Remaining Goods Value
+          </span>
+
+          <strong id="balanceRemaining">
+            GH₵0.00
+          </strong>
+
+        </div>
+
+        <div class="summary-row">
+
+          <span>
+            Sold / Used
+          </span>
+
+          <strong id="balanceSold">
+            GH₵0.00
+          </strong>
+
+        </div>
+
+        <div class="summary-row profit">
+
+          <span>
+            BALANCE
+          </span>
+
+          <strong id="balanceValue">
+            GH₵0.00
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
 
 
-  <!-- STARTING GOODS -->
+    <!-- SAVED WEEKLY RECORDS -->
 
-  <div
-    class="card hidden"
-    id="startingCard"
+    <div class="card">
+
+      <h2>
+        Saved Weekly Records
+      </h2>
+
+      <div id="savedWeeklyRecords"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= ADMIN ================= -->
+
+  <section
+    id="admin"
+    class="section"
   >
 
-    <h2>Starting Goods</h2>
+    <div class="card">
 
-    <div id="startingEditorArea">
+      <h2>
+        Approved Goods & Prices
+      </h2>
 
-      <div id="startingList"></div>
-
-      <button
-        class="add-good-btn"
-        onclick="addStartingRow()"
-      >
-        + ADD GOOD
-      </button>
-
-      <button
-        class="main-btn"
-        onclick="saveStartingGoods()"
-      >
-        SAVE STARTING GOODS
-      </button>
+      <div
+        id="adminGoodsList"
+      ></div>
 
     </div>
 
 
-    <div
-      id="startingSavedStatus"
-      class="hidden"
-    >
+    <div class="card">
 
-      <div class="saved-status">
+      <h2>
+        Add Good & Price
+      </h2>
 
-        Starting Goods Saved
+      <div class="field">
 
-        <small>
-          Your Starting Goods have been recorded for this week.
-        </small>
+        <label>
+          Good Name
+        </label>
+
+        <input
+          id="newGoodName"
+          type="text"
+          placeholder="Enter good name"
+        >
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Price
+        </label>
+
+        <input
+          id="newGoodPrice"
+          type="number"
+          min="0"
+          placeholder="Enter price"
+        >
 
       </div>
 
       <button
-        class="edit-current-btn"
-        onclick="editCurrentStarting()"
+        class="primary full"
+        onclick="addGood()"
       >
-        EDIT STARTING GOODS
+        ADD GOOD & PRICE
       </button>
 
     </div>
 
-  </div>
-
-
-  <!-- REMAINING GOODS -->
-
-  <div
-    class="card hidden"
-    id="remainingCard"
-  >
-
-    <h2>Remaining Goods</h2>
-
-    <div id="remainingEditorArea">
-
-      <div id="remainingList"></div>
-
-      <button
-        class="add-good-btn"
-        onclick="addRemainingRow()"
-      >
-        + ADD GOOD
-      </button>
-
-      <button
-        class="main-btn"
-        onclick="saveRemainingGoods()"
-      >
-        SAVE REMAINING GOODS
-      </button>
-
-    </div>
-
-
-    <div
-      id="remainingSavedStatus"
-      class="hidden"
-    >
-
-      <div class="saved-status">
-
-        Remaining Goods Saved
-
-        <small>
-          Your Remaining Goods have been recorded for this week.
-        </small>
-
-      </div>
-
-      <button
-        class="edit-current-btn"
-        onclick="editCurrentRemaining()"
-      >
-        EDIT REMAINING GOODS
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- BALANCE -->
-
-  <div class="card">
-
-    <h2>Balance Records</h2>
-
-    <div class="info">
-
-      This section records only the weekly Balance value.
-
-      <br><br>
-
-      Tap a Balance record to automatically open the exact Balance figure inside that week's saved record.
-
-    </div>
-
-    <div id="balanceRecords"></div>
-
-  </div>
-
-
-  <!-- SAVED WEEKLY -->
-
-  <div class="card">
-
-    <h2>Saved Weekly Records</h2>
-
-    <div id="savedRecords"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ========================================================= -->
-<!-- ADMIN -->
-<!-- ========================================================= -->
-
-<section id="admin" class="section">
-
-  <div class="card">
-
-    <h2>Approved Goods & Prices</h2>
-
-    <div id="adminGoods"></div>
-
-    <label>Good Name</label>
-
-    <input
-      id="newGoodName"
-      type="text"
-      placeholder="Enter good name"
-    >
-
-    <label>Price</label>
-
-    <input
-      id="newGoodPrice"
-      type="number"
-      inputmode="decimal"
-      placeholder="Enter price"
-    >
-
-    <button
-      class="main-btn"
-      onclick="addGood()"
-    >
-      ADD GOOD & PRICE
-    </button>
-
-  </div>
-
-</section>
+  </section>
 
 </div>
 
 
 <script>
 
-/* =========================================================
+/* =====================================================
    SUPABASE
-========================================================= */
+===================================================== */
 
 const SUPABASE_URL =
-"https://ywsmyynauytmgdiijwlo.supabase.co";
+  "https://ywsmyynauytmgdiijwlo.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
+  "sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
 
 const db =
-supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true,
-      detectSessionInUrl:true
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true
+      }
     }
-  }
-);
+  );
 
 
-/* =========================================================
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const GOODS_KEY =
+  "oc_demo_goods";
+
+const WEEKS_KEY =
+  "oc_demo_weeks_fresh_2026_09";
+
+const REVENUE_KEY =
+  "oc_demo_revenue_records_2026_09";
+
+const CLEAR_OLD_WEEKS_KEY =
+  "oc_demo_old_weeks_cleared_2026_09";
+
+
+/* =====================================================
    VARIABLES
-========================================================= */
+===================================================== */
 
 let session = null;
 
@@ -1211,64 +1283,65 @@ let isAdminUser = false;
 
 let goods = [];
 
-let weeks = {};
+let weeks = JSON.parse(
+  localStorage.getItem(WEEKS_KEY) || "{}"
+);
 
-let revenueRecords = [];
+let revenueRecords = JSON.parse(
+  localStorage.getItem(REVENUE_KEY) || "[]"
+);
 
-let selectedWeek = "Week 1";
-
-let selectedRecordType = "";
-
-
-/* =========================================================
-   LOCAL STORAGE
-========================================================= */
-
-const WEEKS_KEY =
-"oc_demo_weeks_fresh_2026_09";
-
-const REVENUE_KEY =
-"oc_demo_revenue_records_2026_09";
+let currentGoodsMode = "starting";
 
 
-function localLoad(){
+/* =====================================================
+   HELPERS
+===================================================== */
 
-  try{
-
-    weeks =
-      JSON.parse(
-        localStorage.getItem(WEEKS_KEY) || "{}"
-      );
-
-  }catch(e){
-
-    weeks = {};
-
-  }
+function $(id){
+  return document.getElementById(id);
+}
 
 
-  try{
+function money(value){
 
-    revenueRecords =
-      JSON.parse(
-        localStorage.getItem(REVENUE_KEY) || "[]"
-      );
+  const number =
+    Number(value) || 0;
 
-  }catch(e){
-
-    revenueRecords = [];
-
-  }
+  return (
+    "GH₵" +
+    number.toLocaleString(
+      "en-GH",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    )
+  );
 
 }
 
 
-function saveLocal(){
+function numberValue(id){
+
+  return Number(
+    $(id).value
+  ) || 0;
+
+}
+
+
+function saveWeeks(){
 
   localStorage.setItem(
     WEEKS_KEY,
     JSON.stringify(weeks)
   );
+
+}
+
+
+function saveRevenue(){
 
   localStorage.setItem(
     REVENUE_KEY,
@@ -1278,149 +1351,760 @@ function saveLocal(){
 }
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
+/* =====================================================
+   LOGIN
+===================================================== */
 
-const $ = id =>
-document.getElementById(id);
+async function loginApp(){
 
+  const email =
+    $("loginEmail")
+      .value
+      .trim();
 
-function money(value){
+  const password =
+    $("loginPassword")
+      .value;
 
-  return "GH₵" +
-    (Number(value) || 0).toLocaleString(
-      "en-GH",
-      {
-        minimumFractionDigits:2,
-        maximumFractionDigits:2
-      }
+  if(!email || !password){
+
+    showLoginStatus(
+      "Please enter your email and password."
     );
 
+    return;
+
+  }
+
+  showLoginStatus(
+    "Logging in..."
+  );
+
+  const result =
+    await db.auth.signInWithPassword({
+      email:email,
+      password:password
+    });
+
+  if(result.error){
+
+    showLoginStatus(
+      result.error.message
+    );
+
+    return;
+
+  }
+
+  session =
+    result.data.session;
+
+  await initializeApp();
+
 }
 
 
-function esc(value){
+async function createAccount(){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  const email =
+    $("loginEmail")
+      .value
+      .trim();
+
+  const password =
+    $("loginPassword")
+      .value;
+
+  if(!email || !password){
+
+    showLoginStatus(
+      "Please enter an email and password."
+    );
+
+    return;
+
+  }
+
+  if(password.length < 6){
+
+    showLoginStatus(
+      "Password must be at least 6 characters."
+    );
+
+    return;
+
+  }
+
+  showLoginStatus(
+    "Creating account..."
+  );
+
+  const result =
+    await db.auth.signUp({
+      email:email,
+      password:password
+    });
+
+  if(result.error){
+
+    showLoginStatus(
+      result.error.message
+    );
+
+    return;
+
+  }
+
+  if(result.data.session){
+
+    session =
+      result.data.session;
+
+    await initializeApp();
+
+  }else{
+
+    showLoginStatus(
+      "Account created. Check your email if confirmation is required, then log in."
+    );
+
+  }
 
 }
 
 
-function getNum(id){
+function showLoginStatus(message){
 
-  return Number($(id).value) || 0;
+  const box =
+    $("loginStatus");
+
+  box.textContent =
+    message;
+
+  box.classList.remove(
+    "hidden"
+  );
 
 }
 
 
-/* =========================================================
-   TAB SWITCHING
-========================================================= */
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
-function showTab(id,button){
+async function initializeApp(){
+
+  if(!session){
+
+    return;
+
+  }
+
+  $("loginScreen")
+    .classList.add(
+      "hidden"
+    );
+
+  await loadProfile();
+
+  await loadGoods();
+
+  populateWeeks();
+
+  populateRevenueWeeks();
+
+  populateCedi();
+
+  renderAdminGoods();
+
+  renderSavedRevenueRecords();
+
+  renderSavedWeeklyRecords();
+
+  setTodayDates();
+
+  loadSelectedWeek();
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+async function loadProfile(){
+
+  const result =
+    await db
+      .from("profiles")
+      .select("*")
+      .eq(
+        "id",
+        session.user.id
+      )
+      .maybeSingle();
+
+  if(result.error){
+
+    console.error(
+      "Profile error:",
+      result.error
+    );
+
+    userProfile = null;
+
+    isAdminUser = false;
+
+    $("tabAdmin")
+      .classList.add(
+        "hidden"
+      );
+
+    return;
+
+  }
+
+  userProfile =
+    result.data;
+
+  isAdminUser =
+    userProfile &&
+    userProfile.role === "admin" &&
+    userProfile.status === "active";
+
+  if(isAdminUser){
+
+    $("tabAdmin")
+      .classList.remove(
+        "hidden"
+      );
+
+  }else{
+
+    $("tabAdmin")
+      .classList.add(
+        "hidden"
+      );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logoutApp(){
+
+  await db.auth.signOut();
+
+  session = null;
+
+  userProfile = null;
+
+  isAdminUser = false;
+
+  $("loginScreen")
+    .classList.remove(
+      "hidden"
+    );
+
+  $("loginPassword").value = "";
+
+  showLoginStatus(
+    "You have been logged out."
+  );
+
+}
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+function showTab(tab){
 
   document
     .querySelectorAll(".section")
-    .forEach(section =>
-      section.classList.remove("active")
+    .forEach(
+      section =>
+        section.classList.remove(
+          "active"
+        )
     );
-
-
-  $(id).classList.add("active");
-
 
   document
-    .querySelectorAll(".tab")
-    .forEach(tab =>
-      tab.classList.remove("active")
+    .querySelectorAll(".tab-btn")
+    .forEach(
+      button =>
+        button.classList.remove(
+          "active"
+        )
     );
 
+  $(tab)
+    .classList.add(
+      "active"
+    );
 
-  if(button){
+  if(tab === "revenue"){
 
-    button.classList.add("active");
-
-  }
-
-
-  if(id === "goods"){
-
-    loadSelectedWeek();
-
-    renderSavedRecords();
-
-    renderBalanceRecords();
+    $("tabRevenue")
+      .classList.add(
+        "active"
+      );
 
   }
 
+  if(tab === "cedi"){
 
-  if(id === "admin"){
+    $("tabCedi")
+      .classList.add(
+        "active"
+      );
+
+  }
+
+  if(tab === "goods"){
+
+    $("tabGoods")
+      .classList.add(
+        "active"
+      );
+
+  }
+
+  if(tab === "admin"){
+
+    if(!isAdminUser){
+
+      showTab("revenue");
+
+      return;
+
+    }
+
+    $("tabAdmin")
+      .classList.add(
+        "active"
+      );
 
     renderAdminGoods();
 
   }
 
+}
 
-  if(id === "revenue"){
 
-    renderRevenueRecords();
+/* =====================================================
+   GOODS FROM SUPABASE
+===================================================== */
+
+async function loadGoods(){
+
+  if(!session){
+
+    return;
+
+  }
+
+  const result =
+    await db
+      .from("goods")
+      .select("*")
+      .order(
+        "name",
+        {
+          ascending:true
+        }
+      );
+
+  if(result.error){
+
+    console.error(
+      "Load goods error:",
+      result.error
+    );
+
+    alert(
+      "Could not load goods:\n\n" +
+      result.error.message
+    );
+
+    return;
+
+  }
+
+  goods =
+    result.data || [];
+
+  renderAllGoodSelects();
+
+  renderAdminGoods();
+
+}
+
+
+function renderAllGoodSelects(){
+
+  document
+    .querySelectorAll(
+      ".good-select"
+    )
+    .forEach(
+      select =>
+        fillGoodSelect(
+          select
+        )
+    );
+
+}
+
+
+function fillGoodSelect(select){
+
+  const oldValue =
+    select.value;
+
+  select.innerHTML =
+    `<option value="">Select Good</option>`;
+
+  goods.forEach(
+    good => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        good.id;
+
+      option.textContent =
+        good.name;
+
+      option.dataset.price =
+        good.price;
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+  if(oldValue){
+
+    select.value =
+      oldValue;
 
   }
 
 }
 
 
-/* =========================================================
-   REVENUE CALCULATOR
-========================================================= */
+/* =====================================================
+   ADMIN GOODS
+===================================================== */
+
+function renderAdminGoods(){
+
+  const box =
+    $("adminGoodsList");
+
+  if(!box){
+
+    return;
+
+  }
+
+  box.innerHTML = "";
+
+  if(!isAdminUser){
+
+    box.innerHTML =
+      `<div class="empty">Admin access only.</div>`;
+
+    return;
+
+  }
+
+  if(!goods.length){
+
+    box.innerHTML =
+      `<div class="empty">No goods have been added yet.</div>`;
+
+    return;
+
+  }
+
+  goods.forEach(
+    good => {
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
+        "good-row";
+
+      row.innerHTML = `
+        <div class="good-info">
+
+          <div class="good-name">
+            ${escapeHtml(good.name)}
+          </div>
+
+          <div class="good-price">
+            ${money(good.price)}
+          </div>
+
+        </div>
+
+        <button
+          class="delete-btn"
+          onclick="deleteGood('${good.id}')"
+        >
+          DELETE
+        </button>
+      `;
+
+      box.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+async function addGood(){
+
+  if(!isAdminUser){
+
+    alert(
+      "Only the admin can add goods."
+    );
+
+    return;
+
+  }
+
+  if(!session){
+
+    alert(
+      "Please log in first."
+    );
+
+    return;
+
+  }
+
+  const name =
+    $("newGoodName")
+      .value
+      .trim();
+
+  const price =
+    Number(
+      $("newGoodPrice").value
+    );
+
+  if(!name){
+
+    alert(
+      "Please enter the good name."
+    );
+
+    return;
+
+  }
+
+  if(price <= 0){
+
+    alert(
+      "Please enter a valid price."
+    );
+
+    return;
+
+  }
+
+  const duplicate =
+    goods.some(
+      good =>
+        good.name.toLowerCase() ===
+        name.toLowerCase()
+    );
+
+  if(duplicate){
+
+    alert(
+      "This good already exists."
+    );
+
+    return;
+
+  }
+
+  /*
+    IMPORTANT:
+    The goods table requires user_id.
+    The logged-in admin's user ID is saved
+    with the good.
+  */
+
+  const result =
+    await db
+      .from("goods")
+      .insert({
+
+        user_id:
+          session.user.id,
+
+        name:
+          name,
+
+        price:
+          price
+
+      });
+
+  if(result.error){
+
+    console.error(
+      "Add good error:",
+      result.error
+    );
+
+    alert(
+      "Could not add good:\n\n" +
+      result.error.message
+    );
+
+    return;
+
+  }
+
+  $("newGoodName")
+    .value = "";
+
+  $("newGoodPrice")
+    .value = "";
+
+  await loadGoods();
+
+  renderAdminGoods();
+
+  alert(
+    "Good and price added successfully."
+  );
+
+}
+
+
+async function deleteGood(id){
+
+  if(!isAdminUser){
+
+    alert(
+      "Only the admin can delete goods."
+    );
+
+    return;
+
+  }
+
+  const confirmed =
+    confirm(
+      "Delete this good and its price?"
+    );
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+  const result =
+    await db
+      .from("goods")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+  if(result.error){
+
+    console.error(
+      "Delete good error:",
+      result.error
+    );
+
+    alert(
+      "Could not delete good:\n\n" +
+      result.error.message
+    );
+
+    return;
+
+  }
+
+  await loadGoods();
+
+  renderAdminGoods();
+
+}
+
+
+/* =====================================================
+   REVENUE
+===================================================== */
 
 function calculateRevenue(){
 
   const bank1 =
-    getNum("bank1");
+    numberValue("bank1");
 
   const bank2 =
-    getNum("bank2");
+    numberValue("bank2");
 
   const bank3 =
-    getNum("bank3");
+    numberValue("bank3");
 
   const cash =
-    getNum("cash");
+    numberValue("cash");
 
   const expenses =
-    getNum("expenses");
+    numberValue("expenses");
 
   const totalGoods =
-    getNum("totalGoods");
+    numberValue("totalGoods");
 
   const remainingGoods =
-    getNum("remainingGoods");
-
+    numberValue("remainingGoods");
 
   const totalBanks =
-    bank1 + bank2 + bank3;
-
+    bank1 +
+    bank2 +
+    bank3;
 
   const totalCash =
-    totalBanks + cash;
-
+    totalBanks +
+    cash;
 
   const goodsAfterExpenses =
-    totalGoods - expenses;
-
+    totalGoods -
+    expenses;
 
   let profit =
     totalCash +
     remainingGoods -
     goodsAfterExpenses;
-
 
   if(profit < 0){
 
@@ -1428,21 +2112,47 @@ function calculateRevenue(){
 
   }
 
+  $("outTotalBanks")
+    .textContent =
+      money(totalBanks);
 
-  $("outBanks").textContent =
-    money(totalBanks);
+  $("outTotalBankCash")
+    .textContent =
+      money(totalCash);
 
-  $("outCash").textContent =
-    money(totalCash);
+  $("outRemainingGoods")
+    .textContent =
+      money(remainingGoods);
 
-  $("outRemaining").textContent =
-    money(remainingGoods);
+  $("outGoodsAfterExpenses")
+    .textContent =
+      money(goodsAfterExpenses);
 
-  $("outGoodsAfter").textContent =
-    money(goodsAfterExpenses);
+  $("outProfit")
+    .textContent =
+      money(profit);
 
-  $("outProfit").textContent =
-    money(profit);
+  return {
+
+    totalBanks:
+      totalBanks,
+
+    totalBankCash:
+      totalCash,
+
+    remainingGoods:
+      remainingGoods,
+
+    goodsAfterExpenses:
+      goodsAfterExpenses,
+
+    expenses:
+      expenses,
+
+    profit:
+      profit
+
+  };
 
 }
 
@@ -1457,71 +2167,63 @@ function resetRevenue(){
     "expenses",
     "totalGoods",
     "remainingGoods"
-  ].forEach(id => {
+  ].forEach(
+    id =>
+      $(id).value = ""
+  );
 
-    $(id).value = "";
+  $("outTotalBanks")
+    .textContent =
+      money(0);
 
-  });
+  $("outTotalBankCash")
+    .textContent =
+      money(0);
 
+  $("outRemainingGoods")
+    .textContent =
+      money(0);
 
-  [
-    "outBanks",
-    "outCash",
-    "outRemaining",
-    "outGoodsAfter",
-    "outProfit"
-  ].forEach(id => {
+  $("outGoodsAfterExpenses")
+    .textContent =
+      money(0);
 
-    $(id).textContent =
-      "GH₵0.00";
-
-  });
-
-
-  $("revenueSaveCard")
-    .classList.add("hidden");
+  $("outProfit")
+    .textContent =
+      money(0);
 
 }
 
 
-/* =========================================================
-   REVENUE SAVE
-========================================================= */
+function populateRevenueWeeks(){
 
-function openRevenueSave(){
+  const select =
+    $("revenueWeek");
 
-  calculateRevenue();
+  select.innerHTML = "";
 
-  $("revenueSaveCard")
-    .classList.remove("hidden");
+  for(
+    let i = 1;
+    i <= 52;
+    i++
+  ){
 
+    const option =
+      document.createElement(
+        "option"
+      );
 
-  if(!$("revenueStartDate").value){
+    option.value =
+      i;
 
-    const today =
-      new Date();
+    option.textContent =
+      `Week ${i}`;
 
-    $("revenueStartDate").value =
-      today.toISOString().slice(0,10);
+    select.appendChild(
+      option
+    );
 
   }
-
-
-  updateRevenueEndDate();
-
-
-  $("revenueSaveCard")
-    .scrollIntoView({
-      behavior:"smooth"
-    });
-
-}
-
-
-function closeRevenueSave(){
-
-  $("revenueSaveCard")
-    .classList.add("hidden");
 
 }
 
@@ -1529,289 +2231,202 @@ function closeRevenueSave(){
 function updateRevenueEndDate(){
 
   const start =
-    $("revenueStartDate").value;
-
+    $("revenueStartDate")
+      .value;
 
   if(!start){
 
-    $("revenueEndDate").value = "";
+    $("revenueEndDate")
+      .value = "";
 
     return;
 
   }
 
-
   const date =
-    new Date(start + "T00:00:00");
-
+    new Date(
+      start + "T00:00:00"
+    );
 
   date.setDate(
     date.getDate() + 4
   );
 
-
-  $("revenueEndDate").value =
-    date.toISOString().slice(0,10);
+  $("revenueEndDate")
+    .value =
+      formatDateInput(
+        date
+      );
 
 }
 
 
-function confirmSaveRevenueRecord(){
+function saveRevenueRecord(){
 
-  const start =
-    $("revenueStartDate").value;
+  const result =
+    calculateRevenue();
 
-  const end =
-    $("revenueEndDate").value;
+  const week =
+    Number(
+      $("revenueWeek").value
+    );
 
+  const startDate =
+    $("revenueStartDate")
+      .value;
 
-  if(!start || !end){
+  const endDate =
+    $("revenueEndDate")
+      .value;
+
+  if(!startDate){
 
     alert(
-      "Please select the Start date."
+      "Please select the start date."
     );
 
     return;
 
   }
 
+  const record = {
 
-  const totalBanks =
-    getNum("bank1") +
-    getNum("bank2") +
-    getNum("bank3");
-
-
-  const totalBankCash =
-    totalBanks +
-    getNum("cash");
-
-
-  const expenses =
-    getNum("expenses");
-
-
-  const totalGoods =
-    getNum("totalGoods");
-
-
-  const remainingGoods =
-    getNum("remainingGoods");
-
-
-  revenueRecords.unshift({
+    id:
+      Date.now(),
 
     week:
-      $("revenueWeek").value,
+      week,
 
     startDate:
-      start,
+      startDate,
 
     endDate:
-      end,
+      endDate,
 
     dateSaved:
-      new Date().toLocaleString("en-GH"),
+      new Date().toISOString(),
 
     totalBanks:
-      totalBanks,
+      result.totalBanks,
 
     totalBankCash:
-      totalBankCash,
+      result.totalBankCash,
 
     remainingGoods:
-      remainingGoods,
+      result.remainingGoods,
 
     goodsAfterExpenses:
-      totalGoods - expenses,
+      result.goodsAfterExpenses,
 
     expenses:
-      expenses
+      result.expenses
 
-  });
+  };
 
+  revenueRecords.unshift(
+    record
+  );
 
-  saveLocal();
+  saveRevenue();
 
-  renderRevenueRecords();
+  renderSavedRevenueRecords();
 
   alert(
     "Revenue record saved successfully."
   );
 
+}
 
-  closeRevenueSave();
+
+function cancelRevenueSave(){
+
+  $("revenueStartDate")
+    .value = "";
+
+  $("revenueEndDate")
+    .value = "";
 
 }
 
 
-function fmt(date){
+function renderSavedRevenueRecords(){
 
-  if(!date){
+  const box =
+    $("savedRevenueRecords");
 
-    return "";
-
-  }
-
-
-  return new Date(
-    date + "T00:00:00"
-  ).toLocaleDateString(
-    "en-GH",
-    {
-      day:"numeric",
-      month:"long",
-      year:"numeric"
-    }
-  );
-
-}
-
-
-function renderRevenueRecords(){
-
-  const container =
-    $("revenueRecords");
-
-
-  if(!container){
-
-    return;
-
-  }
-
-
-  container.innerHTML = "";
-
+  box.innerHTML = "";
 
   if(!revenueRecords.length){
 
-    container.innerHTML =
-      "<div class='empty'>No Revenue Records saved yet.</div>";
+    box.innerHTML =
+      `<div class="empty">No revenue records saved yet.</div>`;
 
     return;
 
   }
 
-
   revenueRecords.forEach(
-    (record,index) => {
+    record => {
 
-      const box =
-        document.createElement("div");
+      const row =
+        document.createElement(
+          "div"
+        );
 
-      box.className =
-        "revenue-record";
+      row.className =
+        "record-row";
 
-
-      box.innerHTML = `
-
-        <div class="revenue-record-header">
-
-          <div>
-
-            <strong>
-              ${esc(record.week)}
-            </strong>
-
-            <br>
-
-            <span>
-              ${fmt(record.startDate)}
-              →
-              ${fmt(record.endDate)}
-            </span>
-
-          </div>
-
-          <strong>⌄</strong>
-
+      row.innerHTML = `
+        <div class="summary-row">
+          <span>Week</span>
+          <strong>Week ${record.week}</strong>
         </div>
 
-
-        <div class="revenue-record-details">
-
-          <div class="revenue-line">
-            <strong>Total Banks</strong>
-            <strong>${money(record.totalBanks)}</strong>
-          </div>
-
-          <div class="revenue-line">
-            <strong>Total Bank & Cash</strong>
-            <strong>${money(record.totalBankCash)}</strong>
-          </div>
-
-          <div class="revenue-line">
-            <strong>Remaining Goods</strong>
-            <strong>${money(record.remainingGoods)}</strong>
-          </div>
-
-          <div class="revenue-line">
-            <strong>Goods After Expenses</strong>
-            <strong>${money(record.goodsAfterExpenses)}</strong>
-          </div>
-
-          <div class="revenue-line">
-            <strong>Expenses</strong>
-            <strong>${money(record.expenses)}</strong>
-          </div>
-
-          <button class="record-delete">
-            DELETE RECORD
-          </button>
-
+        <div class="summary-row">
+          <span>Period</span>
+          <strong>
+            ${escapeHtml(record.startDate)}
+            -
+            ${escapeHtml(record.endDate)}
+          </strong>
         </div>
 
+        <div class="summary-row">
+          <span>Total Banks</span>
+          <strong>${money(record.totalBanks)}</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Total Bank & Cash</span>
+          <strong>${money(record.totalBankCash)}</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Remaining Goods</span>
+          <strong>${money(record.remainingGoods)}</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Goods After Expenses</span>
+          <strong>${money(record.goodsAfterExpenses)}</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Expenses</span>
+          <strong>${money(record.expenses)}</strong>
+        </div>
+
+        <button
+          class="delete-btn"
+          onclick="deleteRevenueRecord(${record.id})"
+        >
+          DELETE RECORD
+        </button>
       `;
 
-
-      const header =
-        box.querySelector(
-          ".revenue-record-header"
-        );
-
-
-      const details =
-        box.querySelector(
-          ".revenue-record-details"
-        );
-
-
-      header.onclick = () => {
-
-        details.classList.toggle("open");
-
-      };
-
-
-      box
-        .querySelector(".record-delete")
-        .onclick = event => {
-
-          event.stopPropagation();
-
-
-          if(
-            confirm(
-              "Delete this Revenue Record?"
-            )
-          ){
-
-            revenueRecords.splice(
-              index,
-              1
-            );
-
-            saveLocal();
-
-            renderRevenueRecords();
-
-          }
-
-        };
-
-
-      container.appendChild(box);
+      box.appendChild(
+        row
+      );
 
     }
   );
@@ -1819,53 +2434,89 @@ function renderRevenueRecords(){
 }
 
 
-/* =========================================================
+function deleteRevenueRecord(id){
+
+  const confirmed =
+    confirm(
+      "Delete this revenue record?"
+    );
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+  revenueRecords =
+    revenueRecords.filter(
+      record =>
+        record.id !== id
+    );
+
+  saveRevenue();
+
+  renderSavedRevenueRecords();
+
+}
+
+
+/* =====================================================
    CEDI CALCULATOR
-========================================================= */
+===================================================== */
 
-function buildCedi(){
+const denominations = [
+  200,
+  100,
+  50,
+  20,
+  10,
+  5,
+  2,
+  1
+];
 
-  const denominations =
-    [200,100,50,20,10,5,2,1];
 
+function populateCedi(){
+
+  const box =
+    $("cediRows");
+
+  box.innerHTML = "";
 
   denominations.forEach(
     denomination => {
 
       const row =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       row.className =
-        "cedi-row";
-
+        "summary-row";
 
       row.innerHTML = `
-
-        <div class="denom">
+        <span>
           GH₵${denomination}
-        </div>
+        </span>
 
         <input
-          class="cediQty"
-          data-denom="${denomination}"
+          id="cedi_${denomination}"
           type="number"
           min="0"
-          placeholder="Qty"
-          oninput="updateCediLine(this)"
+          placeholder="Quantity"
+          style="width:120px"
         >
 
-        <div
-          class="line-total"
-          id="line${denomination}"
+        <strong
+          id="cediTotal_${denomination}"
         >
           GH₵0.00
-        </div>
-
+        </strong>
       `;
 
-
-      $("cediRows")
-        .appendChild(row);
+      box.appendChild(
+        row
+      );
 
     }
   );
@@ -1873,24 +2524,51 @@ function buildCedi(){
 }
 
 
-function updateCediLine(input){
+function calculateCedi(){
 
-  const denomination =
-    Number(input.dataset.denom);
+  let total = 0;
 
+  denominations.forEach(
+    denomination => {
 
-  const quantity =
-    Number(input.value) || 0;
+      const quantity =
+        Number(
+          $(
+            `cedi_${denomination}`
+          ).value
+        ) || 0;
 
+      const lineTotal =
+        quantity *
+        denomination;
 
-  $("line" + denomination)
+      total +=
+        lineTotal;
+
+      $(
+        `cediTotal_${denomination}`
+      ).textContent =
+        money(lineTotal);
+
+    }
+  );
+
+  $("cediTotal")
     .textContent =
-    money(
-      denomination * quantity
-    );
+      money(total);
+
+  $("amountWords")
+    .textContent =
+      "Amount in Words: " +
+      numberToWords(total) +
+      " Ghana Cedis";
 
 }
 
+
+/* =====================================================
+   NUMBER TO WORDS
+===================================================== */
 
 function numberToWords(number){
 
@@ -1899,51 +2577,47 @@ function numberToWords(number){
       Number(number) || 0
     );
 
-
   if(number === 0){
 
-    return "zero";
+    return "Zero";
 
   }
 
-
   const ones = [
     "",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-    "ten",
-    "eleven",
-    "twelve",
-    "thirteen",
-    "fourteen",
-    "fifteen",
-    "sixteen",
-    "seventeen",
-    "eighteen",
-    "nineteen"
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen"
   ];
-
 
   const tens = [
     "",
     "",
-    "twenty",
-    "thirty",
-    "forty",
-    "fifty",
-    "sixty",
-    "seventy",
-    "eighty",
-    "ninety"
+    "Twenty",
+    "Thirty",
+    "Forty",
+    "Fifty",
+    "Sixty",
+    "Seventy",
+    "Eighty",
+    "Ninety"
   ];
-
 
   function convert(n){
 
@@ -1953,267 +2627,616 @@ function numberToWords(number){
 
     }
 
-
     if(n < 100){
 
       return (
-        tens[Math.floor(n / 10)] +
-        (n % 10
-          ? " " + ones[n % 10]
-          : "")
+        tens[
+          Math.floor(n / 10)
+        ] +
+        (
+          n % 10
+            ? " " + ones[n % 10]
+            : ""
+        )
       );
 
     }
-
 
     if(n < 1000){
 
       return (
-        ones[Math.floor(n / 100)] +
-        " hundred" +
+        ones[
+          Math.floor(n / 100)
+        ] +
+        " Hundred" +
         (
           n % 100
-          ? " " + convert(n % 100)
-          : ""
+            ? " " + convert(n % 100)
+            : ""
         )
       );
 
     }
-
 
     if(n < 1000000){
 
       return (
-        convert(Math.floor(n / 1000)) +
-        " thousand" +
+        convert(
+          Math.floor(n / 1000)
+        ) +
+        " Thousand" +
         (
           n % 1000
-          ? " " + convert(n % 1000)
-          : ""
+            ? " " + convert(n % 1000)
+            : ""
         )
       );
 
     }
-
 
     if(n < 1000000000){
 
       return (
-        convert(Math.floor(n / 1000000)) +
-        " million" +
+        convert(
+          Math.floor(n / 1000000)
+        ) +
+        " Million" +
         (
           n % 1000000
-          ? " " + convert(n % 1000000)
-          : ""
+            ? " " + convert(n % 1000000)
+            : ""
         )
       );
 
     }
 
-
-    return (
-      convert(Math.floor(n / 1000000000)) +
-      " billion" +
-      (
-        n % 1000000000
-        ? " " + convert(n % 1000000000)
-        : ""
-      )
-    );
+    return String(n);
 
   }
-
 
   return convert(number);
 
 }
 
 
-function calculateCedi(){
+/* =====================================================
+   WEEKLY GOODS
+===================================================== */
 
-  let total = 0;
+function populateWeeks(){
 
+  const select =
+    $("goodsWeek");
 
-  document
-    .querySelectorAll(".cediQty")
-    .forEach(input => {
+  select.innerHTML = "";
 
-      const denomination =
-        Number(input.dataset.denom);
-
-      const quantity =
-        Number(input.value) || 0;
-
-      const value =
-        denomination * quantity;
-
-      total += value;
-
-
-      $("line" + denomination)
-        .textContent =
-        money(value);
-
-    });
-
-
-  $("cediGrandTotal")
-    .textContent =
-    money(total);
-
-
-  $("amountWords")
-    .textContent =
-    numberToWords(total) +
-    " Ghana cedis only";
-
-}
-
-
-/* =========================================================
-   WEEK SELECTORS
-========================================================= */
-
-function createWeeks(){
-
-  const weekSelect =
-    $("weekSelect");
-
-
-  const revenueWeek =
-    $("revenueWeek");
-
-
-  for(let i=1;i<=52;i++){
-
-    const option1 =
-      document.createElement("option");
-
-    option1.value =
-      "Week " + i;
-
-    option1.textContent =
-      "Week " + i;
-
-    weekSelect.appendChild(option1);
-
-
-    const option2 =
-      document.createElement("option");
-
-    option2.value =
-      "Week " + i;
-
-    option2.textContent =
-      "Week " + i;
-
-    revenueWeek.appendChild(option2);
-
-  }
-
-}
-
-
-function weekNumber(week){
-
-  const match =
-    String(week).match(/\d+/);
-
-  return Number(
-    match ? match[0] : 0
-  );
-
-}
-
-
-/* =========================================================
-   PREVIOUS WEEK
-========================================================= */
-
-function getPreviousWeekGoods(){
-
-  const number =
-    weekNumber(selectedWeek);
-
-
-  if(number <= 1){
-
-    return [];
-
-  }
-
-
-  const previousWeek =
-    "Week " + (number - 1);
-
-
-  const record =
-    weeks[previousWeek];
-
-
-  if(
-    !record ||
-    !record.remainingGoodsSaved
+  for(
+    let i = 1;
+    i <= 52;
+    i++
   ){
 
-    return [];
+    const option =
+      document.createElement(
+        "option"
+      );
+
+    option.value =
+      i;
+
+    option.textContent =
+      `Week ${i}`;
+
+    select.appendChild(
+      option
+    );
 
   }
 
-
-  return record.remainingGoods || [];
-
 }
 
 
-function getPreviousRemainingValue(){
+function setTodayDates(){
 
-  return getPreviousWeekGoods()
-    .reduce(
-      (total,item) =>
-        total +
-        (
-          Number(item.price) || 0
-        ) *
-        (
-          Number(item.remainingQty) || 0
-        ),
-      0
+  const today =
+    new Date();
+
+  const dateString =
+    formatDateInput(
+      today
     );
 
+  if(!$("goodsDate").value){
+
+    $("goodsDate")
+      .value =
+        dateString;
+
+  }
+
+  if(!$("revenueStartDate").value){
+
+    $("revenueStartDate")
+      .value =
+        dateString;
+
+    updateRevenueEndDate();
+
+  }
+
 }
 
 
-/* =========================================================
-   GOODS OPTIONS
-========================================================= */
+function selectGoodsMode(mode){
 
-function goodsOptions(selected=""){
+  currentGoodsMode =
+    mode;
 
-  let html =
-    "<option value=''>Select good</option>";
+  if(mode === "starting"){
+
+    $("startingCard")
+      .classList.remove(
+        "hidden"
+      );
+
+    $("remainingCard")
+      .classList.add(
+        "hidden"
+      );
+
+    $("startingChoice")
+      .classList.add(
+        "active"
+      );
+
+    $("remainingChoice")
+      .classList.remove(
+        "active"
+      );
+
+  }else{
+
+    $("startingCard")
+      .classList.add(
+        "hidden"
+      );
+
+    $("remainingCard")
+      .classList.remove(
+        "hidden"
+      );
+
+    $("startingChoice")
+      .classList.remove(
+        "active"
+      );
+
+    $("remainingChoice")
+      .classList.add(
+        "active"
+      );
+
+  }
+
+  updateBalance();
+
+}
 
 
-  goods.forEach(good => {
+function loadSelectedWeek(){
 
-    html += `
-      <option
-        value="${esc(good.name)}"
-        ${good.name === selected ? "selected" : ""}
+  const week =
+    Number(
+      $("goodsWeek").value
+    );
+
+  if(!week){
+
+    return;
+
+  }
+
+  const previous =
+    weeks[
+      `week_${week - 1}`
+    ];
+
+  let previousValue = 0;
+
+  if(
+    week > 1 &&
+    previous &&
+    previous.remainingSaved
+  ){
+
+    previousValue =
+      calculateItemsValue(
+        previous.remainingGoods || []
+      );
+
+  }
+
+  $("previousRemaining")
+    .value =
+      previousValue.toFixed(2);
+
+  const current =
+    weeks[
+      `week_${week}`
+    ];
+
+  $("startingItems")
+    .innerHTML = "";
+
+  $("remainingItems")
+    .innerHTML = "";
+
+  $("startingStatus")
+    .classList.add(
+      "hidden"
+    );
+
+  $("remainingStatus")
+    .classList.add(
+      "hidden"
+    );
+
+  $("editStartingBtn")
+    .classList.add(
+      "hidden"
+    );
+
+  $("editRemainingBtn")
+    .classList.add(
+      "hidden"
+    );
+
+  if(current){
+
+    if(current.date){
+
+      $("goodsDate")
+        .value =
+          current.date;
+
+    }
+
+    if(
+      current.startingSaved &&
+      current.startingGoods
+    ){
+
+      current.startingGoods.forEach(
+        item =>
+          addStartingItem(
+            item
+          )
+      );
+
+      disableStartingItems();
+
+      $("startingStatus")
+        .textContent =
+          "Starting goods have been saved.";
+
+      $("startingStatus")
+        .classList.remove(
+          "hidden"
+        );
+
+      $("editStartingBtn")
+        .classList.remove(
+          "hidden"
+        );
+
+    }
+
+    if(
+      current.remainingSaved &&
+      current.remainingGoods
+    ){
+
+      current.remainingGoods.forEach(
+        item =>
+          addRemainingItem(
+            item
+          )
+      );
+
+      disableRemainingItems();
+
+      $("remainingStatus")
+        .textContent =
+          "Remaining goods have been saved.";
+
+      $("remainingStatus")
+        .classList.remove(
+          "hidden"
+        );
+
+      $("editRemainingBtn")
+        .classList.remove(
+          "hidden"
+        );
+
+    }
+
+  }
+
+  if(
+    !$("startingItems").children.length
+  ){
+
+    addStartingItem();
+
+  }
+
+  if(
+    !$("remainingItems").children.length
+  ){
+
+    addRemainingItem();
+
+  }
+
+  updateBalance();
+
+}
+
+
+function addStartingItem(item = null){
+
+  const box =
+    $("startingItems");
+
+  const row =
+    document.createElement(
+      "div"
+    );
+
+  row.className =
+    "item-row";
+
+  row.innerHTML = `
+
+    <div class="item-grid">
+
+      <div>
+
+        <label>
+          Good
+        </label>
+
+        <select
+          class="good-select starting-good"
+          onchange="updateItemPrice(this)"
+        >
+          <option value="">
+            Select Good
+          </option>
+        </select>
+
+      </div>
+
+      <div>
+
+        <label>
+          Price
+        </label>
+
+        <input
+          class="item-price"
+          type="number"
+          readonly
+          value=""
+        >
+
+      </div>
+
+      <div>
+
+        <label>
+          Qty
+        </label>
+
+        <input
+          class="item-qty"
+          type="number"
+          min="0"
+          value=""
+          placeholder="0"
+          oninput="updateBalance()"
+        >
+
+      </div>
+
+      <button
+        class="remove-item"
+        onclick="this.closest('.item-row').remove(); updateBalance();"
       >
-        ${esc(good.name)}
-      </option>
-    `;
+        ×
+      </button>
 
-  });
+    </div>
 
+  `;
 
-  return html;
+  box.appendChild(
+    row
+  );
+
+  const select =
+    row.querySelector(
+      ".good-select"
+    );
+
+  fillGoodSelect(
+    select
+  );
+
+  if(item){
+
+    select.value =
+      item.id ||
+      findGoodIdByName(
+        item.name
+      );
+
+    updateItemPrice(
+      select
+    );
+
+    row.querySelector(
+      ".item-qty"
+    ).value =
+      item.qty || 0;
+
+  }
 
 }
 
 
-function getGoodPrice(name){
+function addRemainingItem(item = null){
+
+  const box =
+    $("remainingItems");
+
+  const row =
+    document.createElement(
+      "div"
+    );
+
+  row.className =
+    "item-row";
+
+  row.innerHTML = `
+
+    <div class="item-grid">
+
+      <div>
+
+        <label>
+          Good
+        </label>
+
+        <select
+          class="good-select remaining-good"
+          onchange="updateItemPrice(this)"
+        >
+          <option value="">
+            Select Good
+          </option>
+        </select>
+
+      </div>
+
+      <div>
+
+        <label>
+          Price
+        </label>
+
+        <input
+          class="item-price"
+          type="number"
+          readonly
+          value=""
+        >
+
+      </div>
+
+      <div>
+
+        <label>
+          Remaining Qty
+        </label>
+
+        <input
+          class="item-qty"
+          type="number"
+          min="0"
+          value=""
+          placeholder="0"
+          oninput="updateBalance()"
+        >
+
+      </div>
+
+      <button
+        class="remove-item"
+        onclick="this.closest('.item-row').remove(); updateBalance();"
+      >
+        ×
+      </button>
+
+    </div>
+
+  `;
+
+  box.appendChild(
+    row
+  );
+
+  const select =
+    row.querySelector(
+      ".good-select"
+    );
+
+  fillGoodSelect(
+    select
+  );
+
+  if(item){
+
+    select.value =
+      item.id ||
+      findGoodIdByName(
+        item.name
+      );
+
+    updateItemPrice(
+      select
+    );
+
+    row.querySelector(
+      ".item-qty"
+    ).value =
+      item.remainingQty || 0;
+
+  }
+
+}
+
+
+function updateItemPrice(select){
+
+  const row =
+    select.closest(
+      ".item-row"
+    );
+
+  const option =
+    select.options[
+      select.selectedIndex
+    ];
+
+  const price =
+    option &&
+    option.dataset
+      ? option.dataset.price
+      : "";
+
+  row.querySelector(
+    ".item-price"
+  ).value =
+    price || "";
+
+  updateBalance();
+
+}
+
+
+function findGoodIdByName(name){
 
   const good =
     goods.find(
@@ -2221,1703 +3244,798 @@ function getGoodPrice(name){
         item.name === name
     );
 
-
   return good
-    ? Number(good.price) || 0
+    ? good.id
+    : "";
+
+}
+
+
+function collectStartingItems(){
+
+  const rows =
+    document.querySelectorAll(
+      "#startingItems .item-row"
+    );
+
+  const result = [];
+
+  rows.forEach(
+    row => {
+
+      const select =
+        row.querySelector(
+          ".good-select"
+        );
+
+      const price =
+        Number(
+          row.querySelector(
+            ".item-price"
+          ).value
+        ) || 0;
+
+      const qty =
+        Number(
+          row.querySelector(
+            ".item-qty"
+          ).value
+        ) || 0;
+
+      if(
+        select.value &&
+        qty > 0
+      ){
+
+        const good =
+          goods.find(
+            item =>
+              String(item.id) ===
+              String(select.value)
+          );
+
+        if(good){
+
+          result.push({
+
+            id:
+              good.id,
+
+            name:
+              good.name,
+
+            price:
+              price,
+
+            qty:
+              qty
+
+          });
+
+        }
+
+      }
+
+    }
+  );
+
+  return result;
+
+}
+
+
+function collectRemainingItems(){
+
+  const rows =
+    document.querySelectorAll(
+      "#remainingItems .item-row"
+    );
+
+  const result = [];
+
+  rows.forEach(
+    row => {
+
+      const select =
+        row.querySelector(
+          ".good-select"
+        );
+
+      const price =
+        Number(
+          row.querySelector(
+            ".item-price"
+          ).value
+        ) || 0;
+
+      const remainingQty =
+        Number(
+          row.querySelector(
+            ".item-qty"
+          ).value
+        ) || 0;
+
+      if(select.value){
+
+        const good =
+          goods.find(
+            item =>
+              String(item.id) ===
+              String(select.value)
+          );
+
+        if(good){
+
+          result.push({
+
+            id:
+              good.id,
+
+            name:
+              good.name,
+
+            price:
+              price,
+
+            startingQty:
+              findStartingQty(
+                good.id
+              ),
+
+            remainingQty:
+              remainingQty
+
+          });
+
+        }
+
+      }
+
+    }
+  );
+
+  return result;
+
+}
+
+
+function findStartingQty(id){
+
+  const current =
+    weeks[
+      `week_${Number(
+        $("goodsWeek").value
+      )}`
+    ];
+
+  if(
+    !current ||
+    !current.startingGoods
+  ){
+
+    return 0;
+
+  }
+
+  const item =
+    current.startingGoods.find(
+      good =>
+        String(good.id) ===
+        String(id)
+    );
+
+  return item
+    ? Number(item.qty) || 0
     : 0;
 
 }
 
 
-/* =========================================================
-   GOODS ROWS
-========================================================= */
-
-function addStartingRow(item={}){
-
-  addGoodsRow(
-    "start",
-    item
-  );
-
-}
-
-
-function addRemainingRow(item={}){
-
-  addGoodsRow(
-    "remain",
-    item
-  );
-
-}
-
-
-function addGoodsRow(type,item={}){
-
-  const container =
-    type === "start"
-      ? $("startingList")
-      : $("remainingList");
-
-
-  const row =
-    document.createElement("div");
-
-  row.className =
-    "goods-row";
-
-
-  const selectedName =
-    item.name || "";
-
-
-  const quantity =
-    type === "start"
-      ? (
-          item.qty !== undefined
-          ? item.qty
-          : ""
-        )
-      : (
-          item.remainingQty !== undefined
-          ? item.remainingQty
-          : ""
-        );
-
-
-  row.innerHTML = `
-
-    <select
-      class="${type}-name"
-      onchange="updateGoodsPrice(this)"
-    >
-      ${goodsOptions(selectedName)}
-    </select>
-
-    <div
-      class="price-box ${type}-price"
-    >
-      ${
-        selectedName
-          ? money(
-              getGoodPrice(
-                selectedName
-              )
-            )
-          : "Price"
-      }
-    </div>
-
-    <input
-      class="${type}-qty"
-      type="number"
-      min="0"
-      placeholder="Qty"
-      value="${esc(quantity)}"
-    >
-
-    <button
-      class="remove-btn"
-      onclick="this.parentElement.remove()"
-    >
-      ×
-    </button>
-
-  `;
-
-
-  container.appendChild(row);
-
-}
-
-
-function updateGoodsPrice(select){
-
-  const row =
-    select.closest(".goods-row");
-
-
-  const type =
-    select.className.includes("start")
-      ? "start"
-      : "remain";
-
-
-  const priceBox =
-    row.querySelector(
-      "." + type + "-price"
-    );
-
-
-  if(select.value){
-
-    priceBox.textContent =
-      money(
-        getGoodPrice(
-          select.value
-        )
-      );
-
-  }else{
-
-    priceBox.textContent =
-      "Price";
-
-  }
-
-}
-
-
-/* =========================================================
-   COLLECT GOODS
-========================================================= */
-
-function collectStartingGoods(){
-
-  const rows =
-    document.querySelectorAll(
-      "#startingList .goods-row"
-    );
-
-
-  const result = [];
-
-
-  rows.forEach(row => {
-
-    const name =
-      row.querySelector(
-        ".start-name"
-      ).value;
-
-
-    const qty =
-      Number(
-        row.querySelector(
-          ".start-qty"
-        ).value
-      ) || 0;
-
-
-    if(name){
-
-      result.push({
-
-        name:name,
-
-        price:
-          getGoodPrice(name),
-
-        qty:qty
-
-      });
-
-    }
-
-  });
-
-
-  return result;
-
-}
-
-
-function collectRemainingGoods(){
-
-  const rows =
-    document.querySelectorAll(
-      "#remainingList .goods-row"
-    );
-
-
-  const result = [];
-
-
-  rows.forEach(row => {
-
-    const name =
-      row.querySelector(
-        ".remain-name"
-      ).value;
-
-
-    const remainingQty =
-      Number(
-        row.querySelector(
-          ".remain-qty"
-        ).value
-      ) || 0;
-
-
-    if(name){
-
-      const previousStarting =
-        weeks[selectedWeek]
-          ?.startingGoods
-          ?.find(
-            item =>
-              item.name === name
-          );
-
-
-      result.push({
-
-        name:name,
-
-        price:
-          getGoodPrice(name),
-
-        startingQty:
-          previousStarting
-            ? Number(
-                previousStarting.qty
-              ) || 0
-            : 0,
-
-        remainingQty:
-          remainingQty
-
-      });
-
-    }
-
-  });
-
-
-  return result;
-
-}
-
-
-/* =========================================================
-   LOAD WEEK
-========================================================= */
-
-function loadSelectedWeek(){
-
-  selectedWeek =
-    $("weekSelect").value;
-
-
-  const record =
-    weeks[selectedWeek];
-
-
-  $("weekDate").value =
-    record?.date || "";
-
-
-  $("previousInfo")
-    .textContent =
-    "Previous Week Remaining Goods: " +
-    money(
-      getPreviousRemainingValue()
-    );
-
-
-  $("startingCard")
-    .classList.add("hidden");
-
-
-  $("remainingCard")
-    .classList.add("hidden");
-
-
-  $("startingChoice")
-    .classList.remove("active");
-
-
-  $("remainingChoice")
-    .classList.remove("active");
-
-
-  if(record?.startingGoodsSaved){
-
-    $("startingList").innerHTML = "";
-
-
-    record.startingGoods.forEach(
-      item =>
-        addStartingRow(item)
-    );
-
-
-    $("startingEditorArea")
-      .classList.add("hidden");
-
-
-    $("startingSavedStatus")
-      .classList.remove("hidden");
-
-  }
-
-
-  if(record?.remainingGoodsSaved){
-
-    $("remainingList").innerHTML = "";
-
-
-    record.remainingGoods.forEach(
-      item =>
-        addRemainingRow(item)
-    );
-
-
-    $("remainingEditorArea")
-      .classList.add("hidden");
-
-
-    $("remainingSavedStatus")
-      .classList.remove("hidden");
-
-  }
-
-}
-
-
-/* =========================================================
-   RECORD TYPE
-========================================================= */
-
-function chooseRecordType(type){
-
-  selectedRecordType =
-    type;
-
-
-  $("startingCard")
-    .classList.toggle(
-      "hidden",
-      type !== "starting"
-    );
-
-
-  $("remainingCard")
-    .classList.toggle(
-      "hidden",
-      type !== "remaining"
-    );
-
-
-  $("startingChoice")
-    .classList.toggle(
-      "active",
-      type === "starting"
-    );
-
-
-  $("remainingChoice")
-    .classList.toggle(
-      "active",
-      type === "remaining"
-    );
-
-
-  const record =
-    weeks[selectedWeek];
-
-
-  if(type === "starting"){
-
-    if(record?.startingGoodsSaved){
-
-      $("startingList").innerHTML = "";
-
-
-      record.startingGoods.forEach(
-        item =>
-          addStartingRow(item)
-      );
-
-
-      $("startingEditorArea")
-        .classList.add("hidden");
-
-
-      $("startingSavedStatus")
-        .classList.remove("hidden");
-
-    }else{
-
-      $("startingList").innerHTML = "";
-
-
-      const previous =
-        getPreviousWeekGoods();
-
-
-      if(previous.length){
-
-        previous.forEach(item => {
-
-          addStartingRow({
-
-            name:item.name,
-
-            qty:
-              Number(
-                item.remainingQty
-              ) || 0
-
-          });
-
-        });
-
-      }else{
-
-        addStartingRow();
-
-      }
-
-
-      $("startingEditorArea")
-        .classList.remove("hidden");
-
-
-      $("startingSavedStatus")
-        .classList.add("hidden");
-
-    }
-
-  }
-
-
-  if(type === "remaining"){
-
-    if(record?.remainingGoodsSaved){
-
-      $("remainingList").innerHTML = "";
-
-
-      record.remainingGoods.forEach(
-        item =>
-          addRemainingRow(item)
-      );
-
-
-      $("remainingEditorArea")
-        .classList.add("hidden");
-
-
-      $("remainingSavedStatus")
-        .classList.remove("hidden");
-
-    }else{
-
-      $("remainingList").innerHTML = "";
-
-
-      if(
-        record?.startingGoods &&
-        record.startingGoods.length
-      ){
-
-        record.startingGoods.forEach(
-          item =>
-            addRemainingRow({
-              name:item.name
-            })
-        );
-
-      }else{
-
-        addRemainingRow();
-
-      }
-
-
-      $("remainingEditorArea")
-        .classList.remove("hidden");
-
-
-      $("remainingSavedStatus")
-        .classList.add("hidden");
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   SAVE STARTING GOODS
-========================================================= */
-
 function saveStartingGoods(){
 
-  const startingGoods =
-    collectStartingGoods();
+  const week =
+    Number(
+      $("goodsWeek").value
+    );
 
+  const date =
+    $("goodsDate")
+      .value;
 
-  if(!startingGoods.length){
+  const items =
+    collectStartingItems();
+
+  if(!items.length){
 
     alert(
-      "Please select at least one good."
+      "Please add at least one starting good."
     );
 
     return;
 
   }
 
+  if(!weeks[`week_${week}`]){
 
-  if(!weeks[selectedWeek]){
-
-    weeks[selectedWeek] = {};
+    weeks[`week_${week}`] = {};
 
   }
 
+  weeks[`week_${week}`].date =
+    date;
 
-  weeks[selectedWeek].date =
-    $("weekDate").value;
+  weeks[`week_${week}`].startingGoods =
+    items;
 
-
-  weeks[selectedWeek].startingGoods =
-    startingGoods;
-
-
-  weeks[selectedWeek].startingGoodsSaved =
+  weeks[`week_${week}`].startingSaved =
     true;
 
+  saveWeeks();
 
-  weeks[selectedWeek].startingGoodsValue =
-    startingGoods.reduce(
-      (total,item) =>
-        total +
-        (
-          Number(item.price) || 0
-        ) *
-        (
-          Number(item.qty) || 0
-        ),
-      0
+  disableStartingItems();
+
+  $("startingStatus")
+    .textContent =
+      "Starting goods have been saved.";
+
+  $("startingStatus")
+    .classList.remove(
+      "hidden"
     );
 
+  $("editStartingBtn")
+    .classList.remove(
+      "hidden"
+    );
 
-  saveLocal();
+  renderSavedWeeklyRecords();
 
-  loadSelectedWeek();
-
-  renderSavedRecords();
-
-  renderBalanceRecords();
-
+  updateBalance();
 
   alert(
-    "Starting Goods saved successfully."
+    "Starting goods saved successfully."
   );
 
 }
 
-
-/* =========================================================
-   SAVE REMAINING GOODS
-========================================================= */
 
 function saveRemainingGoods(){
 
-  const remainingGoods =
-    collectRemainingGoods();
-
-
-  if(!remainingGoods.length){
-
-    alert(
-      "Please select at least one good."
-    );
-
-    return;
-
-  }
-
-
-  if(!weeks[selectedWeek]){
-
-    weeks[selectedWeek] = {};
-
-  }
-
-
-  weeks[selectedWeek].date =
-    $("weekDate").value;
-
-
-  weeks[selectedWeek].remainingGoods =
-    remainingGoods;
-
-
-  weeks[selectedWeek].remainingGoodsSaved =
-    true;
-
-
-  weeks[selectedWeek].remainingGoodsValue =
-    remainingGoods.reduce(
-      (total,item) =>
-        total +
-        (
-          Number(item.price) || 0
-        ) *
-        (
-          Number(item.remainingQty) || 0
-        ),
-      0
-    );
-
-
-  weeks[selectedWeek].soldUsedValue =
-    Math.max(
-      0,
-      (
-        weeks[selectedWeek]
-          .startingGoodsValue || 0
-      ) -
-      (
-        weeks[selectedWeek]
-          .remainingGoodsValue || 0
-      )
-    );
-
-
-  saveLocal();
-
-  loadSelectedWeek();
-
-  renderSavedRecords();
-
-  renderBalanceRecords();
-
-
-  alert(
-    "Remaining Goods saved successfully."
-  );
-
-}
-
-
-/* =========================================================
-   EDIT GOODS
-========================================================= */
-
-function editCurrentStarting(){
-
-  $("startingEditorArea")
-    .classList.remove("hidden");
-
-
-  $("startingSavedStatus")
-    .classList.add("hidden");
-
-}
-
-
-function editCurrentRemaining(){
-
-  $("remainingEditorArea")
-    .classList.remove("hidden");
-
-
-  $("remainingSavedStatus")
-    .classList.add("hidden");
-
-}
-
-
-/* =========================================================
-   BALANCE
-========================================================= */
-
-function getBalance(week){
-
-  const record =
-    weeks[week] || {};
-
-
-  const number =
-    weekNumber(week);
-
-
-  if(number === 1){
-
-    if(
-      record.remainingGoodsSaved
-    ){
-
-      return (
-        record.remainingGoodsValue ||
-        0
-      );
-
-    }
-
-
-    return (
-      record.startingGoodsValue ||
-      0
-    );
-
-  }
-
-
-  const previousWeek =
-    "Week " + (number - 1);
-
-
-  const previousRecord =
-    weeks[previousWeek];
-
-
-  return (
-    previousRecord?.remainingGoodsValue ||
-    0
-  ) +
-  (
-    record.startingGoodsValue ||
-    0
-  );
-
-}
-
-
-/* =========================================================
-   BALANCE RECORDS
-========================================================= */
-
-function renderBalanceRecords(){
-
-  const container =
-    $("balanceRecords");
-
-
-  container.innerHTML = "";
-
-
-  const weekNames =
-    Object.keys(weeks)
-      .sort(
-        (a,b) =>
-          weekNumber(a) -
-          weekNumber(b)
-      );
-
-
-  if(!weekNames.length){
-
-    container.innerHTML =
-      "<div class='empty'>No Balance Records saved yet.</div>";
-
-    return;
-
-  }
-
-
-  weekNames.forEach(week => {
-
-    const record =
-      weeks[week];
-
-
-    const box =
-      document.createElement("div");
-
-
-    box.className =
-      "balance-record";
-
-
-    box.innerHTML = `
-
-      <div class="balance-left">
-
-        ${esc(week)}
-
-        <small>
-          ${esc(record.date || "No date")}
-        </small>
-
-      </div>
-
-      <div class="balance-amount">
-        ${money(getBalance(week))}
-      </div>
-
-    `;
-
-
-    box.onclick = () => {
-
-      showTab(
-        "goods",
-        document.querySelectorAll(".tab")[2]
-      );
-
-
-      const details =
-        document.querySelectorAll(
-          ".record-details"
-        );
-
-
-      details.forEach(
-        detail =>
-          detail.classList.remove("open")
-      );
-
-    };
-
-
-    container.appendChild(box);
-
-  });
-
-}
-
-
-/* =========================================================
-   SAVED WEEKLY RECORDS
-========================================================= */
-
-function renderSavedRecords(){
-
-  const container =
-    $("savedRecords");
-
-
-  container.innerHTML = "";
-
-
-  const weekNames =
-    Object.keys(weeks)
-      .sort(
-        (a,b) =>
-          weekNumber(a) -
-          weekNumber(b)
-      );
-
-
-  if(!weekNames.length){
-
-    container.innerHTML =
-      "<div class='empty'>No Weekly Records saved yet.</div>";
-
-    return;
-
-  }
-
-
-  weekNames.forEach(week => {
-
-    const record =
-      weeks[week];
-
-
-    const wrapper =
-      document.createElement("div");
-
-
-    const header =
-      document.createElement("div");
-
-
-    header.className =
-      "saved-record";
-
-
-    header.innerHTML = `
-
-      <div>
-
-        ${esc(week)}
-
-        <br>
-
-        <span>
-          ${esc(record.date || "No date")}
-        </span>
-
-      </div>
-
-      <div>⌄</div>
-
-    `;
-
-
-    const details =
-      document.createElement("div");
-
-
-    details.className =
-      "record-details";
-
-
-    let html = "";
-
-
-    if(record.startingGoodsSaved){
-
-      html += `
-
-        <h3 style="font-size:15px">
-          Starting Goods
-        </h3>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <tr>
-              <th>Good</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Value</th>
-            </tr>
-
-            ${
-              record.startingGoods
-                .map(item => `
-
-                  <tr>
-
-                    <td>
-                      ${esc(item.name)}
-                    </td>
-
-                    <td class="money">
-                      ${money(item.price)}
-                    </td>
-
-                    <td>
-                      ${item.qty}
-                    </td>
-
-                    <td class="money">
-                      ${
-                        money(
-                          item.price *
-                          item.qty
-                        )
-                      }
-                    </td>
-
-                  </tr>
-
-                `)
-                .join("")
-            }
-
-          </table>
-
-        </div>
-
-        <div class="table-total">
-          Total:
-          ${money(record.startingGoodsValue)}
-        </div>
-
-      `;
-
-    }
-
-
-    if(record.remainingGoodsSaved){
-
-      html += `
-
-        <h3 style="font-size:15px">
-          Remaining Goods
-        </h3>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <tr>
-              <th>Good</th>
-              <th>Price</th>
-              <th>Starting Qty</th>
-              <th>Remaining Qty</th>
-              <th>Value</th>
-            </tr>
-
-            ${
-              record.remainingGoods
-                .map(item => `
-
-                  <tr>
-
-                    <td>
-                      ${esc(item.name)}
-                    </td>
-
-                    <td class="money">
-                      ${money(item.price)}
-                    </td>
-
-                    <td>
-                      ${item.startingQty}
-                    </td>
-
-                    <td>
-                      ${item.remainingQty}
-                    </td>
-
-                    <td class="money">
-                      ${
-                        money(
-                          item.price *
-                          item.remainingQty
-                        )
-                      }
-                    </td>
-
-                  </tr>
-
-                `)
-                .join("")
-            }
-
-          </table>
-
-        </div>
-
-        <div class="table-total">
-          Total:
-          ${money(record.remainingGoodsValue)}
-        </div>
-
-        <div class="sold">
-          Sold:
-          ${money(record.soldUsedValue || 0)}
-        </div>
-
-      `;
-
-    }
-
-
-    html += `
-
-      <div class="balance-box">
-
-        <span>
-          Balance
-        </span>
-
-        <span>
-          ${money(getBalance(week))}
-        </span>
-
-      </div>
-
-    `;
-
-
-    details.innerHTML =
-      html;
-
-
-    header.onclick = () => {
-
-      details.classList.toggle(
-        "open"
-      );
-
-    };
-
-
-    wrapper.appendChild(header);
-
-    wrapper.appendChild(details);
-
-    container.appendChild(wrapper);
-
-  });
-
-}
-
-
-/* =========================================================
-   SUPABASE GOODS
-========================================================= */
-
-async function loadGoods(){
-
-  const result =
-    await db
-      .from("goods")
-      .select("*")
-      .order("name",{
-        ascending:true
-      });
-
-
-  if(result.error){
-
-    console.error(
-      "Goods loading error:",
-      result.error
-    );
-
-
-    alert(
-      "Could not load approved goods:\n\n" +
-      result.error.message
-    );
-
-
-    goods = [];
-
-    return;
-
-  }
-
-
-  goods =
-    (result.data || [])
-      .map(item => ({
-
-        id:item.id,
-
-        name:item.name,
-
-        price:
-          Number(item.price) || 0
-
-      }));
-
-}
-
-
-/* =========================================================
-   ADMIN GOODS
-========================================================= */
-
-function renderAdminGoods(){
-
-  const container =
-    $("adminGoods");
-
-
-  container.innerHTML = "";
-
-
-  if(!goods.length){
-
-    container.innerHTML =
-      "<div class='empty'>No goods saved.</div>";
-
-    return;
-
-  }
-
-
-  goods.forEach(
-    (good,index) => {
-
-      const row =
-        document.createElement("div");
-
-
-      row.className =
-        "good-admin";
-
-
-      row.innerHTML = `
-
-        <div>
-
-          <strong>
-            ${esc(good.name)}
-          </strong>
-
-          <small>
-            ${money(good.price)}
-          </small>
-
-        </div>
-
-        <button
-          class="small-btn delete-btn"
-          style="flex:0 0 75px"
-          onclick="deleteGood(${index})"
-        >
-          DELETE
-        </button>
-
-      `;
-
-
-      container.appendChild(row);
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   ADD GOOD
-========================================================= */
-
-async function addGood(){
-
-  if(
-    !isAdminUser
-  ){
-
-    alert(
-      "Only the admin can add goods."
-    );
-
-    return;
-
-  }
-
-
-  const name =
-    $("newGoodName")
-      .value
-      .trim();
-
-
-  const price =
+  const week =
     Number(
-      $("newGoodPrice").value
+      $("goodsWeek").value
     );
 
-
-  if(!name){
-
-    alert(
-      "Please enter the good name."
-    );
-
-    return;
-
-  }
-
-
-  if(price <= 0){
-
-    alert(
-      "Please enter a valid price."
-    );
-
-    return;
-
-  }
-
-
-  const duplicate =
-    goods.some(
-      good =>
-        good.name.toLowerCase() ===
-        name.toLowerCase()
-    );
-
-
-  if(duplicate){
-
-    alert(
-      "This good already exists."
-    );
-
-    return;
-
-  }
-
-
-  const result =
-    await db
-      .from("goods")
-      .insert({
-
-        name:name,
-
-        price:price
-
-      });
-
-
-  if(result.error){
-
-    console.error(
-      "Add good error:",
-      result.error
-    );
-
-
-    alert(
-      "Could not add good:\n\n" +
-      result.error.message
-    );
-
-    return;
-
-  }
-
-
-  $("newGoodName").value = "";
-
-  $("newGoodPrice").value = "";
-
-
-  await loadGoods();
-
-  renderAdminGoods();
-
-
-  alert(
-    "Good and price added successfully."
-  );
-
-}
-
-
-/* =========================================================
-   DELETE GOOD
-========================================================= */
-
-async function deleteGood(index){
-
-  if(!isAdminUser){
-
-    alert(
-      "Only the admin can delete goods."
-    );
-
-    return;
-
-  }
-
-
-  const good =
-    goods[index];
-
-
-  if(!good){
-
-    return;
-
-  }
-
-
-  if(
-    !confirm(
-      "Delete " +
-      good.name +
-      "?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  const result =
-    await db
-      .from("goods")
-      .delete()
-      .eq(
-        "id",
-        good.id
-      );
-
-
-  if(result.error){
-
-    console.error(
-      "Delete good error:",
-      result.error
-    );
-
-
-    alert(
-      "Could not delete good:\n\n" +
-      result.error.message
-    );
-
-    return;
-
-  }
-
-
-  await loadGoods();
-
-  renderAdminGoods();
-
-
-  alert(
-    "Good deleted successfully."
-  );
-
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-async function loginApp(){
-
-  const email =
-    $("loginEmail")
-      .value
-      .trim();
-
-
-  const password =
-    $("loginPassword")
+  const date =
+    $("goodsDate")
       .value;
 
+  const items =
+    collectRemainingItems();
 
-  const message =
-    $("authMessage");
+  if(!items.length){
 
-
-  message.textContent =
-    "Signing in...";
-
-
-  const result =
-    await db.auth.signInWithPassword({
-
-      email:email,
-
-      password:password
-
-    });
-
-
-  if(result.error){
-
-    message.textContent =
-      result.error.message;
+    alert(
+      "Please add at least one remaining good."
+    );
 
     return;
 
   }
 
+  if(!weeks[`week_${week}`]){
 
-  message.textContent =
-    "Login successful.";
+    weeks[`week_${week}`] = {};
 
+  }
 
-  setTimeout(
-    () => location.reload(),
-    300
+  weeks[`week_${week}`].date =
+    date;
+
+  weeks[`week_${week}`].remainingGoods =
+    items;
+
+  weeks[`week_${week}`].remainingSaved =
+    true;
+
+  saveWeeks();
+
+  disableRemainingItems();
+
+  $("remainingStatus")
+    .textContent =
+      "Remaining goods have been saved.";
+
+  $("remainingStatus")
+    .classList.remove(
+      "hidden"
+    );
+
+  $("editRemainingBtn")
+    .classList.remove(
+      "hidden"
+    );
+
+  renderSavedWeeklyRecords();
+
+  updateBalance();
+
+  alert(
+    "Remaining goods saved successfully."
   );
 
 }
 
 
-/* =========================================================
-   LOGOUT
-========================================================= */
+function editStartingGoods(){
 
-async function logoutApp(){
+  enableStartingItems();
 
-  const result =
-    await db.auth.signOut();
-
-
-  if(result.error){
-
-    alert(
-      "Could not log out:\n\n" +
-      result.error.message
+  $("startingStatus")
+    .classList.add(
+      "hidden"
     );
 
-    return;
-
-  }
-
-
-  location.reload();
+  $("editStartingBtn")
+    .classList.add(
+      "hidden"
+    );
 
 }
 
 
-/* =========================================================
-   START APPLICATION
-========================================================= */
+function editRemainingGoods(){
 
-async function startApp(){
+  enableRemainingItems();
 
-  localLoad();
-
-  buildCedi();
-
-  createWeeks();
-
-
-  const sessionResult =
-    await db.auth.getSession();
-
-
-  if(sessionResult.error){
-
-    console.error(
-      sessionResult.error
+  $("remainingStatus")
+    .classList.add(
+      "hidden"
     );
 
-  }
-
-
-  session =
-    sessionResult.data.session;
-
-
-  if(!session){
-
-    $("loginOverlay")
-      .classList.remove("hidden");
-
-    return;
-
-  }
-
-
-  const profileResult =
-    await db
-      .from("profiles")
-      .select(
-        "id,email,full_name,role,status"
-      )
-      .eq(
-        "id",
-        session.user.id
-      )
-      .maybeSingle();
-
-
-  if(profileResult.error){
-
-    console.error(
-      profileResult.error
+  $("editRemainingBtn")
+    .classList.add(
+      "hidden"
     );
 
+}
 
-    alert(
-      "Could not load your profile:\n\n" +
-      profileResult.error.message
+
+function disableStartingItems(){
+
+  document
+    .querySelectorAll(
+      "#startingItems select, #startingItems input, #startingItems button"
+    )
+    .forEach(
+      element => {
+
+        element.disabled =
+          true;
+
+      }
     );
 
-    return;
-
-  }
+}
 
 
-  userProfile =
-    profileResult.data;
+function enableStartingItems(){
 
+  document
+    .querySelectorAll(
+      "#startingItems select, #startingItems input, #startingItems button"
+    )
+    .forEach(
+      element => {
+
+        element.disabled =
+          false;
+
+      }
+    );
+
+}
+
+
+function disableRemainingItems(){
+
+  document
+    .querySelectorAll(
+      "#remainingItems select, #remainingItems input, #remainingItems button"
+    )
+    .forEach(
+      element => {
+
+        element.disabled =
+          true;
+
+      }
+    );
+
+}
+
+
+function enableRemainingItems(){
+
+  document
+    .querySelectorAll(
+      "#remainingItems select, #remainingItems input, #remainingItems button"
+    )
+    .forEach(
+      element => {
+
+        element.disabled =
+          false;
+
+      }
+    );
+
+}
+
+
+function calculateItemsValue(items){
+
+  return items.reduce(
+    (
+      total,
+      item
+    ) => {
+
+      const qty =
+        Number(
+          item.qty ??
+          item.remainingQty ??
+          0
+        ) || 0;
+
+      const price =
+        Number(
+          item.price
+        ) || 0;
+
+      return (
+        total +
+        qty * price
+      );
+
+    },
+    0
+  );
+
+}
+
+
+function updateBalance(){
+
+  const week =
+    Number(
+      $("goodsWeek").value
+    );
+
+  const current =
+    weeks[
+      `week_${week}`
+    ] || {};
+
+  let startingValue = 0;
+
+  let remainingValue = 0;
 
   if(
-    !userProfile
+    current.startingSaved &&
+    current.startingGoods
   ){
 
-    alert(
-      "Your account does not have a profile in the profiles table."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    userProfile.status !==
-    "active"
-  ){
-
-    alert(
-      "Your account is not active."
-    );
-
-    return;
-
-  }
-
-
-  isAdminUser =
-    userProfile.role ===
-    "admin";
-
-
-  if(isAdminUser){
-
-    $("adminTab")
-      .classList.remove("hidden");
+    startingValue =
+      calculateItemsValue(
+        current.startingGoods
+      );
 
   }else{
 
-    $("adminTab")
-      .classList.add("hidden");
+    startingValue =
+      calculateItemsValue(
+        collectStartingItems()
+      );
 
   }
 
+  if(
+    current.remainingSaved &&
+    current.remainingGoods
+  ){
 
-  await loadGoods();
+    remainingValue =
+      calculateItemsValue(
+        current.remainingGoods
+      );
 
+  }else{
 
-  $("loginOverlay")
-    .classList.add("hidden");
+    remainingValue =
+      calculateItemsValue(
+        collectRemainingItems()
+      );
 
+  }
 
-  $("weekSelect").value =
-    "Week 1";
+  const sold =
+    Math.max(
+      0,
+      startingValue -
+      remainingValue
+    );
 
+  $("balanceStarting")
+    .textContent =
+      money(startingValue);
 
-  $("revenueWeek").value =
-    "Week 1";
+  $("balanceRemaining")
+    .textContent =
+      money(remainingValue);
 
+  $("balanceSold")
+    .textContent =
+      money(sold);
 
-  selectedWeek =
-    "Week 1";
-
-
-  renderRevenueRecords();
-
-  renderBalanceRecords();
-
-  renderSavedRecords();
-
-  loadSelectedWeek();
+  $("balanceValue")
+    .textContent =
+      money(remainingValue);
 
 }
 
 
-/* =========================================================
-   AUTH STATE
-========================================================= */
+function renderSavedWeeklyRecords(){
 
-db.auth.onAuthStateChange(
-  (event,newSession) => {
+  const box =
+    $("savedWeeklyRecords");
+
+  box.innerHTML = "";
+
+  const keys =
+    Object.keys(
+      weeks
+    );
+
+  if(!keys.length){
+
+    box.innerHTML =
+      `<div class="empty">No weekly records saved yet.</div>`;
+
+    return;
+
+  }
+
+  keys
+    .sort(
+      (a,b) => {
+
+        const wa =
+          Number(
+            a.replace(
+              "week_",
+              ""
+            )
+          );
+
+        const wb =
+          Number(
+            b.replace(
+              "week_",
+              ""
+            )
+          );
+
+        return wa - wb;
+
+      }
+    )
+    .forEach(
+      key => {
+
+        const week =
+          weeks[key];
+
+        const startingValue =
+          calculateItemsValue(
+            week.startingGoods || []
+          );
+
+        const remainingValue =
+          calculateItemsValue(
+            week.remainingGoods || []
+          );
+
+        const sold =
+          Math.max(
+            0,
+            startingValue -
+            remainingValue
+          );
+
+        const row =
+          document.createElement(
+            "div"
+          );
+
+        row.className =
+          "week-row";
+
+        row.innerHTML = `
+          <div class="summary-row">
+            <span>Week</span>
+            <strong>
+              ${key.replace("week_","")}
+            </strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Date</span>
+            <strong>
+              ${escapeHtml(week.date || "")}
+            </strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Starting Goods</span>
+            <strong>${money(startingValue)}</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Remaining Goods</span>
+            <strong>${money(remainingValue)}</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Sold / Used</span>
+            <strong>${money(sold)}</strong>
+          </div>
+        `;
+
+        box.appendChild(
+          row
+        );
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   UTILITIES
+===================================================== */
+
+function formatDateInput(date){
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
+
+  return (
+    year +
+    "-" +
+    month +
+    "-" +
+    day
+  );
+
+}
+
+
+function escapeHtml(value){
+
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/* =====================================================
+   START APP
+===================================================== */
+
+(async function(){
+
+  const result =
+    await db.auth.getSession();
+
+  if(result.data.session){
 
     session =
-      newSession;
+      result.data.session;
 
+    await initializeApp();
+
+  }else{
+
+    $("loginScreen")
+      .classList.remove(
+        "hidden"
+      );
+
+  }
+
+})();
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+db.auth.onAuthStateChange(
+  async (
+    event,
+    currentSession
+  ) => {
 
     if(
-      event === "SIGNED_OUT"
+      event ===
+      "SIGNED_IN"
     ){
 
-      location.reload();
+      session =
+        currentSession;
+
+      await initializeApp();
+
+    }
+
+    if(
+      event ===
+      "SIGNED_OUT"
+    ){
+
+      session = null;
+
+      userProfile = null;
+
+      isAdminUser = false;
+
+      $("loginScreen")
+        .classList.remove(
+          "hidden"
+        );
 
     }
 
   }
-);
-
-
-/* =========================================================
-   START
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  startApp
 );
 
 </script>
