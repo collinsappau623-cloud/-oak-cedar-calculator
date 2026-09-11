@@ -3,762 +3,373 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#24452d">
 
 <title>Oak & Cedar Business Calculator</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
 }
 
 body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
     background:linear-gradient(135deg,#eef2ee,#dfe6df);
     color:#24452d;
-    min-height:100vh;
 }
 
-button,
-input,
-select{
+button,input,select{
     font:inherit;
 }
 
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:18px;
+}
+
+.logo{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#24452d;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:10px auto;
+    font-size:22px;
+    font-weight:bold;
+    border:5px solid #6b8e58;
+}
+
+.brand{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.brand h1{
+    margin:5px 0;
+    font-size:25px;
+}
+
+.brand p{
+    margin:0;
+    color:#527a58;
+}
+
+.card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:0 5px 18px rgba(36,69,45,.12);
+}
+
+h2,h3{
+    margin-top:0;
+}
+
+input,select{
+    width:100%;
+    padding:13px;
+    border:1px solid #b9c7ba;
+    border-radius:10px;
+    margin:7px 0;
+    background:white;
+}
+
 button{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:10px;
+    background:#527a58;
+    color:white;
+    font-weight:bold;
     cursor:pointer;
+    margin-top:8px;
+}
+
+button:hover{
+    background:#24452d;
+}
+
+.secondary{
+    background:#dfe6df;
+    color:#24452d;
+}
+
+.danger{
+    background:#9b3d3d;
 }
 
 .hidden{
     display:none !important;
 }
 
-/* LOGIN */
-
-#loginScreen{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.login-box{
-    width:100%;
-    max-width:430px;
-    background:white;
-    border-radius:22px;
-    padding:30px 24px;
-    box-shadow:0 12px 40px rgba(36,69,45,.15);
-}
-
-.logo{
-    width:72px;
-    height:72px;
-    border-radius:20px;
-    background:#24452d;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:0 auto 15px;
-    font-size:26px;
-    font-weight:800;
-    letter-spacing:-2px;
-}
-
-.login-title{
+.auth-toggle{
     text-align:center;
-    font-size:25px;
-    font-weight:800;
-    color:#24452d;
-}
-
-.login-subtitle{
-    text-align:center;
-    color:#6b756d;
-    margin:7px 0 25px;
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-.form-group label{
-    display:block;
-    font-size:14px;
-    font-weight:700;
-    margin-bottom:7px;
-    color:#24452d;
-}
-
-input,
-select{
-    width:100%;
-    border:1px solid #cdd8cf;
-    background:#fbfcfb;
-    border-radius:11px;
-    padding:13px 14px;
-    outline:none;
-    color:#1d2c21;
-}
-
-input:focus,
-select:focus{
-    border-color:#6b8e58;
-    box-shadow:0 0 0 3px rgba(107,142,88,.12);
-}
-
-.primary-btn{
-    width:100%;
-    border:0;
-    border-radius:11px;
-    padding:14px;
-    background:#24452d;
-    color:white;
-    font-weight:800;
-}
-
-.primary-btn:hover{
-    background:#315b3c;
-}
-
-.secondary-btn{
-    border:1px solid #6b8e58;
-    background:white;
-    color:#24452d;
-    border-radius:10px;
-    padding:11px 15px;
-    font-weight:700;
-}
-
-.danger-btn{
-    border:0;
-    background:#8b3333;
-    color:white;
-    border-radius:10px;
-    padding:10px 14px;
-    font-weight:700;
-}
-
-.login-switch{
-    text-align:center;
-    margin-top:18px;
-    color:#667168;
-    font-size:14px;
-}
-
-.login-switch button{
-    border:0;
-    background:none;
+    margin-top:15px;
     color:#527a58;
-    font-weight:800;
+    cursor:pointer;
 }
 
 .message{
-    margin-top:14px;
     padding:11px;
-    border-radius:10px;
-    font-size:13px;
-    line-height:1.5;
+    border-radius:9px;
+    margin-top:10px;
     display:none;
 }
 
-.message.error{
-    display:block;
-    background:#fbeaea;
-    color:#8b3333;
-}
-
-.message.success{
-    display:block;
-    background:#e9f4e9;
-    color:#315b3c;
-}
-
-/* APP */
-
-#app{
-    min-height:100vh;
-}
-
-.header{
-    background:#24452d;
-    color:white;
-    padding:20px;
-    box-shadow:0 4px 18px rgba(0,0,0,.12);
-}
-
-.header-inner{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.brand-logo{
-    width:50px;
-    height:50px;
-    border-radius:14px;
-    background:white;
+.success{
+    background:#e0eee2;
     color:#24452d;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:18px;
-    font-weight:900;
 }
 
-.brand-title{
-    font-size:21px;
-    font-weight:800;
+.error{
+    background:#f5dddd;
+    color:#8a2222;
 }
-
-.brand-subtitle{
-    font-size:12px;
-    opacity:.8;
-    margin-top:3px;
-}
-
-.logout-btn{
-    border:1px solid rgba(255,255,255,.5);
-    color:white;
-    background:transparent;
-    border-radius:9px;
-    padding:9px 13px;
-    font-weight:700;
-}
-
-.user-bar{
-    max-width:1100px;
-    margin:15px auto 0;
-    padding:0 15px;
-    color:#4f5d53;
-    font-size:13px;
-}
-
-.main{
-    max-width:1100px;
-    margin:auto;
-    padding:15px;
-}
-
-/* TABS */
 
 .tabs{
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding-bottom:8px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
     margin-bottom:18px;
 }
 
-.tab-btn{
-    flex:0 0 auto;
-    border:1px solid #c9d5cb;
-    background:white;
-    color:#49604e;
-    border-radius:10px;
-    padding:11px 18px;
-    font-weight:800;
+.tab{
+    background:#dfe6df;
+    color:#24452d;
+    margin:0;
 }
 
-.tab-btn.active{
+.tab.active{
     background:#527a58;
     color:white;
-    border-color:#527a58;
 }
-
-/* CARDS */
-
-.card{
-    background:white;
-    border-radius:17px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:0 5px 20px rgba(36,69,45,.08);
-}
-
-.card-title{
-    color:#24452d;
-    font-size:19px;
-    font-weight:800;
-    margin-bottom:15px;
-}
-
-.card-subtitle{
-    color:#6a756d;
-    font-size:13px;
-    margin-top:-8px;
-    margin-bottom:16px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:14px;
-}
-
-.grid-3{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:14px;
-}
-
-@media(max-width:650px){
-    .grid,
-    .grid-3{
-        grid-template-columns:1fr;
-    }
-
-    .header-inner{
-        align-items:flex-start;
-    }
-
-    .brand-title{
-        font-size:18px;
-    }
-
-    .logout-btn{
-        font-size:12px;
-    }
-}
-
-.field label{
-    display:block;
-    font-size:13px;
-    font-weight:800;
-    margin-bottom:6px;
-}
-
-.full{
-    grid-column:1/-1;
-}
-
-/* SUMMARY */
 
 .summary{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-}
-
-@media(max-width:650px){
-    .summary{
-        grid-template-columns:1fr;
-    }
-}
-
-.summary-box{
-    border:1px solid #d6dfd7;
+    background:#eef2ee;
     border-radius:12px;
-    padding:14px;
-    background:#f7faf7;
+    padding:15px;
+    margin-top:15px;
 }
 
-.summary-label{
-    color:#6b756d;
-    font-size:12px;
-    margin-bottom:5px;
-}
-
-.summary-value{
-    font-size:20px;
-    font-weight:900;
-    color:#24452d;
-}
-
-.profit{
-    background:#24452d;
-    color:white;
-    border-radius:14px;
-    padding:18px;
-}
-
-.profit .summary-label{
-    color:#dce8de;
-}
-
-.profit .summary-value{
-    color:white;
-    font-size:27px;
-}
-
-/* ACTIONS */
-
-.actions{
+.summary-row{
     display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:16px;
+    justify-content:space-between;
+    gap:15px;
+    padding:9px 0;
+    border-bottom:1px solid #d2dbd3;
 }
 
-.actions button{
-    flex:1;
-    min-width:130px;
+.summary-row:last-child{
+    border-bottom:none;
 }
 
-/* CEDI */
+.total{
+    font-size:20px;
+    font-weight:bold;
+}
 
 .cedi-row{
     display:grid;
-    grid-template-columns:90px 1fr 130px;
-    gap:10px;
-    align-items:center;
-    padding:10px 0;
-    border-bottom:1px solid #edf1ed;
-}
-
-.cedi-row:last-child{
-    border-bottom:0;
-}
-
-.denomination{
-    font-weight:900;
-    color:#24452d;
-}
-
-.line-total{
-    text-align:right;
-    font-weight:800;
-    color:#111;
-}
-
-@media(max-width:550px){
-    .cedi-row{
-        grid-template-columns:70px 1fr 100px;
-    }
-}
-
-.cedi-total{
-    margin-top:15px;
-    background:#24452d;
-    color:white;
-    padding:18px;
-    border-radius:14px;
-}
-
-.cedi-total-title{
-    font-size:12px;
-    opacity:.8;
-}
-
-.cedi-total-value{
-    font-size:28px;
-    font-weight:900;
-    margin-top:5px;
-}
-
-.words{
-    margin-top:10px;
-    padding:13px;
-    background:#f1f5f1;
-    border-radius:10px;
-    color:#24452d;
-    font-size:14px;
-    line-height:1.5;
-}
-
-/* GOODS */
-
-.goods-item{
-    border:1px solid #d6dfd7;
-    border-radius:13px;
-    padding:14px;
-    margin-bottom:10px;
-    background:#fafcfa;
-}
-
-.goods-item-top{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    align-items:center;
-}
-
-.goods-name{
-    font-weight:800;
-    color:#24452d;
-}
-
-.goods-price{
-    font-weight:900;
-    color:#111;
-}
-
-.goods-actions{
-    display:flex;
+    grid-template-columns:80px 1fr 1fr;
     gap:8px;
-    margin-top:10px;
-}
-
-.small-btn{
-    border:1px solid #c7d4c9;
-    background:white;
-    border-radius:8px;
-    padding:7px 10px;
-    font-size:12px;
-    font-weight:700;
-}
-
-.small-btn.delete{
-    color:#8b3333;
-}
-
-.record{
-    border:1px solid #d6dfd7;
-    border-radius:12px;
-    padding:14px;
-    margin-bottom:10px;
-    background:#fafcfa;
-}
-
-.record-header{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
+    align-items:center;
     margin-bottom:8px;
 }
 
-.record-title{
-    font-weight:900;
+.cedi-row input{
+    margin:0;
 }
 
-.record-date{
-    font-size:12px;
-    color:#6b756d;
+.denom{
+    font-weight:bold;
 }
 
-.empty{
-    text-align:center;
-    padding:25px 10px;
-    color:#7a857d;
-    font-size:14px;
+.good-card{
+    border:1px solid #d2dbd3;
+    border-radius:10px;
+    padding:12px;
+    margin:8px 0;
+    background:#fafcf9;
 }
 
-/* ADMIN */
-
-.admin-section{
-    margin-bottom:25px;
+.good-line{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
-.admin-badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:7px;
-    background:#e8f1e8;
-    color:#315b3c;
-    font-size:11px;
-    font-weight:900;
+.good-line button{
+    width:auto;
+    padding:8px 12px;
+    margin:0;
 }
 
-.user-card{
-    border:1px solid #d6dfd7;
-    border-radius:13px;
-    padding:14px;
-    margin-bottom:10px;
+.record{
+    border:1px solid #d2dbd3;
+    border-radius:10px;
+    padding:12px;
+    margin:8px 0;
 }
 
-.user-email{
-    font-weight:800;
-    word-break:break-word;
+.small{
+    font-size:13px;
+    color:#527a58;
 }
 
-.user-meta{
-    font-size:12px;
-    color:#6b756d;
-    margin-top:5px;
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
 }
 
-.status-active{
-    color:#315b3c;
-    font-weight:800;
+th,td{
+    border:1px solid #d2dbd3;
+    padding:8px;
+    text-align:left;
+    font-size:13px;
 }
 
-.status-pending{
-    color:#9a6b19;
-    font-weight:800;
+th{
+    background:#eef2ee;
 }
 
-.status-inactive{
-    color:#8b3333;
-    font-weight:800;
+@media(max-width:600px){
+    .tabs{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .cedi-row{
+        grid-template-columns:65px 1fr 1fr;
+    }
+
+    .summary-row{
+        font-size:14px;
+    }
 }
-
-/* LOADING */
-
-.loading{
-    text-align:center;
-    padding:25px;
-    color:#6b756d;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<div class="container">
 
-<div id="loginScreen">
-
-    <div class="login-box">
-
+    <!-- BRAND -->
+    <div class="brand">
         <div class="logo">O&C</div>
+        <h1>Oak & Cedar</h1>
+        <p>Business Calculator</p>
+    </div>
 
-        <div class="login-title">Oak & Cedar</div>
+    <!-- AUTH -->
+    <section id="authSection" class="card">
 
-        <div class="login-subtitle">
-            Business Calculator
-        </div>
+        <h2 id="authTitle">Login</h2>
 
-        <div id="fullNameGroup" class="form-group hidden">
-            <label>Full Name</label>
-            <input
-                id="fullName"
-                type="text"
-                placeholder="Enter your full name"
-            >
-        </div>
-
-        <div class="form-group">
-            <label>Email</label>
-            <input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                autocomplete="email"
-            >
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                autocomplete="current-password"
-            >
-        </div>
-
-        <button
-            id="authButton"
-            class="primary-btn"
-            onclick="handleAuth()"
+        <input
+            id="authEmail"
+            type="email"
+            placeholder="Email address"
         >
+
+        <input
+            id="authPassword"
+            type="password"
+            placeholder="Password"
+        >
+
+        <input
+            id="authName"
+            type="text"
+            placeholder="Full name"
+            class="hidden"
+        >
+
+        <button onclick="handleAuth()" id="authButton">
             LOGIN
         </button>
 
-        <div id="loginMessage" class="message"></div>
+        <div
+            id="authMessage"
+            class="message"
+        ></div>
 
-        <div class="login-switch">
-            <span id="switchText">Don't have an account?</span>
-
-            <button
-                id="switchButton"
-                onclick="toggleAuthMode()"
-            >
-                Create Account
-            </button>
+        <div
+            class="auth-toggle"
+            onclick="toggleAuthMode()"
+            id="authToggle"
+        >
+            Don't have an account? Create Account
         </div>
 
-    </div>
-
-</div>
+    </section>
 
 
-<!-- APP -->
+    <!-- APPLICATION -->
+    <section id="appSection" class="hidden">
 
-<div id="app" class="hidden">
+        <div class="card">
 
-    <header class="header">
-
-        <div class="header-inner">
-
-            <div class="brand">
-
-                <div class="brand-logo">
-                    O&C
-                </div>
-
+            <div class="good-line">
                 <div>
-                    <div class="brand-title">
-                        Oak & Cedar
-                    </div>
+                    <strong id="welcomeUser">
+                        Welcome
+                    </strong>
 
-                    <div class="brand-subtitle">
-                        Business Calculator
-                    </div>
+                    <div
+                        id="accountRole"
+                        class="small"
+                    ></div>
                 </div>
 
+                <button
+                    onclick="logout()"
+                    style="width:auto;background:#9b3d3d;"
+                >
+                    LOGOUT
+                </button>
             </div>
 
-            <button
-                class="logout-btn"
-                onclick="logout()"
-            >
-                LOGOUT
-            </button>
-
         </div>
 
-    </header>
-
-
-    <div class="user-bar">
-        Logged in as:
-        <strong id="currentUserName"></strong>
-    </div>
-
-
-    <main class="main">
 
         <!-- TABS -->
-
         <div class="tabs">
 
             <button
-                class="tab-btn active"
-                data-tab="revenue"
-                onclick="showTab('revenue')"
+                class="tab active"
+                onclick="showTab('revenue',this)"
             >
                 Revenue
             </button>
 
             <button
-                class="tab-btn"
-                data-tab="cedi"
-                onclick="showTab('cedi')"
+                class="tab"
+                onclick="showTab('cedi',this)"
             >
                 Cedi
             </button>
 
             <button
-                class="tab-btn"
-                data-tab="goods"
-                onclick="showTab('goods')"
+                class="tab"
+                onclick="showTab('goods',this)"
             >
                 Goods
             </button>
 
             <button
-                id="adminTabButton"
-                class="tab-btn hidden"
-                data-tab="admin"
-                onclick="showTab('admin')"
+                id="adminTab"
+                class="tab hidden"
+                onclick="showTab('admin',this)"
             >
                 Admin
             </button>
@@ -767,672 +378,272 @@ select:focus{
 
 
         <!-- REVENUE -->
+        <section id="revenueTab" class="card">
 
-        <section id="revenueTab">
+            <h2>Revenue Calculator</h2>
 
-            <div class="card">
+            <input
+                id="bank1"
+                type="number"
+                min="0"
+                placeholder="Bank 1"
+            >
 
-                <div class="card-title">
-                    Revenue Calculator
+            <input
+                id="bank2"
+                type="number"
+                min="0"
+                placeholder="Bank 2"
+            >
+
+            <input
+                id="bank3"
+                type="number"
+                min="0"
+                placeholder="Bank 3"
+            >
+
+            <input
+                id="cash"
+                type="number"
+                min="0"
+                placeholder="Cash at Hand"
+            >
+
+            <input
+                id="expenses"
+                type="number"
+                min="0"
+                placeholder="Expenses"
+            >
+
+            <input
+                id="totalGoods"
+                type="number"
+                min="0"
+                placeholder="Total Goods"
+            >
+
+            <input
+                id="remainingGoods"
+                type="number"
+                min="0"
+                placeholder="Remaining Goods"
+            >
+
+            <button onclick="calculateRevenue()">
+                CALCULATE
+            </button>
+
+            <div id="revenueSummary" class="summary hidden">
+
+                <div class="summary-row">
+                    <span>Total Banks</span>
+                    <strong id="rBanks">GH₵0.00</strong>
                 </div>
 
-                <div class="card-subtitle">
-                    Enter your business figures below.
+                <div class="summary-row">
+                    <span>Total Bank & Cash</span>
+                    <strong id="rCash">GH₵0.00</strong>
                 </div>
 
-                <div class="grid">
+                <div class="summary-row">
+                    <span>Goods After Expenses</span>
+                    <strong id="rGoodsAfter">GH₵0.00</strong>
+                </div>
 
-                    <div class="field">
-                        <label>Bank 1</label>
-                        <input
-                            id="bank1"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            inputmode="decimal"
-                            oninput="calculateRevenue()"
-                        >
-                    </div>
+                <div class="summary-row">
+                    <span>Remaining Goods</span>
+                    <strong id="rRemaining">GH₵0.00</strong>
+                </div>
 
-                    <div class="field">
-                        <label>Bank 2</label>
-                        <input
-                            id="bank2"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            inputmode="decimal"
-                            oninput="calculateRevenue()"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>Bank 3</label>
-                        <input
-                            id="bank3"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            inputmode="decimal"
-                            oninput="calculateRevenue()"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>Cash at Hand</label>
-                        <input
-                            id="cash"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            inputmode="decimal"
-                            oninput="calculateRevenue()"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>Expenses</label>
-                        <input
-                            id="expenses"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            inputmode="decimal"
-                            oninput="calculateRevenue()"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>Total Goods</label>
-                        <input
-                            id="totalGoods"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            inputmode="decimal"
-                            oninput="calculateRevenue()"
-                        >
-                    </div>
-
-                    <div class="field full">
-                        <label>Remaining Goods</label>
-                        <input
-                            id="remainingGoods"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            inputmode="decimal"
-                            oninput="calculateRevenue()"
-                        >
-                    </div>
-
+                <div class="summary-row total">
+                    <span>TOTAL PROFIT</span>
+                    <strong id="rProfit">GH₵0.00</strong>
                 </div>
 
             </div>
 
+            <button
+                onclick="saveRevenue()"
+                class="secondary"
+            >
+                SAVE RECORD
+            </button>
 
-            <div class="card">
+            <button
+                onclick="clearRevenue()"
+                class="secondary"
+            >
+                RESET
+            </button>
 
-                <div class="card-title">
-                    Revenue Summary
-                </div>
-
-                <div class="summary">
-
-                    <div class="summary-box">
-                        <div class="summary-label">
-                            Total Banks
-                        </div>
-
-                        <div
-                            id="totalBanks"
-                            class="summary-value"
-                        >
-                            GH₵0.00
-                        </div>
-                    </div>
-
-
-                    <div class="summary-box">
-                        <div class="summary-label">
-                            Total Bank & Cash
-                        </div>
-
-                        <div
-                            id="totalBankCash"
-                            class="summary-value"
-                        >
-                            GH₵0.00
-                        </div>
-                    </div>
-
-
-                    <div class="summary-box">
-                        <div class="summary-label">
-                            Remaining Goods
-                        </div>
-
-                        <div
-                            id="summaryRemainingGoods"
-                            class="summary-value"
-                        >
-                            GH₵0.00
-                        </div>
-                    </div>
-
-
-                    <div class="summary-box">
-                        <div class="summary-label">
-                            Goods After Expenses
-                        </div>
-
-                        <div
-                            id="goodsAfterExpenses"
-                            class="summary-value"
-                        >
-                            GH₵0.00
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="profit" style="margin-top:12px;">
-
-                    <div class="summary-label">
-                        TOTAL PROFIT
-                    </div>
-
-                    <div
-                        id="totalProfit"
-                        class="summary-value"
-                    >
-                        GH₵0.00
-                    </div>
-
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        class="primary-btn"
-                        onclick="saveRevenue()"
-                    >
-                        SAVE RECORD
-                    </button>
-
-                    <button
-                        class="secondary-btn"
-                        onclick="resetRevenue()"
-                    >
-                        RESET
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-title">
-                    Saved Revenue Records
-                </div>
-
-                <div id="revenueRecords">
-                    <div class="loading">
-                        Loading records...
-                    </div>
-                </div>
-
-            </div>
+            <div id="revenueRecords"></div>
 
         </section>
 
 
         <!-- CEDI -->
+        <section id="cediTab" class="card hidden">
 
-        <section id="cediTab" class="hidden">
+            <h2>Oak & Cedar Cedi Calculator</h2>
 
-            <div class="card">
+            <div id="cediRows"></div>
 
-                <div class="card-title">
-                    Ghana Cedi Calculator
+            <button onclick="calculateCedi()">
+                CALCULATE
+            </button>
+
+            <button
+                onclick="clearCedi()"
+                class="secondary"
+            >
+                CLEAR
+            </button>
+
+            <div id="cediSummary" class="summary hidden">
+
+                <div class="summary-row total">
+                    <span>TOTAL CASH</span>
+                    <strong id="cediTotal">GH₵0.00</strong>
                 </div>
 
-                <div class="card-subtitle">
-                    Enter the quantity of each denomination.
-                </div>
-
-
-                <div id="cediRows"></div>
-
-
-                <div class="cedi-total">
-
-                    <div class="cedi-total-title">
-                        TOTAL CASH
-                    </div>
-
-                    <div
-                        id="cediTotal"
-                        class="cedi-total-value"
-                    >
-                        GH₵0.00
-                    </div>
-
-                </div>
-
-
-                <div
-                    id="amountWords"
-                    class="words"
-                >
-                    Zero Ghana Cedis
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        class="primary-btn"
-                        onclick="calculateCedi()"
-                    >
-                        CALCULATE
-                    </button>
-
-                    <button
-                        class="secondary-btn"
-                        onclick="clearCedi()"
-                    >
-                        CLEAR
-                    </button>
-
-                    <button
-                        class="secondary-btn"
-                        onclick="saveCedi()"
-                    >
-                        SAVE
-                    </button>
-
+                <div class="summary-row">
+                    <span>Amount in Words</span>
+                    <strong id="cediWords"></strong>
                 </div>
 
             </div>
 
+            <button
+                onclick="saveCedi()"
+                class="secondary"
+            >
+                SAVE RECORD
+            </button>
 
-            <div class="card">
-
-                <div class="card-title">
-                    Latest Saved Cedi Calculation
-                </div>
-
-                <div id="cediSaved">
-                    No saved calculation yet.
-                </div>
-
-            </div>
+            <div id="cediRecords"></div>
 
         </section>
 
 
         <!-- GOODS -->
+        <section id="goodsTab" class="card hidden">
 
-        <section id="goodsTab" class="hidden">
+            <h2>Goods</h2>
 
-            <div class="card">
+            <input
+                id="goodsSearch"
+                type="text"
+                placeholder="Search goods..."
+                oninput="renderGoods()"
+            >
 
-                <div class="card-title">
-                    Approved Goods & Prices
-                </div>
+            <select id="goodSelect">
+                <option value="">Select a good</option>
+            </select>
 
-                <div class="card-subtitle">
-                    Goods and prices approved by the administrator.
-                </div>
+            <input
+                id="goodQuantity"
+                type="number"
+                min="1"
+                placeholder="Quantity"
+            >
 
-                <div
-                    id="goodsList"
-                >
-                    <div class="loading">
-                        Loading goods...
-                    </div>
-                </div>
+            <button onclick="addGoodToCart()">
+                ADD TO CALCULATION
+            </button>
 
-            </div>
+            <div id="goodsList"></div>
 
+            <h3>Current Calculation</h3>
 
-            <div class="card">
+            <div id="goodsCart"></div>
 
-                <div class="card-title">
-                    Calculate Goods
-                </div>
+            <div class="summary">
 
-                <div class="grid">
-
-                    <div class="field">
-                        <label>Select Good</label>
-
-                        <select id="goodSelect">
-                            <option value="">
-                                Select a good
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label>Quantity</label>
-
-                        <input
-                            id="goodQuantity"
-                            type="number"
-                            min="1"
-                            step="1"
-                            placeholder="Enter quantity"
-                        >
-                    </div>
-
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        class="primary-btn"
-                        onclick="addGoodToCart()"
-                    >
-                        ADD GOOD
-                    </button>
-
-                    <button
-                        class="secondary-btn"
-                        onclick="clearCart()"
-                    >
-                        CLEAR QUANTITIES
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="cartList"
-                    style="margin-top:18px;"
-                ></div>
-
-
-                <div
-                    class="profit"
-                    style="margin-top:15px;"
-                >
-
-                    <div class="summary-label">
-                        TOTAL GOODS VALUE
-                    </div>
-
-                    <div
-                        id="goodsCartTotal"
-                        class="summary-value"
-                    >
+                <div class="summary-row total">
+                    <span>TOTAL GOODS VALUE</span>
+                    <strong id="goodsTotal">
                         GH₵0.00
-                    </div>
-
+                    </strong>
                 </div>
 
             </div>
 
+            <button onclick="saveGoodsRecord()">
+                SAVE RECORD
+            </button>
 
-            <div class="card">
+            <button
+                onclick="clearCart()"
+                class="secondary"
+            >
+                CLEAR ALL QUANTITIES
+            </button>
 
-                <div class="card-title">
-                    Weekly Goods Record
-                </div>
+            <h3>Saved Records</h3>
 
-                <div class="grid">
-
-                    <div class="field">
-                        <label>Week</label>
-
-                        <select id="weekSelect">
-                            <option value="Week 1">Week 1</option>
-                            <option value="Week 2">Week 2</option>
-                            <option value="Week 3">Week 3</option>
-                            <option value="Week 4">Week 4</option>
-                            <option value="Week 5">Week 5</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label>Starting Goods</label>
-
-                        <input
-                            id="startingGoods"
-                            type="number"
-                            min="0"
-                            step="1"
-                            placeholder="Starting quantity"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>New Goods</label>
-
-                        <input
-                            id="newGoods"
-                            type="number"
-                            min="0"
-                            step="1"
-                            placeholder="New quantity"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>Remaining Goods</label>
-
-                        <input
-                            id="remainingWeeklyGoods"
-                            type="number"
-                            min="0"
-                            step="1"
-                            placeholder="Remaining quantity"
-                        >
-                    </div>
-
-                </div>
-
-
-                <div
-                    class="summary"
-                    style="margin-top:16px;"
-                >
-
-                    <div class="summary-box">
-
-                        <div class="summary-label">
-                            Total / Full Goods
-                        </div>
-
-                        <div
-                            id="fullGoods"
-                            class="summary-value"
-                        >
-                            0
-                        </div>
-
-                    </div>
-
-
-                    <div class="summary-box">
-
-                        <div class="summary-label">
-                            Sold / Used
-                        </div>
-
-                        <div
-                            id="soldGoods"
-                            class="summary-value"
-                        >
-                            0
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        class="primary-btn"
-                        onclick="calculateWeeklyGoods()"
-                    >
-                        CALCULATE & SAVE WEEK
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-title">
-                    Saved Weekly Records
-                </div>
-
-                <div id="weeklyRecords">
-                    <div class="loading">
-                        Loading records...
-                    </div>
-                </div>
-
-            </div>
+            <div id="goodsRecords"></div>
 
         </section>
 
 
         <!-- ADMIN -->
+        <section id="adminTabSection" class="card hidden">
 
-        <section id="adminTab" class="hidden">
+            <h2>Admin Panel</h2>
 
-            <div class="card">
+            <div class="summary">
 
-                <div class="card-title">
-                    Administrator
-                </div>
-
-                <div class="card-subtitle">
-                    Only active administrators can manage approved goods,
-                    prices and users.
-                </div>
-
-                <span class="admin-badge">
-                    ADMIN ACCESS
-                </span>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-title">
-                    Add Approved Good
-                </div>
-
-                <div class="grid">
-
-                    <div class="field">
-                        <label>Good Name</label>
-
-                        <input
-                            id="adminGoodName"
-                            type="text"
-                            placeholder="e.g. Bone Straight"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>Price</label>
-
-                        <input
-                            id="adminGoodPrice"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            placeholder="Enter price"
-                        >
-                    </div>
-
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        class="primary-btn"
-                        onclick="adminAddGood()"
-                    >
-                        SAVE GOOD & PRICE
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="adminGoodsMessage"
-                    class="message"
-                ></div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-title">
-                    Approved Goods
-                </div>
-
-                <div id="adminGoodsList">
-                    <div class="loading">
-                        Loading...
-                    </div>
+                <div class="summary-row">
+                    <span>Registered Users</span>
+                    <strong id="userCount">0</strong>
                 </div>
 
             </div>
 
+            <h3>Add New Good</h3>
 
-            <div class="card">
+            <input
+                id="adminGoodName"
+                type="text"
+                placeholder="Good name"
+            >
 
-                <div class="card-title">
-                    Registered Users
-                </div>
+            <input
+                id="adminGoodPrice"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Price"
+            >
 
-                <div
-                    class="card-subtitle"
-                >
-                    User management requires the appropriate
-                    profiles-table RLS policies.
-                </div>
+            <button onclick="adminAddGood()">
+                ADD GOOD
+            </button>
 
-                <button
-                    class="secondary-btn"
-                    onclick="loadUsers()"
-                >
-                    REFRESH USERS
-                </button>
+            <div id="adminMessage" class="message"></div>
 
-                <div
-                    id="usersList"
-                    style="margin-top:15px;"
-                >
-                    <div class="loading">
-                        Loading users...
-                    </div>
-                </div>
+            <h3>Manage Goods</h3>
 
-            </div>
+            <div id="adminGoods"></div>
+
+            <h3>Registered Users</h3>
+
+            <button
+                onclick="loadUsers()"
+                class="secondary"
+            >
+                REFRESH USERS
+            </button>
+
+            <div id="usersTable"></div>
 
         </section>
 
-    </main>
+
+    </section>
 
 </div>
 
@@ -1444,131 +655,280 @@ select:focus{
 ========================================================= */
 
 const SUPABASE_URL =
-"https://ywsmyynauytmgdiijwlo.supabase.co";
+    "https://ywsmyynauytmgdiijwlo.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
+    "sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
 
-let supabaseClient = null;
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+            auth:{
+                persistSession:true,
+                autoRefreshToken:true,
+                detectSessionInUrl:true
+            }
+        }
+    );
+
 
 let currentUser = null;
 let currentProfile = null;
-
-let authMode = "login";
+let isAdmin = false;
 
 let goods = [];
-let cart = [];
+let goodsCart = [];
 
 
 /* =========================================================
-   INITIALIZE
+   AUTH
 ========================================================= */
 
-function initializeSupabase(){
+let loginMode = true;
 
-    if(!window.supabase){
+function toggleAuthMode(){
 
-        showLoginMessage(
-            "Supabase library could not be loaded. Check your internet connection and reload the page.",
+    loginMode = !loginMode;
+
+    document.getElementById("authTitle").textContent =
+        loginMode ? "Login" : "Create Account";
+
+    document.getElementById("authButton").textContent =
+        loginMode ? "LOGIN" : "CREATE ACCOUNT";
+
+    document.getElementById("authName")
+        .classList.toggle("hidden",loginMode);
+
+    document.getElementById("authToggle").textContent =
+        loginMode
+        ? "Don't have an account? Create Account"
+        : "Already have an account? Login";
+
+    clearMessage("authMessage");
+}
+
+
+async function handleAuth(){
+
+    const email =
+        document.getElementById("authEmail").value.trim();
+
+    const password =
+        document.getElementById("authPassword").value;
+
+    const fullName =
+        document.getElementById("authName").value.trim();
+
+    if(!email || !password){
+
+        showMessage(
+            "authMessage",
+            "Please enter your email and password.",
             "error"
         );
 
-        return false;
+        return;
     }
 
     try{
 
-        supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY,
-            {
-                auth:{
-                    persistSession:true,
-                    autoRefreshToken:true,
-                    detectSessionInUrl:true
+        if(loginMode){
+
+            const {data,error} =
+                await supabaseClient.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+            if(error) throw error;
+
+            await startUserSession();
+
+        }else{
+
+            if(!fullName){
+
+                showMessage(
+                    "authMessage",
+                    "Please enter your full name.",
+                    "error"
+                );
+
+                return;
+            }
+
+            const {data,error} =
+                await supabaseClient.auth.signUp({
+                    email,
+                    password,
+                    options:{
+                        data:{
+                            full_name:fullName
+                        }
+                    }
+                });
+
+            if(error) throw error;
+
+            if(data.user){
+
+                const {error:profileError} =
+                    await supabaseClient
+                    .from("profiles")
+                    .upsert({
+                        id:data.user.id,
+                        email:email,
+                        full_name:fullName,
+                        role:"user",
+                        status:"active"
+                    });
+
+                if(profileError){
+                    console.log(profileError);
                 }
             }
-        );
 
-        return true;
+            showMessage(
+                "authMessage",
+                "Account created. You can now log in.",
+                "success"
+            );
+
+            loginMode = true;
+
+            document.getElementById("authTitle").textContent =
+                "Login";
+
+            document.getElementById("authButton").textContent =
+                "LOGIN";
+
+            document.getElementById("authName")
+                .classList.add("hidden");
+
+        }
 
     }catch(error){
 
-        showLoginMessage(
-            "Supabase could not be initialized: " +
-            error.message,
+        showMessage(
+            "authMessage",
+            error.message || "Authentication failed.",
             "error"
         );
 
-        return false;
     }
 }
 
 
-/* =========================================================
-   STARTUP
-========================================================= */
+async function startUserSession(){
 
-document.addEventListener(
-    "DOMContentLoaded",
-    async function(){
+    const {data,error} =
+        await supabaseClient.auth.getUser();
 
-        buildCediRows();
+    if(error || !data.user){
 
-        if(!initializeSupabase()){
-            return;
-        }
+        return;
+    }
 
-        supabaseClient.auth.onAuthStateChange(
-            async function(event,session){
+    currentUser = data.user;
 
-                if(
-                    session &&
-                    session.user &&
-                    event !== "SIGNED_OUT"
-                ){
+    const {data:profile,error:profileError} =
+        await supabaseClient
+        .from("profiles")
+        .select("*")
+        .eq("id",currentUser.id)
+        .maybeSingle();
 
-                    setTimeout(
-                        () => startUserSession(session.user),
-                        0
-                    );
+    if(profileError){
 
-                }
-
-            }
+        showMessage(
+            "authMessage",
+            profileError.message,
+            "error"
         );
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.auth.getSession();
+        return;
+    }
 
-        if(error){
+    currentProfile = profile;
 
-            console.error(error);
+    isAdmin =
+        profile &&
+        profile.role === "admin" &&
+        profile.status === "active";
 
-            if(
-                error.message &&
-                error.message.toLowerCase()
-                .includes("invalid api key")
-            ){
+    showApp();
 
-                showLoginMessage(
-                    "Invalid Supabase Publishable Key. Check the Publishable key in Supabase Settings → API Keys.",
-                    "error"
-                );
-            }
+    await loadGoods();
+    await loadRevenueRecords();
+    await loadSavedCedi();
+    await loadGoodsRecords();
 
-            return;
-        }
+    if(isAdmin){
 
-        if(data.session){
+        document.getElementById("adminTab")
+            .classList.remove("hidden");
 
-            await startUserSession(
-                data.session.user
-            );
+        await loadAdminGoods();
+        await loadUsers();
+
+    }
+
+}
+
+
+function showApp(){
+
+    document.getElementById("authSection")
+        .classList.add("hidden");
+
+    document.getElementById("appSection")
+        .classList.remove("hidden");
+
+    document.getElementById("welcomeUser")
+        .textContent =
+        "Welcome, " +
+        (currentProfile?.full_name ||
+         currentUser.email);
+
+    document.getElementById("accountRole")
+        .textContent =
+        isAdmin ? "Administrator" : "User";
+
+}
+
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    currentUser = null;
+    currentProfile = null;
+    isAdmin = false;
+
+    document.getElementById("appSection")
+        .classList.add("hidden");
+
+    document.getElementById("authSection")
+        .classList.remove("hidden");
+
+    document.getElementById("authEmail").value = "";
+    document.getElementById("authPassword").value = "";
+
+}
+
+
+supabaseClient.auth.onAuthStateChange(
+    async (event,session)=>{
+
+        if(
+            session &&
+            !currentUser
+        ){
+
+            await startUserSession();
+
         }
 
     }
@@ -1576,480 +936,65 @@ document.addEventListener(
 
 
 /* =========================================================
-   LOGIN / SIGNUP
-========================================================= */
-
-function toggleAuthMode(){
-
-    const fullNameGroup =
-    document.getElementById("fullNameGroup");
-
-    const authButton =
-    document.getElementById("authButton");
-
-    const switchText =
-    document.getElementById("switchText");
-
-    const switchButton =
-    document.getElementById("switchButton");
-
-    clearLoginMessage();
-
-    if(authMode === "login"){
-
-        authMode = "signup";
-
-        fullNameGroup.classList.remove("hidden");
-
-        authButton.textContent =
-        "CREATE ACCOUNT";
-
-        switchText.textContent =
-        "Already have an account?";
-
-        switchButton.textContent =
-        "Login";
-
-    }else{
-
-        authMode = "login";
-
-        fullNameGroup.classList.add("hidden");
-
-        authButton.textContent =
-        "LOGIN";
-
-        switchText.textContent =
-        "Don't have an account?";
-
-        switchButton.textContent =
-        "Create Account";
-    }
-}
-
-
-async function handleAuth(){
-
-    if(!supabaseClient){
-
-        showLoginMessage(
-            "Supabase is not ready. Please reload the page.",
-            "error"
-        );
-
-        return;
-    }
-
-    const email =
-    document.getElementById("email")
-    .value.trim();
-
-    const password =
-    document.getElementById("password")
-    .value;
-
-    const fullName =
-    document.getElementById("fullName")
-    .value.trim();
-
-    if(!email){
-
-        showLoginMessage(
-            "Please enter your email.",
-            "error"
-        );
-
-        return;
-    }
-
-    if(!password){
-
-        showLoginMessage(
-            "Please enter your password.",
-            "error"
-        );
-
-        return;
-    }
-
-    if(
-        authMode === "signup" &&
-        !fullName
-    ){
-
-        showLoginMessage(
-            "Please enter your full name.",
-            "error"
-        );
-
-        return;
-    }
-
-    const button =
-    document.getElementById("authButton");
-
-    button.disabled = true;
-
-    button.textContent =
-    authMode === "login"
-    ? "LOGGING IN..."
-    : "CREATING ACCOUNT...";
-
-    clearLoginMessage();
-
-    try{
-
-        if(authMode === "login"){
-
-            const {
-                data,
-                error
-            } =
-            await supabaseClient.auth
-            .signInWithPassword({
-                email,
-                password
-            });
-
-            if(error){
-
-                throw error;
-            }
-
-            if(!data.user){
-
-                throw new Error(
-                    "Login did not return a user."
-                );
-            }
-
-            await startUserSession(
-                data.user
-            );
-
-        }else{
-
-            const {
-                data,
-                error
-            } =
-            await supabaseClient.auth
-            .signUp({
-                email,
-                password,
-                options:{
-                    data:{
-                        full_name:fullName
-                    }
-                }
-            });
-
-            if(error){
-
-                throw error;
-            }
-
-            if(
-                data.user &&
-                data.session
-            ){
-
-                showLoginMessage(
-                    "Account created. Checking your account status...",
-                    "success"
-                );
-
-                await startUserSession(
-                    data.user
-                );
-
-            }else{
-
-                showLoginMessage(
-                    "Account created. Check your email to confirm your account, then log in.",
-                    "success"
-                );
-            }
-
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-        let message =
-        error.message || "An error occurred.";
-
-        if(
-            message.toLowerCase()
-            .includes("invalid api key")
-        ){
-
-            message =
-            "Invalid Supabase Publishable Key. Make sure the current Publishable key belongs to this Supabase project.";
-        }
-
-        else if(
-            message.toLowerCase()
-            .includes("invalid login credentials")
-        ){
-
-            message =
-            "Invalid email or password.";
-        }
-
-        else if(
-            message.toLowerCase()
-            .includes("email not confirmed")
-        ){
-
-            message =
-            "Your email has not been confirmed. Check your email and confirm your account.";
-        }
-
-        showLoginMessage(
-            message,
-            "error"
-        );
-
-    }finally{
-
-        button.disabled = false;
-
-        button.textContent =
-        authMode === "login"
-        ? "LOGIN"
-        : "CREATE ACCOUNT";
-    }
-}
-
-
-/* =========================================================
-   USER SESSION
-========================================================= */
-
-async function startUserSession(user){
-
-    currentUser = user;
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id",user.id)
-        .maybeSingle();
-
-        if(error){
-
-            throw error;
-        }
-
-        if(!data){
-
-            await supabaseClient.auth.signOut();
-
-            showLoginMessage(
-                "Your account profile has not been created yet. Please contact the administrator.",
-                "error"
-            );
-
-            return;
-        }
-
-        currentProfile = data;
-
-        if(data.status !== "active"){
-
-            await supabaseClient.auth.signOut();
-
-            showLoginMessage(
-                "Your account is pending approval or has been deactivated. Please contact the administrator.",
-                "error"
-            );
-
-            return;
-        }
-
-        showApp();
-
-    }catch(error){
-
-        console.error(error);
-
-        await supabaseClient.auth.signOut();
-
-        let message =
-        error.message ||
-        "Could not load your account.";
-
-        if(
-            message.toLowerCase()
-            .includes("permission")
-        ){
-
-            message =
-            "Your profile table permissions need to be configured in Supabase.";
-        }
-
-        showLoginMessage(
-            message,
-            "error"
-        );
-    }
-}
-
-
-function showApp(){
-
-    document
-    .getElementById("loginScreen")
-    .classList.add("hidden");
-
-    document
-    .getElementById("app")
-    .classList.remove("hidden");
-
-    const fullName =
-    currentProfile.full_name ||
-    currentUser.email ||
-    "User";
-
-    document
-    .getElementById("currentUserName")
-    .textContent =
-    fullName;
-
-    const isAdmin =
-    currentProfile.role === "admin";
-
-    document
-    .getElementById("adminTabButton")
-    .classList.toggle(
-        "hidden",
-        !isAdmin
-    );
-
-    showTab("revenue");
-
-    loadAllData();
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logout(){
-
-    if(!supabaseClient){
-        return;
-    }
-
-    await supabaseClient.auth.signOut();
-
-    currentUser = null;
-    currentProfile = null;
-    goods = [];
-    cart = [];
-
-    document
-    .getElementById("app")
-    .classList.add("hidden");
-
-    document
-    .getElementById("loginScreen")
-    .classList.remove("hidden");
-
-    document
-    .getElementById("email")
-    .value = "";
-
-    document
-    .getElementById("password")
-    .value = "";
-
-    showLoginMessage(
-        "You have been logged out.",
-        "success"
-    );
-}
-
-
-/* =========================================================
    TABS
 ========================================================= */
 
-function showTab(tab){
-
-    const tabs = [
-        "revenue",
-        "cedi",
-        "goods",
-        "admin"
-    ];
-
-    tabs.forEach(function(name){
-
-        const section =
-        document.getElementById(
-            name + "Tab"
-        );
-
-        if(section){
-
-            section.classList.toggle(
-                "hidden",
-                name !== tab
-            );
-        }
-
-    });
-
+function showTab(tab,button){
 
     document
-    .querySelectorAll(".tab-btn")
-    .forEach(function(button){
+        .querySelectorAll(
+            "#appSection > .card:not(:first-child)"
+        )
+        .forEach(x=>{
+            x.classList.add("hidden");
+        });
 
-        button.classList.toggle(
-            "active",
-            button.dataset.tab === tab
-        );
+    document
+        .querySelectorAll(".tab")
+        .forEach(x=>{
+            x.classList.remove("active");
+        });
 
-    });
+    if(tab==="revenue"){
 
+        document
+            .getElementById("revenueTab")
+            .classList.remove("hidden");
 
-    if(tab === "admin"){
-
-        if(
-            !currentProfile ||
-            currentProfile.role !== "admin"
-        ){
-
-            showTab("revenue");
-            return;
-        }
-
-        loadAdminGoods();
-        loadUsers();
     }
-}
 
+    if(tab==="cedi"){
 
-/* =========================================================
-   LOAD ALL
-========================================================= */
+        document
+            .getElementById("cediTab")
+            .classList.remove("hidden");
 
-async function loadAllData(){
+    }
 
-    await loadGoods();
-    await loadRevenueRecords();
-    await loadWeeklyRecords();
-    await loadSavedCedi();
+    if(tab==="goods"){
+
+        document
+            .getElementById("goodsTab")
+            .classList.remove("hidden");
+
+    }
+
+    if(tab==="admin"){
+
+        if(!isAdmin) return;
+
+        document
+            .getElementById("adminTabSection")
+            .classList.remove("hidden");
+
+    }
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
 }
 
 
@@ -2057,119 +1002,79 @@ async function loadAllData(){
    REVENUE
 ========================================================= */
 
-function money(value){
-
-    const number =
-    Number(value) || 0;
-
-    return "GH₵" +
-    number.toLocaleString(
-        "en-GH",
-        {
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        }
-    );
-}
-
-
-function numberValue(id){
+function num(id){
 
     return Number(
         document.getElementById(id).value
     ) || 0;
+
+}
+
+
+function money(value){
+
+    return "GH₵" +
+        Number(value || 0)
+        .toLocaleString(
+            "en-GH",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+
 }
 
 
 function calculateRevenue(){
 
-    const bank1 =
-    numberValue("bank1");
-
-    const bank2 =
-    numberValue("bank2");
-
-    const bank3 =
-    numberValue("bank3");
-
-    const cash =
-    numberValue("cash");
-
-    const expenses =
-    numberValue("expenses");
-
-    const totalGoods =
-    numberValue("totalGoods");
-
-    const remainingGoods =
-    numberValue("remainingGoods");
+    const bank1 = num("bank1");
+    const bank2 = num("bank2");
+    const bank3 = num("bank3");
+    const cash = num("cash");
+    const expenses = num("expenses");
+    const totalGoods = num("totalGoods");
+    const remainingGoods = num("remainingGoods");
 
     const totalBanks =
-    bank1 +
-    bank2 +
-    bank3;
+        bank1 + bank2 + bank3;
 
     const totalCash =
-    totalBanks +
-    cash;
+        totalBanks + cash;
 
     const goodsAfterExpenses =
-    Math.max(
-        0,
-        totalGoods - expenses
-    );
+        totalGoods - expenses;
 
-    let profit =
-    totalCash +
-    remainingGoods -
-    goodsAfterExpenses;
+    const profit =
+        Math.max(
+            0,
+            totalCash +
+            remainingGoods -
+            goodsAfterExpenses
+        );
 
-    if(profit < 0){
-        profit = 0;
-    }
+    document.getElementById("rBanks")
+        .textContent = money(totalBanks);
 
-    document
-    .getElementById("totalBanks")
-    .textContent =
-    money(totalBanks);
+    document.getElementById("rCash")
+        .textContent = money(totalCash);
 
-    document
-    .getElementById("totalBankCash")
-    .textContent =
-    money(totalCash);
+    document.getElementById("rGoodsAfter")
+        .textContent = money(goodsAfterExpenses);
 
-    document
-    .getElementById("summaryRemainingGoods")
-    .textContent =
-    money(remainingGoods);
+    document.getElementById("rRemaining")
+        .textContent = money(remainingGoods);
 
-    document
-    .getElementById("goodsAfterExpenses")
-    .textContent =
-    money(goodsAfterExpenses);
+    document.getElementById("rProfit")
+        .textContent = money(profit);
 
-    document
-    .getElementById("totalProfit")
-    .textContent =
-    money(profit);
+    document.getElementById("revenueSummary")
+        .classList.remove("hidden");
 
-    return {
-        bank1,
-        bank2,
-        bank3,
-        cash,
-        expenses,
-        totalGoods,
-        remainingGoods,
-        totalBanks,
-        totalCash,
-        goodsAfterExpenses,
-        profit
-    };
 }
 
 
-function resetRevenue(){
+function clearRevenue(){
 
     [
         "bank1",
@@ -2179,234 +1084,153 @@ function resetRevenue(){
         "expenses",
         "totalGoods",
         "remainingGoods"
-    ].forEach(function(id){
-
-        document
-        .getElementById(id)
-        .value = "";
-
+    ].forEach(id=>{
+        document.getElementById(id).value="";
     });
 
-    calculateRevenue();
+    document.getElementById("revenueSummary")
+        .classList.add("hidden");
+
 }
 
 
 async function saveRevenue(){
 
-    const values =
+    if(!currentUser) return;
+
     calculateRevenue();
 
-    try{
+    const row = {
 
-        const {
-            error
-        } =
+        user_id:currentUser.id,
+
+        bank1:num("bank1"),
+        bank2:num("bank2"),
+        bank3:num("bank3"),
+        cash:num("cash"),
+        expenses:num("expenses"),
+        total_goods:num("totalGoods"),
+        remaining_goods:num("remainingGoods"),
+
+        total_banks:
+            num("bank1")+
+            num("bank2")+
+            num("bank3"),
+
+        total_cash:
+            num("bank1")+
+            num("bank2")+
+            num("bank3")+
+            num("cash"),
+
+        profit:
+            Math.max(
+                0,
+                (
+                    num("bank1")+
+                    num("bank2")+
+                    num("bank3")+
+                    num("cash")+
+                    num("remainingGoods")-
+                    (
+                        num("totalGoods")-
+                        num("expenses")
+                    )
+                )
+            )
+
+    };
+
+    const {error} =
         await supabaseClient
         .from("revenue_records")
-        .insert({
+        .insert(row);
 
-            user_id:currentUser.id,
+    if(error){
 
-            bank1:values.bank1,
-            bank2:values.bank2,
-            bank3:values.bank3,
-            cash:values.cash,
+        alert(error.message);
+        return;
 
-            expenses:values.expenses,
-
-            total_goods:values.totalGoods,
-
-            remaining_goods:
-            values.remainingGoods,
-
-            total_banks:
-            values.totalBanks,
-
-            total_cash:
-            values.totalCash,
-
-            goods_after_expenses:
-            values.goodsAfterExpenses
-        });
-
-        if(error){
-
-            throw error;
-        }
-
-        alert(
-            "Revenue record saved successfully."
-        );
-
-        await loadRevenueRecords();
-
-    }catch(error){
-
-        alert(
-            "Could not save revenue record: " +
-            error.message
-        );
     }
+
+    alert("Revenue record saved.");
+
+    await loadRevenueRecords();
+
 }
 
 
 async function loadRevenueRecords(){
 
-    const container =
-    document.getElementById(
-        "revenueRecords"
-    );
+    if(!currentUser) return;
 
-    try{
-
-        const {
-            data,
-            error
-        } =
+    const {data,error} =
         await supabaseClient
         .from("revenue_records")
         .select("*")
         .eq("user_id",currentUser.id)
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+        .order("created_at",{ascending:false});
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        console.log(error);
+        return;
 
-        if(!data || data.length === 0){
-
-            container.innerHTML =
-            '<div class="empty">No revenue records saved yet.</div>';
-
-            return;
-        }
-
-        container.innerHTML =
-        data.map(function(record){
-
-            const profit =
-            Number(record.total_cash || 0) +
-            Number(record.remaining_goods || 0) -
-            Number(record.goods_after_expenses || 0);
-
-            return `
-            <div class="record">
-
-                <div class="record-header">
-
-                    <div class="record-title">
-                        Revenue Record
-                    </div>
-
-                    <div class="record-date">
-                        ${formatDate(record.created_at)}
-                    </div>
-
-                </div>
-
-                <div>
-                    Total Banks:
-                    <strong>
-                    ${money(record.total_banks)}
-                    </strong>
-                </div>
-
-                <div>
-                    Total Bank & Cash:
-                    <strong>
-                    ${money(record.total_cash)}
-                    </strong>
-                </div>
-
-                <div>
-                    Expenses:
-                    <strong>
-                    ${money(record.expenses)}
-                    </strong>
-                </div>
-
-                <div>
-                    Goods After Expenses:
-                    <strong>
-                    ${money(record.goods_after_expenses)}
-                    </strong>
-                </div>
-
-                <div>
-                    Remaining Goods:
-                    <strong>
-                    ${money(record.remaining_goods)}
-                    </strong>
-                </div>
-
-                <div style="margin-top:7px;">
-                    Calculated Profit:
-                    <strong>
-                    ${money(Math.max(0,profit))}
-                    </strong>
-                </div>
-
-                <div class="actions">
-
-                    <button
-                        class="danger-btn"
-                        onclick="deleteRevenue('${record.id}')"
-                    >
-                        DELETE
-                    </button>
-
-                </div>
-
-            </div>
-            `;
-
-        }).join("");
-
-    }catch(error){
-
-        container.innerHTML =
-        `<div class="message error" style="display:block;">
-        Could not load revenue records:
-        ${escapeHtml(error.message)}
-        </div>`;
     }
+
+    const box =
+        document.getElementById("revenueRecords");
+
+    box.innerHTML =
+        "<h3>Saved Revenue Records</h3>";
+
+    (data || []).forEach(record=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className="record";
+
+        div.innerHTML=`
+            <strong>${money(record.profit)}</strong>
+            <div class="small">
+                ${formatDate(record.created_at)}
+            </div>
+            <button
+                class="danger"
+                onclick="deleteRevenue('${record.id}')"
+            >
+                DELETE
+            </button>
+        `;
+
+        box.appendChild(div);
+
+    });
+
 }
 
 
 async function deleteRevenue(id){
 
-    if(!confirm(
-        "Delete this revenue record?"
-    )){
-        return;
-    }
+    if(!confirm("Delete this record?")) return;
 
-    const {
-        error
-    } =
-    await supabaseClient
-    .from("revenue_records")
-    .delete()
-    .eq("id",id)
-    .eq("user_id",currentUser.id);
+    const {error} =
+        await supabaseClient
+        .from("revenue_records")
+        .delete()
+        .eq("id",id)
+        .eq("user_id",currentUser.id);
 
     if(error){
 
-        alert(
-            "Could not delete record: " +
-            error.message
-        );
-
+        alert(error.message);
         return;
+
     }
 
     await loadRevenueRecords();
+
 }
 
 
@@ -2415,254 +1239,198 @@ async function deleteRevenue(id){
 ========================================================= */
 
 const denominations =
-[
-    200,
-    100,
-    50,
-    20,
-    10,
-    5,
-    2,
-    1
-];
+    [200,100,50,20,10,5,2,1];
 
 
 function buildCediRows(){
 
-    const container =
-    document.getElementById(
-        "cediRows"
-    );
+    const box =
+        document.getElementById("cediRows");
 
-    container.innerHTML =
-    denominations.map(function(value){
+    box.innerHTML="";
 
-        return `
-        <div class="cedi-row">
+    denominations.forEach(d=>{
 
-            <div class="denomination">
-                GH₵${value}
-            </div>
+        const row =
+            document.createElement("div");
+
+        row.className="cedi-row";
+
+        row.innerHTML=`
+            <div class="denom">GH₵${d}</div>
 
             <input
-                id="cedi_${value}"
                 type="number"
                 min="0"
-                step="1"
-                inputmode="numeric"
+                class="cedi-qty"
+                data-denom="${d}"
                 placeholder="Quantity"
-                oninput="calculateCedi()"
             >
 
             <div
-                id="cedi_total_${value}"
-                class="line-total"
+                class="cedi-line-total"
+                data-total="${d}"
             >
                 GH₵0.00
             </div>
-
-        </div>
         `;
 
-    }).join("");
+        box.appendChild(row);
+
+    });
+
 }
 
 
 function calculateCedi(){
 
-    let total = 0;
+    let total=0;
 
-    denominations.forEach(function(value){
+    document
+        .querySelectorAll(".cedi-qty")
+        .forEach(input=>{
 
-        const quantity =
-        Number(
+            const denomination =
+                Number(input.dataset.denom);
+
+            const quantity =
+                Number(input.value) || 0;
+
+            const lineTotal =
+                denomination * quantity;
+
+            total += lineTotal;
+
             document
-            .getElementById(
-                "cedi_" + value
-            ).value
-        ) || 0;
+                .querySelector(
+                    `.cedi-line-total[data-total="${denomination}"]`
+                )
+                .textContent =
+                money(lineTotal);
 
-        const line =
-        quantity * value;
+        });
 
-        total += line;
+    document.getElementById("cediTotal")
+        .textContent=money(total);
 
-        document
-        .getElementById(
-            "cedi_total_" + value
-        )
-        .textContent =
-        money(line);
+    document.getElementById("cediWords")
+        .textContent=numberToWords(
+            Math.floor(total)
+        ) + " Ghana Cedis";
 
-    });
-
-
-    document
-    .getElementById("cediTotal")
-    .textContent =
-    money(total);
-
-    document
-    .getElementById("amountWords")
-    .textContent =
-    numberToWords(Math.floor(total)) +
-    " Ghana Cedis";
+    document.getElementById("cediSummary")
+        .classList.remove("hidden");
 
     return total;
+
 }
 
 
 function clearCedi(){
 
-    denominations.forEach(function(value){
+    document
+        .querySelectorAll(".cedi-qty")
+        .forEach(input=>{
+            input.value="";
+        });
 
-        document
-        .getElementById(
-            "cedi_" + value
-        )
-        .value = "";
+    document
+        .querySelectorAll(".cedi-line-total")
+        .forEach(x=>{
+            x.textContent="GH₵0.00";
+        });
 
-    });
+    document.getElementById("cediSummary")
+        .classList.add("hidden");
 
-    calculateCedi();
 }
 
 
 async function saveCedi(){
 
+    if(!currentUser) return;
+
     const total =
-    calculateCedi();
+        calculateCedi();
 
-    const quantities = {};
+    const quantities={};
 
-    denominations.forEach(function(value){
+    document
+        .querySelectorAll(".cedi-qty")
+        .forEach(input=>{
 
-        quantities[value] =
-        Number(
-            document
-            .getElementById(
-                "cedi_" + value
-            ).value
-        ) || 0;
+            quantities[input.dataset.denom] =
+                Number(input.value) || 0;
 
-    });
+        });
 
-
-    try{
-
-        const {
-            error
-        } =
+    const {error} =
         await supabaseClient
         .from("cedi_records")
         .insert({
 
             user_id:currentUser.id,
-
             quantities:quantities,
+            total:total
 
-            total:total,
-
-            amount_words:
-            numberToWords(
-                Math.floor(total)
-            ) +
-            " Ghana Cedis"
         });
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        alert(error.message);
+        return;
 
-        alert(
-            "Cedi calculation saved successfully."
-        );
-
-        await loadSavedCedi();
-
-    }catch(error){
-
-        alert(
-            "Could not save Cedi calculation: " +
-            error.message
-        );
     }
+
+    alert("Cedi record saved.");
+
+    await loadSavedCedi();
+
 }
 
 
 async function loadSavedCedi(){
 
-    const container =
-    document.getElementById(
-        "cediSaved"
-    );
+    if(!currentUser) return;
 
-    try{
-
-        const {
-            data,
-            error
-        } =
+    const {data,error} =
         await supabaseClient
         .from("cedi_records")
         .select("*")
         .eq("user_id",currentUser.id)
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        )
-        .limit(1);
+        .order("created_at",{ascending:false});
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        console.log(error);
+        return;
 
-        if(!data || data.length === 0){
+    }
 
-            container.innerHTML =
-            "No saved calculation yet.";
+    const box =
+        document.getElementById("cediRecords");
 
-            return;
-        }
+    box.innerHTML =
+        "<h3>Saved Cedi Records</h3>";
 
-        const record =
-        data[0];
+    (data || []).forEach(record=>{
 
-        container.innerHTML = `
-            <div class="record">
+        const div =
+            document.createElement("div");
 
-                <div>
-                    Total Cash:
-                    <strong>
-                    ${money(record.total)}
-                    </strong>
-                </div>
+        div.className="record";
 
-                <div style="margin-top:7px;">
-                    ${escapeHtml(
-                        record.amount_words || ""
-                    )}
-                </div>
-
-                <div class="record-date" style="margin-top:8px;">
-                    ${formatDate(record.created_at)}
-                </div>
-
+        div.innerHTML=`
+            <strong>${money(record.total)}</strong>
+            <div class="small">
+                ${formatDate(record.created_at)}
             </div>
         `;
 
-    }catch(error){
+        box.appendChild(div);
 
-        container.innerHTML =
-        `<div class="message error" style="display:block;">
-        Could not load Cedi record:
-        ${escapeHtml(error.message)}
-        </div>`;
-    }
+    });
+
 }
 
 
@@ -2672,607 +1440,347 @@ async function loadSavedCedi(){
 
 async function loadGoods(){
 
-    const list =
-    document.getElementById(
-        "goodsList"
-    );
-
-    try{
-
-        const {
-            data,
-            error
-        } =
+    const {data,error} =
         await supabaseClient
         .from("goods")
         .select("*")
-        .order(
-            "name",
-            {
-                ascending:true
-            }
-        );
+        .order("name",{ascending:true});
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        console.log(error);
+        return;
 
-        goods =
-        data || [];
-
-        renderGoods();
-        populateGoodSelect();
-
-    }catch(error){
-
-        console.error(error);
-
-        list.innerHTML =
-        `<div class="message error" style="display:block;">
-        Could not load goods:
-        ${escapeHtml(error.message)}
-        </div>`;
     }
+
+    goods=data || [];
+
+    renderGoods();
+    populateGoodSelect();
+
 }
 
 
 function renderGoods(){
 
-    const list =
-    document.getElementById(
-        "goodsList"
-    );
+    const box =
+        document.getElementById("goodsList");
 
-    if(goods.length === 0){
+    const search =
+        document.getElementById("goodsSearch")
+        ?.value
+        .trim()
+        .toLowerCase() || "";
 
-        list.innerHTML =
-        '<div class="empty">No approved goods have been added yet.</div>';
+    box.innerHTML="";
 
-        return;
-    }
+    goods
+        .filter(g=>
+            g.name
+            .toLowerCase()
+            .startsWith(search)
+        )
+        .forEach(g=>{
 
-    list.innerHTML =
-    goods.map(function(good){
+            const div =
+                document.createElement("div");
 
-        return `
-        <div class="goods-item">
+            div.className="good-card";
 
-            <div class="goods-item-top">
+            div.innerHTML=`
+                <div class="good-line">
+                    <div>
+                        <strong>
+                            ${escapeHtml(g.name)}
+                        </strong>
 
-                <div class="goods-name">
-                    ${escapeHtml(good.name)}
+                        <div class="small">
+                            ${money(g.price)}
+                        </div>
+                    </div>
                 </div>
+            `;
 
-                <div class="goods-price">
-                    ${money(good.price)}
-                </div>
+            box.appendChild(div);
 
-            </div>
+        });
 
-        </div>
-        `;
-
-    }).join("");
 }
 
 
 function populateGoodSelect(){
 
     const select =
-    document.getElementById(
-        "goodSelect"
-    );
+        document.getElementById("goodSelect");
 
     select.innerHTML =
-    '<option value="">Select a good</option>';
+        '<option value="">Select a good</option>';
 
-    goods.forEach(function(good){
+    goods.forEach(g=>{
 
         const option =
-        document.createElement("option");
+            document.createElement("option");
 
-        option.value =
-        good.id;
+        option.value=g.id;
 
         option.textContent =
-        good.name +
-        " — " +
-        money(good.price);
+            `${g.name} - ${money(g.price)}`;
 
         select.appendChild(option);
 
     });
+
 }
 
 
 function addGoodToCart(){
 
     const id =
-    document
-    .getElementById("goodSelect")
-    .value;
+        document.getElementById("goodSelect").value;
 
     const quantity =
-    Number(
-        document
-        .getElementById("goodQuantity")
-        .value
-    );
-
-    if(!id){
-
-        alert(
-            "Please select a good."
+        Number(
+            document.getElementById("goodQuantity").value
         );
 
+    if(!id || quantity<=0){
+
+        alert("Select a good and enter a valid quantity.");
         return;
-    }
 
-    if(!quantity || quantity <= 0){
-
-        alert(
-            "Please enter a valid quantity."
-        );
-
-        return;
     }
 
     const good =
-    goods.find(
-        item => String(item.id) === String(id)
-    );
+        goods.find(g=>g.id===id);
 
-    if(!good){
+    if(!good) return;
 
-        alert(
-            "The selected good could not be found."
-        );
+    const existing =
+        goodsCart.find(x=>x.id===id);
 
-        return;
+    if(existing){
+
+        existing.quantity += quantity;
+
+    }else{
+
+        goodsCart.push({
+
+            id:good.id,
+            name:good.name,
+            price:Number(good.price),
+            quantity:quantity
+
+        });
+
     }
 
-    cart.push({
-        id:good.id,
-        name:good.name,
-        price:Number(good.price),
-        quantity:quantity
-    });
-
-    document
-    .getElementById("goodQuantity")
-    .value = "";
+    document.getElementById("goodQuantity")
+        .value="";
 
     renderCart();
+
 }
 
 
 function renderCart(){
 
-    const container =
-    document.getElementById(
-        "cartList"
-    );
+    const box =
+        document.getElementById("goodsCart");
 
-    if(cart.length === 0){
+    box.innerHTML="";
 
-        container.innerHTML =
-        '<div class="empty">No goods added to the calculation.</div>';
+    let total=0;
 
-        document
-        .getElementById("goodsCartTotal")
-        .textContent =
-        money(0);
-
-        return;
-    }
-
-    let total = 0;
-
-    container.innerHTML =
-    cart.map(function(item,index){
+    goodsCart.forEach((item,index)=>{
 
         const line =
-        item.price *
-        item.quantity;
+            item.price * item.quantity;
 
         total += line;
 
-        return `
-        <div class="goods-item">
+        const div =
+            document.createElement("div");
 
-            <div class="goods-item-top">
+        div.className="record";
+
+        div.innerHTML=`
+            <div class="good-line">
 
                 <div>
-
-                    <div class="goods-name">
+                    <strong>
                         ${escapeHtml(item.name)}
-                    </div>
+                    </strong>
 
-                    <div class="record-date">
+                    <div class="small">
                         ${item.quantity}
                         ×
                         ${money(item.price)}
+                        =
+                        ${money(line)}
                     </div>
-
                 </div>
-
-                <div class="goods-price">
-                    ${money(line)}
-                </div>
-
-            </div>
-
-            <div class="goods-actions">
 
                 <button
-                    class="small-btn delete"
+                    class="danger"
                     onclick="removeCartItem(${index})"
                 >
-                    Remove
+                    REMOVE
                 </button>
 
             </div>
-
-        </div>
         `;
 
-    }).join("");
+        box.appendChild(div);
 
-    document
-    .getElementById("goodsCartTotal")
-    .textContent =
-    money(total);
+    });
+
+    document.getElementById("goodsTotal")
+        .textContent=money(total);
+
 }
 
 
 function removeCartItem(index){
 
-    cart.splice(index,1);
+    goodsCart.splice(index,1);
 
     renderCart();
+
 }
 
 
 function clearCart(){
 
-    cart = [];
+    goodsCart=[];
 
     renderCart();
+
 }
 
 
-/* =========================================================
-   WEEKLY GOODS
-========================================================= */
+async function saveGoodsRecord(){
 
-document
-.getElementById("newGoods")
-.addEventListener(
-    "input",
-    calculateWeeklyPreview
-);
+    if(!currentUser) return;
 
-document
-.getElementById("startingGoods")
-.addEventListener(
-    "input",
-    calculateWeeklyPreview
-);
+    if(goodsCart.length===0){
 
-document
-.getElementById("remainingWeeklyGoods")
-.addEventListener(
-    "input",
-    calculateWeeklyPreview
-);
-
-
-function calculateWeeklyPreview(){
-
-    const starting =
-    Number(
-        document
-        .getElementById(
-            "startingGoods"
-        ).value
-    ) || 0;
-
-    const added =
-    Number(
-        document
-        .getElementById(
-            "newGoods"
-        ).value
-    ) || 0;
-
-    const remaining =
-    Number(
-        document
-        .getElementById(
-            "remainingWeeklyGoods"
-        ).value
-    ) || 0;
-
-    const full =
-    starting + added;
-
-    const sold =
-    Math.max(
-        0,
-        full - remaining
-    );
-
-    document
-    .getElementById("fullGoods")
-    .textContent =
-    full;
-
-    document
-    .getElementById("soldGoods")
-    .textContent =
-    sold;
-}
-
-
-async function calculateWeeklyGoods(){
-
-    calculateWeeklyPreview();
-
-    const week =
-    document
-    .getElementById("weekSelect")
-    .value;
-
-    const starting =
-    Number(
-        document
-        .getElementById(
-            "startingGoods"
-        ).value
-    ) || 0;
-
-    const added =
-    Number(
-        document
-        .getElementById(
-            "newGoods"
-        ).value
-    ) || 0;
-
-    const remaining =
-    Number(
-        document
-        .getElementById(
-            "remainingWeeklyGoods"
-        ).value
-    ) || 0;
-
-    const full =
-    starting + added;
-
-    if(remaining > full){
-
-        alert(
-            "Remaining goods cannot be greater than total goods."
-        );
-
+        alert("There are no goods in the calculation.");
         return;
+
     }
 
-    const sold =
-    full - remaining;
+    let total=0;
 
-    try{
+    goodsCart.forEach(item=>{
 
-        const {
-            error
-        } =
+        total +=
+            item.price *
+            item.quantity;
+
+    });
+
+    const {error} =
         await supabaseClient
-        .from("weekly_records")
+        .from("goods_records")
         .insert({
 
             user_id:currentUser.id,
+            items:goodsCart,
+            total:total
 
-            week:week,
-
-            starting_goods:starting,
-
-            new_goods:added,
-
-            total_goods:full,
-
-            remaining_goods:remaining,
-
-            sold_goods:sold
         });
-
-        if(error){
-
-            throw error;
-        }
-
-        alert(
-            "Weekly goods record saved successfully."
-        );
-
-        document
-        .getElementById(
-            "startingGoods"
-        ).value =
-        remaining;
-
-        document
-        .getElementById(
-            "newGoods"
-        ).value = "";
-
-        document
-        .getElementById(
-            "remainingWeeklyGoods"
-        ).value = "";
-
-        calculateWeeklyPreview();
-
-        await loadWeeklyRecords();
-
-    }catch(error){
-
-        alert(
-            "Could not save weekly record: " +
-            error.message
-        );
-    }
-}
-
-
-async function loadWeeklyRecords(){
-
-    const container =
-    document.getElementById(
-        "weeklyRecords"
-    );
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .from("weekly_records")
-        .select("*")
-        .eq("user_id",currentUser.id)
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-        if(error){
-
-            throw error;
-        }
-
-        if(!data || data.length === 0){
-
-            container.innerHTML =
-            '<div class="empty">No weekly records saved yet.</div>';
-
-            return;
-        }
-
-        container.innerHTML =
-        data.map(function(record){
-
-            return `
-            <div class="record">
-
-                <div class="record-header">
-
-                    <div class="record-title">
-                        ${escapeHtml(
-                            record.week || "Weekly Record"
-                        )}
-                    </div>
-
-                    <div class="record-date">
-                        ${formatDate(record.created_at)}
-                    </div>
-
-                </div>
-
-                <div>
-                    Starting Goods:
-                    <strong>
-                    ${record.starting_goods || 0}
-                    </strong>
-                </div>
-
-                <div>
-                    New Goods:
-                    <strong>
-                    ${record.new_goods || 0}
-                    </strong>
-                </div>
-
-                <div>
-                    Total / Full Goods:
-                    <strong>
-                    ${record.total_goods || 0}
-                    </strong>
-                </div>
-
-                <div>
-                    Remaining Goods:
-                    <strong>
-                    ${record.remaining_goods || 0}
-                    </strong>
-                </div>
-
-                <div>
-                    Sold / Used:
-                    <strong>
-                    ${record.sold_goods || 0}
-                    </strong>
-                </div>
-
-                <div class="actions">
-
-                    <button
-                        class="danger-btn"
-                        onclick="deleteWeekly('${record.id}')"
-                    >
-                        DELETE
-                    </button>
-
-                </div>
-
-            </div>
-            `;
-
-        }).join("");
-
-    }catch(error){
-
-        container.innerHTML =
-        `<div class="message error" style="display:block;">
-        Could not load weekly records:
-        ${escapeHtml(error.message)}
-        </div>`;
-    }
-}
-
-
-async function deleteWeekly(id){
-
-    if(!confirm(
-        "Delete this weekly record?"
-    )){
-        return;
-    }
-
-    const {
-        error
-    } =
-    await supabaseClient
-    .from("weekly_records")
-    .delete()
-    .eq("id",id)
-    .eq("user_id",currentUser.id);
 
     if(error){
 
-        alert(
-            "Could not delete weekly record: " +
-            error.message
-        );
-
+        alert(error.message);
         return;
+
     }
 
-    await loadWeeklyRecords();
+    alert("Goods record saved.");
+
+    clearCart();
+
+    await loadGoodsRecords();
+
+}
+
+
+async function loadGoodsRecords(){
+
+    if(!currentUser) return;
+
+    const {data,error} =
+        await supabaseClient
+        .from("goods_records")
+        .select("*")
+        .eq("user_id",currentUser.id)
+        .order("created_at",{ascending:false});
+
+    if(error){
+
+        console.log(error);
+        return;
+
+    }
+
+    const box =
+        document.getElementById("goodsRecords");
+
+    box.innerHTML="";
+
+    (data || []).forEach(record=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className="record";
+
+        div.innerHTML=`
+            <strong>
+                ${money(record.total)}
+            </strong>
+
+            <div class="small">
+                ${formatDate(record.created_at)}
+            </div>
+
+            <button
+                class="danger"
+                onclick="deleteGoodsRecord('${record.id}')"
+            >
+                DELETE
+            </button>
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+async function deleteGoodsRecord(id){
+
+    if(!confirm("Delete this record?")) return;
+
+    const {error} =
+        await supabaseClient
+        .from("goods_records")
+        .delete()
+        .eq("id",id)
+        .eq("user_id",currentUser.id);
+
+    if(error){
+
+        alert(error.message);
+        return;
+
+    }
+
+    await loadGoodsRecords();
+
 }
 
 
@@ -3282,325 +1790,216 @@ async function deleteWeekly(id){
 
 async function adminAddGood(){
 
-    if(
-        !currentProfile ||
-        currentProfile.role !== "admin"
-    ){
+    if(!isAdmin){
 
-        showAdminMessage(
-            "Only an administrator can add goods.",
-            "error"
-        );
-
+        alert("Administrator access required.");
         return;
+
     }
 
     const name =
-    document
-    .getElementById(
-        "adminGoodName"
-    )
-    .value.trim();
+        document
+        .getElementById("adminGoodName")
+        .value
+        .trim();
 
     const price =
-    Number(
-        document
-        .getElementById(
-            "adminGoodPrice"
-        ).value
-    );
+        Number(
+            document
+            .getElementById("adminGoodPrice")
+            .value
+        );
 
-    if(!name){
+    if(!name || price<0){
 
-        showAdminMessage(
-            "Enter the good name.",
+        showMessage(
+            "adminMessage",
+            "Enter a good name and valid price.",
             "error"
         );
 
         return;
+
     }
 
-    if(!price || price < 0){
-
-        showAdminMessage(
-            "Enter a valid price.",
-            "error"
-        );
-
-        return;
-    }
-
-    try{
-
-        const {
-            error
-        } =
+    const {error} =
         await supabaseClient
         .from("goods")
         .insert({
+
             name:name,
             price:price
+
         });
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
-
-        document
-        .getElementById(
-            "adminGoodName"
-        ).value = "";
-
-        document
-        .getElementById(
-            "adminGoodPrice"
-        ).value = "";
-
-        showAdminMessage(
-            "Good and price saved successfully.",
-            "success"
-        );
-
-        await loadGoods();
-        await loadAdminGoods();
-
-    }catch(error){
-
-        console.error(error);
-
-        let message =
-        error.message;
-
-        if(
-            message.toLowerCase()
-            .includes("row-level security") ||
-            message.toLowerCase()
-            .includes("permission")
-        ){
-
-            message =
-            "Supabase denied this action. Check that your admin account has role = admin and status = active in the profiles table.";
-        }
-
-        showAdminMessage(
-            message,
+        showMessage(
+            "adminMessage",
+            error.message,
             "error"
         );
+
+        return;
+
     }
+
+    document
+        .getElementById("adminGoodName")
+        .value="";
+
+    document
+        .getElementById("adminGoodPrice")
+        .value="";
+
+    showMessage(
+        "adminMessage",
+        "Good added successfully.",
+        "success"
+    );
+
+    await loadGoods();
+    await loadAdminGoods();
+
 }
 
 
 async function loadAdminGoods(){
 
-    const container =
-    document.getElementById(
-        "adminGoodsList"
-    );
+    if(!isAdmin) return;
 
-    if(
-        !currentProfile ||
-        currentProfile.role !== "admin"
-    ){
-
-        return;
-    }
-
-    try{
-
-        const {
-            data,
-            error
-        } =
+    const {data,error} =
         await supabaseClient
         .from("goods")
         .select("*")
-        .order(
-            "name",
-            {
-                ascending:true
-            }
-        );
+        .order("name",{ascending:true});
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        console.log(error);
+        return;
 
-        if(!data || data.length === 0){
-
-            container.innerHTML =
-            '<div class="empty">No goods added yet.</div>';
-
-            return;
-        }
-
-        container.innerHTML =
-        data.map(function(good){
-
-            return `
-            <div class="goods-item">
-
-                <div class="goods-item-top">
-
-                    <div class="goods-name">
-                        ${escapeHtml(good.name)}
-                    </div>
-
-                    <div class="goods-price">
-                        ${money(good.price)}
-                    </div>
-
-                </div>
-
-                <div class="goods-actions">
-
-                    <button
-                        class="small-btn"
-                        onclick="editGood('${good.id}','${escapeAttribute(good.name)}',${Number(good.price)})"
-                    >
-                        EDIT
-                    </button>
-
-                    <button
-                        class="small-btn delete"
-                        onclick="deleteGood('${good.id}')"
-                    >
-                        DELETE
-                    </button>
-
-                </div>
-
-            </div>
-            `;
-
-        }).join("");
-
-    }catch(error){
-
-        container.innerHTML =
-        `<div class="message error" style="display:block;">
-        Could not load admin goods:
-        ${escapeHtml(error.message)}
-        </div>`;
     }
+
+    const box =
+        document.getElementById("adminGoods");
+
+    box.innerHTML="";
+
+    (data || []).forEach(g=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className="record";
+
+        div.innerHTML=`
+            <strong>
+                ${escapeHtml(g.name)}
+            </strong>
+
+            <div class="small">
+                Current price:
+                ${money(g.price)}
+            </div>
+
+            <input
+                id="price-${g.id}"
+                type="number"
+                min="0"
+                step="0.01"
+                value="${Number(g.price)}"
+            >
+
+            <button
+                onclick="editGood('${g.id}')"
+            >
+                SAVE PRICE
+            </button>
+
+            <button
+                class="danger"
+                onclick="deleteGood('${g.id}')"
+            >
+                DELETE GOOD
+            </button>
+        `;
+
+        box.appendChild(div);
+
+    });
+
 }
 
 
-async function editGood(
-    id,
-    oldName,
-    oldPrice
-){
+async function editGood(id){
 
-    const newName =
-    prompt(
-        "Enter the new good name:",
-        oldName
-    );
+    if(!isAdmin) return;
 
-    if(newName === null){
-        return;
-    }
-
-    const newPrice =
-    prompt(
-        "Enter the new price:",
-        oldPrice
-    );
-
-    if(newPrice === null){
-        return;
-    }
-
-    const price =
-    Number(newPrice);
-
-    if(
-        !newName.trim() ||
-        isNaN(price) ||
-        price < 0
-    ){
-
-        alert(
-            "Please enter a valid name and price."
+    const input =
+        document.getElementById(
+            "price-"+id
         );
 
+    const price =
+        Number(input.value);
+
+    if(price<0){
+
+        alert("Invalid price.");
         return;
+
     }
 
-    try{
-
-        const {
-            error
-        } =
+    const {error} =
         await supabaseClient
         .from("goods")
         .update({
-            name:newName.trim(),
             price:price
         })
         .eq("id",id);
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        alert(error.message);
+        return;
 
-        alert(
-            "Good updated successfully."
-        );
-
-        await loadGoods();
-        await loadAdminGoods();
-
-    }catch(error){
-
-        alert(
-            "Could not update good: " +
-            error.message
-        );
     }
+
+    alert("Price updated.");
+
+    await loadGoods();
+    await loadAdminGoods();
+
 }
 
 
 async function deleteGood(id){
 
-    if(!confirm(
-        "Delete this good and its price?"
-    )){
-        return;
-    }
+    if(!isAdmin) return;
 
-    try{
+    if(
+        !confirm(
+            "Delete this good? This cannot be undone."
+        )
+    ) return;
 
-        const {
-            error
-        } =
+    const {error} =
         await supabaseClient
         .from("goods")
         .delete()
         .eq("id",id);
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        alert(error.message);
+        return;
 
-        alert(
-            "Good deleted successfully."
-        );
-
-        await loadGoods();
-        await loadAdminGoods();
-
-    }catch(error){
-
-        alert(
-            "Could not delete good: " +
-            error.message
-        );
     }
+
+    await loadGoods();
+    await loadAdminGoods();
+
 }
 
 
@@ -3610,182 +2009,138 @@ async function deleteGood(id){
 
 async function loadUsers(){
 
-    const container =
-    document.getElementById(
-        "usersList"
-    );
+    if(!isAdmin) return;
 
-    if(
-        !currentProfile ||
-        currentProfile.role !== "admin"
-    ){
-
-        return;
-    }
-
-    try{
-
-        const {
-            data,
-            error
-        } =
+    const {data,error} =
         await supabaseClient
         .from("profiles")
         .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+        .order("created_at",{ascending:false});
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        console.log(error);
 
-        if(!data || data.length === 0){
+        document.getElementById("usersTable")
+            .innerHTML=
+            `<div class="message error"
+                style="display:block">
+                ${escapeHtml(error.message)}
+            </div>`;
 
-            container.innerHTML =
-            '<div class="empty">No users found.</div>';
+        return;
 
-            return;
-        }
-
-        container.innerHTML =
-        data.map(function(user){
-
-            return `
-            <div class="user-card">
-
-                <div class="user-email">
-                    ${escapeHtml(
-                        user.email ||
-                        user.full_name ||
-                        "User"
-                    )}
-                </div>
-
-                <div class="user-meta">
-                    Name:
-                    ${escapeHtml(
-                        user.full_name || "Not provided"
-                    )}
-                </div>
-
-                <div class="user-meta">
-                    Role:
-                    <strong>
-                    ${escapeHtml(
-                        user.role || "user"
-                    )}
-                    </strong>
-                </div>
-
-                <div class="user-meta">
-                    Status:
-                    <strong class="${
-                        user.status === "active"
-                        ? "status-active"
-                        :
-                        user.status === "pending"
-                        ? "status-pending"
-                        :
-                        "status-inactive"
-                    }">
-                    ${escapeHtml(
-                        user.status || "pending"
-                    )}
-                    </strong>
-                </div>
-
-                ${
-                    user.id !== currentUser.id
-                    ? `
-                    <div class="actions">
-
-                        <button
-                            class="secondary-btn"
-                            onclick="changeUserStatus('${user.id}','active')"
-                        >
-                            ACTIVATE
-                        </button>
-
-                        <button
-                            class="danger-btn"
-                            onclick="changeUserStatus('${user.id}','inactive')"
-                        >
-                            DEACTIVATE
-                        </button>
-
-                    </div>
-                    `
-                    : `
-                    <div style="margin-top:10px;">
-                        <span class="admin-badge">
-                            CURRENT ADMIN
-                        </span>
-                    </div>
-                    `
-                }
-
-            </div>
-            `;
-
-        }).join("");
-
-    }catch(error){
-
-        container.innerHTML =
-        `<div class="message error" style="display:block;">
-        Could not load users:
-        ${escapeHtml(error.message)}
-        <br><br>
-        Your profiles table may need an admin SELECT policy.
-        </div>`;
     }
+
+    document.getElementById("userCount")
+        .textContent =
+        (data || []).length;
+
+    const box =
+        document.getElementById("usersTable");
+
+    if(!data || data.length===0){
+
+        box.innerHTML=
+            "<p>No users found.</p>";
+
+        return;
+
+    }
+
+    let html=`
+        <table>
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    data.forEach(user=>{
+
+        html+=`
+            <tr>
+
+                <td>
+                    ${escapeHtml(user.email || "")}
+                </td>
+
+                <td>
+                    ${escapeHtml(user.role || "")}
+                </td>
+
+                <td>
+                    ${escapeHtml(user.status || "")}
+                </td>
+
+                <td>
+                    ${
+                        user.id === currentUser.id
+                        ? "Current Admin"
+                        :
+                        `
+                        <button
+                            onclick="toggleUserStatus(
+                                '${user.id}',
+                                '${user.status}'
+                            )"
+                        >
+                            ${
+                                user.status==="active"
+                                ? "DEACTIVATE"
+                                : "ACTIVATE"
+                            }
+                        </button>
+                        `
+                    }
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+    html+=`
+            </tbody>
+        </table>
+    `;
+
+    box.innerHTML=html;
+
 }
 
 
-async function changeUserStatus(
-    userId,
-    status
-){
+async function toggleUserStatus(id,status){
 
-    if(!confirm(
-        "Change this user's status to " +
-        status +
-        "?"
-    )){
-        return;
-    }
+    if(!isAdmin) return;
 
-    try{
+    const newStatus =
+        status==="active"
+        ? "inactive"
+        : "active";
 
-        const {
-            error
-        } =
+    const {error} =
         await supabaseClient
         .from("profiles")
         .update({
-            status:status
+            status:newStatus
         })
-        .eq("id",userId);
+        .eq("id",id);
 
-        if(error){
+    if(error){
 
-            throw error;
-        }
+        alert(error.message);
+        return;
 
-        await loadUsers();
-
-    }catch(error){
-
-        alert(
-            "Could not change user status: " +
-            error.message
-        );
     }
+
+    await loadUsers();
+
 }
 
 
@@ -3793,96 +2148,52 @@ async function changeUserStatus(
    HELPERS
 ========================================================= */
 
-function showLoginMessage(
-    message,
-    type
-){
+function showMessage(id,text,type){
 
     const box =
-    document.getElementById(
-        "loginMessage"
-    );
+        document.getElementById(id);
 
-    box.textContent =
-    message;
+    box.textContent=text;
 
     box.className =
-    "message " + type;
+        "message " + type;
+
+    box.style.display="block";
+
 }
 
 
-function clearLoginMessage(){
+function clearMessage(id){
 
     const box =
-    document.getElementById(
-        "loginMessage"
-    );
+        document.getElementById(id);
 
-    box.textContent = "";
+    box.textContent="";
 
-    box.className =
-    "message";
-}
+    box.style.display="none";
 
-
-function showAdminMessage(
-    message,
-    type
-){
-
-    const box =
-    document.getElementById(
-        "adminGoodsMessage"
-    );
-
-    box.textContent =
-    message;
-
-    box.className =
-    "message " + type;
 }
 
 
 function formatDate(date){
 
-    if(!date){
-        return "";
-    }
+    if(!date) return "";
 
-    try{
+    return new Date(date)
+        .toLocaleString("en-GH");
 
-        return new Date(date)
-        .toLocaleString(
-            "en-GH",
-            {
-                dateStyle:"medium",
-                timeStyle:"short"
-            }
-        );
-
-    }catch(error){
-
-        return "";
-    }
 }
 
 
 function escapeHtml(value){
 
     return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
-
-function escapeAttribute(value){
-
-    return String(value ?? "")
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'");
 }
 
 
@@ -3890,18 +2201,11 @@ function escapeAttribute(value){
    NUMBER TO WORDS
 ========================================================= */
 
-function numberToWords(number){
+function numberToWords(num){
 
-    number =
-    Math.floor(
-        Number(number) || 0
-    );
+    if(num===0) return "Zero";
 
-    if(number === 0){
-        return "Zero";
-    }
-
-    const ones = [
+    const ones=[
         "",
         "One",
         "Two",
@@ -3924,7 +2228,7 @@ function numberToWords(number){
         "Nineteen"
     ];
 
-    const tens = [
+    const tens=[
         "",
         "",
         "Twenty",
@@ -3939,74 +2243,64 @@ function numberToWords(number){
 
     function convert(n){
 
-        if(n < 20){
+        if(n<20)
             return ones[n];
-        }
 
-        if(n < 100){
+        if(n<100)
+            return tens[Math.floor(n/10)] +
+                (n%10 ? " " + ones[n%10] : "");
 
-            return tens[
-                Math.floor(n / 10)
-            ] +
-            (
-                n % 10
-                ? " " + ones[n % 10]
-                : ""
-            );
-        }
+        if(n<1000)
+            return ones[Math.floor(n/100)] +
+                " Hundred" +
+                (n%100
+                    ? " " + convert(n%100)
+                    : "");
 
-        if(n < 1000){
+        if(n<1000000)
+            return convert(Math.floor(n/1000)) +
+                " Thousand" +
+                (n%1000
+                    ? " " + convert(n%1000)
+                    : "");
 
-            return ones[
-                Math.floor(n / 100)
-            ] +
-            " Hundred" +
-            (
-                n % 100
-                ? " " + convert(n % 100)
-                : ""
-            );
-        }
+        if(n<1000000000)
+            return convert(Math.floor(n/1000000)) +
+                " Million" +
+                (n%1000000
+                    ? " " + convert(n%1000000)
+                    : "");
 
-        if(n < 1000000){
-
-            return convert(
-                Math.floor(n / 1000)
-            ) +
-            " Thousand" +
-            (
-                n % 1000
-                ? " " + convert(n % 1000)
-                : ""
-            );
-        }
-
-        if(n < 1000000000){
-
-            return convert(
-                Math.floor(n / 1000000)
-            ) +
-            " Million" +
-            (
-                n % 1000000
-                ? " " + convert(n % 1000000)
-                : ""
-            );
-        }
-
-        return convert(
-            Math.floor(n / 1000000000)
-        ) +
-        " Billion" +
-        (
-            n % 1000000000
-            ? " " + convert(n % 1000000000)
-            : ""
-        );
+        return convert(Math.floor(n/1000000000)) +
+            " Billion" +
+            (n%1000000000
+                ? " " + convert(n%1000000000)
+                : "");
     }
 
-    return convert(number);
+    return convert(Math.floor(num));
+
 }
+
+
+/* =========================================================
+   START
+========================================================= */
+
+buildCediRows();
+
+(async function(){
+
+    const {data} =
+        await supabaseClient.auth.getSession();
+
+    if(data.session){
+
+        await startUserSession();
+
+    }
+
+})();
 
 </script>
 
