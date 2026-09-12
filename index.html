@@ -406,10 +406,6 @@ padding:11px 3px;
 
 <body>
 
-<!-- =====================================================
-LOGIN
-===================================================== -->
-
 <div id="loginScreen" class="login-screen">
 
 <div class="login-box">
@@ -453,7 +449,6 @@ CREATE ACCOUNT
 </button>
 
 </div>
-
 
 <div id="createFields" class="hidden">
 
@@ -501,10 +496,6 @@ BACK TO LOGIN
 
 </div>
 
-
-<!-- =====================================================
-MAIN APP
-===================================================== -->
 
 <div id="app" class="hidden">
 
@@ -559,10 +550,6 @@ Admin
 </div>
 
 
-<!-- =====================================================
-REVENUE
-===================================================== -->
-
 <section
 id="revenue"
 class="section active">
@@ -572,60 +559,25 @@ class="section active">
 <h2>Revenue Calculator</h2>
 
 <label>Bank 1</label>
-
-<input
-type="number"
-id="bank1"
-value=""
->
+<input type="number" id="bank1" value="">
 
 <label>Bank 2</label>
-
-<input
-type="number"
-id="bank2"
-value=""
->
+<input type="number" id="bank2" value="">
 
 <label>Bank 3</label>
-
-<input
-type="number"
-id="bank3"
-value=""
->
+<input type="number" id="bank3" value="">
 
 <label>Cash at Hand</label>
-
-<input
-type="number"
-id="cashAtHand"
-value=""
->
+<input type="number" id="cashAtHand" value="">
 
 <label>Expenses</label>
-
-<input
-type="number"
-id="expenses"
-value=""
->
+<input type="number" id="expenses" value="">
 
 <label>Total Goods</label>
-
-<input
-type="number"
-id="totalGoods"
-value=""
->
+<input type="number" id="totalGoods" value="">
 
 <label>Remaining Goods</label>
-
-<input
-type="number"
-id="remainingGoods"
-value=""
->
+<input type="number" id="remainingGoods" value="">
 
 <button
 class="main-btn"
@@ -633,56 +585,34 @@ onclick="calculateRevenue()">
 CALCULATE
 </button>
 
-
 <div class="summary">
 
 <div class="summary-row">
 <span>Total Banks</span>
-<strong
-class="money"
-id="totalBanks">
-GH₵0.00
-</strong>
+<strong class="money" id="totalBanks">GH₵0.00</strong>
 </div>
 
 <div class="summary-row">
 <span>Total Bank & Cash</span>
-<strong
-class="money"
-id="totalBankCash">
-GH₵0.00
-</strong>
+<strong class="money" id="totalBankCash">GH₵0.00</strong>
 </div>
 
 <div class="summary-row">
 <span>Remaining Goods</span>
-<strong
-class="money"
-id="summaryRemainingGoods">
-GH₵0.00
-</strong>
+<strong class="money" id="summaryRemainingGoods">GH₵0.00</strong>
 </div>
 
 <div class="summary-row">
 <span>Goods After Expenses</span>
-<strong
-class="money"
-id="goodsAfterExpenses">
-GH₵0.00
-</strong>
+<strong class="money" id="goodsAfterExpenses">GH₵0.00</strong>
 </div>
 
 <div class="summary-row">
 <span>TOTAL PROFIT</span>
-<strong
-class="money profit"
-id="totalProfit">
-GH₵0.00
-</strong>
+<strong class="money profit" id="totalProfit">GH₵0.00</strong>
 </div>
 
 </div>
-
 
 <button
 class="secondary-btn"
@@ -690,54 +620,38 @@ onclick="showRevenueSave()">
 SAVE REVENUE RECORD
 </button>
 
-
-<div
-id="revenueSaveBox"
-class="card hidden">
+<div id="revenueSaveBox" class="card hidden">
 
 <h3>Save Revenue Record</h3>
 
 <label>Week</label>
-
 <select id="revenueWeek"></select>
 
 <label>Start Date</label>
-
 <input
 type="date"
 id="revenueStartDate"
-onchange="setRevenueEndDate()"
+onchange="setRevenueEndDate"
 >
 
 <label>To Date</label>
+<input type="date" id="revenueEndDate" readonly>
 
-<input
-type="date"
-id="revenueEndDate"
-readonly
->
-
-<button
-class="main-btn"
-onclick="saveRevenueRecord()">
+<button class="main-btn" onclick="saveRevenueRecord()">
 SAVE RECORD
 </button>
 
-<button
-class="reset-btn"
-onclick="cancelRevenueSave()">
+<button class="reset-btn" onclick="cancelRevenueSave()">
 CANCEL
 </button>
 
 </div>
-
 
 <button
 class="reset-btn"
 onclick="resetRevenue()">
 RESET
 </button>
-
 
 <button
 class="danger-btn"
@@ -747,7 +661,6 @@ LOGOUT
 </button>
 
 </div>
-
 
 <div class="card">
 
@@ -762,13 +675,7 @@ No saved revenue records.
 </section>
 
 
-<!-- =====================================================
-CEDI
-===================================================== -->
-
-<section
-id="cedi"
-class="section">
+<section id="cedi" class="section">
 
 <div class="card">
 
@@ -781,7 +688,6 @@ class="main-btn"
 onclick="calculateCedi()">
 CALCULATE
 </button>
-
 
 <div class="summary">
 
@@ -796,7 +702,6 @@ GH₵0.00
 </strong>
 
 </div>
-
 
 <div class="summary-row">
 
@@ -815,30 +720,19 @@ Zero Ghana Cedis
 </section>
 
 
-<!-- =====================================================
-GOODS
-===================================================== -->
-
-<section
-id="goods"
-class="section">
-
-
-<!-- REQUEST GOOD -->
+<section id="goods" class="section">
 
 <div class="card">
 
 <h2>Request a New Good</h2>
 
-<p
-style="font-size:14px;color:#527a58">
+<p style="font-size:14px;color:#527a58">
 
 If the good you need is not on the approved goods list,
 enter the name and price below. An admin must approve it
 before it is added to the official goods list.
 
 </p>
-
 
 <label>Good Name</label>
 
@@ -848,7 +742,6 @@ id="requestGoodName"
 placeholder="Enter good name"
 >
 
-
 <label>Price</label>
 
 <input
@@ -857,23 +750,16 @@ id="requestGoodPrice"
 placeholder="Enter price"
 >
 
-
 <button
 class="main-btn"
 onclick="submitGoodRequest()">
 REQUEST GOOD
 </button>
 
-
-<div
-id="requestMessage"
-class="status hidden">
-</div>
+<div id="requestMessage" class="status hidden"></div>
 
 </div>
 
-
-<!-- MY REQUESTS -->
 
 <div class="card">
 
@@ -886,8 +772,6 @@ No requests yet.
 </div>
 
 
-<!-- WEEKLY GOODS -->
-
 <div class="card">
 
 <h2>Weekly Goods Recording</h2>
@@ -899,14 +783,9 @@ id="goodsWeek"
 onchange="loadSelectedWeek()">
 </select>
 
-
 <label>Date</label>
 
-<input
-type="date"
-id="goodsDate"
->
-
+<input type="date" id="goodsDate">
 
 <label>Previous Week Remaining Goods</label>
 
@@ -917,9 +796,7 @@ readonly
 value="None"
 >
 
-
-<div
-style="display:flex;gap:7px;margin-top:12px">
+<div style="display:flex;gap:7px;margin-top:12px">
 
 <button
 class="tab active"
@@ -936,7 +813,6 @@ Remaining Goods
 </button>
 
 </div>
-
 
 <div
 id="startingGoodsBox"
@@ -961,7 +837,6 @@ SAVE STARTING GOODS
 <div id="startingSavedStatus"></div>
 
 </div>
-
 
 <div
 id="remainingGoodsBox"
@@ -1015,23 +890,13 @@ No saved weekly records.
 </section>
 
 
-<!-- =====================================================
-ADMIN
-===================================================== -->
-
-<section
-id="admin"
-class="section">
-
-
-<!-- ACCOUNTS -->
+<section id="admin" class="section">
 
 <div class="card">
 
 <h2>Registered Accounts</h2>
 
-<p
-style="font-size:14px;color:#527a58">
+<p style="font-size:14px;color:#527a58">
 
 Approve new accounts or remove users from the site.
 
@@ -1044,14 +909,11 @@ Loading accounts...
 </div>
 
 
-<!-- GOOD REQUESTS -->
-
 <div class="card">
 
 <h2>Good Requests</h2>
 
-<p
-style="font-size:14px;color:#527a58">
+<p style="font-size:14px;color:#527a58">
 
 Normal users must receive approval before their requested
 good and price are added to the official goods list.
@@ -1065,8 +927,6 @@ Loading requests...
 </div>
 
 
-<!-- APPROVED GOODS -->
-
 <div class="card">
 
 <h2>Approved Goods & Prices</h2>
@@ -1074,7 +934,6 @@ Loading requests...
 <div id="adminGoodsList">
 Loading goods...
 </div>
-
 
 <label>Good Name</label>
 
@@ -1084,7 +943,6 @@ id="adminGoodName"
 placeholder="Good name"
 >
 
-
 <label>Price</label>
 
 <input
@@ -1092,7 +950,6 @@ type="number"
 id="adminGoodPrice"
 placeholder="Price"
 >
-
 
 <button
 class="main-btn"
@@ -1110,10 +967,6 @@ ADD GOOD & PRICE
 
 
 <script>
-
-/* =====================================================
-SUPABASE
-===================================================== */
 
 const SUPABASE_URL =
 "https://ywsmyynauytmgdiijwlo.supabase.co";
@@ -1134,10 +987,6 @@ detectSessionInUrl:true
 );
 
 
-/* =====================================================
-CONSTANTS
-===================================================== */
-
 const GOODS_KEY="oc_demo_goods";
 
 const WEEKS_KEY=
@@ -1150,10 +999,6 @@ let currentUser=null;
 let currentProfile=null;
 let goods=[];
 
-
-/* =====================================================
-LOGIN
-===================================================== */
 
 function showCreateAccount(){
 
@@ -1201,10 +1046,6 @@ box.style.display="block";
 }
 
 
-/* =====================================================
-CREATE ACCOUNT
-===================================================== */
-
 async function createAccount(){
 
 const name=
@@ -1227,6 +1068,7 @@ showLoginMessage(
 );
 
 return;
+
 }
 
 
@@ -1237,6 +1079,7 @@ showLoginMessage(
 );
 
 return;
+
 }
 
 
@@ -1283,10 +1126,6 @@ document.getElementById("createPassword").value="";
 
 }
 
-
-/* =====================================================
-LOGIN
-===================================================== */
 
 async function loginUser(){
 
@@ -1336,10 +1175,6 @@ await loadUserProfile();
 }
 
 
-/* =====================================================
-PROFILE
-===================================================== */
-
 async function loadUserProfile(){
 
 if(!currentUser){
@@ -1383,8 +1218,6 @@ return;
 currentProfile=data;
 
 
-/* PENDING */
-
 if(data.status==="pending"){
 
 await db.auth.signOut();
@@ -1397,8 +1230,6 @@ return;
 
 }
 
-
-/* REMOVED */
 
 if(data.status==="removed"){
 
@@ -1413,8 +1244,6 @@ return;
 }
 
 
-/* ONLY ACTIVE */
-
 if(data.status!=="active"){
 
 await db.auth.signOut();
@@ -1427,8 +1256,6 @@ return;
 
 }
 
-
-/* OPEN APP */
 
 document
 .getElementById("loginScreen")
@@ -1453,8 +1280,6 @@ document
 
 }
 
-
-/* LOAD DATA */
 
 await loadGoods();
 
@@ -1482,10 +1307,6 @@ await loadAdminGoods();
 }
 
 
-/* =====================================================
-LOGOUT
-===================================================== */
-
 async function logoutUser(){
 
 await db.auth.signOut();
@@ -1505,10 +1326,6 @@ showLogin();
 
 }
 
-
-/* =====================================================
-TABS
-===================================================== */
 
 function showTab(id,button){
 
@@ -1550,10 +1367,6 @@ loadAdminGoods();
 }
 
 
-/* =====================================================
-MONEY
-===================================================== */
-
 function money(value){
 
 return "GH₵"+
@@ -1565,10 +1378,6 @@ maximumFractionDigits:2
 
 }
 
-
-/* =====================================================
-REVENUE
-===================================================== */
 
 function calculateRevenue(){
 
@@ -1905,10 +1714,6 @@ loadRevenueRecords();
 }
 
 
-/* =====================================================
-CEDI
-===================================================== */
-
 function loadCediRows(){
 
 const denominations=[
@@ -2156,10 +1961,6 @@ return result+
 }
 
 
-/* =====================================================
-GOODS
-===================================================== */
-
 async function loadGoods(){
 
 const {data,error}=
@@ -2230,10 +2031,6 @@ return div.innerHTML;
 
 }
 
-
-/* =====================================================
-ADMIN GOODS
-===================================================== */
 
 async function loadAdminGoods(){
 
@@ -2436,10 +2233,6 @@ await loadAdminGoods();
 }
 
 
-/* =====================================================
-NORMAL USER GOOD REQUEST
-===================================================== */
-
 async function submitGoodRequest(){
 
 if(!currentUser){
@@ -2527,10 +2320,6 @@ loadMyGoodRequests();
 
 }
 
-
-/* =====================================================
-MY GOOD REQUESTS
-===================================================== */
 
 async function loadMyGoodRequests(){
 
@@ -2629,16 +2418,23 @@ box.appendChild(div);
 
 
 /* =====================================================
-ADMIN ACCOUNTS
+UPDATED ADMIN ACCOUNTS
 ===================================================== */
 
 async function loadAccounts(){
 
-if(currentProfile?.role!=="admin")return;
+if(currentProfile?.role!=="admin"){
+
+return;
+
+}
 
 
 const box=
 document.getElementById("accountsList");
+
+if(!box)return;
+
 
 box.textContent=
 "Loading accounts...";
@@ -2647,25 +2443,32 @@ box.textContent=
 const {data,error}=
 await db
 .from("profiles")
-.select("*")
+.select(
+"id,email,full_name,role,status,created_at"
+)
+.eq("role","user")
 .order("created_at",{ascending:false});
 
 
 if(error){
 
-box.textContent=error.message;
+box.innerHTML=`
+
+<div class="status"
+style="background:#ffecec;color:#8a1c1c">
+
+${escapeHtml(error.message)}
+
+</div>
+
+`;
 
 return;
 
 }
 
 
-const users=
-(data||[])
-.filter(p=>p.role!=="admin");
-
-
-if(!users.length){
+if(!data || !data.length){
 
 box.textContent=
 "No normal user accounts found.";
@@ -2678,12 +2481,40 @@ return;
 box.innerHTML="";
 
 
-users.forEach(user=>{
+data.forEach(user=>{
 
 const div=
 document.createElement("div");
 
 div.className="account-item";
+
+
+let statusColor="#555";
+let statusBackground="#edf2ed";
+
+
+if(user.status==="pending"){
+
+statusColor="#856404";
+statusBackground="#fff3cd";
+
+}
+
+
+if(user.status==="active"){
+
+statusColor="#245c2a";
+statusBackground="#dff1df";
+
+}
+
+
+if(user.status==="removed"){
+
+statusColor="#8a1c1c";
+statusBackground="#f8dddd";
+
+}
 
 
 let buttons="";
@@ -2699,7 +2530,6 @@ onclick="approveUser('${user.id}')">
 APPROVE
 </button>
 
-
 <button
 class="remove-btn"
 onclick="removeUser('${user.id}')">
@@ -2708,7 +2538,10 @@ REMOVE
 
 `;
 
-}else if(user.status==="active"){
+}
+
+
+else if(user.status==="active"){
 
 buttons=`
 
@@ -2720,12 +2553,22 @@ REMOVE
 
 `;
 
-}else if(user.status==="removed"){
+}
+
+
+else if(user.status==="removed"){
 
 buttons=`
 
-<span class="badge">
+<span
+class="badge"
+style="
+background:${statusBackground};
+color:${statusColor};
+">
+
 REMOVED
+
 </span>
 
 `;
@@ -2737,19 +2580,23 @@ div.innerHTML=`
 
 <div class="item-top">
 
-<div>
+<div style="min-width:0">
 
-<strong>
+<strong style="word-break:break-word">
+
 ${escapeHtml(
 user.email||"No email"
 )}
+
 </strong>
 
 
 <div
-style="font-size:12px;
+style="
+font-size:12px;
 color:#777;
-margin-top:5px">
+margin-top:5px;
+">
 
 Created:
 ${
@@ -2767,13 +2614,16 @@ user.created_at
 </div>
 
 
-<span class="badge">
+<span
+class="badge"
+style="
+background:${statusBackground};
+color:${statusColor};
+">
 
-${
-String(
+${String(
 user.status||"unknown"
-).toUpperCase()
-}
+).toUpperCase()}
 
 </span>
 
@@ -2781,11 +2631,12 @@ user.status||"unknown"
 
 
 <div class="item-actions">
+
 ${buttons}
+
 </div>
 
 `;
-
 
 box.appendChild(div);
 
@@ -2795,12 +2646,47 @@ box.appendChild(div);
 
 
 /* =====================================================
-APPROVE USER
+UPDATED APPROVE USER
 ===================================================== */
 
 async function approveUser(userId){
 
-if(currentProfile?.role!=="admin")return;
+if(currentProfile?.role!=="admin"){
+
+alert(
+"Only the admin can approve accounts."
+);
+
+return;
+
+}
+
+
+const confirmed=
+confirm(
+"Approve this account?\n\n" +
+"The account will become active and " +
+"the user's email will be automatically confirmed."
+);
+
+
+if(!confirmed){
+
+return;
+
+}
+
+
+const buttons=
+document.querySelectorAll(
+`button[onclick="approveUser('${userId}')"]`
+);
+
+
+buttons.forEach(button=>{
+button.disabled=true;
+button.textContent="APPROVING...";
+});
 
 
 const {error}=
@@ -2814,11 +2700,22 @@ p_user_id:userId
 
 if(error){
 
-alert(error.message);
+alert(
+"Could not approve this account.\n\n"+
+error.message
+);
+
+await loadAccounts();
 
 return;
 
 }
+
+
+alert(
+"Account approved successfully.\n\n"+
+"The user can now log in."
+);
 
 
 await loadAccounts();
@@ -2827,21 +2724,47 @@ await loadAccounts();
 
 
 /* =====================================================
-REMOVE USER
+UPDATED REMOVE USER
 ===================================================== */
 
 async function removeUser(userId){
 
-if(currentProfile?.role!=="admin")return;
+if(currentProfile?.role!=="admin"){
 
-
-if(!confirm(
-"Remove this account from the Oak & Cedar site?"
-)){
+alert(
+"Only the admin can remove accounts."
+);
 
 return;
 
 }
+
+
+const confirmed=
+confirm(
+"Remove this account?\n\n" +
+"The account will be removed from Oak & Cedar " +
+"and the user will no longer be able to log in."
+);
+
+
+if(!confirmed){
+
+return;
+
+}
+
+
+const buttons=
+document.querySelectorAll(
+`button[onclick="removeUser('${userId}')"]`
+);
+
+
+buttons.forEach(button=>{
+button.disabled=true;
+button.textContent="REMOVING...";
+});
 
 
 const {error}=
@@ -2855,11 +2778,22 @@ p_user_id:userId
 
 if(error){
 
-alert(error.message);
+alert(
+"Could not remove this account.\n\n"+
+error.message
+);
+
+await loadAccounts();
 
 return;
 
 }
+
+
+alert(
+"Account removed successfully.\n\n"+
+"The user can no longer log in."
+);
 
 
 await loadAccounts();
@@ -2869,7 +2803,6 @@ await loadAccounts();
 
 /* =====================================================
 ADMIN GOOD REQUESTS
-FIXED VERSION
 ===================================================== */
 
 async function loadAdminGoodRequests(){
@@ -2885,21 +2818,6 @@ document.getElementById(
 box.textContent=
 "Loading requests...";
 
-
-/*
-IMPORTANT:
-
-We do NOT use:
-
-profiles:user_id(email)
-
-because there is no foreign-key
-relationship between good_requests
-and profiles.
-
-We get requests first, then get
-the emails separately.
-*/
 
 const {
 data:requests,
@@ -2929,10 +2847,6 @@ return;
 
 }
 
-
-/*
-Get all user IDs from the requests.
-*/
 
 const userIds=[
 ...new Set(
@@ -3003,7 +2917,6 @@ onclick="approveGoodRequest(${r.id})">
 APPROVE
 </button>
 
-
 <button
 class="reject-btn"
 onclick="rejectGoodRequest(${r.id})">
@@ -3044,9 +2957,11 @@ ${money(r.price)}
 
 
 <div
-style="font-size:13px;
+style="
+font-size:13px;
 color:#527a58;
-margin-top:6px">
+margin-top:6px
+">
 
 Requested by:
 ${escapeHtml(email)}
@@ -3055,9 +2970,11 @@ ${escapeHtml(email)}
 
 
 <div
-style="font-size:12px;
+style="
+font-size:12px;
 color:#777;
-margin-top:4px">
+margin-top:4px
+">
 
 ${new Date(
 r.created_at
@@ -3083,10 +3000,6 @@ box.appendChild(div);
 
 }
 
-
-/* =====================================================
-APPROVE GOOD REQUEST
-===================================================== */
 
 async function approveGoodRequest(id){
 
@@ -3133,10 +3046,6 @@ alert(
 }
 
 
-/* =====================================================
-REJECT GOOD REQUEST
-===================================================== */
-
 async function rejectGoodRequest(id){
 
 if(currentProfile?.role!=="admin")return;
@@ -3173,10 +3082,6 @@ await loadAdminGoodRequests();
 
 }
 
-
-/* =====================================================
-WEEKLY GOODS
-===================================================== */
 
 function loadWeeks(){
 
@@ -3957,10 +3862,6 @@ html||"No saved weekly records.";
 }
 
 
-/* =====================================================
-EXISTING SESSION
-===================================================== */
-
 async function checkExistingSession(){
 
 const {data}=
@@ -3982,10 +3883,6 @@ await loadUserProfile();
 
 }
 
-
-/* =====================================================
-START
-===================================================== */
 
 loadRevenueWeeks();
 
