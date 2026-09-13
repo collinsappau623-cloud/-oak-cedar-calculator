@@ -9,51 +9,63 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
 
 body{
 margin:0;
 font-family:Arial,Helvetica,sans-serif;
 background:linear-gradient(135deg,#eef2ee,#dfe6df);
 color:#24452d;
+font-size:15px;
 }
 
 header{
 background:#24452d;
 color:white;
-padding:18px 15px;
+padding:16px 15px;
 display:flex;
 align-items:center;
-gap:14px;
+gap:13px;
+box-shadow:0 2px 8px rgba(36,69,45,.12);
 }
 
 .logo{
-width:58px;
-height:58px;
+width:56px;
+height:56px;
+min-width:56px;
 border:3px solid white;
 border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
 font-weight:bold;
-font-size:20px;
+font-size:19px;
+letter-spacing:-1px;
 }
 
 .header-title{
-font-size:23px;
+font-size:22px;
 font-weight:bold;
+line-height:1.1;
 }
 
 .header-subtitle{
 font-size:13px;
 opacity:.85;
-margin-top:3px;
+margin-top:4px;
 }
 
 .container{
+width:100%;
 max-width:720px;
-margin:auto;
-padding:15px;
+margin:0 auto;
+padding:12px 15px 25px;
 }
 
 .tabs{
@@ -62,8 +74,8 @@ top:0;
 z-index:20;
 background:#eef2ee;
 display:flex;
-gap:6px;
-padding:10px 0;
+gap:5px;
+padding:9px 0;
 }
 
 .tab{
@@ -71,15 +83,21 @@ flex:1;
 border:none;
 background:#d8e2d8;
 color:#24452d;
-padding:12px 5px;
-border-radius:9px;
+padding:11px 5px;
+border-radius:8px;
+font-size:13px;
 font-weight:bold;
 cursor:pointer;
+transition:.15s;
 }
 
 .tab.active{
 background:#6b8e58;
 color:white;
+}
+
+.tab:active{
+transform:scale(.98);
 }
 
 .section{
@@ -92,36 +110,60 @@ display:block;
 
 .card{
 background:white;
-border-radius:13px;
-padding:17px;
-margin-bottom:15px;
+border-radius:12px;
+padding:16px;
+margin-bottom:14px;
 box-shadow:0 3px 12px rgba(36,69,45,.08);
 }
 
 .card h2{
-margin:0 0 15px;
+margin:0 0 14px;
 font-size:19px;
+line-height:1.25;
+color:#24452d;
 }
 
 .card h3{
-margin:0 0 12px;
+margin:0 0 11px;
 font-size:16px;
+line-height:1.25;
+color:#24452d;
+}
+
+p{
+line-height:1.5;
 }
 
 label{
 display:block;
+font-size:14px;
 font-weight:bold;
 margin-top:10px;
 margin-bottom:5px;
+color:#24452d;
 }
 
-input,select{
+input,
+select{
 width:100%;
-padding:11px;
+padding:11px 10px;
 border:1px solid #cbd6cb;
 border-radius:8px;
+font-family:inherit;
 font-size:15px;
 background:white;
+color:#24452d;
+outline:none;
+}
+
+input:focus,
+select:focus{
+border-color:#6b8e58;
+box-shadow:0 0 0 2px rgba(107,142,88,.10);
+}
+
+input::placeholder{
+color:#8a948b;
 }
 
 button{
@@ -130,11 +172,12 @@ font-family:inherit;
 
 .main-btn{
 width:100%;
-padding:12px;
+padding:12px 10px;
 border:none;
 border-radius:8px;
 background:#6b8e58;
 color:white;
+font-size:14px;
 font-weight:bold;
 margin-top:12px;
 cursor:pointer;
@@ -142,11 +185,25 @@ cursor:pointer;
 
 .secondary-btn{
 width:100%;
-padding:11px;
+padding:11px 10px;
 border:none;
 border-radius:8px;
 background:#527a58;
 color:white;
+font-size:14px;
+font-weight:bold;
+margin-top:10px;
+cursor:pointer;
+}
+
+.reset-btn{
+width:100%;
+padding:11px 10px;
+border:none;
+border-radius:8px;
+background:#d8e2d8;
+color:#24452d;
+font-size:14px;
 font-weight:bold;
 margin-top:10px;
 cursor:pointer;
@@ -158,6 +215,7 @@ border:none;
 border-radius:7px;
 background:#a94b4b;
 color:white;
+font-size:13px;
 font-weight:bold;
 cursor:pointer;
 }
@@ -168,6 +226,7 @@ border:none;
 border-radius:7px;
 background:#6b8e58;
 color:white;
+font-size:13px;
 font-weight:bold;
 cursor:pointer;
 }
@@ -178,6 +237,7 @@ border:none;
 border-radius:7px;
 background:#777;
 color:white;
+font-size:13px;
 font-weight:bold;
 cursor:pointer;
 }
@@ -188,30 +248,45 @@ border:none;
 border-radius:7px;
 background:#a94b4b;
 color:white;
+font-size:13px;
 font-weight:bold;
 cursor:pointer;
 }
 
-.reset-btn{
-width:100%;
-padding:11px;
+.small-btn{
 border:none;
-border-radius:8px;
-background:#d8e2d8;
-color:#24452d;
+border-radius:7px;
+padding:9px 10px;
+background:#a94b4b;
+color:white;
+font-size:13px;
 font-weight:bold;
-margin-top:10px;
 cursor:pointer;
 }
 
-.row{
-display:flex;
-gap:8px;
-align-items:end;
+.summary{
+background:#edf4eb;
+border-radius:10px;
+padding:11px 12px;
+margin-top:12px;
 }
 
-.row>div{
-flex:1;
+.summary-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+padding:8px 0;
+border-bottom:1px solid #d8e2d8;
+font-size:14px;
+}
+
+.summary-row:last-child{
+border-bottom:none;
+}
+
+.summary-row span{
+color:#24452d;
 }
 
 .money{
@@ -219,27 +294,20 @@ color:#111;
 font-weight:bold;
 }
 
-.summary{
-background:#edf4eb;
-border-radius:10px;
-padding:12px;
+.profit{
+font-size:20px;
+font-weight:bold;
+}
+
+#revenueSaveBox{
+background:#fafcf9;
+border:1px solid #d8e2d8;
+box-shadow:none;
 margin-top:12px;
 }
 
-.summary-row{
-display:flex;
-justify-content:space-between;
-padding:7px 0;
-border-bottom:1px solid #d8e2d8;
-}
-
-.summary-row:last-child{
-border-bottom:none;
-}
-
-.profit{
-font-size:21px;
-font-weight:bold;
+#revenueSaveBox h3{
+font-size:16px;
 }
 
 .cedi-row{
@@ -251,13 +319,16 @@ margin-bottom:8px;
 }
 
 .cedi-denom{
+font-size:14px;
 font-weight:bold;
 color:#24452d;
 }
 
 .cedi-total{
+font-size:14px;
 color:#111;
 font-weight:bold;
+text-align:right;
 }
 
 .good-row{
@@ -268,21 +339,18 @@ align-items:center;
 margin-bottom:8px;
 }
 
-.small-btn{
-border:none;
-border-radius:7px;
-padding:9px;
-background:#a94b4b;
-color:white;
-cursor:pointer;
+.good-row input,
+.good-row select{
+min-width:0;
 }
 
 .status{
-padding:10px;
+padding:10px 11px;
 border-radius:8px;
 background:#edf4eb;
 margin-top:10px;
-font-size:14px;
+font-size:13px;
+line-height:1.45;
 }
 
 .account-item,
@@ -290,9 +358,11 @@ font-size:14px;
 .saved-item{
 border:1px solid #d8e2d8;
 border-radius:9px;
-padding:12px;
+padding:11px;
 margin-bottom:9px;
 background:#fafcf9;
+font-size:14px;
+line-height:1.5;
 }
 
 .item-top{
@@ -306,7 +376,7 @@ align-items:flex-start;
 display:flex;
 gap:6px;
 flex-wrap:wrap;
-margin-top:10px;
+margin-top:9px;
 }
 
 .badge{
@@ -314,8 +384,9 @@ display:inline-block;
 padding:5px 8px;
 border-radius:6px;
 background:#edf2ed;
-font-size:12px;
+font-size:11px;
 font-weight:bold;
+white-space:nowrap;
 }
 
 .login-screen{
@@ -323,21 +394,22 @@ min-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-padding:20px;
+padding:18px;
+background:linear-gradient(135deg,#eef2ee,#dfe6df);
 }
 
 .login-box{
 width:100%;
-max-width:420px;
+max-width:400px;
 background:white;
-border-radius:15px;
-padding:22px;
+border-radius:14px;
+padding:21px;
 box-shadow:0 4px 18px rgba(36,69,45,.12);
 }
 
 .login-logo{
-width:70px;
-height:70px;
+width:68px;
+height:68px;
 border-radius:50%;
 background:#24452d;
 color:white;
@@ -345,29 +417,34 @@ border:3px solid #6b8e58;
 display:flex;
 align-items:center;
 justify-content:center;
-margin:0 auto 12px;
-font-size:23px;
+margin:0 auto 11px;
+font-size:22px;
 font-weight:bold;
+letter-spacing:-1px;
 }
 
 .login-title{
 text-align:center;
 color:#24452d;
-font-size:24px;
+font-size:23px;
 font-weight:bold;
 }
 
 .login-subtitle{
 text-align:center;
 color:#527a58;
-margin-bottom:20px;
+font-size:14px;
+margin-top:3px;
+margin-bottom:19px;
 }
 
 .login-message{
 background:#edf4eb;
+color:#24452d;
 padding:10px;
 border-radius:8px;
-font-size:14px;
+font-size:13px;
+line-height:1.45;
 margin-top:10px;
 display:none;
 }
@@ -378,8 +455,98 @@ display:none !important;
 
 @media(max-width:600px){
 
+body{
+font-size:14px;
+}
+
+header{
+padding:15px 13px;
+}
+
+.logo{
+width:54px;
+height:54px;
+min-width:54px;
+font-size:18px;
+}
+
+.header-title{
+font-size:21px;
+}
+
+.header-subtitle{
+font-size:12px;
+}
+
+.container{
+padding:10px 12px 22px;
+}
+
+.tabs{
+gap:4px;
+padding:8px 0;
+}
+
+.tab{
+font-size:12px;
+padding:11px 3px;
+border-radius:8px;
+}
+
+.card{
+padding:15px;
+margin-bottom:12px;
+border-radius:11px;
+}
+
+.card h2{
+font-size:18px;
+margin-bottom:13px;
+}
+
+.card h3{
+font-size:15px;
+}
+
+label{
+font-size:13px;
+}
+
+input,
+select{
+font-size:14px;
+padding:10px;
+}
+
+.main-btn,
+.secondary-btn,
+.reset-btn{
+font-size:13px;
+padding:11px;
+}
+
+.summary-row{
+font-size:13px;
+padding:7px 0;
+}
+
+.profit{
+font-size:19px;
+}
+
+.cedi-row{
+grid-template-columns:62px 1fr 1fr;
+gap:7px;
+}
+
+.cedi-denom,
+.cedi-total{
+font-size:13px;
+}
+
 .good-row{
 grid-template-columns:1fr 1fr;
+gap:7px;
 }
 
 .good-row input:first-child,
@@ -387,17 +554,72 @@ grid-template-columns:1fr 1fr;
 grid-column:1 / -1;
 }
 
+.small-btn{
+padding:9px;
+}
+
 .item-top{
 flex-direction:column;
+gap:7px;
 }
 
-.tabs{
-gap:4px;
+.item-actions{
+margin-top:8px;
 }
+
+.account-item,
+.request-item,
+.saved-item{
+font-size:13px;
+padding:10px;
+}
+
+.login-screen{
+padding:15px;
+}
+
+.login-box{
+padding:19px;
+}
+
+.login-logo{
+width:64px;
+height:64px;
+font-size:21px;
+}
+
+.login-title{
+font-size:22px;
+}
+
+.login-subtitle{
+font-size:13px;
+}
+
+}
+
+@media(max-width:380px){
 
 .tab{
+font-size:11px;
+padding:10px 2px;
+}
+
+.card{
+padding:13px;
+}
+
+.cedi-row{
+grid-template-columns:58px 1fr 1fr;
+gap:5px;
+}
+
+.cedi-denom{
 font-size:12px;
-padding:11px 3px;
+}
+
+.cedi-total{
+font-size:12px;
 }
 
 }
@@ -412,7 +634,9 @@ padding:11px 3px;
 
 <div class="login-logo">O&C</div>
 
-<div class="login-title">Oak & Cedar</div>
+<div class="login-title">
+Oak & Cedar
+</div>
 
 <div class="login-subtitle">
 Business Calculator
@@ -631,17 +855,21 @@ SAVE REVENUE RECORD
 <input
 type="date"
 id="revenueStartDate"
-onchange="setRevenueEndDate"
+onchange="setRevenueEndDate()"
 >
 
 <label>To Date</label>
 <input type="date" id="revenueEndDate" readonly>
 
-<button class="main-btn" onclick="saveRevenueRecord()">
+<button
+class="main-btn"
+onclick="saveRevenueRecord()">
 SAVE RECORD
 </button>
 
-<button class="reset-btn" onclick="cancelRevenueSave()">
+<button
+class="reset-btn"
+onclick="cancelRevenueSave()">
 CANCEL
 </button>
 
@@ -726,7 +954,7 @@ Zero Ghana Cedis
 
 <h2>Request a New Good</h2>
 
-<p style="font-size:14px;color:#527a58">
+<p style="font-size:13px;color:#527a58">
 
 If the good you need is not on the approved goods list,
 enter the name and price below. An admin must approve it
@@ -785,7 +1013,9 @@ onchange="loadSelectedWeek()">
 
 <label>Date</label>
 
-<input type="date" id="goodsDate">
+<input
+type="date"
+id="goodsDate">
 
 <label>Previous Week Remaining Goods</label>
 
@@ -896,7 +1126,7 @@ No saved weekly records.
 
 <h2>Registered Accounts</h2>
 
-<p style="font-size:14px;color:#527a58">
+<p style="font-size:13px;color:#527a58">
 
 Approve new accounts or remove users from the site.
 
@@ -913,7 +1143,7 @@ Loading accounts...
 
 <h2>Good Requests</h2>
 
-<p style="font-size:14px;color:#527a58">
+<p style="font-size:13px;color:#527a58">
 
 Normal users must receive approval before their requested
 good and price are added to the official goods list.
@@ -985,7 +1215,6 @@ detectSessionInUrl:true
 }
 }
 );
-
 
 const GOODS_KEY="oc_demo_goods";
 
@@ -2418,7 +2647,7 @@ box.appendChild(div);
 
 
 /* =====================================================
-UPDATED ADMIN ACCOUNTS
+ADMIN ACCOUNTS
 ===================================================== */
 
 async function loadAccounts(){
@@ -2645,10 +2874,6 @@ box.appendChild(div);
 }
 
 
-/* =====================================================
-UPDATED APPROVE USER
-===================================================== */
-
 async function approveUser(userId){
 
 if(currentProfile?.role!=="admin"){
@@ -2723,10 +2948,6 @@ await loadAccounts();
 }
 
 
-/* =====================================================
-UPDATED REMOVE USER
-===================================================== */
-
 async function removeUser(userId){
 
 if(currentProfile?.role!=="admin"){
@@ -2797,8 +3018,6 @@ alert(
 );
 
 
-// Refresh the Registered Accounts list.
-// The deleted account will no longer appear.
 await loadAccounts();
 
 }
