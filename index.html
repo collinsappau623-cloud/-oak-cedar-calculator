@@ -2742,9 +2742,9 @@ return;
 
 const confirmed=
 confirm(
-"Remove this account?\n\n" +
-"The account will be removed from Oak & Cedar " +
-"and the user will no longer be able to log in."
+"Remove this account permanently?\n\n" +
+"The account will disappear from Registered Accounts " +
+"and the same email can be registered again as a fresh pending account."
 );
 
 
@@ -2792,10 +2792,13 @@ return;
 
 alert(
 "Account removed successfully.\n\n"+
-"The user can no longer log in."
+"The account has been completely deleted. " +
+"The same email can now be registered again as a new pending account."
 );
 
 
+// Refresh the Registered Accounts list.
+// The deleted account will no longer appear.
 await loadAccounts();
 
 }
