@@ -10,4107 +10,4349 @@
 
 <style>
 *{
-box-sizing:border-box;
+  box-sizing:border-box;
 }
 
-html{
-scroll-behavior:smooth;
+html,body{
+  margin:0;
+  padding:0;
 }
 
 body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:linear-gradient(135deg,#eef2ee,#dfe6df);
-color:#24452d;
-font-size:15px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(135deg,#eef2ee,#dfe6df);
+  color:#24452d;
+  min-height:100vh;
 }
 
-header{
-background:#24452d;
-color:white;
-padding:16px 15px;
-display:flex;
-align-items:center;
-gap:13px;
-box-shadow:0 2px 8px rgba(36,69,45,.12);
+/* =========================
+   LOGIN
+========================= */
+
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-wrapper{
+  width:100%;
+  max-width:420px;
+}
+
+.login-header{
+  background:#24452d;
+  color:white;
+  padding:22px 15px;
+  text-align:center;
+  border-radius:18px 18px 0 0;
+  box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .logo{
-width:56px;
-height:56px;
-min-width:56px;
-border:3px solid white;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-font-size:19px;
-letter-spacing:-1px;
+  width:58px;
+  height:58px;
+  border:3px solid white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 8px;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:1px;
 }
 
-.header-title{
-font-size:22px;
-font-weight:bold;
-line-height:1.1;
+.login-header h1{
+  margin:0;
+  font-size:22px;
 }
 
-.header-subtitle{
-font-size:13px;
-opacity:.85;
-margin-top:4px;
+.login-header p{
+  margin:5px 0 0;
+  font-size:13px;
+  opacity:.9;
 }
 
-.container{
-width:100%;
-max-width:720px;
-margin:0 auto;
-padding:12px 15px 25px;
+.login-card{
+  background:white;
+  padding:20px;
+  border-radius:0 0 18px 18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.10);
 }
+
+.login-card h2{
+  margin:0 0 15px;
+  font-size:18px;
+}
+
+.login-message{
+  display:none;
+  padding:11px;
+  border-radius:10px;
+  margin-bottom:12px;
+  font-size:13px;
+  line-height:1.45;
+}
+
+.login-message.error{
+  display:block;
+  background:#f8e9e9;
+  color:#8b2525;
+}
+
+.login-message.success{
+  display:block;
+  background:#eaf4e9;
+  color:#315c36;
+}
+
+.login-switch{
+  text-align:center;
+  margin-top:15px;
+  font-size:13px;
+}
+
+.login-switch button{
+  border:0;
+  background:none;
+  color:#527a58;
+  font-weight:800;
+  cursor:pointer;
+  padding:0;
+}
+
+/* =========================
+   APP HEADER
+========================= */
+
+#app{
+  display:none;
+}
+
+.header{
+  background:#24452d;
+  color:white;
+  padding:18px 15px;
+  text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+
+.header h1{
+  margin:0;
+  font-size:22px;
+}
+
+.header p{
+  margin:5px 0 0;
+  font-size:13px;
+}
+
+.header .logo{
+  margin:0 auto 8px;
+}
+
+/* =========================
+   TABS
+========================= */
 
 .tabs{
-position:sticky;
-top:0;
-z-index:20;
-background:#eef2ee;
-display:flex;
-gap:5px;
-padding:9px 0;
+  background:white;
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  gap:7px;
+  padding:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .tab{
-flex:1;
-border:none;
-background:#d8e2d8;
-color:#24452d;
-padding:11px 5px;
-border-radius:8px;
-font-size:13px;
-font-weight:bold;
-cursor:pointer;
-transition:.15s;
+  flex:1;
+  padding:12px 5px;
+  border:0;
+  border-radius:10px;
+  background:#edf2ed;
+  color:#24452d;
+  font-weight:700;
+  font-size:13px;
+  cursor:pointer;
 }
 
 .tab.active{
-background:#6b8e58;
-color:white;
+  background:#6b8e58;
+  color:white;
 }
 
-.tab:active{
-transform:scale(.98);
+/* =========================
+   MAIN
+========================= */
+
+.container{
+  max-width:720px;
+  margin:auto;
+  padding:14px;
 }
 
 .section{
-display:none;
+  display:none;
 }
 
 .section.active{
-display:block;
+  display:block;
 }
 
 .card{
-background:white;
-border-radius:12px;
-padding:16px;
-margin-bottom:14px;
-box-shadow:0 3px 12px rgba(36,69,45,.08);
+  background:white;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
 .card h2{
-margin:0 0 14px;
-font-size:19px;
-line-height:1.25;
-color:#24452d;
+  margin:0 0 14px;
+  font-size:18px;
 }
 
 .card h3{
-margin:0 0 11px;
-font-size:16px;
-line-height:1.25;
-color:#24452d;
-}
-
-p{
-line-height:1.5;
+  margin:0 0 10px;
+  font-size:15px;
 }
 
 label{
-display:block;
-font-size:14px;
-font-weight:bold;
-margin-top:10px;
-margin-bottom:5px;
-color:#24452d;
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
 }
 
 input,
 select{
-width:100%;
-padding:11px 10px;
-border:1px solid #cbd6cb;
-border-radius:8px;
-font-family:inherit;
-font-size:15px;
-background:white;
-color:#24452d;
-outline:none;
+  width:100%;
+  padding:12px;
+  border:1px solid #d8e0d8;
+  border-radius:10px;
+  background:#fafcf9;
+  color:#24452d;
+  font-size:15px;
+  outline:none;
 }
 
 input:focus,
 select:focus{
-border-color:#6b8e58;
-box-shadow:0 0 0 2px rgba(107,142,88,.10);
+  border-color:#6b8e58;
 }
 
-input::placeholder{
-color:#8a948b;
+.field{
+  margin-bottom:12px;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
 }
 
 button{
-font-family:inherit;
+  font-family:inherit;
 }
 
 .main-btn{
-width:100%;
-padding:12px 10px;
-border:none;
-border-radius:8px;
-background:#6b8e58;
-color:white;
-font-size:14px;
-font-weight:bold;
-margin-top:12px;
-cursor:pointer;
+  width:100%;
+  border:0;
+  background:#527a58;
+  color:white;
+  padding:13px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:5px;
 }
 
-.secondary-btn{
-width:100%;
-padding:11px 10px;
-border:none;
-border-radius:8px;
-background:#527a58;
-color:white;
-font-size:14px;
-font-weight:bold;
-margin-top:10px;
-cursor:pointer;
+.main-btn:active{
+  transform:scale(.99);
 }
 
 .reset-btn{
-width:100%;
-padding:11px 10px;
-border:none;
-border-radius:8px;
-background:#d8e2d8;
-color:#24452d;
-font-size:14px;
-font-weight:bold;
-margin-top:10px;
-cursor:pointer;
+  width:100%;
+  border:0;
+  background:#e9eee9;
+  color:#24452d;
+  padding:13px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:9px;
 }
 
-.danger-btn{
-padding:9px 12px;
-border:none;
-border-radius:7px;
-background:#a94b4b;
-color:white;
-font-size:13px;
-font-weight:bold;
-cursor:pointer;
+.logout-btn{
+  width:100%;
+  border:0;
+  background:#24452d;
+  color:white;
+  padding:13px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
 }
 
-.approve-btn{
-padding:9px 12px;
-border:none;
-border-radius:7px;
-background:#6b8e58;
-color:white;
-font-size:13px;
-font-weight:bold;
-cursor:pointer;
+/* =========================
+   RESULTS
+========================= */
+
+.result-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #e7ece7;
+  font-size:14px;
 }
 
-.reject-btn{
-padding:9px 12px;
-border:none;
-border-radius:7px;
-background:#777;
-color:white;
-font-size:13px;
-font-weight:bold;
-cursor:pointer;
+.result-row:last-child{
+  border-bottom:0;
 }
 
-.remove-btn{
-padding:9px 12px;
-border:none;
-border-radius:7px;
-background:#a94b4b;
-color:white;
-font-size:13px;
-font-weight:bold;
-cursor:pointer;
+.result-row strong{
+  color:#111;
+}
+
+.profit-box{
+  background:#edf4eb;
+  border-radius:14px;
+  padding:15px;
+  margin-top:12px;
+  text-align:center;
+}
+
+.profit-box span{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:4px;
+}
+
+.profit-box strong{
+  display:block;
+  font-size:25px;
+  color:#24452d;
+}
+
+/* =========================
+   REVENUE
+========================= */
+
+.date-box{
+  background:#f4f7f3;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:12px;
+}
+
+.date-box small{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.revenue-record{
+  border:1px solid #dce4dc;
+  border-radius:12px;
+  margin-bottom:9px;
+  overflow:hidden;
+}
+
+.revenue-record-header{
+  background:#f3f7f2;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:800;
+}
+
+.revenue-record-details{
+  display:none;
+  padding:12px;
+  background:white;
+}
+
+.revenue-record.open .revenue-record-details{
+  display:block;
+}
+
+.delete-btn{
+  border:0;
+  background:#f1dddd;
+  color:#8a2d2d;
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
 }
 
 .small-btn{
-border:none;
-border-radius:7px;
-padding:9px 10px;
-background:#a94b4b;
-color:white;
-font-size:13px;
-font-weight:bold;
-cursor:pointer;
+  border:0;
+  background:#e9eee9;
+  color:#24452d;
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
 }
 
-.summary{
-background:#edf4eb;
-border-radius:10px;
-padding:11px 12px;
-margin-top:12px;
-}
-
-.summary-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-padding:8px 0;
-border-bottom:1px solid #d8e2d8;
-font-size:14px;
-}
-
-.summary-row:last-child{
-border-bottom:none;
-}
-
-.summary-row span{
-color:#24452d;
-}
-
-.money{
-color:#111;
-font-weight:bold;
-}
-
-.profit{
-font-size:20px;
-font-weight:bold;
-}
-
-#revenueSaveBox{
-background:#fafcf9;
-border:1px solid #d8e2d8;
-box-shadow:none;
-margin-top:12px;
-}
-
-#revenueSaveBox h3{
-font-size:16px;
-}
+/* =========================
+   CEDI
+========================= */
 
 .cedi-row{
-display:grid;
-grid-template-columns:70px 1fr 1fr;
-gap:8px;
-align-items:center;
-margin-bottom:8px;
+  display:grid;
+  grid-template-columns:75px 1fr 110px;
+  gap:9px;
+  align-items:center;
+  margin-bottom:9px;
 }
 
 .cedi-denom{
-font-size:14px;
-font-weight:bold;
-color:#24452d;
+  font-weight:800;
+  font-size:14px;
 }
 
 .cedi-total{
-font-size:14px;
-color:#111;
-font-weight:bold;
-text-align:right;
+  text-align:right;
+  font-weight:800;
+  color:#111;
 }
 
-.good-row{
-display:grid;
-grid-template-columns:1.4fr .8fr .7fr auto;
-gap:7px;
-align-items:center;
-margin-bottom:8px;
+.total-box{
+  background:#edf4eb;
+  border-radius:13px;
+  padding:15px;
+  text-align:center;
+  margin-top:14px;
 }
 
-.good-row input,
-.good-row select{
-min-width:0;
+.total-box span{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+}
+
+.total-box strong{
+  display:block;
+  font-size:24px;
+  color:#111;
+  margin-top:4px;
+}
+
+.words-box{
+  background:#f4f7f3;
+  border-radius:12px;
+  padding:12px;
+  margin-top:10px;
+  font-size:13px;
+  text-align:center;
+}
+
+/* =========================
+   GOODS
+========================= */
+
+.choice-row{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.choice-btn{
+  flex:1;
+  border:0;
+  background:#edf2ed;
+  color:#24452d;
+  padding:11px;
+  border-radius:10px;
+  font-weight:800;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.choice-btn.active{
+  background:#6b8e58;
+  color:white;
+}
+
+.goods-row{
+  display:grid;
+  grid-template-columns:minmax(130px,1fr) 75px 105px 42px;
+  gap:7px;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.price-box{
+  background:#f4f7f3;
+  border:1px solid #e0e6e0;
+  border-radius:10px;
+  padding:11px 7px;
+  text-align:center;
+  font-size:12px;
+  font-weight:800;
+  overflow:hidden;
+}
+
+.remove-good{
+  border:0;
+  background:#f1dddd;
+  color:#8a2d2d;
+  border-radius:9px;
+  height:42px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.add-good{
+  width:100%;
+  border:0;
+  background:#e9eee9;
+  color:#24452d;
+  padding:11px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:4px;
+}
+
+.saved-status{
+  display:none;
+  background:#edf4eb;
+  color:#315c36;
+  border-radius:10px;
+  padding:10px;
+  margin-top:10px;
+  text-align:center;
+  font-size:13px;
+  font-weight:800;
+}
+
+.edit-current{
+  display:none;
+  width:100%;
+  border:0;
+  background:#e9eee9;
+  color:#24452d;
+  padding:10px;
+  border-radius:10px;
+  font-weight:800;
+  margin-top:8px;
+  cursor:pointer;
+}
+
+/* =========================
+   BALANCE
+========================= */
+
+.balance-box{
+  background:#edf4eb;
+  border-radius:13px;
+  padding:14px;
+  margin-top:12px;
+}
+
+.balance-row{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+  font-size:13px;
+  border-bottom:1px solid #dce7dc;
+}
+
+.balance-row:last-child{
+  border-bottom:0;
+}
+
+.balance-row strong{
+  color:#111;
+}
+
+.week-record{
+  border:1px solid #dce4dc;
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:9px;
+}
+
+.week-record-header{
+  background:#f3f7f2;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:800;
+}
+
+.week-record-details{
+  display:none;
+  padding:12px;
+}
+
+.week-record.open .week-record-details{
+  display:block;
+}
+
+.record-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+.record-table th,
+.record-table td{
+  padding:8px 5px;
+  border-bottom:1px solid #e5eae5;
+  text-align:left;
+}
+
+.record-table th{
+  color:#24452d;
+  background:#f6f8f5;
+}
+
+/* =========================
+   REQUESTS / ADMIN
+========================= */
+
+.request{
+  border:1px solid #dce4dc;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:9px;
+  font-size:13px;
+}
+
+.request-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
 }
 
 .status{
-padding:10px 11px;
-border-radius:8px;
-background:#edf4eb;
-margin-top:10px;
-font-size:13px;
-line-height:1.45;
+  font-size:11px;
+  font-weight:800;
+  padding:5px 8px;
+  border-radius:8px;
+  background:#edf4eb;
 }
 
-.account-item,
-.request-item,
-.saved-item{
-border:1px solid #d8e2d8;
-border-radius:9px;
-padding:11px;
-margin-bottom:9px;
-background:#fafcf9;
-font-size:14px;
-line-height:1.5;
+.status.pending{
+  background:#f5eedc;
+  color:#745b1d;
 }
 
-.item-top{
-display:flex;
-justify-content:space-between;
-gap:10px;
-align-items:flex-start;
+.status.active{
+  background:#e6f2e7;
+  color:#315c36;
 }
 
-.item-actions{
-display:flex;
-gap:6px;
-flex-wrap:wrap;
-margin-top:9px;
+.status.disabled{
+  background:#f1dddd;
+  color:#8a2d2d;
 }
 
-.badge{
-display:inline-block;
-padding:5px 8px;
-border-radius:6px;
-background:#edf2ed;
-font-size:11px;
-font-weight:bold;
-white-space:nowrap;
+.admin-actions{
+  display:flex;
+  gap:7px;
+  margin-top:9px;
 }
 
-.login-screen{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:18px;
-background:linear-gradient(135deg,#eef2ee,#dfe6df);
+.admin-actions button{
+  flex:1;
 }
 
-.login-box{
-width:100%;
-max-width:400px;
-background:white;
-border-radius:14px;
-padding:21px;
-box-shadow:0 4px 18px rgba(36,69,45,.12);
+.user-card{
+  border:1px solid #dce4dc;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:9px;
 }
 
-.login-logo{
-width:68px;
-height:68px;
-border-radius:50%;
-background:#24452d;
-color:white;
-border:3px solid #6b8e58;
-display:flex;
-align-items:center;
-justify-content:center;
-margin:0 auto 11px;
-font-size:22px;
-font-weight:bold;
-letter-spacing:-1px;
+.user-card-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:flex-start;
 }
 
-.login-title{
-text-align:center;
-color:#24452d;
-font-size:23px;
-font-weight:bold;
+.user-name{
+  font-weight:800;
+  font-size:14px;
 }
 
-.login-subtitle{
-text-align:center;
-color:#527a58;
-font-size:14px;
-margin-top:3px;
-margin-bottom:19px;
+.user-email{
+  font-size:12px;
+  color:#5c695f;
+  margin-top:3px;
+  word-break:break-word;
 }
 
-.login-message{
-background:#edf4eb;
-color:#24452d;
-padding:10px;
-border-radius:8px;
-font-size:13px;
-line-height:1.45;
-margin-top:10px;
-display:none;
+.good-admin-row{
+  display:grid;
+  grid-template-columns:1fr 100px 42px;
+  gap:7px;
+  align-items:center;
+  margin-bottom:8px;
 }
 
-.hidden{
-display:none !important;
+.info{
+  background:#f4f7f3;
+  border-radius:10px;
+  padding:11px;
+  font-size:12px;
+  margin-bottom:10px;
 }
 
-@media(max-width:600px){
-
-body{
-font-size:14px;
+.search-box{
+  margin-bottom:10px;
 }
 
-header{
-padding:15px 13px;
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  text-align:center;
+  padding:25px;
+  font-size:13px;
+  color:#5d6b60;
 }
 
-.logo{
-width:54px;
-height:54px;
-min-width:54px;
-font-size:18px;
+.empty{
+  text-align:center;
+  padding:15px;
+  color:#69756b;
+  font-size:13px;
 }
 
-.header-title{
-font-size:21px;
-}
+/* =========================
+   MOBILE
+========================= */
 
-.header-subtitle{
-font-size:12px;
-}
+@media(max-width:520px){
 
-.container{
-padding:10px 12px 22px;
-}
+  .tabs{
+    gap:5px;
+    padding:8px;
+  }
 
-.tabs{
-gap:4px;
-padding:8px 0;
-}
+  .tab{
+    font-size:12px;
+    padding:11px 3px;
+  }
 
-.tab{
-font-size:12px;
-padding:11px 3px;
-border-radius:8px;
-}
+  .container{
+    padding:12px;
+  }
 
-.card{
-padding:15px;
-margin-bottom:12px;
-border-radius:11px;
-}
+  .goods-row{
+    grid-template-columns:minmax(105px,1fr) 65px 85px 38px;
+  }
 
-.card h2{
-font-size:18px;
-margin-bottom:13px;
-}
+  .cedi-row{
+    grid-template-columns:65px 1fr 90px;
+  }
 
-.card h3{
-font-size:15px;
-}
+  .grid-3{
+    grid-template-columns:1fr;
+  }
 
-label{
-font-size:13px;
-}
+  .grid-2{
+    grid-template-columns:1fr 1fr;
+  }
 
-input,
-select{
-font-size:14px;
-padding:10px;
-}
-
-.main-btn,
-.secondary-btn,
-.reset-btn{
-font-size:13px;
-padding:11px;
-}
-
-.summary-row{
-font-size:13px;
-padding:7px 0;
-}
-
-.profit{
-font-size:19px;
-}
-
-.cedi-row{
-grid-template-columns:62px 1fr 1fr;
-gap:7px;
-}
-
-.cedi-denom,
-.cedi-total{
-font-size:13px;
-}
-
-.good-row{
-grid-template-columns:1fr 1fr;
-gap:7px;
-}
-
-.good-row input:first-child,
-.good-row select:first-child{
-grid-column:1 / -1;
-}
-
-.small-btn{
-padding:9px;
-}
-
-.item-top{
-flex-direction:column;
-gap:7px;
-}
-
-.item-actions{
-margin-top:8px;
-}
-
-.account-item,
-.request-item,
-.saved-item{
-font-size:13px;
-padding:10px;
-}
-
-.login-screen{
-padding:15px;
-}
-
-.login-box{
-padding:19px;
-}
-
-.login-logo{
-width:64px;
-height:64px;
-font-size:21px;
-}
-
-.login-title{
-font-size:22px;
-}
-
-.login-subtitle{
-font-size:13px;
-}
-
-}
-
-@media(max-width:380px){
-
-.tab{
-font-size:11px;
-padding:10px 2px;
-}
-
-.card{
-padding:13px;
-}
-
-.cedi-row{
-grid-template-columns:58px 1fr 1fr;
-gap:5px;
-}
-
-.cedi-denom{
-font-size:12px;
-}
-
-.cedi-total{
-font-size:12px;
-}
-
+  .good-admin-row{
+    grid-template-columns:1fr 85px 38px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div id="loginScreen" class="login-screen">
+<!-- =========================================================
+     LOGIN SCREEN
+========================================================= -->
 
-<div class="login-box">
+<div id="loginScreen">
 
-<div class="login-logo">O&C</div>
+  <div class="login-wrapper">
 
-<div class="login-title">
-Oak & Cedar
-</div>
+    <div class="login-header">
 
-<div class="login-subtitle">
-Business Calculator
-</div>
+      <div class="logo">O&C</div>
 
-<div id="loginFields">
+      <h1>Oak & Cedar</h1>
 
-<label>Email</label>
+      <p>Business Calculator</p>
 
-<input
-type="email"
-id="loginEmail"
-placeholder="Enter your email"
->
+    </div>
 
-<label>Password</label>
+    <div class="login-card">
 
-<input
-type="password"
-id="loginPassword"
-placeholder="Enter your password"
->
+      <div id="loginForm">
 
-<button
-class="main-btn"
-onclick="loginUser()">
-LOGIN
-</button>
+        <h2>Login</h2>
 
-<button
-class="reset-btn"
-onclick="showCreateAccount()">
-CREATE ACCOUNT
-</button>
+        <div id="loginMessage" class="login-message"></div>
 
-</div>
+        <div class="field">
+          <label>Email</label>
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+          >
+        </div>
 
-<div id="createFields" class="hidden">
+        <div class="field">
+          <label>Password</label>
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+          >
+        </div>
 
-<label>Full Name</label>
+        <button class="main-btn" onclick="loginUser()">
+          LOGIN
+        </button>
 
-<input
-type="text"
-id="createName"
-placeholder="Enter your name"
->
+        <div class="login-switch">
+          Don't have an account?
+          <button onclick="showCreateAccount()">Create Account</button>
+        </div>
 
-<label>Email</label>
-
-<input
-type="email"
-id="createEmail"
-placeholder="Enter your email"
->
-
-<label>Password</label>
-
-<input
-type="password"
-id="createPassword"
-placeholder="Create a password"
->
-
-<button
-class="main-btn"
-onclick="createAccount()">
-CREATE ACCOUNT
-</button>
-
-<button
-class="reset-btn"
-onclick="showLogin()">
-BACK TO LOGIN
-</button>
-
-</div>
-
-<div id="loginMessage" class="login-message"></div>
-
-</div>
-
-</div>
+      </div>
 
 
-<div id="app" class="hidden">
+      <div id="createForm" style="display:none;">
 
-<header>
+        <h2>Create Account</h2>
 
-<div class="logo">O&C</div>
+        <div id="createMessage" class="login-message"></div>
 
-<div>
+        <div class="field">
+          <label>Full Name</label>
+          <input
+            id="createName"
+            type="text"
+            placeholder="Enter your full name"
+            autocomplete="name"
+          >
+        </div>
 
-<div class="header-title">
-Oak & Cedar
-</div>
+        <div class="field">
+          <label>Email</label>
+          <input
+            id="createEmail"
+            type="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+          >
+        </div>
 
-<div class="header-subtitle">
-Business Calculator
-</div>
+        <div class="field">
+          <label>Password</label>
+          <input
+            id="createPassword"
+            type="password"
+            placeholder="Create a password"
+            autocomplete="new-password"
+          >
+        </div>
 
-</div>
+        <button class="main-btn" onclick="createAccount()">
+          CREATE ACCOUNT
+        </button>
 
-</header>
+        <div class="login-switch">
+          Already have an account?
+          <button onclick="showLogin()">Login</button>
+        </div>
 
+      </div>
 
-<div class="container">
+    </div>
 
-<div class="tabs">
-
-<button
-class="tab active"
-onclick="showTab('revenue',this)">
-Revenue
-</button>
-
-<button
-class="tab"
-onclick="showTab('cedi',this)">
-Cedi
-</button>
-
-<button
-class="tab"
-onclick="showTab('goods',this)">
-Goods
-</button>
-
-<button
-id="adminTab"
-class="tab hidden"
-onclick="showTab('admin',this)">
-Admin
-</button>
+  </div>
 
 </div>
 
 
-<section
-id="revenue"
-class="section active">
+<!-- =========================================================
+     MAIN APP
+========================================================= -->
 
-<div class="card">
+<div id="app">
 
-<h2>Revenue Calculator</h2>
+  <header class="header">
 
-<label>Bank 1</label>
-<input type="number" id="bank1" value="">
+    <div class="logo">O&C</div>
 
-<label>Bank 2</label>
-<input type="number" id="bank2" value="">
-
-<label>Bank 3</label>
-<input type="number" id="bank3" value="">
+    <h1>Oak & Cedar</h1>
 
-<label>Cash at Hand</label>
-<input type="number" id="cashAtHand" value="">
+    <p>Business Calculator</p>
 
-<label>Expenses</label>
-<input type="number" id="expenses" value="">
+  </header>
 
-<label>Total Goods</label>
-<input type="number" id="totalGoods" value="">
 
-<label>Remaining Goods</label>
-<input type="number" id="remainingGoods" value="">
+  <!-- =======================================================
+       TABS
+  ======================================================== -->
 
-<button
-class="main-btn"
-onclick="calculateRevenue()">
-CALCULATE
-</button>
+  <div class="tabs">
 
-<div class="summary">
+    <button
+      class="tab active"
+      id="revenueTab"
+      onclick="showTab('revenue')"
+    >
+      Revenue
+    </button>
 
-<div class="summary-row">
-<span>Total Banks</span>
-<strong class="money" id="totalBanks">GH₵0.00</strong>
-</div>
+    <button
+      class="tab"
+      id="cediTab"
+      onclick="showTab('cedi')"
+    >
+      Cedi
+    </button>
 
-<div class="summary-row">
-<span>Total Bank & Cash</span>
-<strong class="money" id="totalBankCash">GH₵0.00</strong>
-</div>
+    <button
+      class="tab"
+      id="goodsTab"
+      onclick="showTab('goods')"
+    >
+      Goods
+    </button>
 
-<div class="summary-row">
-<span>Remaining Goods</span>
-<strong class="money" id="summaryRemainingGoods">GH₵0.00</strong>
-</div>
+    <button
+      class="tab"
+      id="adminTab"
+      style="display:none;"
+      onclick="showTab('admin')"
+    >
+      Admin
+    </button>
 
-<div class="summary-row">
-<span>Goods After Expenses</span>
-<strong class="money" id="goodsAfterExpenses">GH₵0.00</strong>
-</div>
+  </div>
 
-<div class="summary-row">
-<span>TOTAL PROFIT</span>
-<strong class="money profit" id="totalProfit">GH₵0.00</strong>
-</div>
 
-</div>
+  <main class="container">
 
-<button
-class="secondary-btn"
-onclick="showRevenueSave()">
-SAVE REVENUE RECORD
-</button>
+    <!-- =====================================================
+         REVENUE
+    ====================================================== -->
 
-<div id="revenueSaveBox" class="card hidden">
+    <section id="revenue" class="section active">
 
-<h3>Save Revenue Record</h3>
+      <div class="card">
 
-<label>Week</label>
-<select id="revenueWeek"></select>
+        <h2>Revenue Calculator</h2>
 
-<label>Start Date</label>
-<input
-type="date"
-id="revenueStartDate"
-onchange="setRevenueEndDate()"
->
+        <div class="grid-2">
 
-<label>To Date</label>
-<input type="date" id="revenueEndDate" readonly>
+          <div class="field">
+            <label>Bank 1</label>
+            <input id="bank1" type="number" inputmode="decimal" value="0">
+          </div>
 
-<button
-class="main-btn"
-onclick="saveRevenueRecord()">
-SAVE RECORD
-</button>
+          <div class="field">
+            <label>Bank 2</label>
+            <input id="bank2" type="number" inputmode="decimal" value="0">
+          </div>
 
-<button
-class="reset-btn"
-onclick="cancelRevenueSave()">
-CANCEL
-</button>
+          <div class="field">
+            <label>Bank 3</label>
+            <input id="bank3" type="number" inputmode="decimal" value="0">
+          </div>
 
-</div>
+          <div class="field">
+            <label>Cash at Hand</label>
+            <input id="cashAtHand" type="number" inputmode="decimal" value="0">
+          </div>
 
-<button
-class="reset-btn"
-onclick="resetRevenue()">
-RESET
-</button>
+          <div class="field">
+            <label>Expenses</label>
+            <input id="expenses" type="number" inputmode="decimal" value="0">
+          </div>
 
-<button
-class="danger-btn"
-style="width:100%;margin-top:10px"
-onclick="logoutUser()">
-LOGOUT
-</button>
+          <div class="field">
+            <label>Total Goods</label>
+            <input id="totalGoodsRevenue" type="number" inputmode="decimal" value="0">
+          </div>
 
-</div>
+          <div class="field">
+            <label>Remaining Goods</label>
+            <input id="remainingGoodsRevenue" type="number" inputmode="decimal" value="0">
+          </div>
 
-<div class="card">
+        </div>
 
-<h2>Saved Revenue Records</h2>
+        <button class="main-btn" onclick="calculateRevenue()">
+          CALCULATE
+        </button>
 
-<div id="savedRevenueRecords">
-No saved revenue records.
-</div>
+        <button class="reset-btn" onclick="resetRevenue()">
+          RESET
+        </button>
 
-</div>
+      </div>
 
-</section>
 
+      <div class="card">
 
-<section id="cedi" class="section">
+        <h2>Summary</h2>
 
-<div class="card">
+        <div class="result-row">
+          <span>Total Banks</span>
+          <strong id="totalBanksResult">GH₵0.00</strong>
+        </div>
 
-<h2>Oak & Cedar Cedi Calculator</h2>
+        <div class="result-row">
+          <span>Total Bank & Cash</span>
+          <strong id="totalBankCashResult">GH₵0.00</strong>
+        </div>
 
-<div id="cediRows"></div>
+        <div class="result-row">
+          <span>Remaining Goods</span>
+          <strong id="remainingGoodsResult">GH₵0.00</strong>
+        </div>
 
-<button
-class="main-btn"
-onclick="calculateCedi()">
-CALCULATE
-</button>
+        <div class="result-row">
+          <span>Goods After Expenses</span>
+          <strong id="goodsAfterExpensesResult">GH₵0.00</strong>
+        </div>
 
-<div class="summary">
+        <div class="profit-box">
+          <span>TOTAL PROFIT</span>
+          <strong id="profitResult">GH₵0.00</strong>
+        </div>
 
-<div class="summary-row">
+      </div>
 
-<span>TOTAL CASH</span>
 
-<strong
-class="money"
-id="cediGrandTotal">
-GH₵0.00
-</strong>
+      <div class="card">
 
-</div>
+        <h2>Save Revenue Record</h2>
 
-<div class="summary-row">
+        <div class="grid-2">
 
-<span>Amount in Words</span>
+          <div class="field">
+            <label>Week</label>
 
-<strong id="cediWords">
-Zero Ghana Cedis
-</strong>
+            <select id="revenueWeek"></select>
+          </div>
 
-</div>
+          <div class="field">
+            <label>Start Date</label>
 
-</div>
+            <input
+              id="revenueStartDate"
+              type="date"
+              onchange="updateRevenueEndDate()"
+            >
+          </div>
 
-</div>
+        </div>
 
-</section>
+        <div class="date-box">
 
+          <small>END DATE</small>
 
-<section id="goods" class="section">
+          <strong id="revenueEndDateText">Select start date</strong>
 
-<div class="card">
+        </div>
 
-<h2>Request a New Good</h2>
+        <button class="main-btn" onclick="saveRevenueRecord()">
+          SAVE REVENUE RECORD
+        </button>
 
-<p style="font-size:13px;color:#527a58">
+      </div>
 
-If the good you need is not on the approved goods list,
-enter the name and price below. An admin must approve it
-before it is added to the official goods list.
 
-</p>
+      <div class="card">
 
-<label>Good Name</label>
+        <h2>Revenue Records</h2>
 
-<input
-type="text"
-id="requestGoodName"
-placeholder="Enter good name"
->
+        <div id="revenueRecords"></div>
 
-<label>Price</label>
+      </div>
 
-<input
-type="number"
-id="requestGoodPrice"
-placeholder="Enter price"
->
 
-<button
-class="main-btn"
-onclick="submitGoodRequest()">
-REQUEST GOOD
-</button>
+      <div class="card">
 
-<div id="requestMessage" class="status hidden"></div>
+        <button class="logout-btn" onclick="logoutApp()">
+          LOGOUT
+        </button>
+      </div>
 
-</div>
+    </section>
 
 
-<div class="card">
+    <!-- =====================================================
+         CEDI
+    ====================================================== -->
 
-<h2>My Good Requests</h2>
+    <section id="cedi" class="section">
 
-<div id="myGoodRequests">
-No requests yet.
-</div>
+      <div class="card">
 
-</div>
+        <h2>Cedi Calculator</h2>
 
+        <div class="cedi-row">
+          <div class="cedi-denom">GH₵200</div>
+          <input id="cedi200" type="number" inputmode="numeric" min="0" value="0" oninput="calculateCedi()">
+          <div class="cedi-total" id="cedi200Total">GH₵0.00</div>
+        </div>
 
-<div class="card">
+        <div class="cedi-row">
+          <div class="cedi-denom">GH₵100</div>
+          <input id="cedi100" type="number" inputmode="numeric" min="0" value="0" oninput="calculateCedi()">
+          <div class="cedi-total" id="cedi100Total">GH₵0.00</div>
+        </div>
 
-<h2>Weekly Goods Recording</h2>
+        <div class="cedi-row">
+          <div class="cedi-denom">GH₵50</div>
+          <input id="cedi50" type="number" inputmode="numeric" min="0" value="0" oninput="calculateCedi()">
+          <div class="cedi-total" id="cedi50Total">GH₵0.00</div>
+        </div>
 
-<label>Select Week</label>
+        <div class="cedi-row">
+          <div class="cedi-denom">GH₵20</div>
+          <input id="cedi20" type="number" inputmode="numeric" min="0" value="0" oninput="calculateCedi()">
+          <div class="cedi-total" id="cedi20Total">GH₵0.00</div>
+        </div>
 
-<select
-id="goodsWeek"
-onchange="loadSelectedWeek()">
-</select>
+        <div class="cedi-row">
+          <div class="cedi-denom">GH₵10</div>
+          <input id="cedi10" type="number" inputmode="numeric" min="0" value="0" oninput="calculateCedi()">
+          <div class="cedi-total" id="cedi10Total">GH₵0.00</div>
+        </div>
 
-<label>Date</label>
+        <div class="cedi-row">
+          <div class="cedi-denom">GH₵5</div>
+          <input id="cedi5" type="number" inputmode="numeric" min="0" value="0" oninput="calculateCedi()">
+          <div class="cedi-total" id="cedi5Total">GH₵0.00</div>
+        </div>
 
-<input
-type="date"
-id="goodsDate">
+        <div class="cedi-row">
+          <div class="cedi-denom">GH₵2</div>
+          <input id="cedi2" type="number" inputmode="numeric" min="0" value="0" oninput="calculateCedi()">
+          <div class="cedi-total" id="cedi2Total">GH₵0.00</div>
+        </div>
 
-<label>Previous Week Remaining Goods</label>
+        <div class="cedi-row">
+          <div class="cedi-denom">GH₵1</div>
+          <input id="cedi1" type="number" inputmode="numeric" min="0" value="0" oninput="calculateCedi()">
+          <div class="cedi-total" id="cedi1Total">GH₵0.00</div>
+        </div>
 
-<input
-type="text"
-id="previousRemainingDisplay"
-readonly
-value="None"
->
+        <button class="main-btn" onclick="calculateCedi()">
+          CALCULATE
+        </button>
 
-<div style="display:flex;gap:7px;margin-top:12px">
+        <div class="total-box">
+          <span>TOTAL CASH</span>
+          <strong id="cediGrandTotal">GH₵0.00</strong>
+        </div>
 
-<button
-class="tab active"
-id="startingBtn"
-onclick="showGoodsMode('starting',this)">
-Starting Goods
-</button>
+        <div class="words-box" id="cediWords">
+          Zero Ghana Cedis
+        </div>
 
-<button
-class="tab"
-id="remainingBtn"
-onclick="showGoodsMode('remaining',this)">
-Remaining Goods
-</button>
+        <button class="reset-btn" onclick="resetCedi()">
+          RESET
+        </button>
 
-</div>
+      </div>
 
-<div
-id="startingGoodsBox"
-style="margin-top:15px">
+    </section>
 
-<h3>Starting Goods</h3>
 
-<div id="startingGoodsRows"></div>
+    <!-- =====================================================
+         GOODS
+    ====================================================== -->
 
-<button
-class="secondary-btn"
-onclick="addStartingGoodRow()">
-ADD GOOD
-</button>
+    <section id="goods" class="section">
 
-<button
-class="main-btn"
-onclick="saveStartingGoods()">
-SAVE STARTING GOODS
-</button>
+      <div class="card">
 
-<div id="startingSavedStatus"></div>
+        <h2>Weekly Goods</h2>
 
-</div>
+        <div class="grid-2">
 
-<div
-id="remainingGoodsBox"
-class="hidden"
-style="margin-top:15px">
+          <div class="field">
+            <label>Week</label>
+            <select id="goodsWeek" onchange="loadSelectedWeek()"></select>
+          </div>
 
-<h3>Remaining Goods</h3>
+          <div class="field">
+            <label>Date</label>
+            <input id="goodsDate" type="date">
+          </div>
 
-<div id="remainingGoodsRows"></div>
+        </div>
 
-<button
-class="secondary-btn"
-onclick="addRemainingGoodRow()">
-ADD GOOD
-</button>
+        <div class="info">
+          <strong>Previous Week Remaining Goods:</strong>
+          <span id="previousRemainingValue">GH₵0.00</span>
+        </div>
 
-<button
-class="main-btn"
-onclick="saveRemainingGoods()">
-SAVE REMAINING GOODS
-</button>
+      </div>
 
-<div id="remainingSavedStatus"></div>
 
-</div>
+      <div class="choice-row">
 
-</div>
+        <button
+          class="choice-btn active"
+          id="startingChoice"
+          onclick="showGoodsMode('starting')"
+        >
+          Starting Goods
+        </button>
 
+        <button
+          class="choice-btn"
+          id="remainingChoice"
+          onclick="showGoodsMode('remaining')"
+        >
+          Remaining Goods
+        </button>
 
-<div class="card">
+      </div>
 
-<h2>Balance Records</h2>
 
-<div id="balanceRecords">
-No balance records.
-</div>
+      <!-- STARTING GOODS -->
 
-</div>
+      <div class="card" id="startingGoodsCard">
 
+        <h2>Starting Goods</h2>
 
-<div class="card">
+        <div id="startingGoodsRows"></div>
 
-<h2>Saved Weekly Records</h2>
+        <button class="add-good" onclick="addGoodsRow('starting')">
+          + ADD GOOD
+        </button>
 
-<div id="savedWeeklyRecords">
-No saved weekly records.
-</div>
+        <button class="main-btn" onclick="saveStartingGoods()">
+          SAVE STARTING GOODS
+        </button>
 
-</div>
+        <div class="saved-status" id="startingSavedStatus">
+          Starting Goods Saved
+        </div>
 
-</section>
+        <button
+          class="edit-current"
+          id="editStartingBtn"
+          onclick="editStartingGoods()"
+        >
+          EDIT STARTING GOODS
+        </button>
 
+      </div>
 
-<section id="admin" class="section">
 
-<div class="card">
+      <!-- REMAINING GOODS -->
 
-<h2>Registered Accounts</h2>
+      <div class="card" id="remainingGoodsCard" style="display:none;">
 
-<p style="font-size:13px;color:#527a58">
+        <h2>Remaining Goods</h2>
 
-Approve new accounts or remove users from the site.
+        <div id="remainingGoodsRows"></div>
 
-</p>
+        <button class="add-good" onclick="addGoodsRow('remaining')">
+          + ADD GOOD
+        </button>
 
-<div id="accountsList">
-Loading accounts...
-</div>
+        <button class="main-btn" onclick="saveRemainingGoods()">
+          SAVE REMAINING GOODS
+        </button>
 
-</div>
+        <div class="saved-status" id="remainingSavedStatus">
+          Remaining Goods Saved
+        </div>
 
+        <button
+          class="edit-current"
+          id="editRemainingBtn"
+          onclick="editRemainingGoods()"
+        >
+          EDIT REMAINING GOODS
+        </button>
 
-<div class="card">
+      </div>
 
-<h2>Good Requests</h2>
 
-<p style="font-size:13px;color:#527a58">
+      <!-- BALANCE -->
 
-Normal users must receive approval before their requested
-good and price are added to the official goods list.
+      <div class="card">
 
-</p>
+        <h2>Balance Records</h2>
 
-<div id="adminGoodRequests">
-Loading requests...
-</div>
+        <div class="balance-box">
 
-</div>
+          <div class="balance-row">
+            <span>Starting Goods</span>
+            <strong id="balanceStarting">GH₵0.00</strong>
+          </div>
 
+          <div class="balance-row">
+            <span>Remaining Goods</span>
+            <strong id="balanceRemaining">GH₵0.00</strong>
+          </div>
 
-<div class="card">
+          <div class="balance-row">
+            <span>Sold / Used</span>
+            <strong id="balanceSold">GH₵0.00</strong>
+          </div>
 
-<h2>Approved Goods & Prices</h2>
+        </div>
 
-<div id="adminGoodsList">
-Loading goods...
-</div>
+      </div>
 
-<label>Good Name</label>
 
-<input
-type="text"
-id="adminGoodName"
-placeholder="Good name"
->
+      <!-- SAVED WEEKLY RECORDS -->
 
-<label>Price</label>
+      <div class="card">
 
-<input
-type="number"
-id="adminGoodPrice"
-placeholder="Price"
->
+        <h2>Saved Weekly Records</h2>
 
-<button
-class="main-btn"
-onclick="addGood()">
-ADD GOOD & PRICE
-</button>
+        <div id="weeklyRecords"></div>
 
-</div>
+      </div>
 
-</section>
+    </section>
 
-</div>
+
+    <!-- =====================================================
+         ADMIN
+    ====================================================== -->
+
+    <section id="admin" class="section">
+
+      <!-- REGISTERED ACCOUNTS -->
+
+      <div class="card">
+
+        <h2>Registered Accounts</h2>
+
+        <div class="info">
+          <strong>Total Registered Accounts:</strong>
+          <span id="userCount">0</span>
+        </div>
+
+        <button class="main-btn" onclick="loadAdminUsers()">
+          REFRESH USERS
+        </button>
+
+        <div id="adminUsers" style="margin-top:12px;"></div>
+
+      </div>
+
+
+      <!-- GOOD REQUESTS -->
+
+      <div class="card">
+
+        <h2>Good Requests</h2>
+
+        <div id="adminRequests"></div>
+
+      </div>
+
+
+      <!-- APPROVED GOODS -->
+
+      <div class="card">
+
+        <h2>Approved Goods & Prices</h2>
+
+        <div class="field">
+          <label>Good Name</label>
+          <input
+            id="adminGoodName"
+            type="text"
+            placeholder="Enter good name"
+          >
+        </div>
+
+        <div class="field">
+          <label>Price</label>
+          <input
+            id="adminGoodPrice"
+            type="number"
+            inputmode="decimal"
+            placeholder="Enter price"
+          >
+        </div>
+
+        <button class="main-btn" onclick="adminAddGood()">
+          ADD GOOD & SAVE PRICE
+        </button>
+
+        <div id="adminGoodsList" style="margin-top:14px;"></div>
+
+      </div>
+
+
+      <!-- REQUEST A GOOD -->
+
+      <div class="card">
+
+        <h2>Request New Good</h2>
+
+        <div class="field">
+          <label>Good Name</label>
+          <input
+            id="requestGoodName"
+            type="text"
+            placeholder="Enter good name"
+          >
+        </div>
+
+        <div class="field">
+          <label>Proposed Price</label>
+          <input
+            id="requestGoodPrice"
+            type="number"
+            inputmode="decimal"
+            placeholder="Enter proposed price"
+          >
+        </div>
+
+        <button class="main-btn" onclick="submitGoodRequest()">
+          SEND REQUEST
+        </button>
+
+        <div id="myRequests" style="margin-top:14px;"></div>
+
+      </div>
+
+    </section>
+
+  </main>
 
 </div>
 
 
 <script>
 
+/* =========================================================
+   SUPABASE
+========================================================= */
+
 const SUPABASE_URL =
-"https://ywsmyynauytmgdiijwlo.supabase.co";
+  "https://ywsmyynauytmgdiijwlo.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
+  "sb_publishable_bgu7ouisQoyYNFP-90fuxA_IPAHAnYZ";
 
 const db = supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY,
-{
-auth:{
-persistSession:true,
-autoRefreshToken:true,
-detectSessionInUrl:true
-}
-}
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
+    }
+  }
 );
 
-const GOODS_KEY="oc_demo_goods";
+const ADMIN_EMAIL = "collinsappau3030@gmail.com";
 
-const WEEKS_KEY=
-"oc_demo_weeks_fresh_2026_09";
+let currentUser = null;
+let currentProfile = null;
+let sharedGoods = [];
+let currentGoodsMode = "starting";
 
-const REVENUE_KEY=
-"oc_demo_revenue_records_2026_09";
+let startingGoodsRows = [];
+let remainingGoodsRows = [];
 
-let currentUser=null;
-let currentProfile=null;
-let goods=[];
+let currentWeekData = {};
 
+const REVENUE_STORAGE_KEY =
+  "oc_demo_revenue_records_2026_09";
+
+const WEEKS_STORAGE_KEY =
+  "oc_demo_weeks_fresh_2026_09";
+
+const CEDI_STORAGE_KEY =
+  "oc_demo_cedi_rows_2026_09";
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function money(value){
+  const n = Number(value) || 0;
+
+  return "GH₵" + n.toLocaleString(
+    "en-GH",
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  );
+}
+
+function numberValue(id){
+  return Number(document.getElementById(id)?.value) || 0;
+}
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function todayString(){
+  const d = new Date();
+
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+
+  return `${y}-${m}-${day}`;
+}
+
+function showMessage(id,message,type){
+  const el = document.getElementById(id);
+
+  if(!el) return;
+
+  el.className =
+    "login-message " +
+    (type || "error");
+
+  el.textContent = message;
+}
+
+function clearMessage(id){
+  const el = document.getElementById(id);
+
+  if(!el) return;
+
+  el.className = "login-message";
+  el.textContent = "";
+}
+
+
+/* =========================================================
+   LOGIN / CREATE ACCOUNT
+========================================================= */
 
 function showCreateAccount(){
 
-document
-.getElementById("loginFields")
-.classList.add("hidden");
+  document.getElementById("loginForm").style.display = "none";
+  document.getElementById("createForm").style.display = "block";
 
-document
-.getElementById("createFields")
-.classList.remove("hidden");
-
-document
-.getElementById("loginMessage")
-.style.display="none";
-
+  clearMessage("loginMessage");
+  clearMessage("createMessage");
 }
-
 
 function showLogin(){
 
-document
-.getElementById("createFields")
-.classList.add("hidden");
+  document.getElementById("createForm").style.display = "none";
+  document.getElementById("loginForm").style.display = "block";
 
-document
-.getElementById("loginFields")
-.classList.remove("hidden");
-
-document
-.getElementById("loginMessage")
-.style.display="none";
-
-}
-
-
-function showLoginMessage(message){
-
-const box=
-document.getElementById("loginMessage");
-
-box.textContent=message;
-
-box.style.display="block";
-
+  clearMessage("loginMessage");
+  clearMessage("createMessage");
 }
 
 
 async function createAccount(){
 
-const name=
-document.getElementById("createName")
-.value.trim();
+  clearMessage("createMessage");
 
-const email=
-document.getElementById("createEmail")
-.value.trim();
+  const name =
+    document.getElementById("createName").value.trim();
 
-const password=
-document.getElementById("createPassword")
-.value;
+  const email =
+    document.getElementById("createEmail").value.trim();
 
+  const password =
+    document.getElementById("createPassword").value;
 
-if(!name || !email || !password){
+  if(!name || !email || !password){
 
-showLoginMessage(
-"Please enter your full name, email and password."
-);
+    showMessage(
+      "createMessage",
+      "Please complete all fields.",
+      "error"
+    );
 
-return;
+    return;
+  }
 
-}
+  if(password.length < 6){
 
+    showMessage(
+      "createMessage",
+      "Password must be at least 6 characters.",
+      "error"
+    );
 
-if(password.length<6){
+    return;
+  }
 
-showLoginMessage(
-"Password must contain at least 6 characters."
-);
+  try{
 
-return;
+    const {data,error} =
+      await db.auth.signUp({
+        email,
+        password,
+        options:{
+          data:{
+            full_name:name
+          }
+        }
+      });
 
-}
+    if(error) throw error;
 
+    if(data.session){
 
-const {data,error}=
-await db.auth.signUp({
+      await db.auth.signOut();
+    }
 
-email:email,
+    document.getElementById("createName").value = "";
+    document.getElementById("createEmail").value = "";
+    document.getElementById("createPassword").value = "";
 
-password:password,
+    showMessage(
+      "createMessage",
+      "Account created successfully. Your account is waiting for admin approval. You can log in after the admin activates your account.",
+      "success"
+    );
 
-options:{
-data:{
-full_name:name
-}
-}
+  }catch(error){
 
-});
-
-
-if(error){
-
-showLoginMessage(error.message);
-
-return;
-
-}
-
-
-if(data.session){
-
-await db.auth.signOut();
-
-}
-
-
-showLoginMessage(
-"Account created successfully. Your account is waiting for admin approval. You cannot log in until an admin approves your account."
-);
-
-
-document.getElementById("createName").value="";
-document.getElementById("createEmail").value="";
-document.getElementById("createPassword").value="";
-
+    showMessage(
+      "createMessage",
+      error.message || "Unable to create account.",
+      "error"
+    );
+  }
 }
 
 
 async function loginUser(){
 
-const email=
-document.getElementById("loginEmail")
-.value.trim();
+  clearMessage("loginMessage");
 
-const password=
-document.getElementById("loginPassword")
-.value;
+  const email =
+    document.getElementById("loginEmail").value.trim();
 
+  const password =
+    document.getElementById("loginPassword").value;
 
-if(!email || !password){
+  if(!email || !password){
 
-showLoginMessage(
-"Please enter your email and password."
-);
+    showMessage(
+      "loginMessage",
+      "Enter your email and password.",
+      "error"
+    );
 
-return;
+    return;
+  }
 
+  try{
+
+    const {data,error} =
+      await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if(error) throw error;
+
+    currentUser = data.user;
+
+    await loadUserProfile();
+
+  }catch(error){
+
+    showMessage(
+      "loginMessage",
+      error.message || "Login failed.",
+      "error"
+    );
+  }
 }
 
 
-const {data,error}=
-await db.auth.signInWithPassword({
-
-email:email,
-
-password:password
-
-});
-
-
-if(error){
-
-showLoginMessage(error.message);
-
-return;
-
-}
-
-
-currentUser=data.user;
-
-await loadUserProfile();
-
-}
-
+/* =========================================================
+   PROFILE / SESSION
+========================================================= */
 
 async function loadUserProfile(){
 
-if(!currentUser){
+  if(!currentUser){
 
-const result=
-await db.auth.getUser();
+    showLogin();
+    return;
+  }
 
-currentUser=result.data.user;
+  try{
 
-}
-
-
-if(!currentUser){
-
-return;
-
-}
-
-
-const {data,error}=
-await db
-.from("profiles")
-.select("*")
-.eq("id",currentUser.id)
-.single();
-
-
-if(error || !data){
-
-await db.auth.signOut();
-
-showLoginMessage(
-"Your account profile could not be found."
-);
-
-return;
-
-}
-
-
-currentProfile=data;
-
-
-if(data.status==="pending"){
-
-await db.auth.signOut();
-
-showLoginMessage(
-"Your account is waiting for admin approval."
-);
-
-return;
-
-}
-
-
-if(data.status==="removed"){
-
-await db.auth.signOut();
-
-showLoginMessage(
-"This account has been removed from the site."
-);
-
-return;
-
-}
-
-
-if(data.status!=="active"){
-
-await db.auth.signOut();
-
-showLoginMessage(
-"Your account is not active."
-);
-
-return;
-
-}
-
-
-document
-.getElementById("loginScreen")
-.classList.add("hidden");
-
-document
-.getElementById("app")
-.classList.remove("hidden");
-
-
-if(data.role==="admin"){
-
-document
-.getElementById("adminTab")
-.classList.remove("hidden");
-
-}else{
-
-document
-.getElementById("adminTab")
-.classList.add("hidden");
-
-}
-
-
-await loadGoods();
-
-loadRevenueRecords();
-
-loadWeeks();
-
-loadCediRows();
-
-loadSelectedWeek();
-
-loadMyGoodRequests();
-
-
-if(data.role==="admin"){
-
-await loadAccounts();
-
-await loadAdminGoodRequests();
-
-await loadAdminGoods();
-
-}
-
-}
-
-
-async function logoutUser(){
-
-await db.auth.signOut();
-
-currentUser=null;
-currentProfile=null;
-
-document
-.getElementById("app")
-.classList.add("hidden");
-
-document
-.getElementById("loginScreen")
-.classList.remove("hidden");
-
-showLogin();
-
-}
-
-
-function showTab(id,button){
-
-document
-.querySelectorAll(".section")
-.forEach(x=>{
-x.classList.remove("active");
-});
-
-
-document
-.getElementById(id)
-.classList.add("active");
-
-
-document
-.querySelectorAll(".tab")
-.forEach(x=>{
-x.classList.remove("active");
-});
-
-
-button.classList.add("active");
-
-
-if(
-id==="admin" &&
-currentProfile?.role==="admin"
-){
-
-loadAccounts();
-
-loadAdminGoodRequests();
-
-loadAdminGoods();
-
-}
-
-}
-
-
-function money(value){
-
-return "GH₵"+
-Number(value||0)
-.toLocaleString("en-GH",{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-});
-
-}
-
-
-function calculateRevenue(){
-
-const b1=
-Number(document.getElementById("bank1").value)||0;
-
-const b2=
-Number(document.getElementById("bank2").value)||0;
-
-const b3=
-Number(document.getElementById("bank3").value)||0;
-
-const cash=
-Number(document.getElementById("cashAtHand").value)||0;
-
-const expenses=
-Number(document.getElementById("expenses").value)||0;
-
-const totalGoods=
-Number(document.getElementById("totalGoods").value)||0;
-
-const remaining=
-Number(document.getElementById("remainingGoods").value)||0;
-
-
-const totalBanks=
-b1+b2+b3;
-
-const totalCash=
-totalBanks+cash;
-
-const goodsAfterExpenses=
-totalGoods-expenses;
-
-
-let profit=
-totalCash+
-remaining-
-goodsAfterExpenses;
-
-
-if(profit<0){
-profit=0;
-}
-
-
-document.getElementById("totalBanks")
-.textContent=money(totalBanks);
-
-document.getElementById("totalBankCash")
-.textContent=money(totalCash);
-
-document.getElementById("summaryRemainingGoods")
-.textContent=money(remaining);
-
-document.getElementById("goodsAfterExpenses")
-.textContent=money(goodsAfterExpenses);
-
-document.getElementById("totalProfit")
-.textContent=money(profit);
-
-}
-
-
-function resetRevenue(){
-
-[
-"bank1",
-"bank2",
-"bank3",
-"cashAtHand",
-"expenses",
-"totalGoods",
-"remainingGoods"
-].forEach(id=>{
-document.getElementById(id).value="";
-});
-
-
-[
-"totalBanks",
-"totalBankCash",
-"summaryRemainingGoods",
-"goodsAfterExpenses",
-"totalProfit"
-].forEach(id=>{
-document.getElementById(id)
-.textContent="GH₵0.00";
-});
-
-}
-
-
-function showRevenueSave(){
-
-document
-.getElementById("revenueSaveBox")
-.classList.remove("hidden");
-
-}
-
-
-function cancelRevenueSave(){
-
-document
-.getElementById("revenueSaveBox")
-.classList.add("hidden");
-
-}
-
-
-function setRevenueEndDate(){
-
-const start=
-document.getElementById("revenueStartDate").value;
-
-if(!start)return;
-
-const d=
-new Date(start+"T00:00:00");
-
-d.setDate(d.getDate()+4);
-
-document.getElementById("revenueEndDate")
-.value=
-d.toISOString().split("T")[0];
-
-}
-
-
-function loadRevenueWeeks(){
-
-const select=
-document.getElementById("revenueWeek");
-
-if(!select)return;
-
-select.innerHTML="";
-
-for(let i=1;i<=52;i++){
-
-const option=
-document.createElement("option");
-
-option.value=i;
-
-option.textContent="Week "+i;
-
-select.appendChild(option);
-
-}
-
-}
-
-
-async function saveRevenueRecord(){
-
-calculateRevenue();
-
-const records=
-JSON.parse(
-localStorage.getItem(REVENUE_KEY)||"[]"
-);
-
-
-const b1=
-Number(document.getElementById("bank1").value)||0;
-
-const b2=
-Number(document.getElementById("bank2").value)||0;
-
-const b3=
-Number(document.getElementById("bank3").value)||0;
-
-const cash=
-Number(document.getElementById("cashAtHand").value)||0;
-
-const expenses=
-Number(document.getElementById("expenses").value)||0;
-
-const totalGoods=
-Number(document.getElementById("totalGoods").value)||0;
-
-const remaining=
-Number(document.getElementById("remainingGoods").value)||0;
-
-
-const totalBanks=
-b1+b2+b3;
-
-const totalBankCash=
-totalBanks+cash;
-
-const goodsAfterExpenses=
-totalGoods-expenses;
-
-
-records.push({
-
-week:
-document.getElementById("revenueWeek").value,
-
-startDate:
-document.getElementById("revenueStartDate").value,
-
-endDate:
-document.getElementById("revenueEndDate").value,
-
-dateSaved:
-new Date().toISOString(),
-
-totalBanks,
-totalBankCash,
-remainingGoods:remaining,
-goodsAfterExpenses,
-expenses
-
-});
-
-
-localStorage.setItem(
-REVENUE_KEY,
-JSON.stringify(records)
-);
-
-
-document
-.getElementById("revenueSaveBox")
-.classList.add("hidden");
-
-loadRevenueRecords();
-
-}
-
-
-function loadRevenueRecords(){
-
-const box=
-document.getElementById("savedRevenueRecords");
-
-if(!box)return;
-
-const records=
-JSON.parse(
-localStorage.getItem(REVENUE_KEY)||"[]"
-);
-
-
-if(!records.length){
-
-box.textContent=
-"No saved revenue records.";
-
-return;
-
-}
-
-
-box.innerHTML="";
-
-
-records.forEach((r,index)=>{
-
-const div=
-document.createElement("div");
-
-div.className="saved-item";
-
-
-div.innerHTML=`
-
-<strong>Week ${r.week}</strong><br>
-
-${r.startDate||""}
-to
-${r.endDate||""}
-
-<div style="margin-top:8px">
-
-Total Banks:
-${money(r.totalBanks)}
-<br>
-
-Total Bank & Cash:
-${money(r.totalBankCash)}
-<br>
-
-Remaining Goods:
-${money(r.remainingGoods)}
-<br>
-
-Goods After Expenses:
-${money(r.goodsAfterExpenses)}
-<br>
-
-Expenses:
-${money(r.expenses)}
-
-</div>
-
-
-<button
-class="danger-btn"
-style="margin-top:9px"
-onclick="deleteRevenueRecord(${index})">
-DELETE
-</button>
-
-`;
-
-box.appendChild(div);
-
-});
-
-}
-
-
-function deleteRevenueRecord(index){
-
-const records=
-JSON.parse(
-localStorage.getItem(REVENUE_KEY)||"[]"
-);
-
-records.splice(index,1);
-
-localStorage.setItem(
-REVENUE_KEY,
-JSON.stringify(records)
-);
-
-loadRevenueRecords();
-
-}
-
-
-function loadCediRows(){
-
-const denominations=[
-200,100,50,20,10,5,2,1
-];
-
-const box=
-document.getElementById("cediRows");
-
-if(!box)return;
-
-box.innerHTML="";
-
-
-denominations.forEach(
-(denom,index)=>{
-
-const row=
-document.createElement("div");
-
-row.className="cedi-row";
-
-
-row.innerHTML=`
-
-<div class="cedi-denom">
-GH₵${denom}
-</div>
-
-<input
-type="number"
-min="0"
-id="cediQty${index}"
-placeholder="Quantity"
->
-
-<div
-class="cedi-total"
-id="cediTotal${index}">
-GH₵0.00
-</div>
-
-`;
-
-box.appendChild(row);
-
-});
-
-}
-
-
-function calculateCedi(){
-
-const denominations=[
-200,100,50,20,10,5,2,1
-];
-
-let total=0;
-
-
-denominations.forEach(
-(denom,index)=>{
-
-const qty=
-Number(
-document.getElementById(
-"cediQty"+index
-).value
-)||0;
-
-
-const line=
-denom*qty;
-
-total+=line;
-
-
-document
-.getElementById(
-"cediTotal"+index
-)
-.textContent=money(line);
-
-});
-
-
-document
-.getElementById("cediGrandTotal")
-.textContent=money(total);
-
-document
-.getElementById("cediWords")
-.textContent=
-amountInWords(total);
-
-}
-
-
-function amountInWords(num){
-
-num=Math.floor(
-Number(num)||0
-);
-
-
-if(num===0){
-
-return "Zero Ghana Cedis";
-
-}
-
-
-const ones=[
-"",
-"One",
-"Two",
-"Three",
-"Four",
-"Five",
-"Six",
-"Seven",
-"Eight",
-"Nine"
-];
-
-
-const teens=[
-"Ten",
-"Eleven",
-"Twelve",
-"Thirteen",
-"Fourteen",
-"Fifteen",
-"Sixteen",
-"Seventeen",
-"Eighteen",
-"Nineteen"
-];
-
-
-const tens=[
-"",
-"",
-"Twenty",
-"Thirty",
-"Forty",
-"Fifty",
-"Sixty",
-"Seventy",
-"Eighty",
-"Ninety"
-];
-
-
-function under1000(n){
-
-let result="";
-
-
-if(n>=100){
-
-result+=
-ones[Math.floor(n/100)]
-+" Hundred";
-
-n%=100;
-
-if(n>0)result+=" ";
-
-}
-
-
-if(n>=20){
-
-result+=
-tens[Math.floor(n/10)];
-
-n%=10;
-
-if(n>0){
-
-result+=" "+ones[n];
-
-}
-
-}else if(n>=10){
-
-result+=teens[n-10];
-
-}else if(n>0){
-
-result+=ones[n];
-
-}
-
-
-return result;
-
-}
-
-
-let result="";
-
-
-if(num>=1000000){
-
-result+=
-under1000(
-Math.floor(num/1000000)
-)
-+" Million";
-
-num%=1000000;
-
-if(num>0)result+=" ";
-
-}
-
-
-if(num>=1000){
-
-result+=
-under1000(
-Math.floor(num/1000)
-)
-+" Thousand";
-
-num%=1000;
-
-if(num>0)result+=" ";
-
-}
-
-
-if(num>0){
-
-result+=under1000(num);
-
-}
-
-
-return result+
-" Ghana Cedis";
-
-}
-
-
-async function loadGoods(){
-
-const {data,error}=
-await db
-.from("goods")
-.select("*")
-.order("name",{ascending:true});
-
-
-if(error){
-
-console.error(error);
-
-return;
-
-}
-
-
-goods=data||[];
-
-
-localStorage.setItem(
-GOODS_KEY,
-JSON.stringify(goods)
-);
-
-}
-
-
-function goodsOptions(){
-
-let html=
-`<option value="">
-Select Good
-</option>`;
-
-
-goods.forEach(g=>{
-
-html+=`
-
-<option
-value="${g.id}"
-data-price="${g.price}">
-
-${escapeHtml(g.name)}
-
-</option>
-
-`;
-
-});
-
-
-return html;
-
-}
-
-
-function escapeHtml(text){
-
-const div=
-document.createElement("div");
-
-div.textContent=text;
-
-return div.innerHTML;
-
-}
-
-
-async function loadAdminGoods(){
-
-if(currentProfile?.role!=="admin")return;
-
-const box=
-document.getElementById("adminGoodsList");
-
-box.textContent=
-"Loading goods...";
-
-
-const {data,error}=
-await db
-.from("goods")
-.select("*")
-.order("name",{ascending:true});
-
-
-if(error){
-
-box.textContent=error.message;
-
-return;
-
-}
-
-
-goods=data||[];
-
-
-if(!goods.length){
-
-box.textContent=
-"No approved goods.";
-
-return;
-
-}
-
-
-box.innerHTML="";
-
-
-goods.forEach(g=>{
-
-const div=
-document.createElement("div");
-
-div.className="account-item";
-
-
-div.innerHTML=`
-
-<div class="item-top">
-
-<div>
-
-<strong>
-${escapeHtml(g.name)}
-</strong>
-
-<br>
-
-<span class="money">
-${money(g.price)}
-</span>
-
-</div>
-
-
-<button
-class="remove-btn"
-onclick="deleteGood(${g.id})">
-DELETE
-</button>
-
-</div>
-
-`;
-
-
-box.appendChild(div);
-
-});
-
-}
-
-
-async function addGood(){
-
-if(currentProfile?.role!=="admin"){
-
-alert(
-"Only the admin can add goods."
-);
-
-return;
-
-}
-
-
-const name=
-document
-.getElementById("adminGoodName")
-.value.trim();
-
-
-const price=
-Number(
-document
-.getElementById("adminGoodPrice")
-.value
-);
-
-
-if(!name || !price || price<=0){
-
-alert(
-"Enter a good name and a valid price."
-);
-
-return;
-
-}
-
-
-const {error}=
-await db
-.from("goods")
-.insert({
-name:name,
-price:price
-});
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-document
-.getElementById("adminGoodName")
-.value="";
-
-document
-.getElementById("adminGoodPrice")
-.value="";
-
-
-await loadGoods();
-
-await loadAdminGoods();
-
-alert(
-"Good added successfully."
-);
-
-}
-
-
-async function deleteGood(id){
-
-if(currentProfile?.role!=="admin")return;
-
-
-if(!confirm(
-"Delete this good from the official goods list?"
-)){
-
-return;
-
-}
-
-
-const {error}=
-await db
-.from("goods")
-.delete()
-.eq("id",id);
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-await loadGoods();
-
-await loadAdminGoods();
-
-}
-
-
-async function submitGoodRequest(){
-
-if(!currentUser){
-
-alert(
-"Please log in first."
-);
-
-return;
-
-}
-
-
-const name=
-document
-.getElementById("requestGoodName")
-.value.trim();
-
-
-const price=
-Number(
-document
-.getElementById("requestGoodPrice")
-.value
-);
-
-
-if(!name || !price || price<=0){
-
-alert(
-"Enter the good name and a valid price."
-);
-
-return;
-
-}
-
-
-const {error}=
-await db
-.from("good_requests")
-.insert({
-
-user_id:currentUser.id,
-
-name:name,
-
-price:price,
-
-status:"pending"
-
-});
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-document
-.getElementById("requestGoodName")
-.value="";
-
-document
-.getElementById("requestGoodPrice")
-.value="";
-
-
-const msg=
-document.getElementById(
-"requestMessage"
-);
-
-msg.textContent=
-"Your good request has been sent to the admin for approval.";
-
-msg.classList.remove("hidden");
-
-
-loadMyGoodRequests();
-
-}
-
-
-async function loadMyGoodRequests(){
-
-if(!currentUser)return;
-
-
-const box=
-document.getElementById("myGoodRequests");
-
-if(!box)return;
-
-
-const {data,error}=
-await db
-.from("good_requests")
-.select("*")
-.eq("user_id",currentUser.id)
-.order("created_at",{ascending:false});
-
-
-if(error){
-
-box.textContent=error.message;
-
-return;
-
-}
-
-
-if(!data || !data.length){
-
-box.textContent=
-"No requests yet.";
-
-return;
-
-}
-
-
-box.innerHTML="";
-
-
-data.forEach(r=>{
-
-const div=
-document.createElement("div");
-
-div.className="request-item";
-
-
-div.innerHTML=`
-
-<div class="item-top">
-
-<div>
-
-<strong>
-${escapeHtml(r.name)}
-</strong>
-
-<br>
-
-<span class="money">
-${money(r.price)}
-</span>
-
-</div>
-
-
-<span class="badge">
-${String(r.status).toUpperCase()}
-</span>
-
-</div>
-
-
-<div
-style="font-size:12px;
-color:#777;
-margin-top:7px">
-
-${new Date(
-r.created_at
-).toLocaleString()}
-
-</div>
-
-`;
-
-
-box.appendChild(div);
-
-});
-
-}
-
-
-/* =====================================================
-ADMIN ACCOUNTS
-===================================================== */
-
-async function loadAccounts(){
-
-if(currentProfile?.role!=="admin"){
-
-return;
-
-}
-
-
-const box=
-document.getElementById("accountsList");
-
-if(!box)return;
-
-
-box.textContent=
-"Loading accounts...";
-
-
-const {data,error}=
-await db
-.from("profiles")
-.select(
-"id,email,full_name,role,status,created_at"
-)
-.eq("role","user")
-.order("created_at",{ascending:false});
-
-
-if(error){
-
-box.innerHTML=`
-
-<div class="status"
-style="background:#ffecec;color:#8a1c1c">
-
-${escapeHtml(error.message)}
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-if(!data || !data.length){
-
-box.textContent=
-"No normal user accounts found.";
-
-return;
-
-}
-
-
-box.innerHTML="";
-
-
-data.forEach(user=>{
-
-const div=
-document.createElement("div");
-
-div.className="account-item";
-
-
-let statusColor="#555";
-let statusBackground="#edf2ed";
-
-
-if(user.status==="pending"){
-
-statusColor="#856404";
-statusBackground="#fff3cd";
-
-}
-
-
-if(user.status==="active"){
-
-statusColor="#245c2a";
-statusBackground="#dff1df";
-
-}
-
-
-if(user.status==="removed"){
-
-statusColor="#8a1c1c";
-statusBackground="#f8dddd";
-
-}
-
-
-let buttons="";
-
-
-if(user.status==="pending"){
-
-buttons=`
-
-<button
-class="approve-btn"
-onclick="approveUser('${user.id}')">
-APPROVE
-</button>
-
-<button
-class="remove-btn"
-onclick="removeUser('${user.id}')">
-REMOVE
-</button>
-
-`;
-
-}
-
-
-else if(user.status==="active"){
-
-buttons=`
-
-<button
-class="remove-btn"
-onclick="removeUser('${user.id}')">
-REMOVE
-</button>
-
-`;
-
-}
-
-
-else if(user.status==="removed"){
-
-buttons=`
-
-<span
-class="badge"
-style="
-background:${statusBackground};
-color:${statusColor};
-">
-
-REMOVED
-
-</span>
-
-`;
-
-}
-
-
-div.innerHTML=`
-
-<div class="item-top">
-
-<div style="min-width:0">
-
-<strong style="word-break:break-word">
-
-${escapeHtml(
-user.email||"No email"
-)}
-
-</strong>
-
-
-<div
-style="
-font-size:12px;
-color:#777;
-margin-top:5px;
-">
-
-Created:
-${
-user.created_at
-?
-new Date(
-user.created_at
-).toLocaleString()
-:
-""
-}
-
-</div>
-
-</div>
-
-
-<span
-class="badge"
-style="
-background:${statusBackground};
-color:${statusColor};
-">
-
-${String(
-user.status||"unknown"
-).toUpperCase()}
-
-</span>
-
-</div>
-
-
-<div class="item-actions">
-
-${buttons}
-
-</div>
-
-`;
-
-box.appendChild(div);
-
-});
-
-}
-
-
-async function approveUser(userId){
-
-if(currentProfile?.role!=="admin"){
-
-alert(
-"Only the admin can approve accounts."
-);
-
-return;
-
-}
-
-
-const confirmed=
-confirm(
-"Approve this account?\n\n" +
-"The account will become active and " +
-"the user's email will be automatically confirmed."
-);
-
-
-if(!confirmed){
-
-return;
-
-}
-
-
-const buttons=
-document.querySelectorAll(
-`button[onclick="approveUser('${userId}')"]`
-);
-
-
-buttons.forEach(button=>{
-button.disabled=true;
-button.textContent="APPROVING...";
-});
-
-
-const {error}=
-await db.rpc(
-"approve_user",
-{
-p_user_id:userId
-}
-);
-
-
-if(error){
-
-alert(
-"Could not approve this account.\n\n"+
-error.message
-);
-
-await loadAccounts();
-
-return;
-
-}
-
-
-alert(
-"Account approved successfully.\n\n"+
-"The user can now log in."
-);
-
-
-await loadAccounts();
-
-}
-
-
-async function removeUser(userId){
-
-if(currentProfile?.role!=="admin"){
-
-alert(
-"Only the admin can remove accounts."
-);
-
-return;
-
-}
-
-
-const confirmed=
-confirm(
-"Remove this account permanently?\n\n" +
-"The account will disappear from Registered Accounts " +
-"and the same email can be registered again as a fresh pending account."
-);
-
-
-if(!confirmed){
-
-return;
-
-}
-
-
-const buttons=
-document.querySelectorAll(
-`button[onclick="removeUser('${userId}')"]`
-);
-
-
-buttons.forEach(button=>{
-button.disabled=true;
-button.textContent="REMOVING...";
-});
-
-
-const {error}=
-await db.rpc(
-"remove_user",
-{
-p_user_id:userId
-}
-);
-
-
-if(error){
-
-alert(
-"Could not remove this account.\n\n"+
-error.message
-);
-
-await loadAccounts();
-
-return;
-
-}
-
-
-alert(
-"Account removed successfully.\n\n"+
-"The account has been completely deleted. " +
-"The same email can now be registered again as a new pending account."
-);
-
-
-await loadAccounts();
-
-}
-
-
-/* =====================================================
-ADMIN GOOD REQUESTS
-===================================================== */
-
-async function loadAdminGoodRequests(){
-
-if(currentProfile?.role!=="admin")return;
-
-
-const box=
-document.getElementById(
-"adminGoodRequests"
-);
-
-box.textContent=
-"Loading requests...";
-
-
-const {
-data:requests,
-error
-}=
-await db
-.from("good_requests")
-.select("*")
-.order("created_at",{ascending:false});
-
-
-if(error){
-
-box.textContent=error.message;
-
-return;
-
-}
-
-
-if(!requests || !requests.length){
-
-box.textContent=
-"No good requests.";
-
-return;
-
-}
-
-
-const userIds=[
-...new Set(
-requests
-.map(r=>r.user_id)
-.filter(Boolean)
-)
-];
-
-
-let profiles=[];
-
-
-if(userIds.length){
-
-const {
-data:profileData,
-error:profileError
-}=
-await db
-.from("profiles")
-.select("id,email")
-.in("id",userIds);
-
-
-if(!profileError){
-
-profiles=
-profileData||[];
-
-}
-
-}
-
-
-box.innerHTML="";
-
-
-requests.forEach(r=>{
-
-const profile=
-profiles.find(
-p=>p.id===r.user_id
-);
-
-
-const email=
-profile?.email||
-"Unknown user";
-
-
-const div=
-document.createElement("div");
-
-div.className="request-item";
-
-
-let actions="";
-
-
-if(r.status==="pending"){
-
-actions=`
-
-<button
-class="approve-btn"
-onclick="approveGoodRequest(${r.id})">
-APPROVE
-</button>
-
-<button
-class="reject-btn"
-onclick="rejectGoodRequest(${r.id})">
-REJECT
-</button>
-
-`;
-
-}else{
-
-actions=`
-
-<span class="badge">
-${String(r.status).toUpperCase()}
-</span>
-
-`;
-
-}
-
-
-div.innerHTML=`
-
-<div>
-
-<strong>
-${escapeHtml(r.name)}
-</strong>
-
-
-<div
-class="money"
-style="margin-top:4px">
-
-${money(r.price)}
-
-</div>
-
-
-<div
-style="
-font-size:13px;
-color:#527a58;
-margin-top:6px
-">
-
-Requested by:
-${escapeHtml(email)}
-
-</div>
-
-
-<div
-style="
-font-size:12px;
-color:#777;
-margin-top:4px
-">
-
-${new Date(
-r.created_at
-).toLocaleString()}
-
-</div>
-
-</div>
-
-
-<div class="item-actions">
-
-${actions}
-
-</div>
-
-`;
-
-
-box.appendChild(div);
-
-});
-
-}
-
-
-async function approveGoodRequest(id){
-
-if(currentProfile?.role!=="admin")return;
-
-
-if(!confirm(
-"Approve this good and add it to the official goods list?"
-)){
-
-return;
-
-}
-
-
-const {error}=
-await db.rpc(
-"approve_good_request",
-{
-p_request_id:id
-}
-);
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-await loadGoods();
-
-await loadAdminGoods();
-
-await loadAdminGoodRequests();
-
-alert(
-"The good has been approved and added to the official goods list."
-);
-
-}
-
-
-async function rejectGoodRequest(id){
-
-if(currentProfile?.role!=="admin")return;
-
-
-if(!confirm(
-"Reject this good request?"
-)){
-
-return;
-
-}
-
-
-const {error}=
-await db.rpc(
-"reject_good_request",
-{
-p_request_id:id
-}
-);
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-await loadAdminGoodRequests();
-
-}
-
-
-function loadWeeks(){
-
-const select=
-document.getElementById(
-"goodsWeek"
-);
-
-if(!select)return;
-
-
-select.innerHTML="";
-
-
-for(let i=1;i<=52;i++){
-
-const option=
-document.createElement("option");
-
-option.value=i;
-
-option.textContent=
-"Week "+i;
-
-select.appendChild(option);
-
-}
-
-
-const date=
-document.getElementById(
-"goodsDate"
-);
-
-
-if(!date.value){
-
-date.value=
-new Date()
-.toISOString()
-.split("T")[0];
-
-}
-
-
-loadRevenueWeeks();
-
-}
-
-
-function getWeeks(){
-
-return JSON.parse(
-localStorage.getItem(
-WEEKS_KEY
-)||"{}"
-);
-
-}
-
-
-function saveWeeks(data){
-
-localStorage.setItem(
-WEEKS_KEY,
-JSON.stringify(data)
-);
-
-}
-
-
-function loadSelectedWeek(){
-
-const week=
-document.getElementById(
-"goodsWeek"
-).value;
-
-
-const weeks=
-getWeeks();
-
-
-const record=
-weeks[week]||{};
-
-
-document
-.getElementById(
-"startingGoodsRows"
-)
-.innerHTML="";
-
-
-document
-.getElementById(
-"remainingGoodsRows"
-)
-.innerHTML="";
-
-
-if(
-record.starting &&
-record.starting.length
-){
-
-record.starting.forEach(g=>{
-addStartingGoodRow(g);
-});
-
-}else{
-
-addStartingGoodRow();
-
-}
-
-
-if(
-record.remaining &&
-record.remaining.length
-){
-
-record.remaining.forEach(g=>{
-addRemainingGoodRow(g);
-});
-
-}else{
-
-addRemainingGoodRow();
-
-}
-
-
-updatePreviousRemaining();
-
-renderBalanceRecords();
-
-renderSavedWeeklyRecords();
-
-}
-
-
-function updatePreviousRemaining(){
-
-const week=
-Number(
-document.getElementById(
-"goodsWeek"
-).value
-);
-
-
-if(week<=1){
-
-document
-.getElementById(
-"previousRemainingDisplay"
-)
-.value="None";
-
-return;
-
-}
-
-
-const weeks=
-getWeeks();
-
-
-const previous=
-weeks[week-1];
-
-
-if(
-!previous ||
-!previous.remaining
-){
-
-document
-.getElementById(
-"previousRemainingDisplay"
-)
-.value="None";
-
-return;
-
-}
-
-
-let total=0;
-
-
-previous.remaining.forEach(g=>{
-
-total+=
-Number(g.price||0)*
-Number(g.remainingQty||0);
-
-});
-
-
-document
-.getElementById(
-"previousRemainingDisplay"
-)
-.value=
-money(total);
-
-}
-
-
-function addStartingGoodRow(data={}){
-
-const box=
-document.getElementById(
-"startingGoodsRows"
-);
-
-const row=
-document.createElement("div");
-
-row.className="good-row";
-
-
-row.innerHTML=`
-
-<select
-class="starting-name"
-onchange="setRowPrice(this)">
-
-${goodsOptions()}
-
-</select>
-
-
-<input
-class="starting-price"
-type="number"
-placeholder="Price"
-value="${data.price||""}"
->
-
-
-<input
-class="starting-qty"
-type="number"
-min="0"
-placeholder="Qty"
-value="${data.qty||""}"
->
-
-
-<button
-class="small-btn"
-onclick="this.parentElement.remove()">
-X
-</button>
-
-`;
-
-
-box.appendChild(row);
-
-
-if(data.id){
-
-row
-.querySelector(".starting-name")
-.value=data.id;
-
-}
-
-}
-
-
-function addRemainingGoodRow(data={}){
-
-const box=
-document.getElementById(
-"remainingGoodsRows"
-);
-
-const row=
-document.createElement("div");
-
-row.className="good-row";
-
-
-row.innerHTML=`
-
-<select
-class="remaining-name"
-onchange="setRowPrice(this)">
-
-${goodsOptions()}
-
-</select>
-
-
-<input
-class="remaining-price"
-type="number"
-placeholder="Price"
-value="${data.price||""}"
->
-
-
-<input
-class="remaining-qty"
-type="number"
-min="0"
-placeholder="Remaining Qty"
-value="${data.remainingQty||""}"
->
-
-
-<button
-class="small-btn"
-onclick="this.parentElement.remove()">
-X
-</button>
-
-`;
-
-
-box.appendChild(row);
-
-
-if(data.id){
-
-row
-.querySelector(".remaining-name")
-.value=data.id;
-
-}
-
-}
-
-
-function setRowPrice(select){
-
-const option=
-select.options[
-select.selectedIndex
-];
-
-
-if(!option)return;
-
-
-const price=
-option.dataset.price||"";
-
-
-const row=
-select.parentElement;
-
-
-const input=
-row.querySelector(
-".starting-price,.remaining-price"
-);
-
-
-if(input){
-
-input.value=price;
-
-}
-
-}
-
-
-function showGoodsMode(mode,button){
-
-if(mode==="starting"){
-
-document
-.getElementById(
-"startingGoodsBox"
-)
-.classList.remove("hidden");
-
-
-document
-.getElementById(
-"remainingGoodsBox"
-)
-.classList.add("hidden");
-
-}else{
-
-document
-.getElementById(
-"startingGoodsBox"
-)
-.classList.add("hidden");
-
-
-document
-.getElementById(
-"remainingGoodsBox"
-)
-.classList.remove("hidden");
-
-}
-
-
-document
-.querySelectorAll(
-"#startingBtn,#remainingBtn"
-)
-.forEach(x=>{
-x.classList.remove("active");
-});
-
-
-button.classList.add("active");
-
-}
-
-
-function saveStartingGoods(){
-
-const week=
-document
-.getElementById(
-"goodsWeek"
-)
-.value;
-
+    const {data,error} =
+      await db
+        .from("profiles")
+        .select("*")
+        .eq("id",currentUser.id)
+        .single();
 
-const rows=
-document.querySelectorAll(
-"#startingGoodsRows .good-row"
-);
+    if(error) throw error;
 
+    currentProfile = data;
 
-const starting=[];
+    if(
+      currentProfile.status !== "active" &&
+      currentProfile.role !== "admin"
+    ){
 
+      await db.auth.signOut();
 
-rows.forEach(row=>{
+      currentUser = null;
+      currentProfile = null;
 
-const select=
-row.querySelector(
-".starting-name"
-);
+      showMessage(
+        "loginMessage",
+        currentProfile?.status === "pending"
+          ? "Your account is still waiting for admin approval."
+          : "Your account is not active.",
+        "error"
+      );
 
-const price=
-Number(
-row.querySelector(
-".starting-price"
-).value
-)||0;
+      return;
+    }
 
+    openApplication();
 
-const qty=
-Number(
-row.querySelector(
-".starting-qty"
-).value
-)||0;
+  }catch(error){
 
+    await db.auth.signOut();
 
-if(select.value && qty>0){
+    currentUser = null;
 
-starting.push({
-
-id:select.value,
-
-name:
-select.options[
-select.selectedIndex
-].textContent,
-
-price:price,
-
-qty:qty
-
-});
-
-}
-
-});
-
-
-const weeks=getWeeks();
-
-
-if(!weeks[week])
-weeks[week]={};
-
-
-weeks[week].starting=
-starting;
-
-
-weeks[week].date=
-document.getElementById(
-"goodsDate"
-).value;
-
-
-saveWeeks(weeks);
-
-
-document
-.getElementById(
-"startingSavedStatus"
-)
-.innerHTML=
-`<div class="status">
-Starting goods saved.
-</div>`;
-
-
-renderBalanceRecords();
-
-renderSavedWeeklyRecords();
-
-}
-
-
-function saveRemainingGoods(){
-
-const week=
-document
-.getElementById(
-"goodsWeek"
-)
-.value;
-
-
-const rows=
-document.querySelectorAll(
-"#remainingGoodsRows .good-row"
-);
-
-
-const remaining=[];
-
-
-rows.forEach(row=>{
-
-const select=
-row.querySelector(
-".remaining-name"
-);
-
-const price=
-Number(
-row.querySelector(
-".remaining-price"
-).value
-)||0;
-
-
-const remainingQty=
-Number(
-row.querySelector(
-".remaining-qty"
-).value
-)||0;
-
-
-if(select.value){
-
-remaining.push({
-
-id:select.value,
-
-name:
-select.options[
-select.selectedIndex
-].textContent,
-
-price:price,
-
-remainingQty:
-remainingQty
-
-});
-
-}
-
-});
-
-
-const weeks=getWeeks();
-
-
-if(!weeks[week])
-weeks[week]={};
-
-
-weeks[week].remaining=
-remaining;
-
-
-weeks[week].date=
-document.getElementById(
-"goodsDate"
-).value;
-
-
-saveWeeks(weeks);
-
-
-document
-.getElementById(
-"remainingSavedStatus"
-)
-.innerHTML=
-`<div class="status">
-Remaining goods saved.
-</div>`;
-
-
-renderBalanceRecords();
-
-renderSavedWeeklyRecords();
-
-}
-
-
-function renderBalanceRecords(){
-
-const box=
-document.getElementById(
-"balanceRecords"
-);
-
-const weeks=
-getWeeks();
-
-
-let html="";
-
-
-for(let i=1;i<=52;i++){
-
-const r=weeks[i];
-
-if(!r)continue;
-
-
-let startingValue=0;
-
-let remainingValue=0;
-
-
-if(r.starting){
-
-r.starting.forEach(g=>{
-
-startingValue+=
-Number(g.price||0)*
-Number(g.qty||0);
-
-});
-
-}
-
-
-if(r.remaining){
-
-r.remaining.forEach(g=>{
-
-remainingValue+=
-Number(g.price||0)*
-Number(g.remainingQty||0);
-
-});
-
-}
-
-
-const soldUsed=
-Math.max(
-0,
-startingValue-
-remainingValue
-);
-
-
-html+=`
-
-<div class="saved-item">
-
-<strong>
-Week ${i}
-</strong>
-
-<br>
-
-Starting Goods:
-${money(startingValue)}
-
-<br>
-
-Remaining Goods:
-${money(remainingValue)}
-
-<br>
-
-Sold / Used:
-${money(soldUsed)}
-
-</div>
-
-`;
-
-}
-
-
-box.innerHTML=
-html||"No balance records.";
-
+    showMessage(
+      "loginMessage",
+      "Unable to load your account. Please try again.",
+      "error"
+    );
+  }
 }
 
 
-function renderSavedWeeklyRecords(){
+function openApplication(){
 
-const box=
-document.getElementById(
-"savedWeeklyRecords"
-);
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("app").style.display = "block";
 
-const weeks=
-getWeeks();
+  const adminTab =
+    document.getElementById("adminTab");
 
+  if(
+    currentProfile &&
+    (
+      currentProfile.role === "admin" ||
+      currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+    )
+  ){
 
-let html="";
+    adminTab.style.display = "block";
 
-
-for(let i=1;i<=52;i++){
-
-const r=weeks[i];
-
-if(!r)continue;
-
-
-html+=`
-
-<div class="saved-item">
-
-<strong>
-Week ${i}
-</strong>
-
-<br>
-
-Date:
-${r.date||""}
-
-<br>
-
-Starting Goods:
-${r.starting?.length||0}
-item(s)
-
-<br>
-
-Remaining Goods:
-${r.remaining?.length||0}
-item(s)
-
-</div>
-
-`;
-
-}
+  }else{
 
+    adminTab.style.display = "none";
+  }
 
-box.innerHTML=
-html||"No saved weekly records.";
+  initializeApp();
 
 }
 
 
 async function checkExistingSession(){
 
-const {data}=
-await db.auth.getSession();
+  try{
+
+    const {data} =
+      await db.auth.getSession();
+
+    if(data.session){
+
+      currentUser = data.session.user;
+
+      await loadUserProfile();
+
+    }else{
+
+      document.getElementById("loginScreen").style.display = "flex";
+      document.getElementById("app").style.display = "none";
+    }
+
+  }catch(error){
+
+    document.getElementById("loginScreen").style.display = "flex";
+    document.getElementById("app").style.display = "none";
+  }
+}
 
 
-if(!data.session){
+async function logoutApp(){
 
-return;
+  await db.auth.signOut();
+
+  currentUser = null;
+  currentProfile = null;
+
+  document.getElementById("app").style.display = "none";
+  document.getElementById("loginScreen").style.display = "flex";
+
+  showLogin();
+
+  document.getElementById("loginEmail").value = "";
+  document.getElementById("loginPassword").value = "";
 
 }
 
 
-currentUser=
-data.session.user;
+/* =========================================================
+   TAB SYSTEM
+========================================================= */
+
+function showTab(tab){
+
+  if(
+    tab === "admin" &&
+    !(
+      currentProfile?.role === "admin" ||
+      currentUser?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+    )
+  ){
+    return;
+  }
+
+  document
+    .querySelectorAll(".section")
+    .forEach(section=>{
+      section.classList.remove("active");
+    });
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(button=>{
+      button.classList.remove("active");
+    });
+
+  const section =
+    document.getElementById(tab);
+
+  const tabButton =
+    document.getElementById(tab + "Tab");
+
+  if(section) section.classList.add("active");
+  if(tabButton) tabButton.classList.add("active");
+
+  if(tab === "admin"){
+    loadAdminData();
+  }
+
+  if(tab === "goods"){
+    loadSelectedWeek();
+  }
+}
 
 
-await loadUserProfile();
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+async function initializeApp(){
+
+  populateWeekSelectors();
+
+  initializeDates();
+
+  loadRevenueRecords();
+
+  loadCediRows();
+
+  await loadSharedGoods();
+
+  loadSelectedWeek();
+
+  calculateRevenue();
+
+  calculateCedi();
+
+  if(
+    currentProfile?.role === "admin" ||
+    currentUser?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+  ){
+
+    await loadAdminData();
+  }
+}
+
+
+/* =========================================================
+   WEEK SELECTORS
+========================================================= */
+
+function populateWeekSelectors(){
+
+  const selects = [
+    document.getElementById("revenueWeek"),
+    document.getElementById("goodsWeek")
+  ];
+
+  selects.forEach(select=>{
+
+    if(!select) return;
+
+    select.innerHTML = "";
+
+    for(let i=1;i<=52;i++){
+
+      const option =
+        document.createElement("option");
+
+      option.value = i;
+      option.textContent = "Week " + i;
+
+      select.appendChild(option);
+    }
+
+  });
 
 }
 
 
-loadRevenueWeeks();
+/* =========================================================
+   REVENUE CALCULATOR
+========================================================= */
 
-loadCediRows();
+function calculateRevenue(){
 
-checkExistingSession();
+  const b1 = numberValue("bank1");
+  const b2 = numberValue("bank2");
+  const b3 = numberValue("bank3");
+
+  const cash = numberValue("cashAtHand");
+
+  const expenses =
+    numberValue("expenses");
+
+  const totalGoods =
+    numberValue("totalGoodsRevenue");
+
+  const remainingGoods =
+    numberValue("remainingGoodsRevenue");
+
+  const totalBanks =
+    b1 + b2 + b3;
+
+  const totalCash =
+    totalBanks + cash;
+
+  const goodsAfterExpenses =
+    totalGoods - expenses;
+
+  let profit =
+    totalCash +
+    remainingGoods -
+    goodsAfterExpenses;
+
+  if(profit < 0){
+    profit = 0;
+  }
+
+  document.getElementById("totalBanksResult")
+    .textContent = money(totalBanks);
+
+  document.getElementById("totalBankCashResult")
+    .textContent = money(totalCash);
+
+  document.getElementById("remainingGoodsResult")
+    .textContent = money(remainingGoods);
+
+  document.getElementById("goodsAfterExpensesResult")
+    .textContent = money(goodsAfterExpenses);
+
+  document.getElementById("profitResult")
+    .textContent = money(profit);
+}
+
+
+function resetRevenue(){
+
+  [
+    "bank1",
+    "bank2",
+    "bank3",
+    "cashAtHand",
+    "expenses",
+    "totalGoodsRevenue",
+    "remainingGoodsRevenue"
+  ].forEach(id=>{
+    document.getElementById(id).value = 0;
+  });
+
+  calculateRevenue();
+}
+
+
+/* =========================================================
+   REVENUE DATES
+========================================================= */
+
+function initializeDates(){
+
+  const start =
+    document.getElementById("revenueStartDate");
+
+  const goodsDate =
+    document.getElementById("goodsDate");
+
+  if(start && !start.value){
+    start.value = todayString();
+  }
+
+  if(goodsDate && !goodsDate.value){
+    goodsDate.value = todayString();
+  }
+
+  updateRevenueEndDate();
+}
+
+
+function updateRevenueEndDate(){
+
+  const input =
+    document.getElementById("revenueStartDate");
+
+  const output =
+    document.getElementById("revenueEndDateText");
+
+  if(!input.value){
+
+    output.textContent =
+      "Select start date";
+
+    return;
+  }
+
+  const date =
+    new Date(input.value + "T00:00:00");
+
+  date.setDate(date.getDate() + 4);
+
+  output.textContent =
+    date.toLocaleDateString(
+      "en-GB",
+      {
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+      }
+    );
+}
+
+
+/* =========================================================
+   REVENUE RECORDS
+========================================================= */
+
+function getRevenueRecords(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(REVENUE_STORAGE_KEY) || "[]"
+    );
+
+  }catch(error){
+
+    return [];
+  }
+}
+
+
+function saveRevenueRecords(records){
+
+  localStorage.setItem(
+    REVENUE_STORAGE_KEY,
+    JSON.stringify(records)
+  );
+}
+
+
+function saveRevenueRecord(){
+
+  calculateRevenue();
+
+  const week =
+    Number(document.getElementById("revenueWeek").value);
+
+  const startDate =
+    document.getElementById("revenueStartDate").value;
+
+  if(!startDate){
+
+    alert("Please select a start date.");
+    return;
+  }
+
+  const date =
+    new Date(startDate + "T00:00:00");
+
+  date.setDate(date.getDate() + 4);
+
+  const endDate =
+    date.toISOString().slice(0,10);
+
+  const record = {
+
+    id:Date.now(),
+
+    week,
+
+    startDate,
+
+    endDate,
+
+    dateSaved:todayString(),
+
+    totalBanks:
+      numberValue("bank1") +
+      numberValue("bank2") +
+      numberValue("bank3"),
+
+    totalBankCash:
+      numberValue("bank1") +
+      numberValue("bank2") +
+      numberValue("bank3") +
+      numberValue("cashAtHand"),
+
+    remainingGoods:
+      numberValue("remainingGoodsRevenue"),
+
+    goodsAfterExpenses:
+      numberValue("totalGoodsRevenue") -
+      numberValue("expenses"),
+
+    expenses:
+      numberValue("expenses")
+  };
+
+  const records =
+    getRevenueRecords();
+
+  records.unshift(record);
+
+  saveRevenueRecords(records);
+
+  loadRevenueRecords();
+
+  alert("Revenue record saved.");
+}
+
+
+function loadRevenueRecords(){
+
+  const container =
+    document.getElementById("revenueRecords");
+
+  if(!container) return;
+
+  const records =
+    getRevenueRecords();
+
+  if(!records.length){
+
+    container.innerHTML =
+      '<div class="empty">No revenue records saved yet.</div>';
+
+    return;
+  }
+
+  container.innerHTML =
+    records.map((record,index)=>`
+
+      <div class="revenue-record" id="revenueRecord${record.id}">
+
+        <div
+          class="revenue-record-header"
+          onclick="toggleRevenueRecord(${record.id})"
+        >
+
+          <span>
+            Week ${escapeHTML(record.week)}
+            · ${escapeHTML(record.startDate)}
+          </span>
+
+          <span>+</span>
+
+        </div>
+
+        <div class="revenue-record-details">
+
+          <div class="result-row">
+            <span>Start Date</span>
+            <strong>${escapeHTML(record.startDate)}</strong>
+          </div>
+
+          <div class="result-row">
+            <span>End Date</span>
+            <strong>${escapeHTML(record.endDate)}</strong>
+          </div>
+
+          <div class="result-row">
+            <span>Total Banks</span>
+            <strong>${money(record.totalBanks)}</strong>
+          </div>
+
+          <div class="result-row">
+            <span>Total Bank & Cash</span>
+            <strong>${money(record.totalBankCash)}</strong>
+          </div>
+
+          <div class="result-row">
+            <span>Remaining Goods</span>
+            <strong>${money(record.remainingGoods)}</strong>
+          </div>
+
+          <div class="result-row">
+            <span>Goods After Expenses</span>
+            <strong>${money(record.goodsAfterExpenses)}</strong>
+          </div>
+
+          <div class="result-row">
+            <span>Expenses</span>
+            <strong>${money(record.expenses)}</strong>
+          </div>
+
+          <div style="margin-top:10px;text-align:right;">
+            <button
+              class="delete-btn"
+              onclick="event.stopPropagation();deleteRevenueRecord(${record.id})"
+            >
+              DELETE
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
+}
+
+
+function toggleRevenueRecord(id){
+
+  const element =
+    document.getElementById(
+      "revenueRecord" + id
+    );
+
+  if(element){
+    element.classList.toggle("open");
+  }
+}
+
+
+function deleteRevenueRecord(id){
+
+  if(!confirm("Delete this revenue record?")){
+    return;
+  }
+
+  const records =
+    getRevenueRecords()
+      .filter(record=>record.id !== id);
+
+  saveRevenueRecords(records);
+
+  loadRevenueRecords();
+}
+
+
+/* =========================================================
+   CEDI
+========================================================= */
+
+const CEDI_VALUES = [
+  200,
+  100,
+  50,
+  20,
+  10,
+  5,
+  2,
+  1
+];
+
+
+function calculateCedi(){
+
+  let total = 0;
+
+  CEDI_VALUES.forEach(value=>{
+
+    const input =
+      document.getElementById("cedi" + value);
+
+    const output =
+      document.getElementById(
+        "cedi" + value + "Total"
+      );
+
+    const qty =
+      Number(input?.value) || 0;
+
+    const lineTotal =
+      value * qty;
+
+    total += lineTotal;
+
+    if(output){
+      output.textContent =
+        money(lineTotal);
+    }
+
+  });
+
+  document.getElementById("cediGrandTotal")
+    .textContent = money(total);
+
+  document.getElementById("cediWords")
+    .textContent = amountInWords(total);
+
+  saveCediRows();
+}
+
+
+function resetCedi(){
+
+  CEDI_VALUES.forEach(value=>{
+
+    const input =
+      document.getElementById("cedi" + value);
+
+    if(input){
+      input.value = 0;
+    }
+
+  });
+
+  calculateCedi();
+}
+
+
+function saveCediRows(){
+
+  const rows = {};
+
+  CEDI_VALUES.forEach(value=>{
+
+    rows[value] =
+      Number(
+        document.getElementById(
+          "cedi" + value
+        )?.value
+      ) || 0;
+
+  });
+
+  localStorage.setItem(
+    CEDI_STORAGE_KEY,
+    JSON.stringify(rows)
+  );
+}
+
+
+function loadCediRows(){
+
+  let rows = {};
+
+  try{
+
+    rows =
+      JSON.parse(
+        localStorage.getItem(
+          CEDI_STORAGE_KEY
+        ) || "{}"
+      );
+
+  }catch(error){
+
+    rows = {};
+  }
+
+  CEDI_VALUES.forEach(value=>{
+
+    const input =
+      document.getElementById("cedi" + value);
+
+    if(input){
+
+      input.value =
+        Number(rows[value]) || 0;
+    }
+
+  });
+
+  calculateCedi();
+}
+
+
+/* =========================================================
+   AMOUNT IN WORDS
+========================================================= */
+
+const ones = [
+  "",
+  "One",
+  "Two",
+  "Three",
+  "Four",
+  "Five",
+  "Six",
+  "Seven",
+  "Eight",
+  "Nine",
+  "Ten",
+  "Eleven",
+  "Twelve",
+  "Thirteen",
+  "Fourteen",
+  "Fifteen",
+  "Sixteen",
+  "Seventeen",
+  "Eighteen",
+  "Nineteen"
+];
+
+const tens = [
+  "",
+  "",
+  "Twenty",
+  "Thirty",
+  "Forty",
+  "Fifty",
+  "Sixty",
+  "Seventy",
+  "Eighty",
+  "Ninety"
+];
+
+
+function numberToWords(num){
+
+  num = Math.floor(Number(num) || 0);
+
+  if(num === 0){
+    return "Zero";
+  }
+
+  if(num < 20){
+    return ones[num];
+  }
+
+  if(num < 100){
+
+    return tens[Math.floor(num/10)] +
+      (num % 10 ? " " + ones[num%10] : "");
+  }
+
+  if(num < 1000){
+
+    return ones[Math.floor(num/100)] +
+      " Hundred" +
+      (num % 100 ? " " + numberToWords(num%100) : "");
+  }
+
+  if(num < 1000000){
+
+    return numberToWords(Math.floor(num/1000)) +
+      " Thousand" +
+      (num % 1000 ? " " + numberToWords(num%1000) : "");
+  }
+
+  if(num < 1000000000){
+
+    return numberToWords(Math.floor(num/1000000)) +
+      " Million" +
+      (num % 1000000 ? " " + numberToWords(num%1000000) : "");
+  }
+
+  return numberToWords(Math.floor(num/1000000000)) +
+    " Billion" +
+    (num % 1000000000 ? " " + numberToWords(num%1000000000) : "");
+}
+
+
+function amountInWords(amount){
+
+  const whole =
+    Math.floor(Number(amount) || 0);
+
+  const decimal =
+    Math.round(
+      ((Number(amount) || 0) - whole) * 100
+    );
+
+  let text =
+    numberToWords(whole) +
+    " Ghana Cedis";
+
+  if(decimal > 0){
+
+    text +=
+      " and " +
+      numberToWords(decimal) +
+      " Pesewas";
+  }
+
+  return text;
+}
+
+
+/* =========================================================
+   SUPABASE SHARED GOODS
+========================================================= */
+
+async function loadSharedGoods(){
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("goods")
+        .select("*")
+        .order("name",{ascending:true});
+
+    if(error) throw error;
+
+    sharedGoods = data || [];
+
+    renderAllGoodsSelects();
+
+  }catch(error){
+
+    console.error("Goods loading error:",error);
+
+    sharedGoods = [];
+
+    renderAllGoodsSelects();
+  }
+}
+
+
+function renderAllGoodsSelects(){
+
+  document
+    .querySelectorAll(".good-select")
+    .forEach(select=>{
+
+      const current =
+        select.value;
+
+      select.innerHTML =
+        '<option value="">Select good</option>' +
+        sharedGoods.map(good=>`
+
+          <option
+            value="${escapeHTML(good.id)}"
+            data-price="${Number(good.price) || 0}"
+          >
+            ${escapeHTML(good.name)}
+          </option>
+
+        `).join("");
+
+      if(current){
+        select.value = current;
+      }
+
+    });
+}
+
+
+function createGoodSelect(type,index){
+
+  const row =
+    type === "starting"
+      ? startingGoodsRows[index]
+      : remainingGoodsRows[index];
+
+  const options =
+    sharedGoods.map(good=>`
+
+      <option
+        value="${escapeHTML(good.id)}"
+        ${String(good.id) === String(row.goodId) ? "selected" : ""}
+      >
+        ${escapeHTML(good.name)}
+      </option>
+
+    `).join("");
+
+  return `
+
+    <select
+      class="good-select"
+      onchange="goodSelectionChanged('${type}',${index})"
+    >
+
+      <option value="">Select good</option>
+
+      ${options}
+
+    </select>
+
+  `;
+}
+
+
+function renderGoodsRows(type){
+
+  const container =
+    document.getElementById(
+      type === "starting"
+        ? "startingGoodsRows"
+        : "remainingGoodsRows"
+    );
+
+  const rows =
+    type === "starting"
+      ? startingGoodsRows
+      : remainingGoodsRows;
+
+  if(!rows.length){
+
+    container.innerHTML =
+      '<div class="empty">No goods added yet.</div>';
+
+    return;
+  }
+
+  container.innerHTML =
+    rows.map((row,index)=>`
+
+      <div class="goods-row">
+
+        ${createGoodSelect(type,index)}
+
+        <div class="price-box">
+          ${money(row.price)}
+        </div>
+
+        <input
+          type="number"
+          min="0"
+          inputmode="decimal"
+          value="${Number(row.qty) || 0}"
+          placeholder="Qty"
+          onchange="goodsQuantityChanged('${type}',${index},this.value)"
+        >
+
+        <button
+          class="remove-good"
+          onclick="removeGoodsRow('${type}',${index})"
+        >
+          ×
+        </button>
+
+      </div>
+
+    `).join("");
+}
+
+
+function addGoodsRow(type){
+
+  const row = {
+    goodId:"",
+    name:"",
+    price:0,
+    qty:0
+  };
+
+  if(type === "starting"){
+
+    startingGoodsRows.push(row);
+
+  }else{
+
+    remainingGoodsRows.push(row);
+  }
+
+  renderGoodsRows(type);
+}
+
+
+function removeGoodsRow(type,index){
+
+  if(type === "starting"){
+
+    startingGoodsRows.splice(index,1);
+    renderGoodsRows("starting");
+
+  }else{
+
+    remainingGoodsRows.splice(index,1);
+    renderGoodsRows("remaining");
+  }
+
+  calculateGoodsBalance();
+}
+
+
+function goodSelectionChanged(type,index){
+
+  const container =
+    document.getElementById(
+      type === "starting"
+        ? "startingGoodsRows"
+        : "remainingGoodsRows"
+    );
+
+  const selects =
+    container.querySelectorAll(".good-select");
+
+  const select =
+    selects[index];
+
+  if(!select) return;
+
+  const id =
+    select.value;
+
+  const good =
+    sharedGoods.find(
+      item=>String(item.id) === String(id)
+    );
+
+  const rows =
+    type === "starting"
+      ? startingGoodsRows
+      : remainingGoodsRows;
+
+  if(good){
+
+    rows[index].goodId = good.id;
+    rows[index].name = good.name;
+    rows[index].price = Number(good.price) || 0;
+
+  }else{
+
+    rows[index].goodId = "";
+    rows[index].name = "";
+    rows[index].price = 0;
+  }
+
+  renderGoodsRows(type);
+  calculateGoodsBalance();
+}
+
+
+function goodsQuantityChanged(type,index,value){
+
+  const rows =
+    type === "starting"
+      ? startingGoodsRows
+      : remainingGoodsRows;
+
+  rows[index].qty =
+    Number(value) || 0;
+
+  calculateGoodsBalance();
+}
+
+
+/* =========================================================
+   GOODS MODE
+========================================================= */
+
+function showGoodsMode(mode){
+
+  currentGoodsMode = mode;
+
+  const startingCard =
+    document.getElementById(
+      "startingGoodsCard"
+    );
+
+  const remainingCard =
+    document.getElementById(
+      "remainingGoodsCard"
+    );
+
+  const startingChoice =
+    document.getElementById(
+      "startingChoice"
+    );
+
+  const remainingChoice =
+    document.getElementById(
+      "remainingChoice"
+    );
+
+  if(mode === "starting"){
+
+    startingCard.style.display = "block";
+    remainingCard.style.display = "none";
+
+    startingChoice.classList.add("active");
+    remainingChoice.classList.remove("active");
+
+  }else{
+
+    startingCard.style.display = "none";
+    remainingCard.style.display = "block";
+
+    startingChoice.classList.remove("active");
+    remainingChoice.classList.add("active");
+  }
+
+}
+
+
+/* =========================================================
+   WEEK DATA
+========================================================= */
+
+function getWeeks(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(
+        WEEKS_STORAGE_KEY
+      ) || "{}"
+    );
+
+  }catch(error){
+
+    return {};
+  }
+}
+
+
+function saveWeeks(weeks){
+
+  localStorage.setItem(
+    WEEKS_STORAGE_KEY,
+    JSON.stringify(weeks)
+  );
+}
+
+
+function getSelectedWeek(){
+
+  return Number(
+    document.getElementById("goodsWeek").value
+  ) || 1;
+}
+
+
+function loadSelectedWeek(){
+
+  const week =
+    getSelectedWeek();
+
+  const weeks =
+    getWeeks();
+
+  currentWeekData =
+    weeks[week] || {};
+
+  document.getElementById("goodsDate").value =
+    currentWeekData.date ||
+    todayString();
+
+  startingGoodsRows =
+    Array.isArray(currentWeekData.startingGoods)
+      ? JSON.parse(
+          JSON.stringify(
+            currentWeekData.startingGoods
+          )
+        )
+      : [];
+
+  remainingGoodsRows =
+    Array.isArray(currentWeekData.remainingGoods)
+      ? JSON.parse(
+          JSON.stringify(
+            currentWeekData.remainingGoods
+          )
+        )
+      : [];
+
+  renderGoodsRows("starting");
+  renderGoodsRows("remaining");
+
+  updatePreviousRemaining();
+
+  updateSavedStatus();
+
+  calculateGoodsBalance();
+
+  loadWeeklyRecords();
+}
+
+
+function updatePreviousRemaining(){
+
+  const week =
+    getSelectedWeek();
+
+  const previous =
+    week > 1
+      ? getWeeks()[week-1]
+      : null;
+
+  let value = 0;
+
+  if(
+    previous &&
+    Array.isArray(previous.remainingGoods)
+  ){
+
+    value =
+      previous.remainingGoods.reduce(
+        (sum,row)=>
+          sum +
+          ((Number(row.price) || 0) *
+           (Number(row.qty) || 0)),
+        0
+      );
+  }
+
+  document.getElementById(
+    "previousRemainingValue"
+  ).textContent = money(value);
+}
+
+
+function createStartingFromPrevious(){
+
+  const week =
+    getSelectedWeek();
+
+  if(week <= 1){
+
+    alert(
+      "There is no previous week for Week 1."
+    );
+
+    return;
+  }
+
+  const previous =
+    getWeeks()[week-1];
+
+  if(
+    !previous ||
+    !Array.isArray(previous.remainingGoods) ||
+    !previous.remainingGoods.length
+  ){
+
+    alert(
+      "There are no remaining goods saved for the previous week."
+    );
+
+    return;
+  }
+
+  startingGoodsRows =
+    previous.remainingGoods.map(row=>({
+
+      goodId:row.goodId,
+      name:row.name,
+      price:Number(row.price) || 0,
+      qty:Number(row.qty) || 0
+
+    }));
+
+  renderGoodsRows("starting");
+
+  showGoodsMode("starting");
+}
+
+
+function updateSavedStatus(){
+
+  const startingSaved =
+    !!currentWeekData.startingSaved;
+
+  const remainingSaved =
+    !!currentWeekData.remainingSaved;
+
+  document.getElementById(
+    "startingSavedStatus"
+  ).style.display =
+    startingSaved
+      ? "block"
+      : "none";
+
+  document.getElementById(
+    "editStartingBtn"
+  ).style.display =
+    startingSaved
+      ? "block"
+      : "none";
+
+  document.getElementById(
+    "remainingSavedStatus"
+  ).style.display =
+    remainingSaved
+      ? "block"
+      : "none";
+
+  document.getElementById(
+    "editRemainingBtn"
+  ).style.display =
+    remainingSaved
+      ? "block"
+      : "none";
+}
+
+
+/* =========================================================
+   SAVE STARTING GOODS
+========================================================= */
+
+function saveStartingGoods(){
+
+  if(!startingGoodsRows.length){
+
+    alert("Add at least one good.");
+    return;
+  }
+
+  const invalid =
+    startingGoodsRows.some(
+      row=>!row.goodId
+    );
+
+  if(invalid){
+
+    alert(
+      "Please select a good for every row."
+    );
+
+    return;
+  }
+
+  const week =
+    getSelectedWeek();
+
+  const weeks =
+    getWeeks();
+
+  const old =
+    weeks[week] || {};
+
+  weeks[week] = {
+
+    ...old,
+
+    date:
+      document.getElementById(
+        "goodsDate"
+      ).value,
+
+    startingGoods:
+      JSON.parse(
+        JSON.stringify(
+          startingGoodsRows
+        )
+      ),
+
+    startingSaved:true
+  };
+
+  saveWeeks(weeks);
+
+  currentWeekData =
+    weeks[week];
+
+  updateSavedStatus();
+
+  calculateGoodsBalance();
+
+  loadWeeklyRecords();
+
+  alert("Starting goods saved.");
+}
+
+
+function editStartingGoods(){
+
+  const week =
+    getSelectedWeek();
+
+  const weeks =
+    getWeeks();
+
+  if(weeks[week]){
+    weeks[week].startingSaved = false;
+    saveWeeks(weeks);
+    currentWeekData = weeks[week];
+  }
+
+  updateSavedStatus();
+}
+
+
+/* =========================================================
+   SAVE REMAINING GOODS
+========================================================= */
+
+function saveRemainingGoods(){
+
+  if(!remainingGoodsRows.length){
+
+    alert("Add at least one good.");
+    return;
+  }
+
+  const invalid =
+    remainingGoodsRows.some(
+      row=>!row.goodId
+    );
+
+  if(invalid){
+
+    alert(
+      "Please select a good for every row."
+    );
+
+    return;
+  }
+
+  const week =
+    getSelectedWeek();
+
+  const weeks =
+    getWeeks();
+
+  const old =
+    weeks[week] || {};
+
+  weeks[week] = {
+
+    ...old,
+
+    date:
+      document.getElementById(
+        "goodsDate"
+      ).value,
+
+    remainingGoods:
+      JSON.parse(
+        JSON.stringify(
+          remainingGoodsRows
+        )
+      ),
+
+    remainingSaved:true
+  };
+
+  saveWeeks(weeks);
+
+  currentWeekData =
+    weeks[week];
+
+  updateSavedStatus();
+
+  calculateGoodsBalance();
+
+  loadWeeklyRecords();
+
+  alert("Remaining goods saved.");
+}
+
+
+function editRemainingGoods(){
+
+  const week =
+    getSelectedWeek();
+
+  const weeks =
+    getWeeks();
+
+  if(weeks[week]){
+    weeks[week].remainingSaved = false;
+    saveWeeks(weeks);
+    currentWeekData = weeks[week];
+  }
+
+  updateSavedStatus();
+}
+
+
+/* =========================================================
+   GOODS BALANCE
+========================================================= */
+
+function getGoodsValue(rows){
+
+  return rows.reduce(
+    (sum,row)=>
+      sum +
+      (
+        (Number(row.price) || 0) *
+        (Number(row.qty) || 0)
+      ),
+    0
+  );
+}
+
+
+function calculateGoodsBalance(){
+
+  const startingValue =
+    getGoodsValue(
+      startingGoodsRows
+    );
+
+  const remainingValue =
+    getGoodsValue(
+      remainingGoodsRows
+    );
+
+  const sold =
+    Math.max(
+      0,
+      startingValue - remainingValue
+    );
+
+  document.getElementById(
+    "balanceStarting"
+  ).textContent =
+    money(startingValue);
+
+  document.getElementById(
+    "balanceRemaining"
+  ).textContent =
+    money(remainingValue);
+
+  document.getElementById(
+    "balanceSold"
+  ).textContent =
+    money(sold);
+}
+
+
+/* =========================================================
+   WEEKLY RECORDS
+========================================================= */
+
+function loadWeeklyRecords(){
+
+  const container =
+    document.getElementById(
+      "weeklyRecords"
+    );
+
+  if(!container) return;
+
+  const weeks =
+    getWeeks();
+
+  const savedWeeks =
+    Object.keys(weeks)
+      .map(Number)
+      .sort((a,b)=>b-a)
+      .filter(week=>{
+
+        const data =
+          weeks[week];
+
+        return (
+          data &&
+          (
+            data.startingSaved ||
+            data.remainingSaved
+          )
+        );
+      });
+
+  if(!savedWeeks.length){
+
+    container.innerHTML =
+      '<div class="empty">No weekly records saved yet.</div>';
+
+    return;
+  }
+
+  container.innerHTML =
+    savedWeeks.map(week=>{
+
+      const data =
+        weeks[week];
+
+      const starting =
+        Array.isArray(data.startingGoods)
+          ? data.startingGoods
+          : [];
+
+      const remaining =
+        Array.isArray(data.remainingGoods)
+          ? data.remainingGoods
+          : [];
+
+      const startingValue =
+        getGoodsValue(starting);
+
+      const remainingValue =
+        getGoodsValue(remaining);
+
+      const sold =
+        Math.max(
+          0,
+          startingValue - remainingValue
+        );
+
+      return `
+
+        <div
+          class="week-record"
+          id="weekRecord${week}"
+        >
+
+          <div
+            class="week-record-header"
+            onclick="toggleWeekRecord(${week})"
+          >
+
+            <span>
+              Week ${week}
+              ${data.date ? " · " + escapeHTML(data.date) : ""}
+            </span>
+
+            <span>+</span>
+
+          </div>
+
+          <div class="week-record-details">
+
+            <h3>Starting Goods</h3>
+
+            ${
+              starting.length
+              ? `
+                <table class="record-table">
+
+                  <thead>
+                    <tr>
+                      <th>Good</th>
+                      <th>Qty</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    ${
+                      starting.map(row=>`
+
+                        <tr>
+                          <td>${escapeHTML(row.name)}</td>
+                          <td>${Number(row.qty) || 0}</td>
+                          <td>${money(
+                            (Number(row.price)||0) *
+                            (Number(row.qty)||0)
+                          )}</td>
+                        </tr>
+
+                      `).join("")
+                    }
+
+                  </tbody>
+
+                </table>
+              `
+              : '<div class="empty">No starting goods.</div>'
+            }
+
+
+            <h3 style="margin-top:16px;">
+              Remaining Goods
+            </h3>
+
+            ${
+              remaining.length
+              ? `
+                <table class="record-table">
+
+                  <thead>
+                    <tr>
+                      <th>Good</th>
+                      <th>Qty</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    ${
+                      remaining.map(row=>`
+
+                        <tr>
+                          <td>${escapeHTML(row.name)}</td>
+                          <td>${Number(row.qty) || 0}</td>
+                          <td>${money(
+                            (Number(row.price)||0) *
+                            (Number(row.qty)||0)
+                          )}</td>
+                        </tr>
+
+                      `).join("")
+                    }
+
+                  </tbody>
+
+                </table>
+              `
+              : '<div class="empty">No remaining goods.</div>'
+            }
+
+
+            <div class="balance-box">
+
+              <div class="balance-row">
+                <span>Starting Goods</span>
+                <strong>${money(startingValue)}</strong>
+              </div>
+
+              <div class="balance-row">
+                <span>Remaining Goods</span>
+                <strong>${money(remainingValue)}</strong>
+              </div>
+
+              <div class="balance-row">
+                <span>Sold / Used</span>
+                <strong>${money(sold)}</strong>
+              </div>
+
+            </div>
+
+
+            <div style="margin-top:10px;text-align:right;">
+
+              <button
+                class="delete-btn"
+                onclick="deleteWeekRecord(${week})"
+              >
+                DELETE
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+}
+
+
+function toggleWeekRecord(week){
+
+  const element =
+    document.getElementById(
+      "weekRecord" + week
+    );
+
+  if(element){
+    element.classList.toggle("open");
+  }
+}
+
+
+function deleteWeekRecord(week){
+
+  if(
+    !confirm(
+      "Delete the saved record for Week " +
+      week +
+      "?"
+    )
+  ){
+
+    return;
+  }
+
+  const weeks =
+    getWeeks();
+
+  delete weeks[week];
+
+  saveWeeks(weeks);
+
+  loadSelectedWeek();
+
+  loadWeeklyRecords();
+}
+
+
+/* =========================================================
+   ADMIN CHECK
+========================================================= */
+
+function isAdmin(){
+
+  return !!(
+    currentProfile?.role === "admin" ||
+    currentUser?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+  );
+}
+
+
+/* =========================================================
+   ADMIN DATA
+========================================================= */
+
+async function loadAdminData(){
+
+  if(!isAdmin()){
+    return;
+  }
+
+  await loadAdminUsers();
+  await loadAdminRequests();
+  await loadAdminGoods();
+}
+
+
+async function loadAdminUsers(){
+
+  if(!isAdmin()) return;
+
+  const container =
+    document.getElementById("adminUsers");
+
+  container.innerHTML =
+    '<div class="loading">Loading users...</div>';
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("profiles")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+    if(error) throw error;
+
+    const users =
+      data || [];
+
+    document.getElementById(
+      "userCount"
+    ).textContent =
+      users.length;
+
+    if(!users.length){
+
+      container.innerHTML =
+        '<div class="empty">No users found.</div>';
+
+      return;
+    }
+
+    container.innerHTML =
+      users.map(user=>{
+
+        const admin =
+          user.role === "admin" ||
+          user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
+        const status =
+          String(user.status || "pending")
+            .toLowerCase();
+
+        return `
+
+          <div class="user-card">
+
+            <div class="user-card-top">
+
+              <div>
+
+                <div class="user-name">
+                  ${escapeHTML(
+                    user.full_name ||
+                    user.name ||
+                    "User"
+                  )}
+                </div>
+
+                <div class="user-email">
+                  ${escapeHTML(user.email || "")}
+                </div>
+
+              </div>
+
+              <span class="status ${escapeHTML(status)}">
+                ${escapeHTML(status)}
+              </span>
+
+            </div>
+
+            ${
+              admin
+              ? `
+                <div
+                  style="
+                    margin-top:9px;
+                    font-size:12px;
+                    font-weight:800;
+                  "
+                >
+                  Administrator
+                </div>
+              `
+              : `
+                <div class="admin-actions">
+
+                  ${
+                    status !== "active"
+                    ? `
+                      <button
+                        class="main-btn"
+                        onclick="approveUser('${user.id}')"
+                      >
+                        APPROVE
+                      </button>
+                    `
+                    : ""
+                  }
+
+                  <button
+                    class="delete-btn"
+                    onclick="removeUser('${user.id}')"
+                  >
+                    REMOVE
+                  </button>
+
+                </div>
+              `
+            }
+
+          </div>
+
+        `;
+
+      }).join("");
+
+  }catch(error){
+
+    container.innerHTML =
+      '<div class="empty">Unable to load users.</div>';
+
+    console.error(error);
+  }
+}
+
+
+/* =========================================================
+   APPROVE / REMOVE USERS
+========================================================= */
+
+async function approveUser(userId){
+
+  if(!isAdmin()) return;
+
+  if(!confirm("Approve this account?")){
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db.rpc(
+        "approve_user",
+        {
+          p_user_id:userId
+        }
+      );
+
+    if(error) throw error;
+
+    alert("User approved.");
+
+    await loadAdminUsers();
+
+  }catch(error){
+
+    alert(
+      "Unable to approve user: " +
+      error.message
+    );
+  }
+}
+
+
+async function removeUser(userId){
+
+  if(!isAdmin()) return;
+
+  if(!confirm(
+    "Remove this account permanently?"
+  )){
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db.rpc(
+        "remove_user",
+        {
+          p_user_id:userId
+        }
+      );
+
+    if(error) throw error;
+
+    alert("User removed.");
+
+    await loadAdminUsers();
+
+  }catch(error){
+
+    alert(
+      "Unable to remove user: " +
+      error.message
+    );
+  }
+}
+
+
+/* =========================================================
+   ADMIN GOODS
+========================================================= */
+
+async function loadAdminGoods(){
+
+  if(!isAdmin()) return;
+
+  const container =
+    document.getElementById(
+      "adminGoodsList"
+    );
+
+  container.innerHTML =
+    '<div class="loading">Loading goods...</div>';
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("goods")
+        .select("*")
+        .order("name",{ascending:true});
+
+    if(error) throw error;
+
+    sharedGoods =
+      data || [];
+
+    renderAllGoodsSelects();
+
+    if(!sharedGoods.length){
+
+      container.innerHTML =
+        '<div class="empty">No goods have been added yet.</div>';
+
+      return;
+    }
+
+    container.innerHTML =
+      sharedGoods.map(good=>`
+
+        <div class="good-admin-row">
+
+          <div
+            class="price-box"
+            style="text-align:left;"
+          >
+            ${escapeHTML(good.name)}
+          </div>
+
+          <div class="price-box">
+            ${money(good.price)}
+          </div>
+
+          <button
+            class="delete-btn"
+            onclick="adminDeleteGood('${good.id}')"
+          >
+            ×
+          </button>
+
+        </div>
+
+      `).join("");
+
+  }catch(error){
+
+    container.innerHTML =
+      '<div class="empty">Unable to load goods.</div>';
+
+    console.error(error);
+  }
+}
+
+
+async function adminAddGood(){
+
+  if(!isAdmin()) return;
+
+  const name =
+    document.getElementById(
+      "adminGoodName"
+    ).value.trim();
+
+  const price =
+    Number(
+      document.getElementById(
+        "adminGoodPrice"
+      ).value
+    );
+
+  if(!name || !Number.isFinite(price) || price < 0){
+
+    alert(
+      "Enter a good name and a valid price."
+    );
+
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db
+        .from("goods")
+        .insert({
+          name,
+          price
+        });
+
+    if(error) throw error;
+
+    document.getElementById(
+      "adminGoodName"
+    ).value = "";
+
+    document.getElementById(
+      "adminGoodPrice"
+    ).value = "";
+
+    await loadSharedGoods();
+    await loadAdminGoods();
+
+    alert("Good and price saved.");
+
+  }catch(error){
+
+    alert(
+      "Unable to save good: " +
+      error.message
+    );
+  }
+}
+
+
+async function adminDeleteGood(id){
+
+  if(!isAdmin()) return;
+
+  if(!confirm(
+    "Delete this good and its shared price?"
+  )){
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db
+        .from("goods")
+        .delete()
+        .eq("id",id);
+
+    if(error) throw error;
+
+    await loadSharedGoods();
+    await loadAdminGoods();
+
+  }catch(error){
+
+    alert(
+      "Unable to delete good: " +
+      error.message
+    );
+  }
+}
+
+
+/* =========================================================
+   GOOD REQUESTS
+========================================================= */
+
+async function submitGoodRequest(){
+
+  if(!currentUser){
+    return;
+  }
+
+  const name =
+    document.getElementById(
+      "requestGoodName"
+    ).value.trim();
+
+  const price =
+    Number(
+      document.getElementById(
+        "requestGoodPrice"
+      ).value
+    );
+
+  if(!name || !Number.isFinite(price) || price < 0){
+
+    alert(
+      "Enter the good name and proposed price."
+    );
+
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db
+        .from("good_requests")
+        .insert({
+          user_id:currentUser.id,
+          name,
+          proposed_price:price,
+          status:"pending"
+        });
+
+    if(error) throw error;
+
+    document.getElementById(
+      "requestGoodName"
+    ).value = "";
+
+    document.getElementById(
+      "requestGoodPrice"
+    ).value = "";
+
+    await loadMyRequests();
+
+    if(isAdmin()){
+      await loadAdminRequests();
+    }
+
+    alert("Good request sent.");
+
+  }catch(error){
+
+    alert(
+      "Unable to send request: " +
+      error.message
+    );
+  }
+}
+
+
+async function loadMyRequests(){
+
+  if(!currentUser) return;
+
+  const container =
+    document.getElementById(
+      "myRequests"
+    );
+
+  if(!container) return;
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("good_requests")
+        .select("*")
+        .eq("user_id",currentUser.id)
+        .order("created_at",{ascending:false});
+
+    if(error) throw error;
+
+    const requests =
+      data || [];
+
+    if(!requests.length){
+
+      container.innerHTML =
+        '<div class="empty">You have no good requests.</div>';
+
+      return;
+    }
+
+    container.innerHTML =
+      requests.map(request=>`
+
+        <div class="request">
+
+          <div class="request-top">
+
+            <div>
+
+              <strong>
+                ${escapeHTML(
+                  request.name ||
+                  request.good_name ||
+                  ""
+                )}
+              </strong>
+
+              <div style="margin-top:4px;">
+                ${money(
+                  request.proposed_price ??
+                  request.price ??
+                  0
+                )}
+              </div>
+
+            </div>
+
+            <span class="status ${
+              String(request.status || "pending")
+                .toLowerCase()
+            }">
+              ${escapeHTML(
+                request.status || "pending"
+              )}
+            </span>
+
+          </div>
+
+        </div>
+
+      `).join("");
+
+  }catch(error){
+
+    container.innerHTML =
+      '<div class="empty">Unable to load requests.</div>';
+
+    console.error(error);
+  }
+}
+
+
+async function loadAdminRequests(){
+
+  if(!isAdmin()) return;
+
+  const container =
+    document.getElementById(
+      "adminRequests"
+    );
+
+  container.innerHTML =
+    '<div class="loading">Loading requests...</div>';
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("good_requests")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+    if(error) throw error;
+
+    const requests =
+      data || [];
+
+    if(!requests.length){
+
+      container.innerHTML =
+        '<div class="empty">No good requests.</div>';
+
+      return;
+    }
+
+    container.innerHTML =
+      requests.map(request=>`
+
+        <div class="request">
+
+          <div class="request-top">
+
+            <div>
+
+              <strong>
+                ${escapeHTML(
+                  request.name ||
+                  request.good_name ||
+                  ""
+                )}
+              </strong>
+
+              <div style="margin-top:4px;">
+                Proposed:
+                ${money(
+                  request.proposed_price ??
+                  request.price ??
+                  0
+                )}
+              </div>
+
+              <div
+                style="
+                  margin-top:4px;
+                  font-size:11px;
+                  color:#69756b;
+                  word-break:break-word;
+                "
+              >
+                User ID:
+                ${escapeHTML(
+                  request.user_id || ""
+                )}
+              </div>
+
+            </div>
+
+            <span class="status ${
+              String(request.status || "pending")
+                .toLowerCase()
+            }">
+              ${escapeHTML(
+                request.status || "pending"
+              )}
+            </span>
+
+          </div>
+
+          ${
+            String(request.status).toLowerCase() === "pending"
+            ? `
+
+              <div class="admin-actions">
+
+                <button
+                  class="main-btn"
+                  onclick="approveGoodRequest(${request.id})"
+                >
+                  APPROVE
+                </button>
+
+                <button
+                  class="delete-btn"
+                  onclick="rejectGoodRequest(${request.id})"
+                >
+                  REJECT
+                </button>
+
+              </div>
+
+            `
+            : ""
+          }
+
+        </div>
+
+      `).join("");
+
+  }catch(error){
+
+    container.innerHTML =
+      '<div class="empty">Unable to load requests.</div>';
+
+    console.error(error);
+  }
+}
+
+
+/* =========================================================
+   GOOD REQUEST RPC
+========================================================= */
+
+async function approveGoodRequest(requestId){
+
+  if(!isAdmin()) return;
+
+  if(!confirm("Approve this good request?")){
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db.rpc(
+        "approve_good_request",
+        {
+          p_request_id:requestId
+        }
+      );
+
+    if(error) throw error;
+
+    await loadSharedGoods();
+    await loadAdminGoods();
+    await loadAdminRequests();
+    await loadMyRequests();
+
+    alert("Good request approved.");
+
+  }catch(error){
+
+    alert(
+      "Unable to approve request: " +
+      error.message
+    );
+  }
+}
+
+
+async function rejectGoodRequest(requestId){
+
+  if(!isAdmin()) return;
+
+  if(!confirm("Reject this good request?")){
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db.rpc(
+        "reject_good_request",
+        {
+          p_request_id:requestId
+        }
+      );
+
+    if(error) throw error;
+
+    await loadAdminRequests();
+    await loadMyRequests();
+
+    alert("Good request rejected.");
+
+  }catch(error){
+
+    alert(
+      "Unable to reject request: " +
+      error.message
+    );
+  }
+}
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+db.auth.onAuthStateChange(
+  async(event,session)=>{
+
+    if(
+      event === "SIGNED_IN" &&
+      session
+    ){
+
+      currentUser =
+        session.user;
+
+    }
+
+    if(event === "SIGNED_OUT"){
+
+      currentUser = null;
+      currentProfile = null;
+
+      document.getElementById(
+        "app"
+      ).style.display = "none";
+
+      document.getElementById(
+        "loginScreen"
+      ).style.display = "flex";
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async()=>{
+
+    populateWeekSelectors();
+
+    initializeDates();
+
+    await checkExistingSession();
+
+  }
+);
 
 </script>
 
