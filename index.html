@@ -878,11 +878,10 @@ select:focus{
 
     <div id="loginMessage" class="login-message"></div>
 
-    <!-- LOGIN FORM -->
-
     <div id="loginForm">
 
       <label>Email</label>
+
       <input
         id="loginEmail"
         type="email"
@@ -891,6 +890,7 @@ select:focus{
       >
 
       <label>Password</label>
+
       <input
         id="loginPassword"
         type="password"
@@ -915,11 +915,10 @@ select:focus{
 
     </div>
 
-    <!-- CREATE ACCOUNT FORM -->
-
     <div id="createForm" style="display:none;">
 
       <label>Full Name</label>
+
       <input
         id="registerName"
         type="text"
@@ -928,6 +927,7 @@ select:focus{
       >
 
       <label>Email</label>
+
       <input
         id="registerEmail"
         type="email"
@@ -936,6 +936,7 @@ select:focus{
       >
 
       <label>Password</label>
+
       <input
         id="registerPassword"
         type="password"
@@ -979,8 +980,6 @@ select:focus{
     <p>Business Calculator</p>
 
   </header>
-
-  <!-- TABS -->
 
   <div class="tabs">
 
@@ -1026,16 +1025,14 @@ select:focus{
          REVENUE SECTION
     ========================= -->
 
-    <section
-      id="revenue"
-      class="section active"
-    >
+    <section id="revenue" class="section active">
 
       <div class="card">
 
         <h2>Revenue Calculator</h2>
 
         <label>Bank 1</label>
+
         <input
           id="bank1"
           type="number"
@@ -1045,6 +1042,7 @@ select:focus{
         >
 
         <label>Bank 2</label>
+
         <input
           id="bank2"
           type="number"
@@ -1054,6 +1052,7 @@ select:focus{
         >
 
         <label>Bank 3</label>
+
         <input
           id="bank3"
           type="number"
@@ -1063,6 +1062,7 @@ select:focus{
         >
 
         <label>Cash at Hand</label>
+
         <input
           id="cashAtHand"
           type="number"
@@ -1072,6 +1072,7 @@ select:focus{
         >
 
         <label>Expenses</label>
+
         <input
           id="expenses"
           type="number"
@@ -1081,6 +1082,7 @@ select:focus{
         >
 
         <label>Total Goods</label>
+
         <input
           id="totalGoods"
           type="number"
@@ -1090,6 +1092,7 @@ select:focus{
         >
 
         <label>Remaining Goods</label>
+
         <input
           id="remainingGoods"
           type="number"
@@ -1106,7 +1109,10 @@ select:focus{
           CALCULATE
         </button>
 
-        <div id="revenueResults" style="display:none;margin-top:12px;">
+        <div
+          id="revenueResults"
+          style="display:none;margin-top:12px;"
+        >
 
           <div class="result">
             <strong>Total Banks</strong>
@@ -1141,8 +1147,6 @@ select:focus{
         </div>
 
       </div>
-
-      <!-- REVENUE DATE -->
 
       <div class="card">
 
@@ -1198,8 +1202,6 @@ select:focus{
 
       </div>
 
-      <!-- REVENUE RECORDS -->
-
       <div class="card">
 
         <div class="records-title">
@@ -1230,10 +1232,7 @@ select:focus{
          CEDI SECTION
     ========================= -->
 
-    <section
-      id="cedi"
-      class="section"
-    >
+    <section id="cedi" class="section">
 
       <div class="card">
 
@@ -1277,12 +1276,7 @@ select:focus{
          GOODS SECTION
     ========================= -->
 
-    <section
-      id="goods"
-      class="section"
-    >
-
-      <!-- WEEK SELECT -->
+    <section id="goods" class="section">
 
       <div class="card">
 
@@ -1347,6 +1341,23 @@ select:focus{
           </button>
 
         </div>
+
+      </div>
+
+      <!-- SEARCH SAVED GOODS -->
+
+      <div class="card">
+
+        <h2>Search Saved Goods</h2>
+
+        <label>Search Saved Goods</label>
+
+        <input
+          id="goodsSearch"
+          type="search"
+          placeholder="Type first letter or letters"
+          autocomplete="off"
+        >
 
       </div>
 
@@ -1521,12 +1532,7 @@ select:focus{
          ADMIN SECTION
     ========================= -->
 
-    <section
-      id="admin"
-      class="section"
-    >
-
-      <!-- REGISTERED ACCOUNTS -->
+    <section id="admin" class="section">
 
       <div class="card">
 
@@ -1544,8 +1550,6 @@ select:focus{
 
       </div>
 
-      <!-- GOOD REQUESTS -->
-
       <div class="card">
 
         <h2>Good Requests</h2>
@@ -1561,8 +1565,6 @@ select:focus{
         <div id="adminRequests"></div>
 
       </div>
-
-      <!-- APPROVED GOODS -->
 
       <div class="card">
 
@@ -1644,23 +1646,12 @@ const ADMIN_EMAIL =
   "collinsappau3030@gmail.com";
 
 /* =========================================================
-   LOCAL STORAGE
+   DEVICE STORAGE
+   Only Cedi quantities remain here.
 ========================================================= */
-
-const GOODS_KEY =
-  "oc_demo_goods";
-
-const WEEKS_KEY =
-  "oc_demo_weeks_fresh_2026_09";
-
-const REVENUE_KEY =
-  "oc_demo_revenue_records_2026_09";
 
 const CEDI_KEY =
   "oc_demo_cedi_2026_09";
-
-const OLD_CLEAR_KEY =
-  "oc_demo_old_weeks_cleared_2026_09";
 
 /* =========================================================
    GLOBAL VARIABLES
@@ -1685,6 +1676,8 @@ let isAdmin = false;
 let startingRows = [];
 
 let remainingRows = [];
+
+let goodsSearchTerm = "";
 
 /* =========================================================
    HELPERS
@@ -1733,7 +1726,9 @@ function formatDate(dateString){
 
   if(!dateString) return "No date";
 
-  const date = new Date(dateString + "T00:00:00");
+  const date = new Date(
+    dateString + "T00:00:00"
+  );
 
   if(Number.isNaN(date.getTime())){
     return dateString;
@@ -1751,36 +1746,45 @@ function formatDate(dateString){
 
 function showLoading(show){
 
-  document.getElementById("loadingScreen").style.display =
+  document.getElementById(
+    "loadingScreen"
+  ).style.display =
     show ? "flex" : "none";
 }
 
 /* =========================================================
-   AUTH MESSAGES
+   LOGIN MESSAGES
 ========================================================= */
 
 function showLoginMessage(message,isError=false){
 
   const box =
-    document.getElementById("loginMessage");
+    document.getElementById(
+      "loginMessage"
+    );
 
-  box.textContent = message;
+  box.textContent =
+    message;
 
   box.className =
     "login-message" +
     (isError ? " error" : "");
 
-  box.style.display = "block";
+  box.style.display =
+    "block";
 }
 
 function clearLoginMessage(){
 
   const box =
-    document.getElementById("loginMessage");
+    document.getElementById(
+      "loginMessage"
+    );
 
   box.textContent = "";
 
-  box.style.display = "none";
+  box.style.display =
+    "none";
 }
 
 /* =========================================================
@@ -1791,10 +1795,14 @@ function showCreateAccount(){
 
   clearLoginMessage();
 
-  document.getElementById("loginForm").style.display =
+  document.getElementById(
+    "loginForm"
+  ).style.display =
     "none";
 
-  document.getElementById("createForm").style.display =
+  document.getElementById(
+    "createForm"
+  ).style.display =
     "block";
 }
 
@@ -1802,10 +1810,14 @@ function showLogin(){
 
   clearLoginMessage();
 
-  document.getElementById("createForm").style.display =
+  document.getElementById(
+    "createForm"
+  ).style.display =
     "none";
 
-  document.getElementById("loginForm").style.display =
+  document.getElementById(
+    "loginForm"
+  ).style.display =
     "block";
 }
 
@@ -1814,13 +1826,19 @@ async function createAccount(){
   clearLoginMessage();
 
   const name =
-    document.getElementById("registerName").value.trim();
+    document.getElementById(
+      "registerName"
+    ).value.trim();
 
   const email =
-    document.getElementById("registerEmail").value.trim();
+    document.getElementById(
+      "registerEmail"
+    ).value.trim();
 
   const password =
-    document.getElementById("registerPassword").value;
+    document.getElementById(
+      "registerPassword"
+    ).value;
 
   if(!name || !email || !password){
 
@@ -1879,7 +1897,8 @@ async function createAccount(){
     showLoading(false);
 
     showLoginMessage(
-      error.message || "Unable to create account.",
+      error.message ||
+      "Unable to create account.",
       true
     );
   }
@@ -1890,10 +1909,14 @@ async function loginUser(){
   clearLoginMessage();
 
   const email =
-    document.getElementById("loginEmail").value.trim();
+    document.getElementById(
+      "loginEmail"
+    ).value.trim();
 
   const password =
-    document.getElementById("loginPassword").value;
+    document.getElementById(
+      "loginPassword"
+    ).value;
 
   if(!email || !password){
 
@@ -1919,7 +1942,8 @@ async function loginUser(){
       throw error;
     }
 
-    currentUser = data.user;
+    currentUser =
+      data.user;
 
     const success =
       await loadUserProfile();
@@ -1940,7 +1964,8 @@ async function loginUser(){
     showLoading(false);
 
     showLoginMessage(
-      error.message || "Login failed.",
+      error.message ||
+      "Login failed.",
       true
     );
   }
@@ -1966,20 +1991,38 @@ async function logoutUser(){
 
   isAdmin = false;
 
-  document.getElementById("app").style.display =
+  weeks = {};
+
+  revenueRecords = [];
+
+  startingRows = [];
+
+  remainingRows = [];
+
+  document.getElementById(
+    "app"
+  ).style.display =
     "none";
 
-  document.getElementById("loginScreen").style.display =
+  document.getElementById(
+    "loginScreen"
+  ).style.display =
     "flex";
 
-  document.getElementById("adminTab").style.display =
+  document.getElementById(
+    "adminTab"
+  ).style.display =
     "none";
 
   showLogin();
 
-  document.getElementById("loginEmail").value = "";
+  document.getElementById(
+    "loginEmail"
+  ).value = "";
 
-  document.getElementById("loginPassword").value = "";
+  document.getElementById(
+    "loginPassword"
+  ).value = "";
 
   showLoading(false);
 }
@@ -2012,17 +2055,25 @@ async function loadUserProfile(){
     return false;
   }
 
-  currentProfile = data;
+  currentProfile =
+    data;
 
   const status =
-    String(data.status || "").toLowerCase();
+    String(
+      data.status || ""
+    ).toLowerCase();
 
   const email =
-    String(currentUser.email || "").toLowerCase();
+    String(
+      currentUser.email || ""
+    ).toLowerCase();
 
   isAdmin =
-    email === ADMIN_EMAIL.toLowerCase() ||
-    String(data.role || "").toLowerCase() === "admin";
+    email ===
+      ADMIN_EMAIL.toLowerCase() ||
+    String(
+      data.role || ""
+    ).toLowerCase() === "admin";
 
   if(!isAdmin && status !== "active"){
 
@@ -2044,13 +2095,19 @@ async function loadUserProfile(){
     return false;
   }
 
-  document.getElementById("loginScreen").style.display =
+  document.getElementById(
+    "loginScreen"
+  ).style.display =
     "none";
 
-  document.getElementById("app").style.display =
+  document.getElementById(
+    "app"
+  ).style.display =
     "block";
 
-  document.getElementById("adminTab").style.display =
+  document.getElementById(
+    "adminTab"
+  ).style.display =
     isAdmin ? "block" : "none";
 
   await initializeAppData();
@@ -2058,7 +2115,9 @@ async function loadUserProfile(){
   if(isAdmin){
 
     await loadAdminUsers();
+
     await loadGoodRequests();
+
     await loadAdminGoods();
   }
 
@@ -2071,7 +2130,10 @@ async function loadUserProfile(){
 
 function showTab(tabName,button){
 
-  if(tabName === "admin" && !isAdmin){
+  if(
+    tabName === "admin" &&
+    !isAdmin
+  ){
 
     return;
   }
@@ -2080,7 +2142,9 @@ function showTab(tabName,button){
     .querySelectorAll(".section")
     .forEach(section => {
 
-      section.classList.remove("active");
+      section.classList.remove(
+        "active"
+      );
 
     });
 
@@ -2088,31 +2152,44 @@ function showTab(tabName,button){
     .querySelectorAll(".tab")
     .forEach(tab => {
 
-      tab.classList.remove("active");
+      tab.classList.remove(
+        "active"
+      );
 
     });
 
   const section =
-    document.getElementById(tabName);
+    document.getElementById(
+      tabName
+    );
 
   if(section){
 
-    section.classList.add("active");
+    section.classList.add(
+      "active"
+    );
   }
 
   if(button){
 
-    button.classList.add("active");
+    button.classList.add(
+      "active"
+    );
 
   }else{
 
     const matching =
       document.querySelector(
-        '.tab[data-tab="' + tabName + '"]'
+        '.tab[data-tab="' +
+        tabName +
+        '"]'
       );
 
     if(matching){
-      matching.classList.add("active");
+
+      matching.classList.add(
+        "active"
+      );
     }
   }
 
@@ -2128,11 +2205,33 @@ function showTab(tabName,button){
 
 async function initializeAppData(){
 
-  loadLocalData();
+  weeks = {};
+
+  revenueRecords = [];
+
+  startingRows = [];
+
+  remainingRows = [];
+
+  selectedWeek =
+    selectedWeek || "Week 1";
 
   populateWeekSelects();
 
   populateCediRows();
+
+  await loadWeeklyRecords();
+
+  await loadRevenueRecords();
+
+  ensureWeek(selectedWeek);
+
+  document.getElementById(
+    "weekSelect"
+  ).value =
+    selectedWeek;
+
+  loadWeekRows();
 
   renderRevenueRecords();
 
@@ -2140,124 +2239,411 @@ async function initializeAppData(){
 
   renderBalanceRecords();
 
-  renderStartingRows();
-
-  renderRemainingRows();
-
   updatePreviousGoodsInfo();
 
   await loadSharedGoods();
 
   await loadUserRequests();
 
-  if(!document.getElementById("weekDate").value){
+  const weekDate =
+    document.getElementById(
+      "weekDate"
+    );
 
-    document.getElementById("weekDate").value =
-      new Date().toISOString().slice(0,10);
+  if(
+    !weekDate.value &&
+    !weeks[selectedWeek].date
+  ){
 
+    weekDate.value =
+      new Date()
+        .toISOString()
+        .slice(0,10);
   }
 
   updateRevenueEndDate();
 }
 
 /* =========================================================
-   LOCAL DATA
+   WEEKLY RECORDS - SUPABASE
 ========================================================= */
 
-function loadLocalData(){
+function blankWeekRecord(){
 
-  try{
+  return {
+    date:"",
+    startingGoods:[],
+    startingGoodsSaved:false,
+    startingGoodsValue:0,
+    remainingGoods:[],
+    remainingGoodsSaved:false,
+    remainingGoodsValue:0,
+    soldUsedValue:0,
+    balanceValue:0
+  };
+}
 
-    const savedGoods =
-      localStorage.getItem(GOODS_KEY);
+async function loadWeeklyRecords(){
 
-    if(savedGoods){
-
-      goods = JSON.parse(savedGoods);
-
-    }
-
-  }catch(error){
-
-    goods = [];
-  }
-
-  try{
-
-    const savedWeeks =
-      localStorage.getItem(WEEKS_KEY);
-
-    if(savedWeeks){
-
-      weeks = JSON.parse(savedWeeks);
-
-    }else{
-
-      weeks = {};
-
-    }
-
-  }catch(error){
+  if(!currentUser){
 
     weeks = {};
+
+    return;
   }
 
-  try{
+  const {data,error} =
+    await db
+      .from("weekly_records")
+      .select("*")
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "week",
+        {ascending:true}
+      );
 
-    const savedRevenue =
-      localStorage.getItem(REVENUE_KEY);
+  if(error){
 
-    if(savedRevenue){
+    console.error(
+      "Weekly records loading error:",
+      error
+    );
 
-      revenueRecords =
-        JSON.parse(savedRevenue);
+    alert(
+      "Unable to load Weekly Goods Records: " +
+      error.message
+    );
 
-    }else{
+    weeks = {};
 
-      revenueRecords = [];
+    return;
+  }
+
+  weeks = {};
+
+  (data || []).forEach(
+    row => {
+
+      weeks[row.week] = {
+
+        date:
+          row.date || "",
+
+        startingGoods:
+          Array.isArray(
+            row.starting_goods
+          )
+            ? row.starting_goods
+            : [],
+
+        startingGoodsSaved:
+          !!row.starting_goods_saved,
+
+        startingGoodsValue:
+          numberValue(
+            row.starting_goods_value
+          ),
+
+        remainingGoods:
+          Array.isArray(
+            row.remaining_goods
+          )
+            ? row.remaining_goods
+            : [],
+
+        remainingGoodsSaved:
+          !!row.remaining_goods_saved,
+
+        remainingGoodsValue:
+          numberValue(
+            row.remaining_goods_value
+          ),
+
+        soldUsedValue:
+          numberValue(
+            row.sold_used_value
+          ),
+
+        balanceValue:
+          numberValue(
+            row.balance_value
+          )
+      };
 
     }
+  );
+}
 
-  }catch(error){
+function ensureWeek(week){
+
+  if(!weeks[week]){
+
+    weeks[week] =
+      blankWeekRecord();
+  }
+
+  return weeks[week];
+}
+
+async function saveWeeklyRecordToSupabase(week){
+
+  if(!currentUser){
+
+    alert(
+      "You must be logged in to save a weekly record."
+    );
+
+    return false;
+  }
+
+  const record =
+    ensureWeek(week);
+
+  const {error} =
+    await db
+      .from("weekly_records")
+      .upsert(
+        {
+          user_id:
+            currentUser.id,
+
+          week,
+
+          date:
+            record.date || null,
+
+          starting_goods:
+            record.startingGoods || [],
+
+          starting_goods_saved:
+            !!record.startingGoodsSaved,
+
+          starting_goods_value:
+            numberValue(
+              record.startingGoodsValue
+            ),
+
+          remaining_goods:
+            record.remainingGoods || [],
+
+          remaining_goods_saved:
+            !!record.remainingGoodsSaved,
+
+          remaining_goods_value:
+            numberValue(
+              record.remainingGoodsValue
+            ),
+
+          sold_used_value:
+            numberValue(
+              record.soldUsedValue
+            ),
+
+          balance_value:
+            numberValue(
+              record.balanceValue
+            ),
+
+          updated_at:
+            new Date().toISOString()
+        },
+        {
+          onConflict:
+            "user_id,week"
+        }
+      );
+
+  if(error){
+
+    console.error(
+      "Weekly record save error:",
+      error
+    );
+
+    alert(
+      "Unable to save Weekly Goods Record: " +
+      error.message
+    );
+
+    return false;
+  }
+
+  return true;
+}
+
+/* =========================================================
+   REVENUE RECORDS - SUPABASE
+========================================================= */
+
+async function loadRevenueRecords(){
+
+  if(!currentUser){
 
     revenueRecords = [];
+
+    return;
   }
 
-  if(!weeks["Week 1"]){
+  const {data,error} =
+    await db
+      .from("revenue_records")
+      .select("*")
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "week",
+        {ascending:true}
+      );
 
-    weeks["Week 1"] = {
-      date:"",
-      startingGoods:[],
-      startingGoodsSaved:false,
-      startingGoodsValue:0,
-      remainingGoods:[],
-      remainingGoodsSaved:false,
-      remainingGoodsValue:0,
-      soldUsedValue:0,
-      balanceValue:0
-    };
+  if(error){
 
-    saveWeeks();
+    console.error(
+      "Revenue records loading error:",
+      error
+    );
+
+    alert(
+      "Unable to load Revenue Records: " +
+      error.message
+    );
+
+    revenueRecords = [];
+
+    return;
   }
 
-  selectedWeek =
-    selectedWeek || "Week 1";
+  revenueRecords =
+    (data || []).map(
+      row => ({
+
+        id:
+          row.id,
+
+        week:
+          row.week,
+
+        startDate:
+          row.start_date || "",
+
+        endDate:
+          row.end_date || "",
+
+        dateSaved:
+          row.date_saved || "",
+
+        totalBanks:
+          numberValue(
+            row.total_banks
+          ),
+
+        totalBankCash:
+          numberValue(
+            row.total_bank_cash
+          ),
+
+        remainingGoods:
+          numberValue(
+            row.remaining_goods
+          ),
+
+        goodsAfterExpenses:
+          numberValue(
+            row.goods_after_expenses
+          ),
+
+        expenses:
+          numberValue(
+            row.expenses
+          )
+
+      })
+    );
 }
 
-function saveWeeks(){
+async function saveRevenueRecordToSupabase(record){
 
-  localStorage.setItem(
-    WEEKS_KEY,
-    JSON.stringify(weeks)
-  );
-}
+  if(!currentUser){
 
-function saveRevenueRecords(){
+    alert(
+      "You must be logged in to save a Revenue Record."
+    );
 
-  localStorage.setItem(
-    REVENUE_KEY,
-    JSON.stringify(revenueRecords)
-  );
+    return false;
+  }
+
+  const {error} =
+    await db
+      .from("revenue_records")
+      .upsert(
+        {
+          user_id:
+            currentUser.id,
+
+          week:
+            record.week,
+
+          start_date:
+            record.startDate || null,
+
+          end_date:
+            record.endDate || null,
+
+          date_saved:
+            record.dateSaved ||
+            new Date().toISOString(),
+
+          total_banks:
+            numberValue(
+              record.totalBanks
+            ),
+
+          total_bank_cash:
+            numberValue(
+              record.totalBankCash
+            ),
+
+          remaining_goods:
+            numberValue(
+              record.remainingGoods
+            ),
+
+          goods_after_expenses:
+            numberValue(
+              record.goodsAfterExpenses
+            ),
+
+          expenses:
+            numberValue(
+              record.expenses
+            )
+        },
+        {
+          onConflict:
+            "user_id,week"
+        }
+      );
+
+  if(error){
+
+    console.error(
+      "Revenue record save error:",
+      error
+    );
+
+    alert(
+      "Unable to save Revenue Record: " +
+      error.message
+    );
+
+    return false;
+  }
+
+  return true;
 }
 
 /* =========================================================
@@ -2267,7 +2653,9 @@ function saveRevenueRecords(){
 function weekNumber(week){
 
   const match =
-    String(week).match(/\d+/);
+    String(week).match(
+      /\d+/
+    );
 
   return match
     ? Number(match[0])
@@ -2277,10 +2665,19 @@ function weekNumber(week){
 function populateWeekSelects(){
 
   const weekSelect =
-    document.getElementById("weekSelect");
+    document.getElementById(
+      "weekSelect"
+    );
 
   const revenueWeek =
-    document.getElementById("revenueWeek");
+    document.getElementById(
+      "revenueWeek"
+    );
+
+  if(!weekSelect || !revenueWeek){
+
+    return;
+  }
 
   weekSelect.innerHTML = "";
 
@@ -2288,55 +2685,46 @@ function populateWeekSelects(){
 
   for(let i=1;i<=52;i++){
 
-    const name = "Week " + i;
+    const name =
+      "Week " + i;
 
     const option1 =
-      document.createElement("option");
+      document.createElement(
+        "option"
+      );
 
-    option1.value = name;
-    option1.textContent = name;
+    option1.value =
+      name;
 
-    weekSelect.appendChild(option1);
+    option1.textContent =
+      name;
+
+    weekSelect.appendChild(
+      option1
+    );
 
     const option2 =
-      document.createElement("option");
+      document.createElement(
+        "option"
+      );
 
-    option2.value = name;
-    option2.textContent = name;
+    option2.value =
+      name;
 
-    revenueWeek.appendChild(option2);
+    option2.textContent =
+      name;
+
+    revenueWeek.appendChild(
+      option2
+    );
   }
 
   weekSelect.value =
-    selectedWeek;
+    selectedWeek || "Week 1";
 
-  if(!revenueWeek.value){
-
-    revenueWeek.value =
-      "Week 1";
-  }
-}
-
-function ensureWeek(week){
-
-  if(!weeks[week]){
-
-    weeks[week] = {
-      date:"",
-      startingGoods:[],
-      startingGoodsSaved:false,
-      startingGoodsValue:0,
-      remainingGoods:[],
-      remainingGoodsSaved:false,
-      remainingGoodsValue:0,
-      soldUsedValue:0,
-      balanceValue:0
-    };
-
-    saveWeeks();
-  }
-
-  return weeks[week];
+  revenueWeek.value =
+    revenueWeek.value ||
+    "Week 1";
 }
 
 /* =========================================================
@@ -2349,24 +2737,96 @@ async function loadSharedGoods(){
     await db
       .from("goods")
       .select("*")
-      .order("name",{ascending:true});
+      .order(
+        "name",
+        {ascending:true}
+      );
 
   if(error){
 
-    console.error("Goods loading error:",error);
+    console.error(
+      "Goods loading error:",
+      error
+    );
 
     return;
   }
 
   goods =
-    (data || []).map(item => ({
-      id:item.id,
-      name:item.name,
-      price:numberValue(item.price)
-    }));
+    (data || []).map(
+      item => ({
+        id:item.id,
+        name:item.name,
+        price:numberValue(
+          item.price
+        )
+      })
+    );
 
   renderStartingRows();
+
   renderRemainingRows();
+}
+
+/* =========================================================
+   GOODS SEARCH
+========================================================= */
+
+function getFilteredGoods(selected=""){
+
+  const query =
+    String(
+      goodsSearchTerm || ""
+    )
+      .trim()
+      .toLowerCase();
+
+  let filtered =
+    !query
+      ? [...goods]
+      : goods.filter(
+          good =>
+            String(
+              good.name || ""
+            )
+              .toLowerCase()
+              .startsWith(query)
+        );
+
+  /*
+    Keep the currently selected good visible
+    even when the search term no longer
+    matches it.
+  */
+
+  if(selected){
+
+    const alreadyIncluded =
+      filtered.some(
+        good =>
+          String(good.name) ===
+          String(selected)
+      );
+
+    if(!alreadyIncluded){
+
+      const current =
+        goods.find(
+          good =>
+            String(good.name) ===
+            String(selected)
+        );
+
+      if(current){
+
+        filtered.unshift(
+          current
+        );
+      }
+    }
+  }
+
+  return filtered;
 }
 
 function goodsOptions(selected=""){
@@ -2374,23 +2834,31 @@ function goodsOptions(selected=""){
   let html =
     '<option value="">Select good</option>';
 
-  goods.forEach(good => {
+  const filteredGoods =
+    getFilteredGoods(
+      selected
+    );
 
-    const selectedText =
-      String(good.name) === String(selected)
-        ? " selected"
-        : "";
+  filteredGoods.forEach(
+    good => {
 
-    html +=
-      '<option value="' +
-      escapeHTML(good.name) +
-      '"' +
-      selectedText +
-      '>' +
-      escapeHTML(good.name) +
-      "</option>";
+      const selectedText =
+        String(good.name) ===
+        String(selected)
+          ? " selected"
+          : "";
 
-  });
+      html +=
+        '<option value="' +
+        escapeHTML(good.name) +
+        '"' +
+        selectedText +
+        '>' +
+        escapeHTML(good.name) +
+        "</option>";
+
+    }
+  );
 
   return html;
 }
@@ -2400,12 +2868,25 @@ function getGoodPrice(name){
   const item =
     goods.find(
       good =>
-        String(good.name) === String(name)
+        String(good.name) ===
+        String(name)
     );
 
   return item
     ? numberValue(item.price)
     : 0;
+}
+
+function applyGoodsSearch(){
+
+  goodsSearchTerm =
+    document.getElementById(
+      "goodsSearch"
+    ).value.trim();
+
+  renderStartingRows();
+
+  renderRemainingRows();
 }
 
 /* =========================================================
@@ -2414,35 +2895,60 @@ function getGoodPrice(name){
 
 function selectGoodsMode(mode){
 
-  selectedRecordType = mode;
+  selectedRecordType =
+    mode;
 
   const startingCard =
-    document.getElementById("startingGoodsCard");
+    document.getElementById(
+      "startingGoodsCard"
+    );
 
   const remainingCard =
-    document.getElementById("remainingGoodsCard");
+    document.getElementById(
+      "remainingGoodsCard"
+    );
 
   const startingChoice =
-    document.getElementById("startingChoice");
+    document.getElementById(
+      "startingChoice"
+    );
 
   const remainingChoice =
-    document.getElementById("remainingChoice");
+    document.getElementById(
+      "remainingChoice"
+    );
 
   if(mode === "starting"){
 
-    startingCard.style.display = "block";
-    remainingCard.style.display = "none";
+    startingCard.style.display =
+      "block";
 
-    startingChoice.classList.add("active");
-    remainingChoice.classList.remove("active");
+    remainingCard.style.display =
+      "none";
+
+    startingChoice.classList.add(
+      "active"
+    );
+
+    remainingChoice.classList.remove(
+      "active"
+    );
 
   }else{
 
-    startingCard.style.display = "none";
-    remainingCard.style.display = "block";
+    startingCard.style.display =
+      "none";
 
-    startingChoice.classList.remove("active");
-    remainingChoice.classList.add("active");
+    remainingCard.style.display =
+      "block";
+
+    startingChoice.classList.remove(
+      "active"
+    );
+
+    remainingChoice.classList.add(
+      "active"
+    );
   }
 }
 
@@ -2453,7 +2959,9 @@ function selectGoodsMode(mode){
 function getPreviousRemainingGoods(){
 
   const number =
-    weekNumber(selectedWeek);
+    weekNumber(
+      selectedWeek
+    );
 
   if(number <= 1){
 
@@ -2461,7 +2969,10 @@ function getPreviousRemainingGoods(){
   }
 
   const previous =
-    weeks["Week " + (number - 1)];
+    weeks[
+      "Week " +
+      (number - 1)
+    ];
 
   if(
     !previous ||
@@ -2480,8 +2991,12 @@ function getPreviousRemainingValue(){
     .reduce(
       (sum,item) =>
         sum +
-        numberValue(item.price) *
-        numberValue(item.remainingQty),
+        numberValue(
+          item.price
+        ) *
+        numberValue(
+          item.remainingQty
+        ),
       0
     );
 }
@@ -2491,10 +3006,16 @@ function updatePreviousGoodsInfo(){
   const value =
     getPreviousRemainingValue();
 
-  document.getElementById(
-    "previousGoodsValue"
-  ).textContent =
-    money(value);
+  const element =
+    document.getElementById(
+      "previousGoodsValue"
+    );
+
+  if(element){
+
+    element.textContent =
+      money(value);
+  }
 }
 
 function createStartingFromPrevious(){
@@ -2508,36 +3029,53 @@ function createStartingFromPrevious(){
   }
 
   const current =
-    ensureWeek(selectedWeek);
+    ensureWeek(
+      selectedWeek
+    );
 
   if(
     current.startingGoodsSaved ||
-    (current.startingGoods &&
-     current.startingGoods.length)
+    (
+      current.startingGoods &&
+      current.startingGoods.length
+    )
   ){
 
     return;
   }
 
+  /*
+    This only prepares the current week.
+    It does NOT save anything to Supabase
+    until the user presses SAVE STARTING GOODS.
+  */
+
   current.startingGoods =
-    previous.map(item => ({
-      name:item.name,
-      price:numberValue(item.price),
-      qty:numberValue(item.remainingQty)
-    }));
+    previous.map(
+      item => ({
+        name:item.name,
+        price:numberValue(
+          item.price
+        ),
+        qty:numberValue(
+          item.remainingQty
+        )
+      })
+    );
 
   current.startingGoodsValue =
-    calculateStartingValue(current);
-
-  saveWeeks();
+    calculateStartingValue(
+      current
+    );
 
   startingRows =
-    current.startingGoods.map(item => ({
-      name:item.name,
-      price:item.price,
-      qty:item.qty
-    }));
-
+    current.startingGoods.map(
+      item => ({
+        name:item.name,
+        price:item.price,
+        qty:item.qty
+      })
+    );
 }
 
 /* =========================================================
@@ -2547,14 +3085,20 @@ function createStartingFromPrevious(){
 function changeWeek(){
 
   selectedWeek =
-    document.getElementById("weekSelect").value;
+    document.getElementById(
+      "weekSelect"
+    ).value;
 
-  ensureWeek(selectedWeek);
+  ensureWeek(
+    selectedWeek
+  );
 
   const record =
     weeks[selectedWeek];
 
-  document.getElementById("weekDate").value =
+  document.getElementById(
+    "weekDate"
+  ).value =
     record.date || "";
 
   createStartingFromPrevious();
@@ -2567,17 +3111,31 @@ function changeWeek(){
 
   renderBalanceRecords();
 
-  selectGoodsMode("starting");
+  selectGoodsMode(
+    "starting"
+  );
 }
 
-function saveWeekDate(){
+async function saveWeekDate(){
 
-  ensureWeek(selectedWeek);
+  ensureWeek(
+    selectedWeek
+  );
 
   weeks[selectedWeek].date =
-    document.getElementById("weekDate").value;
+    document.getElementById(
+      "weekDate"
+    ).value;
 
-  saveWeeks();
+  const ok =
+    await saveWeeklyRecordToSupabase(
+      selectedWeek
+    );
+
+  if(!ok){
+
+    return;
+  }
 
   renderSavedRecords();
 
@@ -2587,22 +3145,40 @@ function saveWeekDate(){
 function loadWeekRows(){
 
   const record =
-    ensureWeek(selectedWeek);
+    ensureWeek(
+      selectedWeek
+    );
 
   startingRows =
-    (record.startingGoods || []).map(item => ({
-      name:item.name,
-      price:numberValue(item.price),
-      qty:numberValue(item.qty)
-    }));
+    (record.startingGoods || [])
+      .map(
+        item => ({
+          name:item.name,
+          price:numberValue(
+            item.price
+          ),
+          qty:numberValue(
+            item.qty
+          )
+        })
+      );
 
   remainingRows =
-    (record.remainingGoods || []).map(item => ({
-      name:item.name,
-      price:numberValue(item.price),
-      startingQty:numberValue(item.startingQty),
-      remainingQty:numberValue(item.remainingQty)
-    }));
+    (record.remainingGoods || [])
+      .map(
+        item => ({
+          name:item.name,
+          price:numberValue(
+            item.price
+          ),
+          startingQty:numberValue(
+            item.startingQty
+          ),
+          remainingQty:numberValue(
+            item.remainingQty
+          )
+        })
+      );
 
   if(
     !startingRows.length &&
@@ -2632,7 +3208,9 @@ function loadWeekRows(){
   }
 
   renderStartingRows();
+
   renderRemainingRows();
+
   updateStatuses();
 }
 
@@ -2653,7 +3231,10 @@ function addStartingGoodRow(){
 
 function removeStartingGoodRow(index){
 
-  startingRows.splice(index,1);
+  startingRows.splice(
+    index,
+    1
+  );
 
   if(!startingRows.length){
 
@@ -2683,14 +3264,18 @@ function renderStartingRows(){
     (row,index) => {
 
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       div.className =
         "goods-row";
 
       div.innerHTML =
         '<select>' +
-        goodsOptions(row.name) +
+        goodsOptions(
+          row.name
+        ) +
         '</select>' +
 
         '<div class="goods-price">' +
@@ -2698,19 +3283,27 @@ function renderStartingRows(){
         '</div>' +
 
         '<input type="number" min="0" inputmode="numeric" placeholder="Qty" value="' +
-        (row.qty || "") +
+        (
+          row.qty || ""
+        ) +
         '">' +
 
         '<button class="remove-good" type="button">×</button>';
 
       const select =
-        div.querySelector("select");
+        div.querySelector(
+          "select"
+        );
 
       const qty =
-        div.querySelector("input");
+        div.querySelector(
+          "input"
+        );
 
       const remove =
-        div.querySelector("button");
+        div.querySelector(
+          "button"
+        );
 
       select.addEventListener(
         "change",
@@ -2720,7 +3313,9 @@ function renderStartingRows(){
             select.value;
 
           row.price =
-            getGoodPrice(row.name);
+            getGoodPrice(
+              row.name
+            );
 
           renderStartingRows();
         }
@@ -2733,7 +3328,9 @@ function renderStartingRows(){
           row.qty =
             Math.max(
               0,
-              numberValue(qty.value)
+              numberValue(
+                qty.value
+              )
             );
         }
       );
@@ -2742,11 +3339,15 @@ function renderStartingRows(){
         "click",
         function(){
 
-          removeStartingGoodRow(index);
+          removeStartingGoodRow(
+            index
+          );
         }
       );
 
-      container.appendChild(div);
+      container.appendChild(
+        div
+      );
 
     }
   );
@@ -2770,7 +3371,10 @@ function addRemainingGoodRow(){
 
 function removeRemainingGoodRow(index){
 
-  remainingRows.splice(index,1);
+  remainingRows.splice(
+    index,
+    1
+  );
 
   if(!remainingRows.length){
 
@@ -2801,14 +3405,18 @@ function renderRemainingRows(){
     (row,index) => {
 
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       div.className =
         "goods-row";
 
       div.innerHTML =
         '<select>' +
-        goodsOptions(row.name) +
+        goodsOptions(
+          row.name
+        ) +
         '</select>' +
 
         '<div class="goods-price">' +
@@ -2816,19 +3424,27 @@ function renderRemainingRows(){
         '</div>' +
 
         '<input type="number" min="0" inputmode="numeric" placeholder="Remaining" value="' +
-        (row.remainingQty || "") +
+        (
+          row.remainingQty || ""
+        ) +
         '">' +
 
         '<button class="remove-good" type="button">×</button>';
 
       const select =
-        div.querySelector("select");
+        div.querySelector(
+          "select"
+        );
 
       const qty =
-        div.querySelector("input");
+        div.querySelector(
+          "input"
+        );
 
       const remove =
-        div.querySelector("button");
+        div.querySelector(
+          "button"
+        );
 
       select.addEventListener(
         "change",
@@ -2838,17 +3454,22 @@ function renderRemainingRows(){
             select.value;
 
           row.price =
-            getGoodPrice(row.name);
+            getGoodPrice(
+              row.name
+            );
 
           const start =
             startingRows.find(
               item =>
-                item.name === row.name
+                item.name ===
+                row.name
             );
 
           row.startingQty =
             start
-              ? numberValue(start.qty)
+              ? numberValue(
+                  start.qty
+                )
               : 0;
 
           renderRemainingRows();
@@ -2862,7 +3483,9 @@ function renderRemainingRows(){
           row.remainingQty =
             Math.max(
               0,
-              numberValue(qty.value)
+              numberValue(
+                qty.value
+              )
             );
         }
       );
@@ -2871,40 +3494,60 @@ function renderRemainingRows(){
         "click",
         function(){
 
-          removeRemainingGoodRow(index);
+          removeRemainingGoodRow(
+            index
+          );
         }
       );
 
-      container.appendChild(div);
+      container.appendChild(
+        div
+      );
 
     }
   );
 }
 
 /* =========================================================
-   STARTING VALUE
+   STARTING / REMAINING VALUES
 ========================================================= */
 
-function calculateStartingValue(record){
+function calculateStartingValue(
+  record
+){
 
-  return (record.startingGoods || [])
+  return (
+    record.startingGoods || []
+  )
     .reduce(
       (sum,item) =>
         sum +
-        numberValue(item.price) *
-        numberValue(item.qty),
+        numberValue(
+          item.price
+        ) *
+        numberValue(
+          item.qty
+        ),
       0
     );
 }
 
-function calculateRemainingValue(record){
+function calculateRemainingValue(
+  record
+){
 
-  return (record.remainingGoods || [])
+  return (
+    record.remainingGoods || []
+  )
     .reduce(
       (sum,item) =>
         sum +
-        numberValue(item.price) *
-        numberValue(item.remainingQty),
+        numberValue(
+          item.price
+        ) *
+        numberValue(
+          item.remainingQty
+        ),
       0
     );
 }
@@ -2913,35 +3556,55 @@ function calculateRemainingValue(record){
    SAVE STARTING GOODS
 ========================================================= */
 
-function saveStartingGoods(){
+async function saveStartingGoods(){
 
   const validRows =
     startingRows
-      .filter(row => row.name)
-      .map(row => ({
-        name:row.name,
-        price:getGoodPrice(row.name),
-        qty:Math.max(
-          0,
-          numberValue(row.qty)
-        )
-      }));
+      .filter(
+        row =>
+          row.name
+      )
+      .map(
+        row => ({
+          name:
+            row.name,
+
+          price:
+            getGoodPrice(
+              row.name
+            ),
+
+          qty:
+            Math.max(
+              0,
+              numberValue(
+                row.qty
+              )
+            )
+        })
+      );
 
   if(!validRows.length){
 
-    alert("Please add at least one good.");
+    alert(
+      "Please add at least one good."
+    );
 
     return;
   }
 
   const record =
-    ensureWeek(selectedWeek);
+    ensureWeek(
+      selectedWeek
+    );
 
   record.startingGoods =
     validRows;
 
   record.startingGoodsValue =
-    calculateStartingValue(record);
+    calculateStartingValue(
+      record
+    );
 
   record.startingGoodsSaved =
     true;
@@ -2955,16 +3618,28 @@ function saveStartingGoods(){
   }
 
   record.balanceValue =
-    calculateBalance(selectedWeek);
+    calculateBalance(
+      selectedWeek
+    );
 
-  saveWeeks();
+  const ok =
+    await saveWeeklyRecordToSupabase(
+      selectedWeek
+    );
+
+  if(!ok){
+
+    return;
+  }
 
   startingRows =
-    validRows.map(item => ({
-      name:item.name,
-      price:item.price,
-      qty:item.qty
-    }));
+    validRows.map(
+      item => ({
+        name:item.name,
+        price:item.price,
+        qty:item.qty
+      })
+    );
 
   renderStartingRows();
 
@@ -2974,18 +3649,30 @@ function saveStartingGoods(){
 
   renderBalanceRecords();
 
-  alert("Starting Goods saved.");
+  alert(
+    "Starting Goods saved."
+  );
 }
 
-function editStartingGoods(){
+async function editStartingGoods(){
 
   const record =
-    ensureWeek(selectedWeek);
+    ensureWeek(
+      selectedWeek
+    );
 
   record.startingGoodsSaved =
     false;
 
-  saveWeeks();
+  const ok =
+    await saveWeeklyRecordToSupabase(
+      selectedWeek
+    );
+
+  if(!ok){
+
+    return;
+  }
 
   updateStatuses();
 }
@@ -2994,57 +3681,85 @@ function editStartingGoods(){
    SAVE REMAINING GOODS
 ========================================================= */
 
-function saveRemainingGoods(){
+async function saveRemainingGoods(){
 
   const validRows =
     remainingRows
-      .filter(row => row.name)
-      .map(row => {
+      .filter(
+        row =>
+          row.name
+      )
+      .map(
+        row => {
 
-        const starting =
-          startingRows.find(
-            item =>
-              item.name === row.name
-          );
+          const starting =
+            startingRows.find(
+              item =>
+                item.name ===
+                row.name
+            );
 
-        const startingQty =
-          starting
-            ? numberValue(starting.qty)
-            : numberValue(row.startingQty);
+          const startingQty =
+            starting
+              ? numberValue(
+                  starting.qty
+                )
+              : numberValue(
+                  row.startingQty
+                );
 
-        let remainingQty =
-          numberValue(row.remainingQty);
+          let remainingQty =
+            numberValue(
+              row.remainingQty
+            );
 
-        if(remainingQty > startingQty){
+          if(
+            remainingQty >
+            startingQty
+          ){
 
-          remainingQty =
-            startingQty;
+            remainingQty =
+              startingQty;
+          }
+
+          return {
+            name:
+              row.name,
+
+            price:
+              getGoodPrice(
+                row.name
+              ),
+
+            startingQty,
+
+            remainingQty
+          };
+
         }
-
-        return {
-          name:row.name,
-          price:getGoodPrice(row.name),
-          startingQty,
-          remainingQty
-        };
-
-      });
+      );
 
   if(!validRows.length){
 
-    alert("Please add at least one remaining good.");
+    alert(
+      "Please add at least one remaining good."
+    );
 
     return;
   }
 
   const record =
-    ensureWeek(selectedWeek);
+    ensureWeek(
+      selectedWeek
+    );
 
   record.remainingGoods =
     validRows;
 
   record.remainingGoodsValue =
-    calculateRemainingValue(record);
+    calculateRemainingValue(
+      record
+    );
 
   record.remainingGoodsSaved =
     true;
@@ -3052,22 +3767,38 @@ function saveRemainingGoods(){
   record.soldUsedValue =
     Math.max(
       0,
-      numberValue(record.startingGoodsValue) -
-      numberValue(record.remainingGoodsValue)
+      numberValue(
+        record.startingGoodsValue
+      ) -
+      numberValue(
+        record.remainingGoodsValue
+      )
     );
 
   record.balanceValue =
-    calculateBalance(selectedWeek);
+    calculateBalance(
+      selectedWeek
+    );
 
-  saveWeeks();
+  const ok =
+    await saveWeeklyRecordToSupabase(
+      selectedWeek
+    );
+
+  if(!ok){
+
+    return;
+  }
 
   remainingRows =
-    validRows.map(item => ({
-      name:item.name,
-      price:item.price,
-      startingQty:item.startingQty,
-      remainingQty:item.remainingQty
-    }));
+    validRows.map(
+      item => ({
+        name:item.name,
+        price:item.price,
+        startingQty:item.startingQty,
+        remainingQty:item.remainingQty
+      })
+    );
 
   renderRemainingRows();
 
@@ -3077,18 +3808,30 @@ function saveRemainingGoods(){
 
   renderBalanceRecords();
 
-  alert("Remaining Goods saved.");
+  alert(
+    "Remaining Goods saved."
+  );
 }
 
-function editRemainingGoods(){
+async function editRemainingGoods(){
 
   const record =
-    ensureWeek(selectedWeek);
+    ensureWeek(
+      selectedWeek
+    );
 
   record.remainingGoodsSaved =
     false;
 
-  saveWeeks();
+  const ok =
+    await saveWeeklyRecordToSupabase(
+      selectedWeek
+    );
+
+  if(!ok){
+
+    return;
+  }
 
   updateStatuses();
 }
@@ -3100,7 +3843,9 @@ function editRemainingGoods(){
 function updateStatuses(){
 
   const record =
-    ensureWeek(selectedWeek);
+    ensureWeek(
+      selectedWeek
+    );
 
   const startingStatus =
     document.getElementById(
@@ -3173,7 +3918,9 @@ function updateStatuses(){
    BALANCE CALCULATION
 ========================================================= */
 
-function calculateBalance(week){
+function calculateBalance(
+  week
+){
 
   const current =
     weeks[week];
@@ -3194,17 +3941,15 @@ function calculateBalance(week){
     );
 
   const number =
-    weekNumber(week);
-
-  /*
-    Week 1:
-    The balance is the saved remaining goods
-    when remaining goods have been recorded.
-  */
+    weekNumber(
+      week
+    );
 
   if(number === 1){
 
-    if(current.remainingGoodsSaved){
+    if(
+      current.remainingGoodsSaved
+    ){
 
       return currentRemaining;
     }
@@ -3212,16 +3957,11 @@ function calculateBalance(week){
     return currentStarting;
   }
 
-  /*
-    For later weeks, the previous week's
-    remaining goods become the current week's
-    opening balance/reference.
-
-    The current starting goods are then included.
-  */
-
   const previous =
-    weeks["Week " + (number - 1)];
+    weeks[
+      "Week " +
+      (number - 1)
+    ];
 
   const previousRemaining =
     previous &&
@@ -3233,15 +3973,11 @@ function calculateBalance(week){
 
   if(previousRemaining >= 1){
 
-    return previousRemaining +
-           currentStarting;
+    return (
+      previousRemaining +
+      currentStarting
+    );
   }
-
-  /*
-    If the previous week has no saved
-    remaining goods, fall back to the
-    current week's saved remaining goods.
-  */
 
   return current.remainingGoodsSaved
     ? currentRemaining
@@ -3250,9 +3986,13 @@ function calculateBalance(week){
 
 /* =========================================================
    RECALCULATE RECORD
+   IMPORTANT:
+   This function does NOT save anything.
 ========================================================= */
 
-function recalculateRecord(week){
+function recalculateRecord(
+  week
+){
 
   const record =
     weeks[week];
@@ -3260,22 +4000,30 @@ function recalculateRecord(week){
   if(!record) return;
 
   record.startingGoodsValue =
-    calculateStartingValue(record);
+    calculateStartingValue(
+      record
+    );
 
   record.remainingGoodsValue =
-    calculateRemainingValue(record);
+    calculateRemainingValue(
+      record
+    );
 
   record.soldUsedValue =
     Math.max(
       0,
-      numberValue(record.startingGoodsValue) -
-      numberValue(record.remainingGoodsValue)
+      numberValue(
+        record.startingGoodsValue
+      ) -
+      numberValue(
+        record.remainingGoodsValue
+      )
     );
 
   record.balanceValue =
-    calculateBalance(week);
-
-  saveWeeks();
+    calculateBalance(
+      week
+    );
 }
 
 /* =========================================================
@@ -3301,7 +4049,25 @@ function renderBalanceRecords(){
           weekNumber(b)
       );
 
-  if(!names.length){
+  const savedNames =
+    names.filter(
+      week => {
+
+        const record =
+          weeks[week];
+
+        return (
+          record &&
+          (
+            record.startingGoodsSaved ||
+            record.remainingGoodsSaved
+          )
+        );
+
+      }
+    );
+
+  if(!savedNames.length){
 
     container.innerHTML =
       '<div class="empty">No Balance records yet.</div>';
@@ -3309,77 +4075,78 @@ function renderBalanceRecords(){
     return;
   }
 
-  names.forEach(function(week){
+  savedNames.forEach(
+    function(week){
 
-    const record =
-      weeks[week];
+      const record =
+        weeks[week];
 
-    recalculateRecord(week);
+      recalculateRecord(
+        week
+      );
 
-    const bar =
-      document.createElement("div");
+      const bar =
+        document.createElement(
+          "div"
+        );
 
-    bar.className =
-      "balance-record";
+      bar.className =
+        "balance-record";
 
-    bar.innerHTML =
-      '<div class="balance-left">' +
-        escapeHTML(week) +
-        '<small>' +
-          (
-            record.date
-              ? escapeHTML(
-                  formatDate(record.date)
-                )
-              : "No date"
+      bar.innerHTML =
+        '<div class="balance-left">' +
+          escapeHTML(
+            week
           ) +
-        "</small>" +
-      "</div>" +
+          '<small>' +
+            (
+              record.date
+                ? escapeHTML(
+                    formatDate(
+                      record.date
+                    )
+                  )
+                : "No date"
+            ) +
+          "</small>" +
+        "</div>" +
 
-      '<div class="balance-amount">' +
-        money(record.balanceValue) +
-      "</div>";
+        '<div class="balance-amount">' +
+          money(
+            record.balanceValue
+          ) +
+        "</div>";
 
-    /*
-      THIS IS THE IMPORTANT BALANCE REFERENCE.
+      bar.addEventListener(
+        "click",
+        function(){
 
-      Tapping this record:
-      1. Opens Goods.
-      2. Selects the exact week.
-      3. Opens that week's saved record.
-      4. Scrolls to that week's Balance box.
-    */
+          openExactBalance(
+            week
+          );
 
-    bar.addEventListener(
-      "click",
-      function(){
+        }
+      );
 
-        openExactBalance(week);
+      container.appendChild(
+        bar
+      );
 
-      }
-    );
-
-    container.appendChild(bar);
-
-  });
+    }
+  );
 }
 
 /* =========================================================
    EXACT BALANCE REFERENCE
 ========================================================= */
 
-function openExactBalance(week){
+function openExactBalance(
+  week
+){
 
-  /*
-    Make sure the week exists.
-  */
-
-  ensureWeek(week);
-
-  /*
-    Open Goods using the actual tab name.
-    This avoids relying on the tab's position.
-  */
+  ensureWeek(
+    week
+  );
 
   const goodsTab =
     document.querySelector(
@@ -3391,10 +4158,6 @@ function openExactBalance(week){
     goodsTab
   );
 
-  /*
-    Select the exact week.
-  */
-
   const weekSelect =
     document.getElementById(
       "weekSelect"
@@ -3405,10 +4168,6 @@ function openExactBalance(week){
 
   selectedWeek =
     week;
-
-  /*
-    Load that week's data.
-  */
 
   const record =
     weeks[week];
@@ -3424,53 +4183,52 @@ function openExactBalance(week){
 
   updateStatuses();
 
-  /*
-    Render the saved records so the
-    exact details element exists.
-  */
-
   renderSavedRecords();
 
-  /*
-    Open the exact saved record.
-  */
-
   const detailsId =
-    "details-" + safeWeekId(week);
+    "details-" +
+    safeWeekId(
+      week
+    );
 
   const details =
-    document.getElementById(detailsId);
+    document.getElementById(
+      detailsId
+    );
 
   if(details){
 
-    details.classList.add("open");
+    details.classList.add(
+      "open"
+    );
   }
 
-  /*
-    Give the DOM a moment to render and
-    then scroll exactly to the Balance box.
-  */
+  setTimeout(
+    function(){
 
-  setTimeout(function(){
+      const balanceId =
+        "balance-" +
+        safeWeekId(
+          week
+        );
 
-    const balanceId =
-      "balance-" + safeWeekId(week);
+      const balanceElement =
+        document.getElementById(
+          balanceId
+        );
 
-    const balanceElement =
-      document.getElementById(
-        balanceId
-      );
+      if(balanceElement){
 
-    if(balanceElement){
+        balanceElement.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
 
-      balanceElement.scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-      });
+      }
 
-    }
-
-  },150);
+    },
+    150
+  );
 }
 
 /* =========================================================
@@ -3496,7 +4254,25 @@ function renderSavedRecords(){
           weekNumber(b)
       );
 
-  if(!names.length){
+  const savedNames =
+    names.filter(
+      week => {
+
+        const record =
+          weeks[week];
+
+        return (
+          record &&
+          (
+            record.startingGoodsSaved ||
+            record.remainingGoodsSaved
+          )
+        );
+
+      }
+    );
+
+  if(!savedNames.length){
 
     container.innerHTML =
       '<div class="empty">No saved weekly records yet.</div>';
@@ -3504,274 +4280,314 @@ function renderSavedRecords(){
     return;
   }
 
-  names.forEach(function(week){
+  savedNames.forEach(
+    function(week){
 
-    const record =
-      weeks[week];
+      const record =
+        weeks[week];
 
-    recalculateRecord(week);
-
-    const wrapper =
-      document.createElement("div");
-
-    wrapper.className =
-      "week-record";
-
-    const head =
-      document.createElement("button");
-
-    head.type = "button";
-
-    head.className =
-      "week-record-head";
-
-    head.innerHTML =
-      '<div class="week-record-head-left">' +
-
-        '<span>' +
-          escapeHTML(week) +
-        "</span>" +
-
-        "<small>" +
-          (
-            record.date
-              ? escapeHTML(
-                  formatDate(record.date)
-                )
-              : "No date"
-          ) +
-        "</small>" +
-
-      "</div>" +
-
-      "<span>" +
-        money(record.balanceValue) +
-      "</span>";
-
-    const details =
-      document.createElement("div");
-
-    details.className =
-      "week-record-details";
-
-    details.id =
-      "details-" + safeWeekId(week);
-
-    /*
-      STARTING GOODS
-    */
-
-    let html =
-      '<div class="record-subtitle">Starting Goods</div>';
-
-    if(
-      record.startingGoods &&
-      record.startingGoods.length
-    ){
-
-      html +=
-        '<table class="week-table">' +
-          "<thead>" +
-            "<tr>" +
-              "<th>Good</th>" +
-              "<th>Qty</th>" +
-              "<th>Value</th>" +
-            "</tr>" +
-          "</thead>" +
-          "<tbody>";
-
-      record.startingGoods.forEach(
-        item => {
-
-          const value =
-            numberValue(item.price) *
-            numberValue(item.qty);
-
-          html +=
-            "<tr>" +
-              "<td>" +
-                escapeHTML(item.name) +
-              "</td>" +
-
-              "<td>" +
-                numberValue(item.qty) +
-              "</td>" +
-
-              "<td>" +
-                money(value) +
-              "</td>" +
-            "</tr>";
-
-        }
+      recalculateRecord(
+        week
       );
 
-      html +=
-          "</tbody>" +
-        "</table>";
-
-    }else{
-
-      html +=
-        '<div class="empty">No starting goods saved.</div>';
-    }
-
-    /*
-      REMAINING GOODS
-    */
-
-    html +=
-      '<div class="record-subtitle">Remaining Goods</div>';
-
-    if(
-      record.remainingGoods &&
-      record.remainingGoods.length
-    ){
-
-      html +=
-        '<table class="week-table">' +
-          "<thead>" +
-            "<tr>" +
-              "<th>Good</th>" +
-              "<th>Remaining</th>" +
-              "<th>Value</th>" +
-            "</tr>" +
-          "</thead>" +
-          "<tbody>";
-
-      record.remainingGoods.forEach(
-        item => {
-
-          const value =
-            numberValue(item.price) *
-            numberValue(item.remainingQty);
-
-          html +=
-            "<tr>" +
-
-              "<td>" +
-                escapeHTML(item.name) +
-              "</td>" +
-
-              "<td>" +
-                numberValue(item.remainingQty) +
-              "</td>" +
-
-              "<td>" +
-                money(value) +
-              "</td>" +
-
-            "</tr>";
-
-        }
-      );
-
-      html +=
-          "</tbody>" +
-        "</table>";
-
-    }else{
-
-      html +=
-        '<div class="empty">No remaining goods saved.</div>';
-    }
-
-    /*
-      SUMMARY
-    */
-
-    html +=
-      '<div class="result">' +
-        "<strong>Starting Goods Value</strong>" +
-        "<strong>" +
-          money(record.startingGoodsValue) +
-        "</strong>" +
-      "</div>" +
-
-      '<div class="result">' +
-        "<strong>Remaining Goods Value</strong>" +
-        "<strong>" +
-          money(record.remainingGoodsValue) +
-        "</strong>" +
-      "</div>" +
-
-      '<div class="result">' +
-        "<strong>Sold / Used</strong>" +
-        "<strong>" +
-          money(record.soldUsedValue) +
-        "</strong>" +
-      "</div>";
-
-    /*
-      THIS IS THE BALANCE BOX.
-
-      The Balance Records section points
-      directly here.
-    */
-
-    html +=
-      '<div class="balance-box record-anchor" id="balance-' +
-        safeWeekId(week) +
-      '">' +
-
-        "<span>Balance</span>" +
-
-        "<span>" +
-          money(record.balanceValue) +
-        "</span>" +
-
-      "</div>";
-
-    /*
-      DELETE WEEK
-    */
-
-    html +=
-      '<button class="main-btn delete-btn" type="button">' +
-        "DELETE WEEK RECORD" +
-      "</button>";
-
-    details.innerHTML =
-      html;
-
-    const deleteButton =
-      details.querySelector(
-        ".delete-btn"
-      );
-
-    deleteButton.addEventListener(
-      "click",
-      function(){
-
-        deleteWeekRecord(week);
-
-      }
-    );
-
-    head.addEventListener(
-      "click",
-      function(){
-
-        details.classList.toggle(
-          "open"
+      const wrapper =
+        document.createElement(
+          "div"
         );
 
+      wrapper.className =
+        "week-record";
+
+      const head =
+        document.createElement(
+          "button"
+        );
+
+      head.type =
+        "button";
+
+      head.className =
+        "week-record-head";
+
+      head.innerHTML =
+        '<div class="week-record-head-left">' +
+
+          "<span>" +
+            escapeHTML(
+              week
+            ) +
+          "</span>" +
+
+          "<small>" +
+            (
+              record.date
+                ? escapeHTML(
+                    formatDate(
+                      record.date
+                    )
+                  )
+                : "No date"
+            ) +
+          "</small>" +
+
+        "</div>" +
+
+        "<span>" +
+          money(
+            record.balanceValue
+          ) +
+        "</span>";
+
+      const details =
+        document.createElement(
+          "div"
+        );
+
+      details.className =
+        "week-record-details";
+
+      details.id =
+        "details-" +
+        safeWeekId(
+          week
+        );
+
+      let html =
+        '<div class="record-subtitle">Starting Goods</div>';
+
+      if(
+        record.startingGoods &&
+        record.startingGoods.length
+      ){
+
+        html +=
+          '<table class="week-table">' +
+            "<thead>" +
+              "<tr>" +
+                "<th>Good</th>" +
+                "<th>Qty</th>" +
+                "<th>Value</th>" +
+              "</tr>" +
+            "</thead>" +
+            "<tbody>";
+
+        record.startingGoods.forEach(
+          item => {
+
+            const value =
+              numberValue(
+                item.price
+              ) *
+              numberValue(
+                item.qty
+              );
+
+            html +=
+              "<tr>" +
+
+                "<td>" +
+                  escapeHTML(
+                    item.name
+                  ) +
+                "</td>" +
+
+                "<td>" +
+                  numberValue(
+                    item.qty
+                  ) +
+                "</td>" +
+
+                "<td>" +
+                  money(value) +
+                "</td>" +
+
+              "</tr>";
+
+          }
+        );
+
+        html +=
+            "</tbody>" +
+          "</table>";
+
+      }else{
+
+        html +=
+          '<div class="empty">No starting goods saved.</div>';
       }
-    );
 
-    wrapper.appendChild(head);
+      html +=
+        '<div class="record-subtitle">Remaining Goods</div>';
 
-    wrapper.appendChild(details);
+      if(
+        record.remainingGoods &&
+        record.remainingGoods.length
+      ){
 
-    container.appendChild(wrapper);
+        html +=
+          '<table class="week-table">' +
+            "<thead>" +
+              "<tr>" +
+                "<th>Good</th>" +
+                "<th>Remaining</th>" +
+                "<th>Value</th>" +
+              "</tr>" +
+            "</thead>" +
+            "<tbody>";
 
-  });
+        record.remainingGoods.forEach(
+          item => {
+
+            const value =
+              numberValue(
+                item.price
+              ) *
+              numberValue(
+                item.remainingQty
+              );
+
+            html +=
+              "<tr>" +
+
+                "<td>" +
+                  escapeHTML(
+                    item.name
+                  ) +
+                "</td>" +
+
+                "<td>" +
+                  numberValue(
+                    item.remainingQty
+                  ) +
+                "</td>" +
+
+                "<td>" +
+                  money(value) +
+                "</td>" +
+
+              "</tr>";
+
+          }
+        );
+
+        html +=
+            "</tbody>" +
+          "</table>";
+
+      }else{
+
+        html +=
+          '<div class="empty">No remaining goods saved.</div>';
+      }
+
+      html +=
+        '<div class="result">' +
+          "<strong>Starting Goods Value</strong>" +
+          "<strong>" +
+            money(
+              record.startingGoodsValue
+            ) +
+          "</strong>" +
+        "</div>" +
+
+        '<div class="result">' +
+          "<strong>Remaining Goods Value</strong>" +
+          "<strong>" +
+            money(
+              record.remainingGoodsValue
+            ) +
+          "</strong>" +
+        "</div>" +
+
+        '<div class="result">' +
+          "<strong>Sold / Used</strong>" +
+          "<strong>" +
+            money(
+              record.soldUsedValue
+            ) +
+          "</strong>" +
+        "</div>";
+
+      html +=
+        '<div class="balance-box record-anchor" id="balance-' +
+          safeWeekId(
+            week
+          ) +
+        '">' +
+
+          "<span>Balance</span>" +
+
+          "<span>" +
+            money(
+              record.balanceValue
+            ) +
+          "</span>" +
+
+        "</div>";
+
+      html +=
+        '<button class="main-btn delete-btn" type="button">' +
+          "DELETE WEEK RECORD" +
+        "</button>";
+
+      details.innerHTML =
+        html;
+
+      const deleteButton =
+        details.querySelector(
+          ".delete-btn"
+        );
+
+      deleteButton.addEventListener(
+        "click",
+        function(){
+
+          deleteWeekRecord(
+            week
+          );
+
+        }
+      );
+
+      head.addEventListener(
+        "click",
+        function(){
+
+          details.classList.toggle(
+            "open"
+          );
+
+        }
+      );
+
+      wrapper.appendChild(
+        head
+      );
+
+      wrapper.appendChild(
+        details
+      );
+
+      container.appendChild(
+        wrapper
+      );
+
+    }
+  );
 }
 
 /* =========================================================
    DELETE WEEK
 ========================================================= */
 
-function deleteWeekRecord(week){
+async function deleteWeekRecord(
+  week
+){
+
+  if(!currentUser){
+
+    return;
+  }
 
   const confirmed =
     confirm(
@@ -3785,25 +4601,44 @@ function deleteWeekRecord(week){
     return;
   }
 
-  delete weeks[week];
+  const {error} =
+    await db
+      .from("weekly_records")
+      .delete()
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .eq(
+        "week",
+        week
+      );
 
-  if(!Object.keys(weeks).length){
+  if(error){
 
-    weeks["Week 1"] = {
-      date:"",
-      startingGoods:[],
-      startingGoodsSaved:false,
-      startingGoodsValue:0,
-      remainingGoods:[],
-      remainingGoodsSaved:false,
-      remainingGoodsValue:0,
-      soldUsedValue:0,
-      balanceValue:0
-    };
+    console.error(
+      "Weekly record delete error:",
+      error
+    );
 
+    alert(
+      "Unable to delete Weekly Goods Record: " +
+      error.message
+    );
+
+    return;
   }
 
-  saveWeeks();
+  delete weeks[week];
+
+  if(
+    !Object.keys(weeks).length
+  ){
+
+    weeks["Week 1"] =
+      blankWeekRecord();
+
+  }
 
   if(!weeks[selectedWeek]){
 
@@ -3902,27 +4737,37 @@ function calculateRevenue(){
   document.getElementById(
     "resultTotalBanks"
   ).textContent =
-    money(totalBanks);
+    money(
+      totalBanks
+    );
 
   document.getElementById(
     "resultTotalCash"
   ).textContent =
-    money(totalCash);
+    money(
+      totalCash
+    );
 
   document.getElementById(
     "resultRemainingGoods"
   ).textContent =
-    money(remainingGoods);
+    money(
+      remainingGoods
+    );
 
   document.getElementById(
     "resultGoodsAfterExpenses"
   ).textContent =
-    money(goodsAfterExpenses);
+    money(
+      goodsAfterExpenses
+    );
 
   document.getElementById(
     "resultProfit"
   ).textContent =
-    money(profit);
+    money(
+      profit
+    );
 
   document.getElementById(
     "revenueResults"
@@ -3945,14 +4790,16 @@ function updateRevenueEndDate(){
 
     document.getElementById(
       "revenueEndDate"
-    ).value = "";
+    ).value =
+      "";
 
     return;
   }
 
   const date =
     new Date(
-      start + "T00:00:00"
+      start +
+      "T00:00:00"
     );
 
   date.setDate(
@@ -3962,14 +4809,24 @@ function updateRevenueEndDate(){
   document.getElementById(
     "revenueEndDate"
   ).value =
-    date.toISOString().slice(0,10);
+    date.toISOString()
+      .slice(0,10);
 }
 
 /* =========================================================
    SAVE REVENUE RECORD
 ========================================================= */
 
-function saveRevenueRecord(){
+async function saveRevenueRecord(){
+
+  if(!currentUser){
+
+    alert(
+      "You must be logged in."
+    );
+
+    return;
+  }
 
   const week =
     document.getElementById(
@@ -3983,7 +4840,9 @@ function saveRevenueRecord(){
 
   if(!startDate){
 
-    alert("Please select a start date.");
+    alert(
+      "Please select a start date."
+    );
 
     return;
   }
@@ -4053,11 +4912,27 @@ function saveRevenueRecord(){
   const goodsAfterExpenses =
     totalGoods - expenses;
 
-  const existingIndex =
-    revenueRecords.findIndex(
+  const existing =
+    revenueRecords.find(
       record =>
-        record.week === week
+        record.week ===
+        week
     );
+
+  if(existing){
+
+    const replace =
+      confirm(
+        "A revenue record already exists for " +
+        week +
+        ". Replace it?"
+      );
+
+    if(!replace){
+
+      return;
+    }
+  }
 
   const record = {
 
@@ -4082,30 +4957,17 @@ function saveRevenueRecord(){
 
   };
 
-  if(existingIndex >= 0){
+  const ok =
+    await saveRevenueRecordToSupabase(
+      record
+    );
 
-    const replace =
-      confirm(
-        "A revenue record already exists for " +
-        week +
-        ". Replace it?"
-      );
+  if(!ok){
 
-    if(!replace){
-
-      return;
-    }
-
-    revenueRecords[
-      existingIndex
-    ] = record;
-
-  }else{
-
-    revenueRecords.push(record);
+    return;
   }
 
-  saveRevenueRecords();
+  await loadRevenueRecords();
 
   renderRevenueRecords();
 
@@ -4144,23 +5006,30 @@ function renderRevenueRecords(){
           .localeCompare(
             String(b.week),
             undefined,
-            {numeric:true}
+            {
+              numeric:true
+            }
           )
     );
 
   sorted.forEach(
-    (record,index) => {
+    record => {
 
       const wrapper =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       wrapper.className =
         "record-card";
 
       const head =
-        document.createElement("button");
+        document.createElement(
+          "button"
+        );
 
-      head.type = "button";
+      head.type =
+        "button";
 
       head.className =
         "record-head";
@@ -4169,7 +5038,9 @@ function renderRevenueRecords(){
         '<div class="record-head-left">' +
 
           "<span>" +
-            escapeHTML(record.week) +
+            escapeHTML(
+              record.week
+            ) +
           "</span>" +
 
           "<small>" +
@@ -4189,11 +5060,15 @@ function renderRevenueRecords(){
         "</div>" +
 
         "<span>" +
-          money(record.totalBankCash) +
+          money(
+            record.totalBankCash
+          ) +
         "</span>";
 
       const body =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       body.className =
         "record-body";
@@ -4203,35 +5078,45 @@ function renderRevenueRecords(){
         '<div class="result">' +
           "<strong>Total Banks</strong>" +
           "<strong>" +
-            money(record.totalBanks) +
+            money(
+              record.totalBanks
+            ) +
           "</strong>" +
         "</div>" +
 
         '<div class="result">' +
           "<strong>Total Bank &amp; Cash</strong>" +
           "<strong>" +
-            money(record.totalBankCash) +
+            money(
+              record.totalBankCash
+            ) +
           "</strong>" +
         "</div>" +
 
         '<div class="result">' +
           "<strong>Remaining Goods</strong>" +
           "<strong>" +
-            money(record.remainingGoods) +
+            money(
+              record.remainingGoods
+            ) +
           "</strong>" +
         "</div>" +
 
         '<div class="result">' +
           "<strong>Goods After Expenses</strong>" +
           "<strong>" +
-            money(record.goodsAfterExpenses) +
+            money(
+              record.goodsAfterExpenses
+            ) +
           "</strong>" +
         "</div>" +
 
         '<div class="result">' +
           "<strong>Expenses</strong>" +
           "<strong>" +
-            money(record.expenses) +
+            money(
+              record.expenses
+            ) +
           "</strong>" +
         "</div>" +
 
@@ -4261,42 +5146,69 @@ function renderRevenueRecords(){
 
       deleteButton.addEventListener(
         "click",
-        function(){
+        async function(){
 
           const yes =
             confirm(
               "Delete this Revenue record?"
             );
 
-          if(!yes) return;
+          if(!yes){
 
-          const actualIndex =
-            revenueRecords.findIndex(
-              item =>
-                item.dateSaved ===
-                record.dateSaved
-            );
-
-          if(actualIndex >= 0){
-
-            revenueRecords.splice(
-              actualIndex,
-              1
-            );
-
-            saveRevenueRecords();
-
-            renderRevenueRecords();
+            return;
           }
+
+          if(!currentUser){
+
+            return;
+          }
+
+          const {error} =
+            await db
+              .from("revenue_records")
+              .delete()
+              .eq(
+                "user_id",
+                currentUser.id
+              )
+              .eq(
+                "id",
+                record.id
+              );
+
+          if(error){
+
+            console.error(
+              "Revenue delete error:",
+              error
+            );
+
+            alert(
+              "Unable to delete Revenue Record: " +
+              error.message
+            );
+
+            return;
+          }
+
+          await loadRevenueRecords();
+
+          renderRevenueRecords();
 
         }
       );
 
-      wrapper.appendChild(head);
+      wrapper.appendChild(
+        head
+      );
 
-      wrapper.appendChild(body);
+      wrapper.appendChild(
+        body
+      );
 
-      container.appendChild(wrapper);
+      container.appendChild(
+        wrapper
+      );
 
     }
   );
@@ -4316,17 +5228,20 @@ function resetRevenue(){
     "expenses",
     "totalGoods",
     "remainingGoods"
-  ].forEach(id => {
+  ].forEach(
+    id => {
 
-    document.getElementById(id).value = "";
+      document.getElementById(
+        id
+      ).value = "";
 
-  });
+    }
+  );
 
   document.getElementById(
     "revenueResults"
   ).style.display =
     "none";
-
 }
 
 /* =========================================================
@@ -4334,7 +5249,16 @@ function resetRevenue(){
 ========================================================= */
 
 const CEDI_DENOMINATIONS =
-  [200,100,50,20,10,5,2,1];
+  [
+    200,
+    100,
+    50,
+    20,
+    10,
+    5,
+    2,
+    1
+  ];
 
 function populateCediRows(){
 
@@ -4343,7 +5267,13 @@ function populateCediRows(){
       "cediRows"
     );
 
-  container.innerHTML = "";
+  if(!container){
+
+    return;
+  }
+
+  container.innerHTML =
+    "";
 
   let saved = {};
 
@@ -4365,14 +5295,20 @@ function populateCediRows(){
     denomination => {
 
       const row =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       row.className =
         "cedi-row";
 
       const savedQty =
         numberValue(
-          saved[String(denomination)]
+          saved[
+            String(
+              denomination
+            )
+          ]
         );
 
       row.innerHTML =
@@ -4383,7 +5319,9 @@ function populateCediRows(){
         "</div>" +
 
         '<input type="number" min="0" inputmode="numeric" placeholder="Qty" value="' +
-          (savedQty || "") +
+          (
+            savedQty || ""
+          ) +
         '">' +
 
         '<div class="cedi-total">' +
@@ -4394,7 +5332,9 @@ function populateCediRows(){
         "</div>";
 
       const input =
-        row.querySelector("input");
+        row.querySelector(
+          "input"
+        );
 
       const total =
         row.querySelector(
@@ -4412,14 +5352,18 @@ function populateCediRows(){
 
           total.textContent =
             money(
-              denomination * qty
+              denomination *
+              qty
             );
 
           saveCediRows();
+
         }
       );
 
-      container.appendChild(row);
+      container.appendChild(
+        row
+      );
 
     }
   );
@@ -4439,11 +5383,15 @@ function saveCediRows(){
       (row,index) => {
 
         const input =
-          row.querySelector("input");
+          row.querySelector(
+            "input"
+          );
 
         saved[
           String(
-            CEDI_DENOMINATIONS[index]
+            CEDI_DENOMINATIONS[
+              index
+            ]
           )
         ] =
           numberValue(
@@ -4471,7 +5419,9 @@ function calculateCedi(){
       (row,index) => {
 
         const input =
-          row.querySelector("input");
+          row.querySelector(
+            "input"
+          );
 
         const line =
           row.querySelector(
@@ -4484,15 +5434,21 @@ function calculateCedi(){
           );
 
         const denomination =
-          CEDI_DENOMINATIONS[index];
+          CEDI_DENOMINATIONS[
+            index
+          ];
 
         const value =
-          denomination * qty;
+          denomination *
+          qty;
 
-        total += value;
+        total +=
+          value;
 
         line.textContent =
-          money(value);
+          money(
+            value
+          );
 
       }
     );
@@ -4500,12 +5456,16 @@ function calculateCedi(){
   document.getElementById(
     "cediGrandTotal"
   ).textContent =
-    money(total);
+    money(
+      total
+    );
 
   document.getElementById(
     "cediWords"
   ).textContent =
-    cediToWords(total);
+    cediToWords(
+      total
+    );
 
   saveCediRows();
 }
@@ -4560,11 +5520,16 @@ function numberToWords(num){
   if(num < 100){
 
     return tens[
-      Math.floor(num / 10)
+      Math.floor(
+        num / 10
+      )
     ] +
     (
       num % 10
-        ? " " + ones[num % 10]
+        ? " " +
+          ones[
+            num % 10
+          ]
         : ""
     );
   }
@@ -4572,12 +5537,17 @@ function numberToWords(num){
   if(num < 1000){
 
     return ones[
-      Math.floor(num / 100)
+      Math.floor(
+        num / 100
+      )
     ] +
     " Hundred" +
     (
       num % 100
-        ? " " + numberToWords(num % 100)
+        ? " " +
+          numberToWords(
+            num % 100
+          )
         : ""
     );
   }
@@ -4585,12 +5555,17 @@ function numberToWords(num){
   if(num < 1000000){
 
     return numberToWords(
-      Math.floor(num / 1000)
+      Math.floor(
+        num / 1000
+      )
     ) +
     " Thousand" +
     (
       num % 1000
-        ? " " + numberToWords(num % 1000)
+        ? " " +
+          numberToWords(
+            num % 1000
+          )
         : ""
     );
   }
@@ -4598,12 +5573,17 @@ function numberToWords(num){
   if(num < 1000000000){
 
     return numberToWords(
-      Math.floor(num / 1000000)
+      Math.floor(
+        num / 1000000
+      )
     ) +
     " Million" +
     (
       num % 1000000
-        ? " " + numberToWords(num % 1000000)
+        ? " " +
+          numberToWords(
+            num % 1000000
+          )
         : ""
     );
   }
@@ -4615,18 +5595,28 @@ function cediToWords(amount){
 
   const rounded =
     Math.round(
-      numberValue(amount) * 100
+      numberValue(
+        amount
+      ) * 100
     ) / 100;
 
   const whole =
-    Math.floor(rounded);
+    Math.floor(
+      rounded
+    );
 
   const pesewas =
     Math.round(
-      (rounded - whole) * 100
+      (
+        rounded -
+        whole
+      ) * 100
     );
 
-  if(whole === 0 && pesewas === 0){
+  if(
+    whole === 0 &&
+    pesewas === 0
+  ){
 
     return "Zero Ghana Cedis";
   }
@@ -4634,14 +5624,18 @@ function cediToWords(amount){
   let result =
     whole === 0
       ? "Zero Ghana Cedis"
-      : numberToWords(whole) +
+      : numberToWords(
+          whole
+        ) +
         " Ghana Cedis";
 
   if(pesewas > 0){
 
     result +=
       " and " +
-      numberToWords(pesewas) +
+      numberToWords(
+        pesewas
+      ) +
       " Pesewas";
   }
 
@@ -4668,14 +5662,18 @@ async function submitGoodRequest(){
 
   if(!name){
 
-    alert("Please enter the good name.");
+    alert(
+      "Please enter the good name."
+    );
 
     return;
   }
 
   if(price <= 0){
 
-    alert("Please enter a valid price.");
+    alert(
+      "Please enter a valid price."
+    );
 
     return;
   }
@@ -4689,15 +5687,23 @@ async function submitGoodRequest(){
     await db
       .from("good_requests")
       .insert({
-        user_id:currentUser.id,
+        user_id:
+          currentUser.id,
+
         name:name,
-        proposed_price:price,
-        status:"pending"
+
+        proposed_price:
+          price,
+
+        status:
+          "pending"
       });
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       error.message ||
@@ -4737,12 +5743,22 @@ async function loadUserRequests(){
     await db
       .from("good_requests")
       .select("*")
-      .eq("user_id",currentUser.id)
-      .order("created_at",{ascending:false});
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     container.innerHTML =
       '<div class="empty">Unable to load requests.</div>';
@@ -4750,9 +5766,13 @@ async function loadUserRequests(){
     return;
   }
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
-  if(!data || !data.length){
+  if(
+    !data ||
+    !data.length
+  ){
 
     container.innerHTML =
       '<div class="empty">No requests yet.</div>';
@@ -4764,14 +5784,17 @@ async function loadUserRequests(){
     request => {
 
       const card =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       card.className =
         "request-card";
 
       const status =
         String(
-          request.status || "pending"
+          request.status ||
+          "pending"
         ).toLowerCase();
 
       card.innerHTML =
@@ -4794,10 +5817,14 @@ async function loadUserRequests(){
 
         '<div class="request-meta">' +
           "Status: " +
-          escapeHTML(status) +
+          escapeHTML(
+            status
+          ) +
         "</div>";
 
-      container.appendChild(card);
+      container.appendChild(
+        card
+      );
 
     }
   );
@@ -4837,20 +5864,22 @@ async function loadAdminUsers(){
   container.innerHTML =
     '<div class="empty">Loading users...</div>';
 
-  /*
-    The profiles table is used for the
-    registered account list.
-  */
-
   const {data,error} =
     await db
       .from("profiles")
       .select("*")
-      .order("created_at",{ascending:false});
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     container.innerHTML =
       '<div class="empty">Unable to load users.</div>';
@@ -4858,9 +5887,13 @@ async function loadAdminUsers(){
     return;
   }
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
-  if(!data || !data.length){
+  if(
+    !data ||
+    !data.length
+  ){
 
     container.innerHTML =
       '<div class="empty">No registered accounts.</div>';
@@ -4872,33 +5905,40 @@ async function loadAdminUsers(){
     user => {
 
       const card =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       card.className =
         "admin-user-card";
 
       const status =
         String(
-          user.status || "pending"
+          user.status ||
+          "pending"
         ).toLowerCase();
 
       const role =
         String(
-          user.role || "user"
+          user.role ||
+          "user"
         ).toLowerCase();
 
-      let badgeClass = "";
+      let badgeClass =
+        "";
 
       if(status === "pending"){
 
-        badgeClass = "pending";
+        badgeClass =
+          "pending";
 
       }else if(
         status === "removed" ||
         status === "disabled"
       ){
 
-        badgeClass = "removed";
+        badgeClass =
+          "removed";
       }
 
       const email =
@@ -4915,14 +5955,18 @@ async function loadAdminUsers(){
 
         '<div class="admin-top">' +
 
-          '<div>' +
+          "<div>" +
 
             '<div class="admin-name">' +
-              escapeHTML(name) +
+              escapeHTML(
+                name
+              ) +
             "</div>" +
 
             '<div class="request-meta">' +
-              escapeHTML(email) +
+              escapeHTML(
+                email
+              ) +
             "</div>" +
 
           "</div>" +
@@ -4930,14 +5974,18 @@ async function loadAdminUsers(){
           '<span class="badge ' +
             badgeClass +
           '">' +
-            escapeHTML(status) +
+            escapeHTML(
+              status
+            ) +
           "</span>" +
 
         "</div>" +
 
         '<div class="request-meta">' +
           "Role: " +
-          escapeHTML(role) +
+          escapeHTML(
+            role
+          ) +
         "</div>" +
 
         '<div class="admin-actions"></div>';
@@ -4947,13 +5995,10 @@ async function loadAdminUsers(){
           ".admin-actions"
         );
 
-      /*
-        Never allow the admin account
-        to be removed.
-      */
-
       const userEmail =
-        String(email).toLowerCase();
+        String(
+          email
+        ).toLowerCase();
 
       if(
         userEmail !==
@@ -5012,7 +6057,9 @@ async function loadAdminUsers(){
         );
       }
 
-      container.appendChild(card);
+      container.appendChild(
+        card
+      );
 
     }
   );
@@ -5022,7 +6069,9 @@ async function loadAdminUsers(){
    APPROVE USER
 ========================================================= */
 
-async function approveUser(userId){
+async function approveUser(
+  userId
+){
 
   if(!requireAdmin()) return;
 
@@ -5037,13 +6086,16 @@ async function approveUser(userId){
     await db.rpc(
       "approve_user",
       {
-        p_user_id:userId
+        p_user_id:
+          userId
       }
     );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       error.message ||
@@ -5064,7 +6116,9 @@ async function approveUser(userId){
    REMOVE USER
 ========================================================= */
 
-async function removeUser(userId){
+async function removeUser(
+  userId
+){
 
   if(!requireAdmin()) return;
 
@@ -5079,13 +6133,16 @@ async function removeUser(userId){
     await db.rpc(
       "remove_user",
       {
-        p_user_id:userId
+        p_user_id:
+          userId
       }
     );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       error.message ||
@@ -5122,11 +6179,18 @@ async function loadGoodRequests(){
     await db
       .from("good_requests")
       .select("*")
-      .order("created_at",{ascending:false});
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     container.innerHTML =
       '<div class="empty">Unable to load requests.</div>';
@@ -5134,9 +6198,13 @@ async function loadGoodRequests(){
     return;
   }
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
-  if(!data || !data.length){
+  if(
+    !data ||
+    !data.length
+  ){
 
     container.innerHTML =
       '<div class="empty">No good requests.</div>';
@@ -5148,14 +6216,17 @@ async function loadGoodRequests(){
     request => {
 
       const card =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       card.className =
         "request-card";
 
       const status =
         String(
-          request.status || "pending"
+          request.status ||
+          "pending"
         ).toLowerCase();
 
       card.innerHTML =
@@ -5179,13 +6250,16 @@ async function loadGoodRequests(){
         '<div class="request-meta">' +
           "User ID: " +
           escapeHTML(
-            request.user_id || ""
+            request.user_id ||
+            ""
           ) +
         "</div>" +
 
         '<div class="request-meta">' +
           "Status: " +
-          escapeHTML(status) +
+          escapeHTML(
+            status
+          ) +
         "</div>" +
 
         '<div class="admin-actions"></div>';
@@ -5246,7 +6320,9 @@ async function loadGoodRequests(){
         );
       }
 
-      container.appendChild(card);
+      container.appendChild(
+        card
+      );
 
     }
   );
@@ -5256,7 +6332,9 @@ async function loadGoodRequests(){
    APPROVE GOOD REQUEST
 ========================================================= */
 
-async function approveGoodRequest(id){
+async function approveGoodRequest(
+  id
+){
 
   if(!requireAdmin()) return;
 
@@ -5264,13 +6342,16 @@ async function approveGoodRequest(id){
     await db.rpc(
       "approve_good_request",
       {
-        p_request_id:id
+        p_request_id:
+          id
       }
     );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       error.message ||
@@ -5297,7 +6378,9 @@ async function approveGoodRequest(id){
    REJECT GOOD REQUEST
 ========================================================= */
 
-async function rejectGoodRequest(id){
+async function rejectGoodRequest(
+  id
+){
 
   if(!requireAdmin()) return;
 
@@ -5305,13 +6388,16 @@ async function rejectGoodRequest(id){
     await db.rpc(
       "reject_good_request",
       {
-        p_request_id:id
+        p_request_id:
+          id
       }
     );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       error.message ||
@@ -5378,7 +6464,9 @@ async function adminAddGood(){
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     alert(
       error.message ||
@@ -5425,11 +6513,18 @@ async function loadAdminGoods(){
     await db
       .from("goods")
       .select("*")
-      .order("name",{ascending:true});
+      .order(
+        "name",
+        {
+          ascending:true
+        }
+      );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     container.innerHTML =
       '<div class="empty">Unable to load goods.</div>';
@@ -5437,9 +6532,13 @@ async function loadAdminGoods(){
     return;
   }
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
-  if(!data || !data.length){
+  if(
+    !data ||
+    !data.length
+  ){
 
     container.innerHTML =
       '<div class="empty">No approved goods yet.</div>';
@@ -5451,7 +6550,9 @@ async function loadAdminGoods(){
     item => {
 
       const row =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       row.className =
         "admin-good-row";
@@ -5459,11 +6560,15 @@ async function loadAdminGoods(){
       row.innerHTML =
 
         '<input type="text" value="' +
-          escapeHTML(item.name) +
+          escapeHTML(
+            item.name
+          ) +
           '" readonly>' +
 
         '<input type="number" value="' +
-          numberValue(item.price) +
+          numberValue(
+            item.price
+          ) +
           '" inputmode="decimal">' +
 
         '<button class="small-btn delete-btn" type="button">' +
@@ -5471,10 +6576,14 @@ async function loadAdminGoods(){
         "</button>";
 
       const priceInput =
-        row.querySelectorAll("input")[1];
+        row.querySelectorAll(
+          "input"
+        )[1];
 
       const deleteButton =
-        row.querySelector("button");
+        row.querySelector(
+          "button"
+        );
 
       priceInput.addEventListener(
         "change",
@@ -5492,7 +6601,9 @@ async function loadAdminGoods(){
             );
 
             priceInput.value =
-              numberValue(item.price);
+              numberValue(
+                item.price
+              );
 
             return;
           }
@@ -5503,11 +6614,16 @@ async function loadAdminGoods(){
               .update({
                 price:newPrice
               })
-              .eq("id",item.id);
+              .eq(
+                "id",
+                item.id
+              );
 
           if(error){
 
-            console.error(error);
+            console.error(
+              error
+            );
 
             alert(
               error.message ||
@@ -5515,7 +6631,9 @@ async function loadAdminGoods(){
             );
 
             priceInput.value =
-              numberValue(item.price);
+              numberValue(
+                item.price
+              );
 
             return;
           }
@@ -5545,11 +6663,16 @@ async function loadAdminGoods(){
             await db
               .from("goods")
               .delete()
-              .eq("id",item.id);
+              .eq(
+                "id",
+                item.id
+              );
 
           if(error){
 
-            console.error(error);
+            console.error(
+              error
+            );
 
             alert(
               error.message ||
@@ -5566,7 +6689,9 @@ async function loadAdminGoods(){
         }
       );
 
-      container.appendChild(row);
+      container.appendChild(
+        row
+      );
 
     }
   );
@@ -5608,7 +6733,9 @@ async function checkExistingSession(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
   }
 
@@ -5620,17 +6747,30 @@ async function checkExistingSession(){
 ========================================================= */
 
 db.auth.onAuthStateChange(
-  function(event,session){
+  function(
+    event,
+    session
+  ){
 
     if(
-      event === "SIGNED_OUT"
+      event ===
+      "SIGNED_OUT"
     ){
 
-      currentUser = null;
+      currentUser =
+        null;
 
-      currentProfile = null;
+      currentProfile =
+        null;
 
-      isAdmin = false;
+      isAdmin =
+        false;
+
+      weeks =
+        {};
+
+      revenueRecords =
+        [];
 
       document.getElementById(
         "app"
@@ -5667,7 +6807,15 @@ document.addEventListener(
       ).value ||
       "Week 1";
 
-    ensureWeek(selectedWeek);
+    /*
+      Week 1 is created only in memory.
+      It is NOT saved to Supabase until
+      the user actually saves something.
+    */
+
+    ensureWeek(
+      selectedWeek
+    );
 
     loadWeekRows();
 
@@ -5682,6 +6830,27 @@ document.addEventListener(
     updatePreviousGoodsInfo();
 
     updateRevenueEndDate();
+
+    /*
+      Goods search.
+      Blank = all goods.
+      First letter = goods beginning
+      with that letter.
+      Multiple letters = longer prefix.
+    */
+
+    const goodsSearch =
+      document.getElementById(
+        "goodsSearch"
+      );
+
+    if(goodsSearch){
+
+      goodsSearch.addEventListener(
+        "input",
+        applyGoodsSearch
+      );
+    }
 
     await checkExistingSession();
 
