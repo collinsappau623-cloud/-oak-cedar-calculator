@@ -3465,12 +3465,30 @@ function renderRemainingRows(){
                 row.name
             );
 
-          row.startingQty =
-            start
-              ? numberValue(
-                  start.qty
-                )
-              : 0;
+          if(start){
+
+            row.startingQty =
+              numberValue(
+                start.qty
+              );
+
+          }else{
+
+            const previous =
+              getPreviousRemainingGoods()
+                .find(
+                  item =>
+                    item.name ===
+                    row.name
+                );
+
+            row.startingQty =
+              previous
+                ? numberValue(
+                    previous.remainingQty
+                  )
+                : 0;
+          }
 
           renderRemainingRows();
         }
@@ -3699,14 +3717,26 @@ async function saveRemainingGoods(){
                 row.name
             );
 
+          const previous =
+            getPreviousRemainingGoods()
+              .find(
+                item =>
+                  item.name ===
+                  row.name
+              );
+
           const startingQty =
             starting
               ? numberValue(
                   starting.qty
                 )
-              : numberValue(
-                  row.startingQty
-                );
+              : previous
+                ? numberValue(
+                    previous.remainingQty
+                  )
+                : numberValue(
+                    row.startingQty
+                  );
 
           let remainingQty =
             numberValue(
